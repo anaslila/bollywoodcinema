@@ -1,704 +1,376 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<MovieProductionSimulator>
-  <GameInfo>
-    <Title>Movie Production Simulator</Title>
-    <Version>1.0</Version>
-    <Currency>₹</Currency>
-    <CurrencyFormat>#,##,##,##,##,###</CurrencyFormat>
-    <Logo>https://www.flaticon.com/free-icon/clapperboard_1038100</Logo>
-  </GameInfo>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Production Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="logo">
+                <i class="fas fa-film"></i>
+                <h1>Movie Production Simulator</h1>
+            </div>
+            <div class="player-stats">
+                <div class="stat-item">
+                    <i class="fas fa-rupee-sign"></i>
+                    <span id="money">₹50,00,000</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-star"></i>
+                    <span id="reputation">10</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-building"></i>
+                    <span id="studio-level">Level 1</span>
+                </div>
+            </div>
+        </header>
 
-  <!-- UI Configuration with Beautiful Color Schemes -->
-  <UIConfiguration>
-    <Theme name="cinematic_gold">
-      <PrimaryColor>#1a1a1a</PrimaryColor>
-      <SecondaryColor>#ffd700</SecondaryColor>
-      <AccentColor>#ff6b35</AccentColor>
-      <BackgroundColor>#0f0f0f</BackgroundColor>
-      <TextColor>#ffffff</TextColor>
-      <ButtonHover>#ffed4e</ButtonHover>
-      <TabActive>#ffd700</TabActive>
-      <TabInactive>#666666</TabInactive>
-    </Theme>
-    
-    <Tabs>
-      <Tab id="studio" name="Studio" icon="https://www.flaticon.com/free-icon/studio_3652191" />
-      <Tab id="scripts" name="Scripts" icon="https://www.flaticon.com/free-icon/script_2991120" />
-      <Tab id="casting" name="Casting" icon="https://www.flaticon.com/free-icon/casting_3652174" />
-      <Tab id="production" name="Production" icon="https://www.flaticon.com/free-icon/film_3652186" />
-      <Tab id="marketing" name="Marketing" icon="https://www.flaticon.com/free-icon/marketing_3652201" />
-      <Tab id="boxoffice" name="Box Office" icon="https://www.flaticon.com/free-icon/ticket_3652224" />
-      <Tab id="finances" name="Finances" icon="https://www.flaticon.com/free-icon/money_3652207" />
-      <Tab id="profile" name="Profile" icon="https://www.flaticon.com/free-icon/user_3652233" />
-    </Tabs>
-  </UIConfiguration>
+        <!-- Navigation Tabs -->
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="profile">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </button>
+            <button class="tab-btn" data-tab="studio">
+                <i class="fas fa-video"></i>
+                <span>Studio</span>
+            </button>
+            <button class="tab-btn" data-tab="scripts">
+                <i class="fas fa-scroll"></i>
+                <span>Scripts</span>
+            </button>
+            <button class="tab-btn" data-tab="casting">
+                <i class="fas fa-users"></i>
+                <span>Casting</span>
+            </button>
+            <button class="tab-btn" data-tab="production">
+                <i class="fas fa-camera"></i>
+                <span>Production</span>
+            </button>
+            <button class="tab-btn" data-tab="marketing">
+                <i class="fas fa-bullhorn"></i>
+                <span>Marketing</span>
+            </button>
+            <button class="tab-btn" data-tab="boxoffice">
+                <i class="fas fa-ticket-alt"></i>
+                <span>Box Office</span>
+            </button>
+            <button class="tab-btn" data-tab="finances">
+                <i class="fas fa-chart-line"></i>
+                <span>Finances</span>
+            </button>
+        </nav>
 
-  <!-- Character Creation -->
-  <CharacterCreation>
-    <PlayerFaceIcons>
-      <Icon id="face1" src="https://www.flaticon.com/free-icon/man_3135715" />
-      <Icon id="face2" src="https://www.flaticon.com/free-icon/woman_3135823" />
-      <Icon id="face3" src="https://www.flaticon.com/free-icon/businessman_3135768" />
-      <Icon id="face4" src="https://www.flaticon.com/free-icon/businesswoman_3135844" />
-    </PlayerFaceIcons>
-    
-    <StudioNameSuggestions>
-      <Name>Bollywood Dreams Productions</Name>
-      <Name>Mumbai Masala Studios</Name>
-      <Name>Golden Gate Entertainment</Name>
-      <Name>Royal Cinema Works</Name>
-      <Name>Starlight Productions</Name>
-      <Name>Desi Film Factory</Name>
-      <Name>Cinematic Vision Studios</Name>
-      <Name>Rainbow Entertainment</Name>
-      <Name>Silver Screen Productions</Name>
-      <Name>Mega Movie Makers</Name>
-    </StudioNameSuggestions>
-  </CharacterCreation>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Profile Tab -->
+            <div class="tab-content active" id="profile-tab">
+                <div class="profile-section">
+                    <h2>Create Your Character</h2>
+                    <div class="character-creation">
+                        <div class="avatar-selection">
+                            <h3>Choose Avatar</h3>
+                            <div class="avatar-grid">
+                                <div class="avatar-option" data-avatar="male1">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="avatar-option" data-avatar="female1">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div class="avatar-option" data-avatar="male2">
+                                    <i class="fas fa-user-astronaut"></i>
+                                </div>
+                                <div class="avatar-option" data-avatar="female2">
+                                    <i class="fas fa-user-ninja"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="name-input">
+                            <h3>Character Name</h3>
+                            <input type="text" id="character-name" placeholder="Enter your name">
+                        </div>
+                        <div class="studio-name">
+                            <h3>Studio Name</h3>
+                            <input type="text" id="studio-name" placeholder="Enter studio name">
+                            <div class="suggestions">
+                                <button class="suggestion-btn">Bollywood Dreams Productions</button>
+                                <button class="suggestion-btn">Mumbai Masala Studios</button>
+                                <button class="suggestion-btn">Golden Gate Entertainment</button>
+                                <button class="suggestion-btn">Royal Cinema Works</button>
+                            </div>
+                        </div>
+                        <button class="primary-btn" id="start-game">Start Your Journey</button>
+                    </div>
+                </div>
+            </div>
 
-<!-- Game Logic System (Continued) -->
-<GameLogic>
-  <StartingResources>
-    <Money>₹50,00,000</Money>
-    <Reputation>10</Reputation>
-    <StudioLevel>1</StudioLevel>
-    <MaxProjects>1</MaxProjects>
-  </StartingResources>
+            <!-- Studio Tab -->
+            <div class="tab-content" id="studio-tab">
+                <div class="studio-overview">
+                    <h2>Your Studio</h2>
+                    <div class="studio-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-building"></i>
+                            <h3>Studio Level</h3>
+                            <p id="current-level">1</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <h3>Staff Count</h3>
+                            <p id="staff-count">5</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-trophy"></i>
+                            <h3>Awards Won</h3>
+                            <p id="awards-count">0</p>
+                        </div>
+                    </div>
+                    <div class="upgrades-section">
+                        <h3>Studio Upgrades</h3>
+                        <div class="upgrade-grid">
+                            <div class="upgrade-card">
+                                <i class="fas fa-tools"></i>
+                                <h4>Better Facilities</h4>
+                                <p>Cost: ₹2,00,00,000</p>
+                                <button class="upgrade-btn">Upgrade</button>
+                            </div>
+                            <div class="upgrade-card">
+                                <i class="fas fa-handshake"></i>
+                                <h4>Star Contracts</h4>
+                                <p>Cost: ₹5,00,00,000</p>
+                                <button class="upgrade-btn">Upgrade</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <MoneySystem>
-    <Income>
-      <BoxOfficeShare>0.75</BoxOfficeShare>
-      <OTTDeals>0.15</OTTDeals>
-      <MerchandisingRights>0.10</MerchandisingRights>
-    </Income>
-    <Expenses>
-      <StudioRent>₹2,00,000</StudioRent>
-      <StaffSalaries>₹5,00,000</StaffSalaries>
-      <Utilities>₹50,000</Utilities>
-      <Marketing>varies</Marketing>
-    </Expenses>
-  </MoneySystem>
+            <!-- Scripts Tab -->
+            <div class="tab-content" id="scripts-tab">
+                <div class="scripts-section">
+                    <h2>Script Development</h2>
+                    <div class="script-creation">
+                        <div class="genre-selection">
+                            <h3>Choose Genre</h3>
+                            <div class="genre-grid">
+                                <div class="genre-card" data-genre="romance">
+                                    <i class="fas fa-heart"></i>
+                                    <h4>Romance</h4>
+                                    <p>Market Appeal: 85%</p>
+                                </div>
+                                <div class="genre-card" data-genre="action">
+                                    <i class="fas fa-fist-raised"></i>
+                                    <h4>Action</h4>
+                                    <p>Market Appeal: 90%</p>
+                                </div>
+                                <div class="genre-card" data-genre="comedy">
+                                    <i class="fas fa-laugh"></i>
+                                    <h4>Comedy</h4>
+                                    <p>Market Appeal: 80%</p>
+                                </div>
+                                <div class="genre-card" data-genre="drama">
+                                    <i class="fas fa-theater-masks"></i>
+                                    <h4>Drama</h4>
+                                    <p>Market Appeal: 75%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="script-options">
+                            <h3>Development Time</h3>
+                            <div class="time-options">
+                                <label>
+                                    <input type="radio" name="dev-time" value="30">
+                                    Rush (30 days) - Quality: Poor
+                                </label>
+                                <label>
+                                    <input type="radio" name="dev-time" value="60" checked>
+                                    Normal (60 days) - Quality: Good
+                                </label>
+                                <label>
+                                    <input type="radio" name="dev-time" value="90">
+                                    Polish (90 days) - Quality: Excellent
+                                </label>
+                            </div>
+                        </div>
+                        <button class="primary-btn" id="create-script">Create Script</button>
+                    </div>
+                </div>
+            </div>
 
-  <ReputationSystem>
-    <Factors>
-      <BoxOfficeSuccess weight="40" />
-      <CriticalAcclaim weight="25" />
-      <AwardWins weight="20" />
-      <PublicImage weight="15" />
-    </Factors>
-  </ReputationSystem>
-</GameLogic>
+            <!-- Casting Tab -->
+            <div class="tab-content" id="casting-tab">
+                <div class="casting-section">
+                    <h2>Cast & Crew</h2>
+                    <div class="cast-categories">
+                        <div class="category-tabs">
+                            <button class="cat-tab active" data-category="actors">Actors</button>
+                            <button class="cat-tab" data-category="directors">Directors</button>
+                            <button class="cat-tab" data-category="writers">Writers</button>
+                            <button class="cat-tab" data-category="music">Music Directors</button>
+                        </div>
+                        
+                        <div class="cast-grid" id="actors-grid">
+                            <div class="cast-card">
+                                <div class="cast-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <h4>Shah Rukh Khan</h4>
+                                <div class="stats">
+                                    <span>Popularity: 95</span>
+                                    <span>Acting: 92</span>
+                                </div>
+                                <p class="fee">₹25,00,00,000</p>
+                                <button class="hire-btn">Hire</button>
+                            </div>
+                            <div class="cast-card">
+                                <div class="cast-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <h4>Aamir Khan</h4>
+                                <div class="stats">
+                                    <span>Popularity: 90</span>
+                                    <span>Acting: 95</span>
+                                </div>
+                                <p class="fee">₹20,00,00,000</p>
+                                <button class="hire-btn">Hire</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<!-- Enhanced Indian Celebrities Database -->
-<CelebrityDatabase>
-  <Actors>
-    <Actor id="1">
-      <Name>Shah Rukh Khan</Name>
-      <Popularity>95</Popularity>
-      <Acting>92</Acting>
-      <Bankability>98</Bankability>
-      <Fee>₹25,00,00,000</Fee>
-      <Genre>Romance, Drama, Action</Genre>
-      <Age>58</Age>
-      <CareerPhase>Veteran</CareerPhase>
-    </Actor>
-    <Actor id="2">
-      <Name>Aamir Khan</Name>
-      <Popularity>90</Popularity>
-      <Acting>95</Acting>
-      <Bankability>85</Bankability>
-      <Fee>₹20,00,00,000</Fee>
-      <Genre>Drama, Social, Thriller</Genre>
-      <Age>59</Age>
-      <CareerPhase>Veteran</CareerPhase>
-    </Actor>
-    <Actor id="3">
-      <Name>Salman Khan</Name>
-      <Popularity>88</Popularity>
-      <Acting>75</Acting>
-      <Bankability>95</Bankability>
-      <Fee>₹15,00,00,000</Fee>
-      <Genre>Action, Comedy, Drama</Genre>
-      <Age>58</Age>
-      <CareerPhase>Veteran</CareerPhase>
-    </Actor>
-    <Actor id="4">
-      <Name>Ranbir Kapoor</Name>
-      <Popularity>82</Popularity>
-      <Acting>88</Acting>
-      <Bankability>75</Bankability>
-      <Fee>₹12,00,00,000</Fee>
-      <Genre>Romance, Drama, Comedy</Genre>
-      <Age>41</Age>
-      <CareerPhase>Prime</CareerPhase>
-    </Actor>
-    <Actor id="5">
-      <Name>Ranveer Singh</Name>
-      <Popularity>85</Popularity>
-      <Acting>82</Acting>
-      <Bankability>80</Bankability>
-      <Fee>₹10,00,00,000</Fee>
-      <Genre>Drama, Comedy, Historical</Genre>
-      <Age>38</Age>
-      <CareerPhase>Prime</CareerPhase>
-    </Actor>
-    <Actor id="6">
-      <Name>Deepika Padukone</Name>
-      <Popularity>85</Popularity>
-      <Acting>88</Acting>
-      <Bankability>80</Bankability>
-      <Fee>₹10,00,00,000</Fee>
-      <Genre>Romance, Drama, Historical</Genre>
-      <Age>38</Age>
-      <CareerPhase>Prime</CareerPhase>
-    </Actor>
-    <Actor id="7">
-      <Name>Alia Bhatt</Name>
-      <Popularity>88</Popularity>
-      <Acting>90</Acting>
-      <Bankability>85</Bankability>
-      <Fee>₹8,00,00,000</Fee>
-      <Genre>Drama, Romance, Thriller</Genre>
-      <Age>31</Age>
-      <CareerPhase>Rising Star</CareerPhase>
-    </Actor>
-    <Actor id="8">
-      <Name>Katrina Kaif</Name>
-      <Popularity>78</Popularity>
-      <Acting>70</Acting>
-      <Bankability>75</Bankability>
-      <Fee>₹6,00,00,000</Fee>
-      <Genre>Action, Romance, Comedy</Genre>
-      <Age>40</Age>
-      <CareerPhase>Established</CareerPhase>
-    </Actor>
-  </Actors>
+            <!-- Production Tab -->
+            <div class="tab-content" id="production-tab">
+                <div class="production-section">
+                    <h2>Movie Production</h2>
+                    <div class="production-status">
+                        <div class="phase-tracker">
+                            <div class="phase active">
+                                <i class="fas fa-clipboard-list"></i>
+                                <span>Pre-Production</span>
+                            </div>
+                            <div class="phase">
+                                <i class="fas fa-video"></i>
+                                <span>Shooting</span>
+                            </div>
+                            <div class="phase">
+                                <i class="fas fa-cut"></i>
+                                <span>Post-Production</span>
+                            </div>
+                            <div class="phase">
+                                <i class="fas fa-rocket"></i>
+                                <span>Release</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 25%"></div>
+                        </div>
+                        <p class="progress-text">Pre-Production: 25% Complete</p>
+                    </div>
+                </div>
+            </div>
 
-  <Directors>
-    <Director id="1">
-      <Name>Rajkumar Hirani</Name>
-      <Skill>95</Skill>
-      <Specialty>Comedy-Drama</Specialty>
-      <Fee>₹5,00,00,000</Fee>
-      <SuccessRate>90</SuccessRate>
-      <Awards>Multiple Filmfare, National Awards</Awards>
-    </Director>
-    <Director id="2">
-      <Name>Sanjay Leela Bhansali</Name>
-      <Skill>92</Skill>
-      <Specialty>Historical Drama</Specialty>
-      <Fee>₹4,50,00,000</Fee>
-      <SuccessRate>85</SuccessRate>
-      <Awards>Padma Shri, National Awards</Awards>
-    </Director>
-    <Director id="3">
-      <Name>Zoya Akhtar</Name>
-      <Skill>88</Skill>
-      <Specialty>Contemporary Drama</Specialty>
-      <Fee>₹3,00,00,000</Fee>
-      <SuccessRate>80</SuccessRate>
-      <Awards>Filmfare Awards</Awards>
-    </Director>
-    <Director id="4">
-      <Name>Rohit Shetty</Name>
-      <Skill>75</Skill>
-      <Specialty>Action Comedy</Specialty>
-      <Fee>₹2,50,00,000</Fee>
-      <SuccessRate>75</SuccessRate>
-      <Awards>Commercial Success Expert</Awards>
-    </Director>
-    <Director id="5">
-      <Name>Shoojit Sircar</Name>
-      <Skill>90</Skill>
-      <Specialty>Social Drama</Specialty>
-      <Fee>₹2,00,00,000</Fee>
-      <SuccessRate>85</SuccessRate>
-      <Awards>National Film Awards</Awards>
-    </Director>
-  </Directors>
+            <!-- Marketing Tab -->
+            <div class="tab-content" id="marketing-tab">
+                <div class="marketing-section">
+                    <h2>Marketing Campaign</h2>
+                    <div class="marketing-strategies">
+                        <div class="strategy-card">
+                            <i class="fas fa-battery-quarter"></i>
+                            <h4>Minimal Marketing</h4>
+                            <p>Cost: ₹5,00,00,000</p>
+                            <p>Reach: 30%</p>
+                            <button class="strategy-btn">Select</button>
+                        </div>
+                        <div class="strategy-card recommended">
+                            <i class="fas fa-bullhorn"></i>
+                            <h4>Standard Marketing</h4>
+                            <p>Cost: ₹15,00,00,000</p>
+                            <p>Reach: 60%</p>
+                            <button class="strategy-btn">Select</button>
+                        </div>
+                        <div class="strategy-card">
+                            <i class="fas fa-rocket"></i>
+                            <h4>Aggressive Marketing</h4>
+                            <p>Cost: ₹30,00,00,000</p>
+                            <p>Reach: 85%</p>
+                            <button class="strategy-btn">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <Writers>
-    <Writer id="1">
-      <Name>Abhijat Joshi</Name>
-      <Skill>90</Skill>
-      <Specialty>Comedy-Drama</Specialty>
-      <Fee>₹50,00,000</Fee>
-      <Awards>Filmfare Best Screenplay</Awards>
-    </Writer>
-    <Writer id="2">
-      <Name>Juhi Chaturvedi</Name>
-      <Skill>88</Skill>
-      <Specialty>Social Drama</Specialty>
-      <Fee>₹40,00,000</Fee>
-      <Awards>National Film Awards</Awards>
-    </Writer>
-    <Writer id="3">
-      <Name>Vijay Krishna Acharya</Name>
-      <Skill>75</Skill>
-      <Specialty>Action Thriller</Specialty>
-      <Fee>₹30,00,000</Fee>
-      <Awards>Commercial Writer</Awards>
-    </Writer>
-    <Writer id="4">
-      <Name>Himanshu Sharma</Name>
-      <Skill>85</Skill>
-      <Specialty>Drama, Comedy</Specialty>
-      <Fee>₹35,00,000</Fee>
-      <Awards>Filmfare Nominations</Awards>
-    </Writer>
-  </Writers>
+            <!-- Box Office Tab -->
+            <div class="tab-content" id="boxoffice-tab">
+                <div class="boxoffice-section">
+                    <h2>Box Office Performance</h2>
+                    <div class="boxoffice-stats">
+                        <div class="revenue-card">
+                            <h3>Total Collection</h3>
+                            <p class="amount" id="total-collection">₹0</p>
+                        </div>
+                        <div class="revenue-breakdown">
+                            <div class="week-stats">
+                                <h4>Week 1</h4>
+                                <p>₹0</p>
+                            </div>
+                            <div class="week-stats">
+                                <h4>Week 2</h4>
+                                <p>₹0</p>
+                            </div>
+                            <div class="week-stats">
+                                <h4>Week 3</h4>
+                                <p>₹0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <MusicDirectors>
-    <MusicDirector id="1">
-      <Name>A.R. Rahman</Name>
-      <Skill>98</Skill>
-      <Fee>₹2,00,00,000</Fee>
-      <Specialty>All Genres</Specialty>
-      <Awards>2 Oscars, Grammy, Padma Bhushan</Awards>
-    </MusicDirector>
-    <MusicDirector id="2">
-      <Name>Shankar-Ehsaan-Loy</Name>
-      <Skill>85</Skill>
-      <Fee>₹1,00,00,000</Fee>
-      <Specialty>Contemporary</Specialty>
-      <Awards>Multiple Filmfare Awards</Awards>
-    </MusicDirector>
-    <MusicDirector id="3">
-      <Name>Vishal-Shekhar</Name>
-      <Skill>82</Skill>
-      <Fee>₹80,00,000</Fee>
-      <Specialty>Pop, Dance</Specialty>
-      <Awards>Filmfare Awards</Awards>
-    </MusicDirector>
-    <MusicDirector id="4">
-      <Name>Ilaiyaraaja</Name>
-      <Skill>95</Skill>
-      <Fee>₹1,50,00,000</Fee>
-      <Specialty>Classical Fusion</Specialty>
-      <Awards>Padma Bhushan, National Awards</Awards>
-    </MusicDirector>
-    <MusicDirector id="5">
-      <Name>Amit Trivedi</Name>
-      <Skill>88</Skill>
-      <Fee>₹75,00,000</Fee>
-      <Specialty>Indie, Contemporary</Specialty>
-      <Awards>National Film Awards</Awards>
-    </MusicDirector>
-  </MusicDirectors>
+            <!-- Finances Tab -->
+            <div class="tab-content" id="finances-tab">
+                <div class="finances-section">
+                    <h2>Financial Overview</h2>
+                    <div class="finance-grid">
+                        <div class="finance-card income">
+                            <i class="fas fa-arrow-up"></i>
+                            <h3>Total Income</h3>
+                            <p>₹0</p>
+                        </div>
+                        <div class="finance-card expense">
+                            <i class="fas fa-arrow-down"></i>
+                            <h3>Total Expenses</h3>
+                            <p>₹0</p>
+                        </div>
+                        <div class="finance-card profit">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Net Profit</h3>
+                            <p>₹0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
-  <Singers>
-    <Singer id="1">
-      <Name>Arijit Singh</Name>
-      <Popularity>95</Popularity>
-      <Fee>₹15,00,000</Fee>
-      <Specialty>Romantic, Sad</Specialty>
-      <Voice>Male</Voice>
-    </Singer>
-    <Singer id="2">
-      <Name>Shreya Ghoshal</Name>
-      <Popularity>92</Popularity>
-      <Fee>₹12,00,000</Fee>
-      <Specialty>Classical, Romantic</Specialty>
-      <Voice>Female</Voice>
-    </Singer>
-    <Singer id="3">
-      <Name>Rahat Fateh Ali Khan</Name>
-      <Popularity>88</Popularity>
-      <Fee>₹20,00,000</Fee>
-      <Specialty>Sufi, Classical</Specialty>
-      <Voice>Male</Voice>
-    </Singer>
-    <Singer id="4">
-      <Name>Sunidhi Chauhan</Name>
-      <Popularity>85</Popularity>
-      <Fee>₹10,00,000</Fee>
-      <Specialty>Dance, Pop</Specialty>
-      <Voice>Female</Voice>
-    </Singer>
-    <Singer id="5">
-      <Name>Armaan Malik</Name>
-      <Popularity>80</Popularity>
-      <Fee>₹8,00,000</Fee>
-      <Specialty>Pop, Romantic</Specialty>
-      <Voice>Male</Voice>
-    </Singer>
-  </Singers>
-</CelebrityDatabase>
+    <!-- Notification System -->
+    <div class="notification-container" id="notifications"></div>
 
-<!-- Movie Production Pipeline -->
-<ProductionPipeline>
-  <ScriptDevelopment>
-    <Genres>
-      <Genre id="romance" marketAppeal="85" budget="medium">
-        <Name>Romance</Name>
-        <Icon>https://www.flaticon.com/free-icon/love_1077035</Icon>
-        <SuccessFactors>Star Cast, Music, Chemistry</SuccessFactors>
-      </Genre>
-      <Genre id="action" marketAppeal="90" budget="high">
-        <Name>Action</Name>
-        <Icon>https://www.flaticon.com/free-icon/explosion_1055014</Icon>
-        <SuccessFactors>Stunts, VFX, Hero Appeal</SuccessFactors>
-      </Genre>
-      <Genre id="comedy" marketAppeal="80" budget="low">
-        <Name>Comedy</Name>
-        <Icon>https://www.flaticon.com/free-icon/laugh_1077090</Icon>
-        <SuccessFactors>Timing, Script, Cast Chemistry</SuccessFactors>
-      </Genre>
-      <Genre id="drama" marketAppeal="75" budget="medium">
-        <Name>Drama</Name>
-        <Icon>https://www.flaticon.com/free-icon/drama_1077051</Icon>
-        <SuccessFactors>Story, Performance, Direction</SuccessFactors>
-      </Genre>
-      <Genre id="thriller" marketAppeal="78" budget="medium">
-        <Name>Thriller</Name>
-        <Icon>https://www.flaticon.com/free-icon/mystery_1077087</Icon>
-        <SuccessFactors>Plot Twists, Suspense, Pacing</SuccessFactors>
-      </Genre>
-      <Genre id="horror" marketAppeal="65" budget="low">
-        <Name>Horror</Name>
-        <Icon>https://www.flaticon.com/free-icon/ghost_1077052</Icon>
-        <SuccessFactors>Scares, Atmosphere, Sound</SuccessFactors>
-      </Genre>
-      <Genre id="historical" marketAppeal="70" budget="very_high">
-        <Name>Historical</Name>
-        <Icon>https://www.flaticon.com/free-icon/castle_1077039</Icon>
-        <SuccessFactors>Authenticity, Grandeur, Star Power</SuccessFactors>
-      </Genre>
-    </Genres>
+    <!-- Modal for Random Events -->
+    <div class="modal" id="event-modal">
+        <div class="modal-content">
+            <h3 id="event-title"></h3>
+            <p id="event-description"></p>
+            <button class="primary-btn" id="event-ok">OK</button>
+        </div>
+    </div>
 
-    <ScriptQuality>
-      <Poor>1-30</Poor>
-      <Average>31-60</Average>
-      <Good>61-80</Good>
-      <Excellent>81-95</Excellent>
-      <Masterpiece>96-100</Masterpiece>
-    </ScriptQuality>
-
-    <DevelopmentTime>
-      <Rush>30 days</Rush>
-      <Normal>60 days</Normal>
-      <Polish>90 days</Polish>
-      <Perfect>120 days</Perfect>
-    </DevelopmentTime>
-  </ScriptDevelopment>
-
-  <PreProduction>
-    <Tasks>
-      <LocationScouting duration="14" cost="₹5,00,000" />
-      <SetDesign duration="21" cost="₹15,00,000" />
-      <CostumeDesign duration="14" cost="₹8,00,000" />
-      <StoryBoard duration="10" cost="₹3,00,000" />
-      <Rehearsals duration="7" cost="₹2,00,000" />
-    </Tasks>
-  </PreProduction>
-
-  <Production>
-    <ShootingSchedule>
-      <IndoorDays>40-60</IndoorDays>
-      <OutdoorDays>30-50</OutdoorDays>
-      <SongSequences>10-15</SongSequences>
-      <ActionSequences>5-20</ActionSequences>
-    </ShootingSchedule>
-
-    <DailyExpenses>
-      <CrewCost>₹2,00,000</CrewCost>
-      <EquipmentRental>₹1,50,000</EquipmentRental>
-      <LocationCost>₹1,00,000</LocationCost>
-      <FoodAndLodging>₹50,000</FoodAndLodging>
-      <Miscellaneous>₹50,000</Miscellaneous>
-    </DailyExpenses>
-  </Production>
-
-  <PostProduction>
-    <Tasks>
-      <Editing duration="30" cost="₹10,00,000" />
-      <ColorGrading duration="10" cost="₹5,00,000" />
-      <SoundMixing duration="15" cost="₹8,00,000" />
-      <VFX duration="45" cost="₹2,00,00,000" />
-      <MusicRecording duration="20" cost="₹15,00,000" />
-      <DubbingADR duration="10" cost="₹3,00,000" />
-    </Tasks>
-  </PostProduction>
-</ProductionPipeline>
-
-<!-- Marketing & Distribution System -->
-<MarketingSystem>
-  <Strategies>
-    <Strategy id="minimal" cost="₹5,00,00,000" reach="30" effectiveness="40">
-      <Name>Minimal Marketing</Name>
-      <Icon>https://www.flaticon.com/free-icon/low-battery_1077072</Icon>
-      <Components>Basic TV Ads, Social Media</Components>
-    </Strategy>
-    <Strategy id="standard" cost="₹15,00,00,000" reach="60" effectiveness="70">
-      <Name>Standard Marketing</Name>
-      <Icon>https://www.flaticon.com/free-icon/marketing_1077074</Icon>
-      <Components>TV, Radio, Print, Digital, Events</Components>
-    </Strategy>
-    <Strategy id="aggressive" cost="₹30,00,00,000" reach="85" effectiveness="90">
-      <Name>Aggressive Marketing</Name>
-      <Icon>https://www.flaticon.com/free-icon/megaphone_1077076</Icon>
-      <Components>360° Campaign, Celebrity Appearances, International</Components>
-    </Strategy>
-    <Strategy id="premium" cost="₹50,00,00,000" reach="95" effectiveness="95">
-      <Name>Premium Marketing</Name>
-      <Icon>https://www.flaticon.com/free-icon/crown_1077045</Icon>
-      <Components>Global Campaign, Premium Events, Influencer Network</Components>
-    </Strategy>
-  </Strategies>
-
-  <ReleaseTypes>
-    <Release id="limited" screens="500-800" cost="₹2,00,00,000">
-      <Name>Limited Release</Name>
-      <MarketPenetration>25</MarketPenetration>
-    </Release>
-    <Release id="wide" screens="1500-2500" cost="₹5,00,00,000">
-      <Name>Wide Release</Name>
-      <MarketPenetration>60</MarketPenetration>
-    </Release>
-    <Release id="mega" screens="3000-4000" cost="₹10,00,00,000">
-      <Name>Mega Release</Name>
-      <MarketPenetration>85</MarketPenetration>
-    </Release>
-    <Release id="global" screens="4500+" cost="₹15,00,00,000">
-      <Name>Global Release</Name>
-      <MarketPenetration>95</MarketPenetration>
-    </Release>
-  </ReleaseTypes>
-</MarketingSystem>
-
-<!-- Box Office Calculation System -->
-<BoxOfficeSystem>
-  <Factors>
-    <StarPower weight="25" />
-    <ScriptQuality weight="20" />
-    <DirectorReputation weight="15" />
-    <MarketingReach weight="15" />
-    <GenreAppeal weight="10" />
-    <MusicQuality weight="8" />
-    <SeasonalTiming weight="4" />
-    <Competition weight="3" />
-  </Factors>
-
-  <WeeklyCollection>
-    <Week1 percentage="40-50" />
-    <Week2 percentage="25-30" />
-    <Week3 percentage="15-20" />
-    <Week4+ percentage="5-10" />
-  </WeeklyCollection>
-
-  <TheatreDistribution>
-    <Exhibitor share="50" />
-    <Distributor share="25" />
-    <Producer share="25" />
-  </TheatreDistribution>
-
-  <OTTDeals>
-    <Timing>
-      <TheatricalWindow>45-90 days</TheatricalWindow>
-      <Premium>₹20,00,00,000 - ₹1,00,00,00,000</Premium>
-    </Timing>
-  </OTTDeals>
-</BoxOfficeSystem>
-
-<!-- Advanced UI Components -->
-<UIComponents>
-  <Dashboard>
-    <Widgets>
-      <Widget id="cashflow" type="financial">
-        <Title>Cash Flow</Title>
-        <Icon>https://www.flaticon.com/free-icon/money-flow_1077078</Icon>
-        <DisplayType>Real-time Graph</DisplayType>
-      </Widget>
-      <Widget id="projects" type="production">
-        <Title>Active Projects</Title>
-        <Icon>https://www.flaticon.com/free-icon/film-reel_1077055</Icon>
-        <DisplayType>Progress Bars</DisplayType>
-      </Widget>
-      <Widget id="reputation" type="status">
-        <Title>Studio Reputation</Title>
-        <Icon>https://www.flaticon.com/free-icon/star_1077092</Icon>
-        <DisplayType>Rating Stars</DisplayType>
-      </Widget>
-      <Widget id="boxoffice" type="performance">
-        <Title>Box Office Tracker</Title>
-        <Icon>https://www.flaticon.com/free-icon/analytics_1077032</Icon>
-        <DisplayType>Live Counter</DisplayType>
-      </Widget>
-    </Widgets>
-  </Dashboard>
-
-  <AnimationEffects>
-    <CountUp enabled="true" duration="2000ms" />
-    <FadeIn enabled="true" duration="500ms" />
-    <SlideTransitions enabled="true" duration="300ms" />
-    <HoverEffects enabled="true" />
-    <ParallaxScrolling enabled="true" />
-    <ParticleEffects enabled="true" theme="golden_sparkles" />
-  </AnimationEffects>
-
-  <SoundEffects>
-    <UIClick>cash_register.wav</UIClick>
-    <Success>applause.wav</Success>
-    <Failure>dramatic_fail.wav</Failure>
-    <BoxOfficeHit>celebration.wav</BoxOfficeHit>
-    <BackgroundMusic>bollywood_instrumental.mp3</BackgroundMusic>
-  </SoundEffects>
-</UIComponents>
-
-<!-- Random Events System -->
-<RandomEvents>
-  <Event id="controversy" probability="15" impact="negative">
-    <Title>Celebrity Controversy</Title>
-    <Description>Your lead actor is involved in a public scandal</Description>
-    <Effects>
-      <BoxOfficeImpact>-20%</BoxOfficeImpact>
-      <ReputationImpact>-15</ReputationImpact>
-      <MarketingCostIncrease>+30%</MarketingCostIncrease>
-    </Effects>
-  </Event>
-  
-  <Event id="award_win" probability="8" impact="positive">
-    <Title>Unexpected Award Win</Title>
-    <Description>Your movie wins a prestigious award</Description>
-    <Effects>
-      <BoxOfficeBoost>+25%</BoxOfficeBoost>
-      <ReputationIncrease>+20</ReputationIncrease>
-      <NextProjectInterest>+40%</NextProjectInterest>
-    </Effects>
-  </Event>
-
-  <Event id="piracy" probability="20" impact="negative">
-    <Title>Movie Leaked Online</Title>
-    <Description>Your movie gets leaked before release</Description>
-    <Effects>
-      <BoxOfficeImpact>-15%</BoxOfficeImpact>
-      <OTTDealImpact>-10%</OTTDealImpact>
-    </Effects>
-  </Event>
-
-  <Event id="hit_song" probability="12" impact="positive">
-    <Title>Viral Song Hit</Title>
-    <Description>One of your movie songs becomes a viral sensation</Description>
-    <Effects>
-      <MarketingBoost>+50%</MarketingBoost>
-      <AudienceInterest>+30%</AudienceInterest>
-    </Effects>
-  </Event>
-</RandomEvents>
-
-<!-- Studio Upgrade System -->
-<StudioUpgrades>
-  <Upgrade id="better_facilities" cost="₹2,00,00,000" level="2">
-    <Name>Enhanced Studio Facilities</Name>
-    <Icon>https://www.flaticon.com/free-icon/studio_1077094</Icon>
-    <Benefits>
-      <ProductionSpeedIncrease>15%</ProductionSpeedIncrease>
-      <QualityBonus>+5</QualityBonus>
-    </Benefits>
-  </Upgrade>
-
-  <Upgrade id="star_contracts" cost="₹5,00,00,000" level="3">
-    <Name>Exclusive Star Contracts</Name>
-    <Icon>https://www.flaticon.com/free-icon/contract_1077043</Icon>
-    <Benefits>
-      <StarDiscounts>20%</StarDiscounts>
-      <PriorityBooking>true</PriorityBooking>
-    </Benefits>
-  </Upgrade>
-
-  <Upgrade id="distribution_network" cost="₹10,00,00,000" level="4">
-    <Name>Own Distribution Network</Name>
-    <Icon>https://www.flaticon.com/free-icon/network_1077080</Icon>
-    <Benefits>
-      <DistributionSavings>25%</DistributionSavings>
-      <BoxOfficeShare>+10%</BoxOfficeShare>
-    </Benefits>
-  </Upgrade>
-
-  <Upgrade id="vfx_studio" cost="₹15,00,00,000" level="5">
-    <Name>In-House VFX Studio</Name>
-    <Icon>https://www.flaticon.com/free-icon/special-effects_1077091</Icon>
-    <Benefits>
-      <VFXCostReduction>40%</VFXCostReduction>
-      <QualityBonus>+10</QualityBonus>
-    </Benefits>
-  </Upgrade>
-</StudioUpgrades>
-
-<!-- Tutorial System -->
-<Tutorial>
-  <Step id="1">
-    <Title>Welcome to Movie Production Simulator!</Title>
-    <Description>Create your character and name your production house</Description>
-    <Highlight>profile_tab</Highlight>
-    <Action>character_creation</Action>
-  </Step>
-  
-  <Step id="2">
-    <Title>Your First Script</Title>
-    <Description>Every great movie starts with a great script. Let's create one!</Description>
-    <Highlight>scripts_tab</Highlight>
-    <Action>script_creation</Action>
-  </Step>
-  
-  <Step id="3">
-    <Title>Casting Your Stars</Title>
-    <Description>Time to hire actors, directors, and crew for your movie</Description>
-    <Highlight>casting_tab</Highlight>
-    <Action>cast_selection</Action>
-  </Step>
-  
-  <Step id="4">
-    <Title>Lights, Camera, Action!</Title>
-    <Description>Monitor your movie production and handle any issues that arise</Description>
-    <Highlight>production_tab</Highlight>
-    <Action>production_monitoring</Action>
-  </Step>
-  
-  <Step id="5">
-    <Title>Marketing Magic</Title>
-    <Description>Create buzz for your movie with the right marketing strategy</Description>
-    <Highlight>marketing_tab</Highlight>
-    <Action>marketing_setup</Action>
-  </Step>
-  
-  <Step id="6">
-    <Title>Box Office Glory</Title>
-    <Description>Watch your movie's performance and collect your earnings</Description>
-    <Highlight>boxoffice_tab</Highlight>
-    <Action>results_viewing</Action>
-  </Step>
-</Tutorial>
-
-<!-- Achievement System -->
-<Achievements>
-  <Achievement id="first_hit">
-    <Name>First Blockbuster</Name>
-    <Description>Create your first movie that earns ₹100 crores+</Description>
-    <Icon>https://www.flaticon.com/free-icon/trophy_1077095</Icon>
-    <Reward>₹50,00,000 bonus</Reward>
-  </Achievement>
-  
-  <Achievement id="star_maker">
-    <Name>Star Maker</Name>
-    <Description>Launch a newcomer who becomes a superstar</Description>
-    <Icon>https://www.flaticon.com/free-icon/shooting-star_1077089</Icon>
-    <Reward>Permanent casting discount</Reward>
-  </Achievement>
-  
-  <Achievement id="multi_genre">
-    <Name>Genre Master</Name>
-    <Description>Create successful movies in 5 different genres</Description>
-    <Icon>https://www.flaticon.com/free-icon/diversity_1077047</Icon>
-    <Reward>Script quality bonus</Reward>
-  </Achievement>
-  
-  <Achievement id="franchise_king">
-    <Name>Franchise King</Name>
-    <Description>Create a successful movie franchise (3+ movies)</Description>
-    <Icon>https://www.flaticon.com/free-icon/chain_1077038</Icon>
-    <Reward>Sequel production discount</Reward>
-  </Achievement>
-</Achievements>
-
-</MovieProductionSimulator>
+    <script src="script.js"></script>
+</body>
+</html>
