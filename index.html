@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Production Simulator</title>
+    <title>Movie Production Simulator - Enhanced Edition</title>
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmZkNzAwIiBkPSJNNTEyIDI1NmMwIDE0MS4zNy0xMTQuNjMgMjU2LTI1NiAyNTZTMCAzOTcuMzcgMCAyNTYgMTE0LjYzIDAgMjU2IDBzMjU2IDExNC42MyAyNTYgMjU2ek0yNTYgMjU2bC0xMDcuNy0xMjhIMTI4djI1NmgxMzUuN0wyNTYgMjU2em0tMTA3LjcgMzJIMTI4djEyOGgxMzUuN0w0OC4zIDI4OHptMjE1LjQgMEg0ODAuM0wyNTYgNDE2IDQ4LjMgMjg4aDEzNS43TDQwMCAxNjBoNjR2MjU2aDEzNS43TDI1NiAyNTZ6Ii8+PC9zdmc+">
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -13,10 +13,11 @@
     <div class="loading-screen" id="loading-screen">
         <div class="loading-animation">
             <i class="fas fa-film spinning"></i>
-            <h2>Loading Movie Production Simulator...</h2>
+            <h2>Loading Bollywood Production Simulator...</h2>
             <div class="loading-bar">
                 <div class="loading-progress"></div>
             </div>
+            <p class="loading-text">Building your cinema empire...</p>
         </div>
     </div>
 
@@ -26,44 +27,44 @@
             <div class="start-modal">
                 <div class="start-header">
                     <i class="fas fa-film"></i>
-                    <h1>Movie Production Simulator</h1>
-                    <p>Create your Bollywood empire!</p>
+                    <h1>Bollywood Production Simulator</h1>
+                    <p>Create Your Cinema Legacy!</p>
                 </div>
                 
                 <div class="start-options">
                     <div class="money-selection">
-                        <h3>Starting Budget</h3>
+                        <h3>Choose Your Starting Capital</h3>
                         <div class="budget-options">
                             <label class="budget-option">
-                                <input type="radio" name="starting-budget" value="5000000" checked>
-                                <div class="option-card">
-                                    <h4>Beginner</h4>
-                                    <p>₹50,00,000</p>
-                                    <small>Easy Mode</small>
+                                <input type="radio" name="starting-budget" value="10000000">
+                                <div class="option-card beginner">
+                                    <h4>📱 YouTuber</h4>
+                                    <p>₹1,00,00,000</p>
+                                    <small>Start Small</small>
                                 </div>
                             </label>
                             <label class="budget-option">
-                                <input type="radio" name="starting-budget" value="10000000">
-                                <div class="option-card">
-                                    <h4>Producer</h4>
-                                    <p>₹1,00,00,000</p>
+                                <input type="radio" name="starting-budget" value="50000000" checked>
+                                <div class="option-card normal">
+                                    <h4>🎬 Producer</h4>
+                                    <p>₹5,00,00,000</p>
                                     <small>Normal Mode</small>
                                 </div>
                             </label>
                             <label class="budget-option">
-                                <input type="radio" name="starting-budget" value="25000000">
-                                <div class="option-card">
-                                    <h4>Mogul</h4>
-                                    <p>₹2,50,00,000</p>
-                                    <small>Hard Mode</small>
+                                <input type="radio" name="starting-budget" value="200000000">
+                                <div class="option-card hard">
+                                    <h4>🏢 Studio Head</h4>
+                                    <p>₹20,00,00,000</p>
+                                    <small>Big Budget</small>
                                 </div>
                             </label>
                             <label class="budget-option">
-                                <input type="radio" name="starting-budget" value="100000000">
-                                <div class="option-card">
-                                    <h4>Tycoon</h4>
-                                    <p>₹10,00,00,000</p>
-                                    <small>Expert Mode</small>
+                                <input type="radio" name="starting-budget" value="1000000000">
+                                <div class="option-card expert">
+                                    <h4>👑 Media Mogul</h4>
+                                    <p>₹100,00,00,000</p>
+                                    <small>Unlimited Power</small>
                                 </div>
                             </label>
                         </div>
@@ -83,12 +84,30 @@
             </div>
         </div>
 
-        <!-- Header -->
+        <!-- Header with Time Controls -->
         <header class="game-header">
             <div class="logo">
                 <i class="fas fa-film"></i>
-                <h1>Movie Production Simulator</h1>
+                <h1>Bollywood Simulator</h1>
             </div>
+            
+            <div class="time-controls">
+                <div class="current-date">
+                    <i class="fas fa-calendar"></i>
+                    <span id="current-date">Week 1, Year 1</span>
+                </div>
+                <div class="time-buttons">
+                    <button class="time-btn" id="advance-week">
+                        <i class="fas fa-forward"></i>
+                        +1 Week
+                    </button>
+                    <button class="time-btn" id="advance-month">
+                        <i class="fas fa-fast-forward"></i>
+                        +1 Month
+                    </button>
+                </div>
+            </div>
+            
             <div class="player-stats">
                 <div class="stat-item money-stat" id="money-container">
                     <i class="fas fa-rupee-sign"></i>
@@ -102,10 +121,6 @@
                     <i class="fas fa-building"></i>
                     <span id="studio-level">Level 1</span>
                 </div>
-                <div class="stat-item">
-                    <i class="fas fa-trophy"></i>
-                    <span id="awards">0</span>
-                </div>
             </div>
         </header>
 
@@ -116,7 +131,7 @@
                 <span>Profile</span>
             </button>
             <button class="tab-btn" data-tab="studio">
-                <i class="fas fa-video"></i>
+                <i class="fas fa-building"></i>
                 <span>Studio</span>
             </button>
             <button class="tab-btn" data-tab="scripts">
@@ -128,7 +143,7 @@
                 <span>Casting</span>
             </button>
             <button class="tab-btn" data-tab="production">
-                <i class="fas fa-camera"></i>
+                <i class="fas fa-video"></i>
                 <span>Production</span>
             </button>
             <button class="tab-btn" data-tab="marketing">
@@ -150,436 +165,628 @@
             <!-- Profile Tab -->
             <div class="tab-content active" id="profile-tab">
                 <div class="profile-section">
-                    <h2>Create Your Character & Studio</h2>
+                    <h2>Create Your Producer Profile</h2>
                     <div class="character-creation">
                         <div class="avatar-selection">
-                            <h3>Choose Your Avatar</h3>
+                            <h3>Choose Your Avatar (Indian Faces)</h3>
                             <div class="avatar-grid" id="avatar-grid">
-                                <!-- Generated dynamically -->
+                                <!-- Real Indian faces generated dynamically -->
                             </div>
                         </div>
                         
                         <div class="name-input">
-                            <h3>Character Name</h3>
-                            <input type="text" id="character-name" placeholder="Enter your name" maxlength="25">
+                            <h3>Your Name</h3>
+                            <input type="text" id="character-name" placeholder="Enter your producer name" maxlength="25">
                         </div>
                         
                         <div class="studio-section">
-                            <h3>Studio Name</h3>
-                            <input type="text" id="studio-name" placeholder="Enter studio name" maxlength="30">
-                            <div class="suggestions">
-                                <button class="suggestion-btn">Bollywood Dreams Productions</button>
-                                <button class="suggestion-btn">Mumbai Masala Studios</button>
-                                <button class="suggestion-btn">Golden Gate Entertainment</button>
-                                <button class="suggestion-btn">Royal Cinema Works</button>
-                                <button class="suggestion-btn">Starlight Productions</button>
-                                <button class="suggestion-btn">Desi Film Factory</button>
+                            <h3>Production House Name</h3>
+                            <input type="text" id="studio-name" placeholder="Enter production house name" maxlength="40">
+                            <div class="premium-suggestions">
+                                <h4>Premium Suggestions:</h4>
+                                <div class="suggestions">
+                                    <button class="suggestion-btn">Royal Cinemas Productions</button>
+                                    <button class="suggestion-btn">Majestic Entertainment Studios</button>
+                                    <button class="suggestion-btn">Paramount Bollywood Films</button>
+                                    <button class="suggestion-btn">Golden Era Productions</button>
+                                    <button class="suggestion-btn">Emerald Screen Entertainment</button>
+                                    <button class="suggestion-btn">Diamond Pictures International</button>
+                                    <button class="suggestion-btn">Platinum Film Corporation</button>
+                                    <button class="suggestion-btn">Crown Jewel Studios</button>
+                                    <button class="suggestion-btn">Imperial Cinema Works</button>
+                                    <button class="suggestion-btn">Grandeur Motion Pictures</button>
+                                </div>
                             </div>
                         </div>
                         
                         <div class="logo-selection">
-                            <h3>Studio Logo</h3>
-                            <div class="logo-options">
-                                <div class="logo-grid" id="logo-grid">
-                                    <!-- Generated dynamically -->
-                                </div>
-                                <button class="design-logo-btn" id="design-logo-btn">
-                                    <i class="fas fa-paint-brush"></i>
-                                    Design Custom Logo
-                                </button>
+                            <h3>Production House Logo</h3>
+                            <div class="real-logo-grid" id="real-logo-grid">
+                                <!-- Real production house style logos -->
                             </div>
+                            <button class="design-logo-btn" id="design-logo-btn">
+                                <i class="fas fa-paint-brush"></i>
+                                Design Custom Logo
+                            </button>
                         </div>
                         
                         <button class="primary-btn" id="start-game">
                             <i class="fas fa-rocket"></i>
-                            Start Your Journey
+                            Launch Your Studio
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Studio Tab -->
+            <!-- Studio Tab - Enhanced with Office Management -->
             <div class="tab-content" id="studio-tab">
                 <div class="studio-overview">
                     <div class="studio-header">
                         <div class="studio-info">
-                            <img id="studio-logo-display" src="" alt="Studio Logo" class="studio-logo-img">
-                            <div>
+                            <div class="studio-logo-container">
+                                <img id="studio-logo-display" src="" alt="Studio Logo" class="studio-logo-img">
+                            </div>
+                            <div class="studio-details">
                                 <h2 id="studio-name-display">Your Studio</h2>
-                                <p id="studio-tagline">Building Dreams, Creating Magic</p>
+                                <p id="studio-tagline">"Creating Cinematic Excellence"</p>
+                                <div class="studio-established">
+                                    <span>Established: <strong id="studio-year">2025</strong></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="studio-stats">
-                        <div class="stat-card">
-                            <i class="fas fa-building"></i>
-                            <h3>Studio Level</h3>
-                            <p id="current-level">1</p>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-users"></i>
-                            <h3>Staff Count</h3>
-                            <p id="staff-count">5</p>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-trophy"></i>
-                            <h3>Awards Won</h3>
-                            <p id="awards-count">0</p>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-film"></i>
-                            <h3>Movies Made</h3>
-                            <p id="movies-count">0</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scripts Tab -->
-            <div class="tab-content" id="scripts-tab">
-                <div class="scripts-section">
-                    <h2>Script Development</h2>
-                    <div class="script-creation">
-                        <div class="genre-selection">
-                            <h3>Choose Genre</h3>
-                            <div class="genre-grid" id="genre-grid">
-                                <!-- Generated dynamically with 15+ genres -->
-                            </div>
-                        </div>
-                        
-                        <div class="script-options">
-                            <h3>Development Options</h3>
-                            <div class="development-grid">
-                                <div class="dev-option">
-                                    <h4>Script Quality</h4>
-                                    <div class="time-options">
-                                        <label><input type="radio" name="dev-time" value="30"> Rush (30 days) - Basic Quality</label>
-                                        <label><input type="radio" name="dev-time" value="60" checked> Normal (60 days) - Good Quality</label>
-                                        <label><input type="radio" name="dev-time" value="90"> Polish (90 days) - Excellent Quality</label>
-                                        <label><input type="radio" name="dev-time" value="120"> Perfect (120 days) - Masterpiece Quality</label>
+                    <div class="office-management">
+                        <h3>🏢 Office Staff Management</h3>
+                        <div class="staff-categories">
+                            <div class="staff-category">
+                                <h4>📝 Administrative Staff</h4>
+                                <div class="staff-grid">
+                                    <div class="staff-card">
+                                        <i class="fas fa-user-tie"></i>
+                                        <h5>Production Manager</h5>
+                                        <p>Salary: ₹80,000/month</p>
+                                        <p>Hired: <span id="production-managers">0</span>/3</p>
+                                        <button class="hire-staff-btn" data-role="production-manager" data-salary="80000">Hire</button>
                                     </div>
-                                </div>
-                                
-                                <div class="dev-option">
-                                    <h4>Budget Range</h4>
-                                    <div class="budget-range">
-                                        <label><input type="radio" name="budget-range" value="low"> Low Budget (₹5-15 Cr)</label>
-                                        <label><input type="radio" name="budget-range" value="medium" checked> Medium Budget (₹15-50 Cr)</label>
-                                        <label><input type="radio" name="budget-range" value="high"> High Budget (₹50-150 Cr)</label>
-                                        <label><input type="radio" name="budget-range" value="blockbuster"> Blockbuster (₹150+ Cr)</label>
+                                    <div class="staff-card">
+                                        <i class="fas fa-calculator"></i>
+                                        <h5>Accountant</h5>
+                                        <p>Salary: ₹60,000/month</p>
+                                        <p>Hired: <span id="accountants">0</span>/2</p>
+                                        <button class="hire-staff-btn" data-role="accountant" data-salary="60000">Hire</button>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <button class="primary-btn" id="create-script">
-                            <i class="fas fa-pen"></i>
-                            Create Script
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Casting Tab -->
-            <div class="tab-content" id="casting-tab">
-                <div class="casting-section">
-                    <h2>Cast & Crew Selection</h2>
-                    <div class="cast-categories">
-                        <div class="category-tabs">
-                            <button class="cat-tab active" data-category="actors">
-                                <i class="fas fa-user-friends"></i>
-                                Actors (100+)
-                            </button>
-                            <button class="cat-tab" data-category="directors">
-                                <i class="fas fa-video"></i>
-                                Directors (50+)
-                            </button>
-                            <button class="cat-tab" data-category="producers">
-                                <i class="fas fa-briefcase"></i>
-                                Producers (30+)
-                            </button>
-                            <button class="cat-tab" data-category="music">
-                                <i class="fas fa-music"></i>
-                                Music Directors (40+)
-                            </button>
-                            <button class="cat-tab" data-category="singers">
-                                <i class="fas fa-microphone"></i>
-                                Singers (60+)
-                            </button>
-                            <button class="cat-tab" data-category="distributors">
-                                <i class="fas fa-truck"></i>
-                                Distributors (25+)
-                            </button>
-                        </div>
-                        
-                        <div class="cast-filters">
-                            <input type="text" id="search-cast" placeholder="Search celebrities...">
-                            <select id="filter-budget">
-                                <option value="">All Budget Ranges</option>
-                                <option value="low">Low Budget (Under ₹5 Cr)</option>
-                                <option value="medium">Medium Budget (₹5-20 Cr)</option>
-                                <option value="high">High Budget (₹20+ Cr)</option>
-                            </select>
-                            <select id="filter-genre">
-                                <option value="">All Genres</option>
-                                <option value="action">Action Specialists</option>
-                                <option value="comedy">Comedy Experts</option>
-                                <option value="drama">Drama Masters</option>
-                                <option value="romance">Romance Icons</option>
-                            </select>
-                        </div>
-                        
-                        <div class="cast-grid" id="cast-grid">
-                            <!-- Populated dynamically with 100+ celebrities -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Production Tab -->
-            <div class="tab-content" id="production-tab">
-                <div class="production-section">
-                    <h2>Movie Production</h2>
-                    <div class="production-pipeline">
-                        <div class="phase-tracker">
-                            <div class="phase active" data-phase="planning">
-                                <i class="fas fa-clipboard-list"></i>
-                                <span>Planning</span>
-                                <div class="phase-progress">0%</div>
-                            </div>
-                            <div class="phase" data-phase="preproduction">
-                                <i class="fas fa-cogs"></i>
-                                <span>Pre-Production</span>
-                                <div class="phase-progress">0%</div>
-                            </div>
-                            <div class="phase" data-phase="shooting">
-                                <i class="fas fa-video"></i>
-                                <span>Shooting</span>
-                                <div class="phase-progress">0%</div>
-                            </div>
-                            <div class="phase" data-phase="postproduction">
-                                <i class="fas fa-cut"></i>
-                                <span>Post-Production</span>
-                                <div class="phase-progress">0%</div>
-                            </div>
-                            <div class="phase" data-phase="marketing">
-                                <i class="fas fa-bullhorn"></i>
-                                <span>Marketing</span>
-                                <div class="phase-progress">0%</div>
-                            </div>
-                            <div class="phase" data-phase="release">
-                                <i class="fas fa-rocket"></i>
-                                <span>Release</span>
-                                <div class="phase-progress">0%</div>
-                            </div>
-                        </div>
-                        
-                        <div class="production-details">
-                            <div class="current-movie-info">
-                                <h3>Current Project</h3>
-                                <div id="movie-details">
-                                    <p>No active project</p>
+                                    <div class="staff-card">
+                                        <i class="fas fa-bullhorn"></i>
+                                        <h5>PR Manager</h5>
+                                        <p>Salary: ₹70,000/month</p>
+                                        <p>Hired: <span id="pr-managers">0</span>/2</p>
+                                        <button class="hire-staff-btn" data-role="pr-manager" data-salary="70000">Hire</button>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="production-actions">
-                                <button class="action-btn" id="speed-up-production">
-                                    <i class="fas fa-fast-forward"></i>
-                                    Speed Up (₹50,00,000)
-                                </button>
-                                <button class="action-btn" id="halt-production">
-                                    <i class="fas fa-pause"></i>
-                                    Halt Production
-                                </button>
+                            <div class="staff-category">
+                                <h4>🎬 Technical Staff</h4>
+                                <div class="staff-grid">
+                                    <div class="staff-card">
+                                        <i class="fas fa-video"></i>
+                                        <h5>Camera Operator</h5>
+                                        <p>Salary: ₹50,000/month</p>
+                                        <p>Hired: <span id="camera-operators">0</span>/5</p>
+                                        <button class="hire-staff-btn" data-role="camera-operator" data-salary="50000">Hire</button>
+                                    </div>
+                                    <div class="staff-card">
+                                        <i class="fas fa-volume-up"></i>
+                                        <h5>Sound Engineer</h5>
+                                        <p>Salary: ₹45,000/month</p>
+                                        <p>Hired: <span id="sound-engineers">0</span>/3</p>
+                                        <button class="hire-staff-btn" data-role="sound-engineer" data-salary="45000">Hire</button>
+                                    </div>
+                                    <div class="staff-card">
+                                        <i class="fas fa-cut"></i>
+                                        <h5>Video Editor</h5>
+                                        <p>Salary: ₹55,000/month</p>
+                                        <p>Hired: <span id="video-editors">0</span>/4</p>
+                                        <button class="hire-staff-btn" data-role="video-editor" data-salary="55000">Hire</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="monthly-expenses">
+                            <h4>📊 Monthly Office Expenses</h4>
+                            <div class="expense-breakdown">
+                                <div class="expense-item">
+                                    <span>Staff Salaries:</span>
+                                    <span id="total-salaries">₹0</span>
+                                </div>
+                                <div class="expense-item">
+                                    <span>Office Rent:</span>
+                                    <span>₹2,00,000</span>
+                                </div>
+                                <div class="expense-item">
+                                    <span>Utilities & Internet:</span>
+                                    <span>₹50,000</span>
+                                </div>
+                                <div class="expense-item total">
+                                    <span>Total Monthly Cost:</span>
+                                    <span id="total-monthly-cost">₹2,50,000</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Marketing Tab -->
-            <div class="tab-content" id="marketing-tab">
-                <div class="marketing-section">
-                    <h2>Marketing & Distribution</h2>
-                    <div class="marketing-strategies">
-                        <div class="strategy-grid">
-                            <div class="strategy-card" data-strategy="viral">
-                                <i class="fas fa-share-alt"></i>
-                                <h4>Viral Marketing</h4>
-                                <p>Cost: ₹25,00,000</p>
-                                <p>Reach: 40% | Social Media Focus</p>
-                                <button class="strategy-btn">Select</button>
+            <!-- Enhanced Scripts Tab with Movie Naming -->
+            <div class="tab-content" id="scripts-tab">
+                <div class="scripts-section">
+                    <h2>🎬 Script Development</h2>
+                    
+                    <div class="script-creation-process">
+                        <div class="step-indicator">
+                            <div class="step active" data-step="1">
+                                <span class="step-number">1</span>
+                                <span class="step-title">Movie Details</span>
                             </div>
-                            <div class="strategy-card" data-strategy="minimal">
-                                <i class="fas fa-battery-quarter"></i>
-                                <h4>Minimal Marketing</h4>
-                                <p>Cost: ₹75,00,000</p>
-                                <p>Reach: 30% | Basic Promotion</p>
-                                <button class="strategy-btn">Select</button>
+                            <div class="step" data-step="2">
+                                <span class="step-number">2</span>
+                                <span class="step-title">Genre & Budget</span>
                             </div>
-                            <div class="strategy-card recommended" data-strategy="standard">
-                                <i class="fas fa-bullhorn"></i>
-                                <h4>Standard Marketing</h4>
-                                <p>Cost: ₹2,50,00,000</p>
-                                <p>Reach: 60% | TV + Digital</p>
-                                <button class="strategy-btn">Select</button>
+                            <div class="step" data-step="3">
+                                <span class="step-number">3</span>
+                                <span class="step-title">Script Quality</span>
                             </div>
-                            <div class="strategy-card" data-strategy="aggressive">
-                                <i class="fas fa-rocket"></i>
-                                <h4>Aggressive Marketing</h4>
-                                <p>Cost: ₹5,00,00,000</p>
-                                <p>Reach: 85% | 360° Campaign</p>
-                                <button class="strategy-btn">Select</button>
+                        </div>
+                        
+                        <div class="script-step active" id="step-1">
+                            <h3>Step 1: Movie Details</h3>
+                            <div class="movie-details-form">
+                                <div class="form-group">
+                                    <label for="movie-title">🎭 Movie Title</label>
+                                    <input type="text" id="movie-title" placeholder="Enter your movie title" maxlength="50">
+                                    <div class="title-suggestions">
+                                        <button class="title-suggestion" data-genre="action">Tiger Zinda Hai 2</button>
+                                        <button class="title-suggestion" data-genre="romance">Kabir Singh Returns</button>
+                                        <button class="title-suggestion" data-genre="comedy">Housefull 5</button>
+                                        <button class="title-suggestion" data-genre="drama">83: The Sequel</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="movie-characters">👥 Number of Main Characters</label>
+                                    <select id="movie-characters">
+                                        <option value="1">1 Character (Solo Hero)</option>
+                                        <option value="2" selected>2 Characters (Hero + Heroine)</option>
+                                        <option value="3">3 Characters (Love Triangle)</option>
+                                        <option value="4">4 Characters (Ensemble)</option>
+                                        <option value="5">5+ Characters (Multi-starrer)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="movie-format">🎥 Cinema Format</label>
+                                    <div class="format-options">
+                                        <label class="format-option">
+                                            <input type="radio" name="format" value="2d" checked>
+                                            <div class="format-card">
+                                                <h4>2D Standard</h4>
+                                                <p>Cost: +₹0</p>
+                                                <small>Regular theaters</small>
+                                            </div>
+                                        </label>
+                                        <label class="format-option">
+                                            <input type="radio" name="format" value="3d">
+                                            <div class="format-card">
+                                                <h4>3D Experience</h4>
+                                                <p>Cost: +₹2 Cr</p>
+                                                <small>Enhanced visuals</small>
+                                            </div>
+                                        </label>
+                                        <label class="format-option">
+                                            <input type="radio" name="format" value="imax">
+                                            <div class="format-card">
+                                                <h4>IMAX Premium</h4>
+                                                <p>Cost: +₹5 Cr</p>
+                                                <small>Large screen format</small>
+                                            </div>
+                                        </label>
+                                        <label class="format-option">
+                                            <input type="radio" name="format" value="4dx">
+                                            <div class="format-card">
+                                                <h4>4DX Motion</h4>
+                                                <p>Cost: +₹8 Cr</p>
+                                                <small>Motion effects</small>
+                                            </div>
+                                        </label>
+                                        <label class="format-option">
+                                            <input type="radio" name="format" value="5d">
+                                            <div class="format-card">
+                                                <h4>5D Ultimate</h4>
+                                                <p>Cost: +₹12 Cr</p>
+                                                <small>Full sensory experience</small>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <button class="next-step-btn" onclick="nextStep(2)">Next Step →</button>
                             </div>
-                            <div class="strategy-card premium" data-strategy="premium">
-                                <i class="fas fa-crown"></i>
-                                <h4>Premium Marketing</h4>
-                                <p>Cost: ₹10,00,00,000</p>
-                                <p>Reach: 95% | Global Campaign</p>
-                                <button class="strategy-btn">Select</button>
+                        </div>
+                        
+                        <div class="script-step" id="step-2">
+                            <h3>Step 2: Genre & Budget Planning</h3>
+                            <div class="enhanced-genre-grid" id="enhanced-genre-grid">
+                                <!-- Enhanced genres with better visuals -->
                             </div>
-                            <div class="strategy-card" data-strategy="international">
-                                <i class="fas fa-globe"></i>
-                                <h4>International Marketing</h4>
-                                <p>Cost: ₹15,00,00,000</p>
-                                <p>Reach: 100% | Worldwide Release</p>
-                                <button class="strategy-btn">Select</button>
+                            <button class="next-step-btn" onclick="nextStep(3)">Next Step →</button>
+                        </div>
+                        
+                        <div class="script-step" id="step-3">
+                            <h3>Step 3: Script Development Timeline</h3>
+                            <div class="timeline-options">
+                                <div class="timeline-card">
+                                    <h4>⚡ Rush Script</h4>
+                                    <p><strong>Duration:</strong> 2-3 weeks</p>
+                                    <p><strong>Quality:</strong> 40-60%</p>
+                                    <p><strong>Cost:</strong> ₹15 Lakhs</p>
+                                    <input type="radio" name="script-timeline" value="rush">
+                                </div>
+                                <div class="timeline-card recommended">
+                                    <h4>📝 Standard Script</h4>
+                                    <p><strong>Duration:</strong> 4-6 weeks</p>
+                                    <p><strong>Quality:</strong> 60-80%</p>
+                                    <p><strong>Cost:</strong> ₹30 Lakhs</p>
+                                    <input type="radio" name="script-timeline" value="standard" checked>
+                                </div>
+                                <div class="timeline-card">
+                                    <h4>✨ Premium Script</h4>
+                                    <p><strong>Duration:</strong> 6-8 weeks</p>
+                                    <p><strong>Quality:</strong> 80-95%</p>
+                                    <p><strong>Cost:</strong> ₹50 Lakhs</p>
+                                    <input type="radio" name="script-timeline" value="premium">
+                                </div>
+                            </div>
+                            <button class="primary-btn" id="create-script-final">
+                                <i class="fas fa-pen"></i>
+                                Start Script Development
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Active Scripts Progress -->
+                    <div class="active-scripts" id="active-scripts" style="display: none;">
+                        <h3>📋 Scripts in Development</h3>
+                        <div id="script-progress-list">
+                            <!-- Dynamic script progress cards -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Casting Tab with Real Celebrity Photos -->
+            <div class="tab-content" id="casting-tab">
+                <div class="casting-section">
+                    <h2>⭐ Cast & Crew Selection</h2>
+                    
+                    <div class="casting-requirements" id="casting-requirements" style="display: none;">
+                        <h3>📋 Current Movie Requirements</h3>
+                        <div class="requirements-grid" id="requirements-grid">
+                            <!-- Dynamic requirements based on character count -->
+                        </div>
+                    </div>
+                    
+                    <div class="celebrity-categories">
+                        <div class="category-tabs">
+                            <button class="cat-tab active" data-category="actors">
+                                <i class="fas fa-user-friends"></i>
+                                Actors & Actresses
+                            </button>
+                            <button class="cat-tab" data-category="directors">
+                                <i class="fas fa-video"></i>
+                                Directors
+                            </button>
+                            <button class="cat-tab" data-category="music">
+                                <i class="fas fa-music"></i>
+                                Music Directors
+                            </button>
+                            <button class="cat-tab" data-category="singers">
+                                <i class="fas fa-microphone"></i>
+                                Playback Singers
+                            </button>
+                        </div>
+                        
+                        <div class="celebrity-filters">
+                            <input type="text" id="search-celebrity" placeholder="🔍 Search celebrities...">
+                            <select id="filter-budget-range">
+                                <option value="">All Price Ranges</option>
+                                <option value="budget">Budget Friendly (Under ₹5 Cr)</option>
+                                <option value="mid">Mid Range (₹5-20 Cr)</option>
+                                <option value="premium">Premium (₹20+ Cr)</option>
+                            </select>
+                            <select id="filter-popularity">
+                                <option value="">All Popularity</option>
+                                <option value="superstar">Superstars (90+)</option>
+                                <option value="established">Established (70-89)</option>
+                                <option value="rising">Rising Stars (50-69)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="celebrity-showcase" id="celebrity-showcase">
+                            <!-- Real celebrity cards with actual photos -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Production Tab with Week-by-Week Progress -->
+            <div class="tab-content" id="production-tab">
+                <div class="production-section">
+                    <h2>🎬 Movie Production Pipeline</h2>
+                    
+                    <div class="production-overview" id="production-overview">
+                        <div class="current-project-card">
+                            <h3>🎭 Current Project Status</h3>
+                            <div id="current-project-info">
+                                <p class="no-project">No active project. Create a script to begin!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="production-timeline" id="production-timeline" style="display: none;">
+                            <h3>📅 Production Schedule</h3>
+                            <div class="timeline-phases">
+                                <div class="phase-item" data-phase="pre-production">
+                                    <div class="phase-icon">🎯</div>
+                                    <div class="phase-info">
+                                        <h4>Pre-Production</h4>
+                                        <p>Planning & Setup</p>
+                                        <div class="phase-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 0%"></div>
+                                            </div>
+                                            <span class="progress-text">0% Complete</span>
+                                        </div>
+                                        <p class="time-remaining">Time: 3-4 weeks</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="phase-item" data-phase="shooting">
+                                    <div class="phase-icon">🎥</div>
+                                    <div class="phase-info">
+                                        <h4>Principal Photography</h4>
+                                        <p>Filming & Recording</p>
+                                        <div class="phase-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 0%"></div>
+                                            </div>
+                                            <span class="progress-text">0% Complete</span>
+                                        </div>
+                                        <p class="time-remaining">Time: 8-12 weeks</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="phase-item" data-phase="post-production">
+                                    <div class="phase-icon">✂️</div>
+                                    <div class="phase-info">
+                                        <h4>Post-Production</h4>
+                                        <p>Editing & VFX</p>
+                                        <div class="phase-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 0%"></div>
+                                            </div>
+                                            <span class="progress-text">0% Complete</span>
+                                        </div>
+                                        <p class="time-remaining">Time: 6-10 weeks</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="phase-item" data-phase="marketing">
+                                    <div class="phase-icon">📢</div>
+                                    <div class="phase-info">
+                                        <h4>Marketing Campaign</h4>
+                                        <p>Promotion & Trailers</p>
+                                        <div class="phase-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 0%"></div>
+                                            </div>
+                                            <span class="progress-text">0% Complete</span>
+                                        </div>
+                                        <p class="time-remaining">Time: 4-6 weeks</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="phase-item" data-phase="release">
+                                    <div class="phase-icon">🚀</div>
+                                    <div class="phase-info">
+                                        <h4>Theatrical Release</h4>
+                                        <p>Box Office Run</p>
+                                        <div class="phase-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 0%"></div>
+                                            </div>
+                                            <span class="progress-text">0% Complete</span>
+                                        </div>
+                                        <p class="time-remaining">Time: 4-8 weeks</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Box Office Tab -->
+            <!-- Enhanced Box Office with Theatre Chains -->
             <div class="tab-content" id="boxoffice-tab">
                 <div class="boxoffice-section">
-                    <h2>Box Office Performance</h2>
-                    <div class="boxoffice-dashboard">
-                        <div class="main-collection">
-                            <h3>Total Collection</h3>
+                    <h2>🎫 Box Office Performance</h2>
+                    
+                    <div class="theatre-chains">
+                        <h3>🏢 Theatre Chain Partners</h3>
+                        <div class="chains-grid">
+                            <div class="chain-card pvr">
+                                <img src="https://via.placeholder.com/80x40/C41E3A/FFFFFF?text=PVR" alt="PVR Cinemas">
+                                <h4>PVR Cinemas</h4>
+                                <p>Screens: 1,200+</p>
+                                <p>Share: 32%</p>
+                            </div>
+                            <div class="chain-card inox">
+                                <img src="https://via.placeholder.com/80x40/1565C0/FFFFFF?text=INOX" alt="INOX">
+                                <h4>INOX Leisure</h4>
+                                <p>Screens: 800+</p>
+                                <p>Share: 28%</p>
+                            </div>
+                            <div class="chain-card cinepolis">
+                                <img src="https://via.placeholder.com/80x40/FF6F00/FFFFFF?text=CPX" alt="Cinepolis">
+                                <h4>Cinepolis India</h4>
+                                <p>Screens: 500+</p>
+                                <p>Share: 18%</p>
+                            </div>
+                            <div class="chain-card others">
+                                <img src="https://via.placeholder.com/80x40/424242/FFFFFF?text=OTHER" alt="Others">
+                                <h4>Independent</h4>
+                                <p>Screens: 2,000+</p>
+                                <p>Share: 22%</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="collection-dashboard">
+                        <div class="main-collection-card">
+                            <h3>💰 Total Box Office Collection</h3>
                             <div class="collection-display">
                                 <span class="currency">₹</span>
                                 <span class="amount" id="total-collection">0</span>
-                                <span class="crores">Crores</span>
+                                <span class="unit">Crores</span>
+                            </div>
+                            <div class="collection-status" id="collection-status">
+                                <span class="status-text">Awaiting Release</span>
                             </div>
                         </div>
                         
-                        <div class="collection-breakdown">
-                            <div class="week-collection">
-                                <h4>Week 1</h4>
-                                <p id="week1-collection">₹0</p>
-                                <span class="percentage">(0%)</span>
-                            </div>
-                            <div class="week-collection">
-                                <h4>Week 2</h4>
-                                <p id="week2-collection">₹0</p>
-                                <span class="percentage">(0%)</span>
-                            </div>
-                            <div class="week-collection">
-                                <h4>Week 3</h4>
-                                <p id="week3-collection">₹0</p>
-                                <span class="percentage">(0%)</span>
-                            </div>
-                            <div class="week-collection">
-                                <h4>Week 4+</h4>
-                                <p id="week4-collection">₹0</p>
-                                <span class="percentage">(0%)</span>
-                            </div>
-                        </div>
-                        
-                        <div class="collection-sources">
-                            <div class="source-card">
-                                <h4>Theatrical</h4>
-                                <p id="theatrical-collection">₹0</p>
-                            </div>
-                            <div class="source-card">
-                                <h4>OTT Rights</h4>
-                                <p id="ott-collection">₹0</p>
-                            </div>
-                            <div class="source-card">
-                                <h4>Music Rights</h4>
-                                <p id="music-collection">₹0</p>
-                            </div>
-                            <div class="source-card">
-                                <h4>Satellite Rights</h4>
-                                <p id="satellite-collection">₹0</p>
+                        <div class="weekly-breakdown">
+                            <h4>📊 Week-wise Performance</h4>
+                            <div class="weeks-grid">
+                                <div class="week-card">
+                                    <h5>Week 1</h5>
+                                    <p class="week-collection" id="week1">₹0</p>
+                                    <span class="week-percentage">0%</span>
+                                </div>
+                                <div class="week-card">
+                                    <h5>Week 2</h5>
+                                    <p class="week-collection" id="week2">₹0</p>
+                                    <span class="week-percentage">0%</span>
+                                </div>
+                                <div class="week-card">
+                                    <h5>Week 3</h5>
+                                    <p class="week-collection" id="week3">₹0</p>
+                                    <span class="week-percentage">0%</span>
+                                </div>
+                                <div class="week-card">
+                                    <h5>Week 4+</h5>
+                                    <p class="week-collection" id="week4">₹0</p>
+                                    <span class="week-percentage">0%</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Finances Tab -->
+            <!-- Enhanced Finances Tab -->
             <div class="tab-content" id="finances-tab">
                 <div class="finances-section">
-                    <h2>Financial Management</h2>
+                    <h2>💼 Financial Management</h2>
                     
                     <!-- Money Management Panel -->
-                    <div class="money-management" id="money-management">
-                        <div class="current-balance">
-                            <h3>Current Balance</h3>
-                            <p class="balance-amount" id="current-balance">₹0</p>
-                        </div>
-                        
-                        <div class="loan-options">
-                            <h3>Bank Loans Available</h3>
-                            <div class="loan-grid">
-                                <div class="loan-card">
-                                    <h4>Small Business Loan</h4>
-                                    <p>Amount: ₹50,00,000</p>
-                                    <p>Interest: 12% per year</p>
-                                    <p>Term: 2 years</p>
-                                    <button class="loan-btn" data-amount="5000000" data-interest="12">Apply</button>
-                                </div>
-                                <div class="loan-card">
-                                    <h4>Production Loan</h4>
-                                    <p>Amount: ₹2,00,00,000</p>
-                                    <p>Interest: 15% per year</p>
-                                    <p>Term: 3 years</p>
-                                    <button class="loan-btn" data-amount="20000000" data-interest="15">Apply</button>
-                                </div>
-                                <div class="loan-card">
-                                    <h4>Mega Project Loan</h4>
-                                    <p>Amount: ₹10,00,00,000</p>
-                                    <p>Interest: 18% per year</p>
-                                    <p>Term: 5 years</p>
-                                    <button class="loan-btn" data-amount="100000000" data-interest="18">Apply</button>
-                                </div>
+                    <div class="money-management">
+                        <div class="balance-overview">
+                            <div class="balance-card">
+                                <h3>Current Balance</h3>
+                                <p class="balance-amount" id="current-balance">₹0</p>
                             </div>
-                        </div>
-                        
-                        <!-- Sandbox Cheat Panel -->
-                        <div class="cheat-panel">
-                            <h3>Developer Tools</h3>
-                            <div class="cheat-input">
-                                <input type="text" id="promo-code" placeholder="Enter promo code..." maxlength="20">
-                                <button id="apply-promo">Apply Code</button>
-                            </div>
-                            <p class="cheat-hint">Hint: Try some creative words! 😉</p>
-                        </div>
-                        
-                        <div class="financial-overview">
-                            <div class="finance-cards">
-                                <div class="finance-card income">
+                            
+                            <div class="cash-flow">
+                                <div class="flow-item income">
                                     <i class="fas fa-arrow-up"></i>
-                                    <h3>Total Income</h3>
-                                    <p id="total-income">₹0</p>
+                                    <div>
+                                        <h4>Monthly Income</h4>
+                                        <p id="monthly-income">₹0</p>
+                                    </div>
                                 </div>
-                                <div class="finance-card expense">
+                                <div class="flow-item expense">
                                     <i class="fas fa-arrow-down"></i>
-                                    <h3>Total Expenses</h3>
-                                    <p id="total-expenses">₹0</p>
+                                    <div>
+                                        <h4>Monthly Expenses</h4>
+                                        <p id="monthly-expenses">₹0</p>
+                                    </div>
                                 </div>
-                                <div class="finance-card profit">
+                                <div class="flow-item profit">
                                     <i class="fas fa-chart-line"></i>
-                                    <h3>Net Profit</h3>
-                                    <p id="net-profit">₹0</p>
+                                    <div>
+                                        <h4>Net Profit</h4>
+                                        <p id="net-monthly-profit">₹0</p>
+                                    </div>
                                 </div>
-                                <div class="finance-card debt">
-                                    <i class="fas fa-credit-card"></i>
-                                    <h3>Outstanding Loans</h3>
-                                    <p id="total-debt">₹0</p>
+                            </div>
+                        </div>
+                        
+                        <div class="loan-section">
+                            <h3>🏦 Bank Loans & Financing</h3>
+                            <div class="loan-options">
+                                <div class="loan-card">
+                                    <h4>🏪 Small Business Loan</h4>
+                                    <div class="loan-details">
+                                        <p><strong>Amount:</strong> ₹2,00,00,000</p>
+                                        <p><strong>Interest:</strong> 11.5% per year</p>
+                                        <p><strong>Term:</strong> 24 months</p>
+                                        <p><strong>Monthly EMI:</strong> ₹9,85,000</p>
+                                    </div>
+                                    <button class="loan-apply-btn" data-amount="20000000" data-rate="11.5" data-term="24">Apply Now</button>
+                                </div>
+                                
+                                <div class="loan-card">
+                                    <h4>🎬 Film Production Loan</h4>
+                                    <div class="loan-details">
+                                        <p><strong>Amount:</strong> ₹10,00,00,000</p>
+                                        <p><strong>Interest:</strong> 13.5% per year</p>
+                                        <p><strong>Term:</strong> 36 months</p>
+                                        <p><strong>Monthly EMI:</strong> ₹34,50,000</p>
+                                    </div>
+                                    <button class="loan-apply-btn" data-amount="100000000" data-rate="13.5" data-term="36">Apply Now</button>
+                                </div>
+                                
+                                <div class="loan-card premium">
+                                    <h4>👑 Mega Budget Loan</h4>
+                                    <div class="loan-details">
+                                        <p><strong>Amount:</strong> ₹50,00,00,000</p>
+                                        <p><strong>Interest:</strong> 15.5% per year</p>
+                                        <p><strong>Term:</strong> 60 months</p>
+                                        <p><strong>Monthly EMI:</strong> ₹1,20,00,000</p>
+                                    </div>
+                                    <button class="loan-apply-btn" data-amount="500000000" data-rate="15.5" data-term="60">Apply Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Cheat Panel -->
+                        <div class="developer-panel">
+                            <h3>🔧 Developer Console</h3>
+                            <div class="cheat-interface">
+                                <div class="promo-input">
+                                    <input type="text" id="promo-code-input" placeholder="Enter developer code..." maxlength="20">
+                                    <button id="apply-promo-code">Execute</button>
+                                </div>
+                                <div class="cheat-hints">
+                                    <p>🎮 <strong>Available Commands:</strong></p>
+                                    <ul>
+                                        <li><code>SANDBOX</code> - Double current money</li>
+                                        <li><code>RICHMODE</code> - Add ₹100 Crores</li>
+                                        <li><code>GODMODE</code> - Ultimate power mode</li>
+                                        <li><code>SUPERSTAR</code> - Max reputation</li>
+                                        <li><code>FREELOAN</code> - Clear all loans</li>
+                                        <li><code>TIMETRAVEL</code> - Skip time phases</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -589,37 +796,65 @@
         </main>
     </div>
 
-    <!-- Modals -->
+    <!-- Enhanced Modals -->
     <div class="modal-overlay" id="notification-modal" style="display: none;">
-        <div class="notification-modal">
-            <div class="notification-content">
+        <div class="enhanced-notification">
+            <div class="notification-icon-container">
                 <i class="notification-icon"></i>
-                <h3 class="notification-title"></h3>
-                <p class="notification-message"></p>
-                <button class="notification-ok">OK</button>
             </div>
+            <h3 class="notification-title"></h3>
+            <p class="notification-message"></p>
+            <button class="notification-confirm">Understood</button>
         </div>
     </div>
 
-    <!-- Custom Logo Designer Modal -->
+    <!-- Logo Designer Modal -->
     <div class="modal-overlay" id="logo-designer-modal" style="display: none;">
-        <div class="logo-designer">
-            <h3>Design Your Studio Logo</h3>
-            <div class="logo-canvas">
-                <canvas id="logo-canvas" width="200" height="200"></canvas>
-            </div>
-            <div class="design-tools">
-                <input type="text" id="logo-text" placeholder="Studio Name" maxlength="15">
-                <input type="color" id="logo-color" value="#ffd700">
-                <select id="logo-font">
-                    <option value="Arial">Arial</option>
-                    <option value="Impact">Impact</option>
-                    <option value="Times">Times</option>
-                    <option value="Courier">Courier</option>
-                </select>
-                <button id="generate-logo">Generate</button>
-                <button id="save-logo">Save Logo</button>
-                <button id="close-designer">Close</button>
+        <div class="logo-designer-panel">
+            <h3>🎨 Custom Logo Designer</h3>
+            <div class="designer-workspace">
+                <div class="logo-canvas-container">
+                    <canvas id="logo-canvas" width="300" height="300"></canvas>
+                </div>
+                <div class="design-controls">
+                    <div class="control-group">
+                        <label>Studio Text:</label>
+                        <input type="text" id="logo-text-input" placeholder="Studio Name" maxlength="20">
+                    </div>
+                    <div class="control-group">
+                        <label>Primary Color:</label>
+                        <input type="color" id="logo-primary-color" value="#ffd700">
+                    </div>
+                    <div class="control-group">
+                        <label>Background:</label>
+                        <input type="color" id="logo-bg-color" value="#1a1a1a">
+                    </div>
+                    <div class="control-group">
+                        <label>Font Style:</label>
+                        <select id="logo-font-style">
+                            <option value="Arial">Arial Bold</option>
+                            <option value="Impact">Impact</option>
+                            <option value="Times">Times Roman</option>
+                            <option value="Courier">Courier</option>
+                            <option value="Verdana">Verdana</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Logo Icon:</label>
+                        <select id="logo-icon-select">
+                            <option value="film">🎬 Film</option>
+                            <option value="star">⭐ Star</option>
+                            <option value="crown">👑 Crown</option>
+                            <option value="diamond">💎 Diamond</option>
+                            <option value="fire">🔥 Fire</option>
+                        </select>
+                    </div>
+                    <div class="design-actions">
+                        <button id="preview-logo">Preview</button>
+                        <button id="save-custom-logo">Save Logo</button>
+                        <button id="close-logo-designer">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
