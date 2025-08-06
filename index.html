@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bollywood Simulator</title>
+    <title>Bollywood Simulator - Ultimate Cinema Empire</title>
     
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iI0ZGRDcwMCIvPgo8cGF0aCBkPSJNMTYgOEw4IDI0SDE2TDI0IDhIMTZaIiBmaWxsPSIjMUExQTFBIi8+CjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjMiIGZpbGw9IiNGRkQ3MDAiLz4KPC9zdmc+" type="image/svg+xml">
@@ -11,15 +11,6 @@
     <!-- PWA Support -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ffd700">
-    
-    <!-- Apple iOS Support -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Bollywood Simulator">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-    
-    <!-- Android Support -->
-    <meta name="mobile-web-app-capable" content="yes">
     
     <!-- External Libraries -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -52,7 +43,7 @@
     </div>
 
     <div id="game-container" class="game-container" style="display: none;">
-        <!-- Game Start Modal - FIXED: Limited to 3 options & no scrolling -->
+        <!-- Game Start Modal -->
         <div id="game-start-modal" class="modal-overlay">
             <div class="start-modal">
                 <div class="start-header">
@@ -64,7 +55,6 @@
                 <div class="start-options">
                     <div class="money-selection">
                         <h3>Choose Your Starting Capital</h3>
-                        <!-- FIXED: Only 3 options, no scrolling -->
                         <div class="budget-options budget-options-limited">
                             <label class="budget-option">
                                 <input type="radio" name="starting-budget" value="50000000" checked>
@@ -107,10 +97,9 @@
             </div>
         </div>
 
-        <!-- Header with Time Controls & FIXED Studio Logo Display -->
+        <!-- Header with Studio Logo Display -->
         <header class="game-header">
             <div class="logo">
-                <!-- FIXED: Studio Logo Display -->
                 <div class="studio-logo-display" id="header-studio-logo">
                     <i class="fas fa-film"></i>
                 </div>
@@ -153,7 +142,7 @@
             </div>
         </header>
 
-        <!-- Navigation Tabs - Added Market Tab -->
+        <!-- Navigation Tabs -->
         <nav class="tab-navigation">
             <button class="tab-btn active" data-tab="profile">
                 <i class="fas fa-user"></i>
@@ -166,6 +155,10 @@
             <button class="tab-btn" data-tab="scripts">
                 <i class="fas fa-scroll"></i>
                 <span>Scripts</span>
+            </button>
+            <button class="tab-btn" data-tab="marketplace">
+                <i class="fas fa-store"></i>
+                <span>Marketplace</span>
             </button>
             <button class="tab-btn" data-tab="casting">
                 <i class="fas fa-users"></i>
@@ -183,7 +176,14 @@
                 <i class="fas fa-ticket-alt"></i>
                 <span>Box Office</span>
             </button>
-            <!-- NEW: Market Competition Tab -->
+            <button class="tab-btn" data-tab="festivals">
+                <i class="fas fa-trophy"></i>
+                <span>Festivals</span>
+            </button>
+            <button class="tab-btn" data-tab="awards">
+                <i class="fas fa-award"></i>
+                <span>Awards</span>
+            </button>
             <button class="tab-btn" data-tab="market">
                 <i class="fas fa-chart-bar"></i>
                 <span>Market</span>
@@ -202,9 +202,9 @@
                     <h2>Create Your Producer Profile</h2>
                     <div class="character-creation">
                         <div class="avatar-selection">
-                            <h3>Choose Your Avatar (Indian Faces)</h3>
+                            <h3>Choose Your Avatar</h3>
                             <div class="avatar-grid" id="avatar-grid">
-                                <!-- Real Indian faces generated dynamically -->
+                                <!-- Real faces generated dynamically -->
                             </div>
                         </div>
                         
@@ -216,34 +216,14 @@
                         <div class="studio-section">
                             <h3>Production House Name</h3>
                             <input type="text" id="studio-name" placeholder="Enter production house name" maxlength="40">
-                            <div class="premium-suggestions">
-                                <h4>Premium Suggestions:</h4>
-                                <div class="suggestions">
-                                    <button class="suggestion-btn">Royal Cinemas Productions</button>
-                                    <button class="suggestion-btn">Majestic Entertainment Studios</button>
-                                    <button class="suggestion-btn">Paramount Bollywood Films</button>
-                                    <button class="suggestion-btn">Golden Era Productions</button>
-                                    <button class="suggestion-btn">Emerald Screen Entertainment</button>
-                                    <button class="suggestion-btn">Diamond Pictures International</button>
-                                    <button class="suggestion-btn">Platinum Film Corporation</button>
-                                    <button class="suggestion-btn">Crown Jewel Studios</button>
-                                    <button class="suggestion-btn">Imperial Cinema Works</button>
-                                    <button class="suggestion-btn">Grandeur Motion Pictures</button>
-                                </div>
-                            </div>
                         </div>
                         
-                        <!-- ENHANCED: Real Production House Style Logos -->
                         <div class="logo-selection">
                             <h3>Choose Production House Style</h3>
                             <div class="real-production-logos" id="production-logo-grid">
                                 <!-- Real production house style logos -->
                             </div>
                             <p class="logo-note">Select a professional logo style, then customize with your studio name</p>
-                            <button class="design-logo-btn" id="design-logo-btn">
-                                <i class="fas fa-paint-brush"></i>
-                                Design Custom Logo
-                            </button>
                         </div>
                         
                         <button class="primary-btn" id="start-game">
@@ -254,12 +234,11 @@
                 </div>
             </div>
 
-            <!-- Studio Tab - Enhanced with Office Management -->
+            <!-- Studio Tab -->
             <div class="tab-content" id="studio-tab">
                 <div class="studio-overview">
                     <div class="studio-header">
                         <div class="studio-info">
-                            <!-- FIXED: Studio Logo Container -->
                             <div class="studio-logo-container">
                                 <div id="studio-logo-display" class="studio-logo-img">
                                     <i class="fas fa-film"></i>
@@ -272,6 +251,32 @@
                                     <span>Established: <strong id="studio-year">2025</strong></span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NEW: Studio Ranking System -->
+                    <div class="studio-ranking">
+                        <h3>🏆 Studio Ranking System</h3>
+                        <div class="ranking-progress">
+                            <div class="current-rank" id="current-rank">
+                                <div class="rank-badge">
+                                    <i class="fas fa-star"></i>
+                                    <span id="rank-name">Independent</span>
+                                </div>
+                                <p>Next Rank: <span id="next-rank">Regional</span></p>
+                                <div class="rank-progress-bar">
+                                    <div class="rank-progress-fill" id="rank-progress" style="width: 0%"></div>
+                                </div>
+                                <p class="rank-requirement" id="rank-requirement">Need: ₹10 Cr total earnings</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NEW: Studio Upgrades -->
+                    <div class="studio-upgrades">
+                        <h3>🔧 Studio Upgrades</h3>
+                        <div class="upgrades-grid" id="upgrades-grid">
+                            <!-- Studio upgrades populated dynamically -->
                         </div>
                     </div>
                     
@@ -358,12 +363,11 @@
                 </div>
             </div>
 
-            <!-- Enhanced Scripts Tab with FIXED Franchise Input & Back Navigation -->
+            <!-- Enhanced Scripts Tab -->
             <div class="tab-content" id="scripts-tab">
                 <div class="scripts-section">
                     <h2>🎬 Script Development</h2>
                     
-                    <!-- FIXED: Navigation with Back Button -->
                     <div class="script-navigation">
                         <button class="back-btn" id="script-back-btn" style="display: none;">
                             <i class="fas fa-arrow-left"></i>
@@ -382,6 +386,10 @@
                                 <span class="step-number">3</span>
                                 <span class="step-title">Script Quality</span>
                             </div>
+                            <div class="step" data-step="4">
+                                <span class="step-number">4</span>
+                                <span class="step-title">Production Details</span>
+                            </div>
                         </div>
                     </div>
                     
@@ -392,15 +400,8 @@
                                 <div class="form-group">
                                     <label for="movie-title">🎭 Movie Title</label>
                                     <input type="text" id="movie-title" placeholder="Enter your movie title" maxlength="50">
-                                    <div class="title-suggestions">
-                                        <button class="title-suggestion" data-genre="action">Tiger Zinda Hai 3</button>
-                                        <button class="title-suggestion" data-genre="romance">Kabir Singh Returns</button>
-                                        <button class="title-suggestion" data-genre="comedy">Housefull 6</button>
-                                        <button class="title-suggestion" data-genre="drama">83: The Sequel</button>
-                                    </div>
                                 </div>
 
-                                <!-- NEW: Lead Roles Input -->
                                 <div class="form-group">
                                     <label for="lead-roles-count">👥 Number of Lead Roles</label>
                                     <select id="lead-roles-count">
@@ -412,7 +413,6 @@
                                     </select>
                                 </div>
 
-                                <!-- NEW: Supporting Roles Input -->
                                 <div class="form-group">
                                     <label for="supporting-roles-count">🎭 Number of Supporting Roles</label>
                                     <select id="supporting-roles-count">
@@ -425,7 +425,6 @@
                                     </select>
                                 </div>
 
-                                <!-- FIXED: Franchise Input with Text Box & Dropdown -->
                                 <div class="form-group">
                                     <label>
                                         <input type="checkbox" id="is-franchise"> 
@@ -441,14 +440,6 @@
                                             <!-- Existing franchises will be populated here -->
                                         </div>
                                     </div>
-                                    <small>Type to search existing franchises or create a new one</small>
-                                    
-                                    <div id="franchise-info" class="franchise-info" style="display: none;">
-                                        <h4>Franchise Cast History:</h4>
-                                        <div id="franchise-cast-display" class="franchise-cast">
-                                            <!-- Franchise cast members displayed here -->
-                                        </div>
-                                    </div>
                                 </div>
                                 
                                 <div class="form-group">
@@ -459,7 +450,6 @@
                                             <div class="format-card">
                                                 <h4>2D Standard</h4>
                                                 <p>Cost: +₹0</p>
-                                                <small>Regular theaters</small>
                                             </div>
                                         </label>
                                         <label class="format-option">
@@ -467,7 +457,6 @@
                                             <div class="format-card">
                                                 <h4>3D Experience</h4>
                                                 <p>Cost: +₹2 Cr</p>
-                                                <small>Enhanced visuals</small>
                                             </div>
                                         </label>
                                         <label class="format-option">
@@ -475,23 +464,6 @@
                                             <div class="format-card">
                                                 <h4>IMAX Premium</h4>
                                                 <p>Cost: +₹5 Cr</p>
-                                                <small>Large screen format</small>
-                                            </div>
-                                        </label>
-                                        <label class="format-option">
-                                            <input type="radio" name="format" value="4dx">
-                                            <div class="format-card">
-                                                <h4>4DX Motion</h4>
-                                                <p>Cost: +₹8 Cr</p>
-                                                <small>Motion effects</small>
-                                            </div>
-                                        </label>
-                                        <label class="format-option">
-                                            <input type="radio" name="format" value="5d">
-                                            <div class="format-card">
-                                                <h4>5D Ultimate</h4>
-                                                <p>Cost: +₹12 Cr</p>
-                                                <small>Full sensory experience</small>
                                             </div>
                                         </label>
                                     </div>
@@ -502,9 +474,16 @@
                         </div>
                         
                         <div class="script-step" id="step-2">
-                            <h3>Step 2: Genre & Budget Planning</h3>
+                            <h3>Step 2: Genre Selection (Choose up to 3 genres)</h3>
+                            <div class="genre-selection-info">
+                                <p>Select 1-3 genres for your movie. Multiple genres can increase appeal but may complicate marketing.</p>
+                                <div class="selected-genres" id="selected-genres">
+                                    <span>Selected: </span>
+                                    <div id="selected-genres-list"></div>
+                                </div>
+                            </div>
                             <div class="enhanced-genre-grid" id="enhanced-genre-grid">
-                                <!-- Enhanced genres with better visuals -->
+                                <!-- Enhanced genres with FIXED icons -->
                             </div>
                             <button class="next-step-btn" onclick="nextStep(3)">Next Step →</button>
                         </div>
@@ -534,6 +513,65 @@
                                     <input type="radio" name="script-timeline" value="premium">
                                 </div>
                             </div>
+                            <button class="next-step-btn" onclick="nextStep(4)">Next Step →</button>
+                        </div>
+
+                        <!-- NEW: Step 4 - Production Details -->
+                        <div class="script-step" id="step-4">
+                            <h3>Step 4: Production Details & Location</h3>
+                            
+                            <div class="production-details">
+                                <div class="form-group">
+                                    <label for="filming-location">🌍 Filming Location</label>
+                                    <select id="filming-location">
+                                        <option value="mumbai">Mumbai Studios (₹2 Cr)</option>
+                                        <option value="goa">Goa Locations (₹3 Cr)</option>
+                                        <option value="rajasthan">Rajasthan Palaces (₹4 Cr)</option>
+                                        <option value="kerala">Kerala Backwaters (₹3.5 Cr)</option>
+                                        <option value="himachal">Himachal Mountains (₹5 Cr)</option>
+                                        <option value="international">International (₹15 Cr)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="special-effects-budget">✨ Special Effects Budget</label>
+                                    <div class="effects-options">
+                                        <label class="effects-option">
+                                            <input type="radio" name="effects-budget" value="basic" checked>
+                                            <div class="effects-card">
+                                                <h4>Basic Effects</h4>
+                                                <p>Cost: +₹1 Cr</p>
+                                            </div>
+                                        </label>
+                                        <label class="effects-option">
+                                            <input type="radio" name="effects-budget" value="advanced">
+                                            <div class="effects-card">
+                                                <h4>Advanced VFX</h4>
+                                                <p>Cost: +₹5 Cr</p>
+                                            </div>
+                                        </label>
+                                        <label class="effects-option">
+                                            <input type="radio" name="effects-budget" value="hollywood">
+                                            <div class="effects-card">
+                                                <h4>Hollywood Level</h4>
+                                                <p>Cost: +₹20 Cr</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="target-audience">🎯 Target Audience</label>
+                                    <select id="target-audience">
+                                        <option value="family">Family (All Ages)</option>
+                                        <option value="youth">Youth (18-35)</option>
+                                        <option value="adults">Adults (25-45)</option>
+                                        <option value="children">Children (5-15)</option>
+                                        <option value="teens">Teens (13-25)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <button class="primary-btn" id="create-script-final">
                                 <i class="fas fa-pen"></i>
                                 Start Script Development
@@ -541,29 +579,55 @@
                         </div>
                     </div>
                     
-                    <!-- Active Scripts Progress -->
                     <div class="active-scripts" id="active-scripts" style="display: none;">
                         <h3>📋 Scripts in Development</h3>
-                        <div id="script-progress-list">
-                            <!-- Dynamic script progress cards -->
-                        </div>
+                        <div id="script-progress-list"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- FIXED: Enhanced Casting Tab with Movie Dropdown & Negotiation -->
+            <!-- NEW: Script Marketplace Tab -->
+            <div class="tab-content" id="marketplace-tab">
+                <div class="marketplace-section">
+                    <h2>📚 Script Marketplace</h2>
+                    <p>Buy ready-made scripts from established writers and save development time!</p>
+                    
+                    <div class="marketplace-filters">
+                        <select id="marketplace-genre-filter">
+                            <option value="">All Genres</option>
+                            <option value="action">Action</option>
+                            <option value="romance">Romance</option>
+                            <option value="comedy">Comedy</option>
+                            <option value="drama">Drama</option>
+                            <option value="thriller">Thriller</option>
+                        </select>
+                        <select id="marketplace-budget-filter">
+                            <option value="">All Budgets</option>
+                            <option value="low">Under ₹50L</option>
+                            <option value="medium">₹50L - ₹2Cr</option>
+                            <option value="high">Above ₹2Cr</option>
+                        </select>
+                        <button id="refresh-marketplace">🔄 Refresh Scripts</button>
+                    </div>
+                    
+                    <div class="marketplace-grid" id="marketplace-grid">
+                        <!-- Available scripts populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Casting Tab -->
             <div class="tab-content" id="casting-tab">
                 <div class="casting-section">
                     <h2>⭐ Cast & Crew Selection</h2>
                     
-                    <!-- FIXED: Cast Assignment Dropdown Container -->
+                    <!-- FIXED: Cast Assignment Panel -->
                     <div class="cast-assignment-panel">
                         <div class="assignment-controls">
                             <div class="control-group">
                                 <label for="movie-selector">📽️ Select Movie:</label>
                                 <select id="movie-selector">
                                     <option value="">-- Select a movie to cast --</option>
-                                    <!-- FIXED: Populated dynamically with active movies -->
                                 </select>
                             </div>
                             
@@ -575,6 +639,8 @@
                                     <option value="director">Director</option>
                                     <option value="music">Music Director</option>
                                     <option value="singer">Playback Singer</option>
+                                    <option value="composer">Composer</option>
+                                    <option value="cinematographer">Cinematographer</option>
                                 </select>
                             </div>
 
@@ -582,7 +648,6 @@
                                 <label for="role-number-selector">🔢 Role Number:</label>
                                 <select id="role-number-selector">
                                     <option value="1">Role 1</option>
-                                    <!-- Populated dynamically based on role requirements -->
                                 </select>
                             </div>
                         </div>
@@ -592,21 +657,9 @@
                         </div>
                     </div>
 
-                    <!-- Franchise Cast Display - Shows previous franchise actors -->
-                    <div class="franchise-showcase" id="franchise-showcase" style="display: none;">
-                        <h3>🏆 Franchise Stars</h3>
-                        <p>Actors who have appeared in this franchise before:</p>
-                        <div class="franchise-cast-grid" id="franchise-cast-grid">
-                            <!-- Previous franchise actors displayed here -->
-                        </div>
-                    </div>
-
-                    <!-- Cast Hiring Requirements -->
                     <div class="casting-requirements" id="casting-requirements" style="display: none;">
                         <h3>📋 Current Movie Requirements</h3>
-                        <div class="requirements-grid" id="requirements-grid">
-                            <!-- Dynamic requirements based on selected movie -->
-                        </div>
+                        <div class="requirements-grid" id="requirements-grid"></div>
                     </div>
                     
                     <div class="celebrity-categories">
@@ -627,6 +680,14 @@
                                 <i class="fas fa-microphone"></i>
                                 Playback Singers
                             </button>
+                            <button class="cat-tab" data-category="composers">
+                                <i class="fas fa-piano"></i>
+                                Composers
+                            </button>
+                            <button class="cat-tab" data-category="cinematographers">
+                                <i class="fas fa-camera"></i>
+                                Cinematographers
+                            </button>
                         </div>
                         
                         <div class="celebrity-filters">
@@ -643,14 +704,20 @@
                                 <option value="established">Established (70-89)</option>
                                 <option value="rising">Rising Stars (50-69)</option>
                             </select>
+                            <select id="filter-genre-specialty">
+                                <option value="">All Specialties</option>
+                                <option value="action">Action Specialists</option>
+                                <option value="romance">Romance Experts</option>
+                                <option value="comedy">Comedy Stars</option>
+                                <option value="drama">Drama Artists</option>
+                            </select>
                         </div>
                         
                         <div class="celebrity-showcase" id="celebrity-showcase">
-                            <!-- Real celebrity cards with actual photos -->
+                            <!-- Celebrity cards with genre specialization -->
                         </div>
                     </div>
 
-                    <!-- Hired Cast Display with Movie Assignment -->
                     <div class="hired-cast-section">
                         <h3>✅ Hired Cast & Crew</h3>
                         <div class="hired-cast-table-container">
@@ -662,20 +729,19 @@
                                         <th>Role Number</th>
                                         <th>Celebrity</th>
                                         <th>Fee/Deal</th>
+                                        <th>Genre Match</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="hired-cast-table-body">
-                                    <!-- Hired cast entries populated dynamically -->
-                                </tbody>
+                                <tbody id="hired-cast-table-body"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Enhanced Production Tab with Processing -->
+            <!-- Enhanced Production Tab -->
             <div class="tab-content" id="production-tab">
                 <div class="production-section">
                     <h2>🎬 Movie Production Pipeline</h2>
@@ -688,7 +754,6 @@
                             </div>
                         </div>
                         
-                        <!-- NEW: Production Actions -->
                         <div class="production-actions" id="production-actions" style="display: none;">
                             <button class="production-btn" id="start-production-btn">
                                 <i class="fas fa-play"></i>
@@ -787,23 +852,40 @@
             <div class="tab-content" id="marketing-tab">
                 <div class="marketing-section">
                     <h2>📢 Marketing Campaign</h2>
-                    <div class="marketing-overview">
+                    
+                    <div class="marketing-overview" id="marketing-overview">
                         <p class="no-project">Complete production to start marketing your movies!</p>
+                    </div>
+
+                    <!-- NEW: Release Date Selection -->
+                    <div class="release-planning" id="release-planning" style="display: none;">
+                        <h3>📅 Release Date Strategy</h3>
+                        <div class="release-calendar">
+                            <div class="calendar-header">
+                                <button id="prev-month">‹</button>
+                                <span id="calendar-month-year">January 2025</span>
+                                <button id="next-month">›</button>
+                            </div>
+                            <div class="calendar-grid" id="calendar-grid">
+                                <!-- Calendar populated dynamically -->
+                            </div>
+                        </div>
+                        <div class="release-analysis" id="release-analysis">
+                            <h4>Competition Analysis</h4>
+                            <div id="competition-info">Select a date to see competition</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- FIXED: Box Office Tab with Theatre Chain Logos -->
+            <!-- Enhanced Box Office Tab -->
             <div class="tab-content" id="boxoffice-tab">
                 <div class="boxoffice-section">
                     <h2>🎫 Box Office Performance</h2>
                     
-                    <!-- FIXED: Theatre Chain Logos -->
                     <div class="theatre-chains">
                         <h3>🏢 Theatre Chain Partners</h3>
-                        <div class="chains-grid" id="chains-grid">
-                            <!-- FIXED: Theatre chain logos will be populated properly -->
-                        </div>
+                        <div class="chains-grid" id="chains-grid"></div>
                     </div>
                     
                     <div class="collection-dashboard">
@@ -819,36 +901,143 @@
                             </div>
                         </div>
                         
-                        <div class="weekly-breakdown">
-                            <h4>📊 Week-wise Performance</h4>
-                            <div class="weeks-grid">
-                                <div class="week-card">
-                                    <h5>Week 1</h5>
-                                    <p class="week-collection" id="week1">₹0</p>
-                                    <span class="week-percentage">0%</span>
+                        <!-- NEW: Enhanced Box Office Analytics -->
+                        <div class="box-office-analytics">
+                            <h3>📊 Detailed Box Office Analytics</h3>
+                            <div class="analytics-tabs">
+                                <button class="analytics-tab active" data-tab="weekly">Weekly</button>
+                                <button class="analytics-tab" data-tab="regional">Regional</button>
+                                <button class="analytics-tab" data-tab="demographic">Demographic</button>
+                                <button class="analytics-tab" data-tab="comparison">Comparison</button>
+                            </div>
+                            <div class="analytics-content" id="analytics-content">
+                                <div class="weeks-grid">
+                                    <div class="week-card">
+                                        <h5>Opening Weekend</h5>
+                                        <p class="week-collection" id="opening-weekend">₹0</p>
+                                        <span class="week-percentage">0%</span>
+                                    </div>
+                                    <div class="week-card">
+                                        <h5>Week 1</h5>
+                                        <p class="week-collection" id="week1">₹0</p>
+                                        <span class="week-percentage">0%</span>
+                                    </div>
+                                    <div class="week-card">
+                                        <h5>Week 2</h5>
+                                        <p class="week-collection" id="week2">₹0</p>
+                                        <span class="week-percentage">0%</span>
+                                    </div>
+                                    <div class="week-card">
+                                        <h5>Week 3+</h5>
+                                        <p class="week-collection" id="week3plus">₹0</p>
+                                        <span class="week-percentage">0%</span>
+                                    </div>
                                 </div>
-                                <div class="week-card">
-                                    <h5>Week 2</h5>
-                                    <p class="week-collection" id="week2">₹0</p>
-                                    <span class="week-percentage">0%</span>
-                                </div>
-                                <div class="week-card">
-                                    <h5>Week 3</h5>
-                                    <p class="week-collection" id="week3">₹0</p>
-                                    <span class="week-percentage">0%</span>
-                                </div>
-                                <div class="week-card">
-                                    <h5>Week 4+</h5>
-                                    <p class="week-collection" id="week4">₹0</p>
-                                    <span class="week-percentage">0%</span>
-                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NEW: OTT & Digital Rights -->
+                        <div class="digital-rights">
+                            <h3>📺 OTT & Digital Rights</h3>
+                            <div class="ott-platforms" id="ott-platforms">
+                                <!-- OTT deals populated dynamically -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- NEW: Market Competition Tab -->
+            <!-- NEW: Film Festivals Tab -->
+            <div class="tab-content" id="festivals-tab">
+                <div class="festivals-section">
+                    <h2>🎪 Film Festival Competitions</h2>
+                    
+                    <div class="festival-overview">
+                        <p>Submit your completed movies to prestigious film festivals for recognition and potential distribution deals!</p>
+                    </div>
+
+                    <div class="active-festivals">
+                        <h3>🏆 Current Festival Seasons</h3>
+                        <div class="festivals-grid" id="festivals-grid">
+                            <!-- Active festivals populated dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="festival-submissions">
+                        <h3>📋 Your Festival Submissions</h3>
+                        <div class="submissions-list" id="submissions-list">
+                            <p class="no-submissions">No festival submissions yet. Complete a movie first!</p>
+                        </div>
+                    </div>
+
+                    <div class="festival-history">
+                        <h3>📚 Festival History & Achievements</h3>
+                        <div class="achievements-grid" id="festival-achievements">
+                            <!-- Past achievements populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW: Awards Tab -->
+            <div class="tab-content" id="awards-tab">
+                <div class="awards-section">
+                    <h2>🏆 Annual Awards Ceremonies</h2>
+                    
+                    <div class="awards-overview">
+                        <div class="current-award-season">
+                            <h3>🎭 Current Award Season</h3>
+                            <div class="award-season-info" id="award-season-info">
+                                <p>Award season begins in December each year!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="award-categories">
+                        <h3>🏅 Award Categories</h3>
+                        <div class="categories-grid">
+                            <div class="category-card">
+                                <h4>🎬 Best Film</h4>
+                                <p>Overall excellence in filmmaking</p>
+                            </div>
+                            <div class="category-card">
+                                <h4>🎭 Best Actor/Actress</h4>
+                                <p>Outstanding performances</p>
+                            </div>
+                            <div class="category-card">
+                                <h4>🎥 Best Director</h4>
+                                <p>Visionary direction</p>
+                            </div>
+                            <div class="category-card">
+                                <h4>🎵 Best Music</h4>
+                                <p>Exceptional soundtrack</p>
+                            </div>
+                            <div class="category-card">
+                                <h4>✨ Best VFX</h4>
+                                <p>Visual effects excellence</p>
+                            </div>
+                            <div class="category-card">
+                                <h4>📝 Best Script</h4>
+                                <p>Outstanding screenplay</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nominations-section" id="nominations-section" style="display: none;">
+                        <h3>🌟 Your Nominations</h3>
+                        <div class="nominations-list" id="nominations-list"></div>
+                    </div>
+
+                    <div class="awards-history">
+                        <h3>🏆 Awards History</h3>
+                        <div class="awards-timeline" id="awards-timeline">
+                            <!-- Past awards populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Competition Tab -->
             <div class="tab-content" id="market-tab">
                 <div class="market-section">
                     <h2>📈 Market Competition & Release Schedule</h2>
@@ -856,9 +1045,7 @@
                     <div class="market-overview">
                         <div class="competitor-studios">
                             <h3>🏢 Competitor Studios</h3>
-                            <div class="competitors-grid" id="competitors-grid">
-                                <!-- Competitor studios populated dynamically -->
-                            </div>
+                            <div class="competitors-grid" id="competitors-grid"></div>
                         </div>
                         
                         <div class="release-schedule">
@@ -881,9 +1068,7 @@
                                         <option value="12">December</option>
                                     </select>
                                 </div>
-                                <div class="release-timeline" id="release-timeline">
-                                    <!-- Release schedule populated dynamically -->
-                                </div>
+                                <div class="release-timeline" id="release-timeline"></div>
                             </div>
                         </div>
                         
@@ -908,7 +1093,7 @@
                 </div>
             </div>
 
-            <!-- Finances Tab -->
+            <!-- Enhanced Finances Tab -->
             <div class="tab-content" id="finances-tab">
                 <div class="finances-section">
                     <h2>💼 Financial Management</h2>
@@ -941,6 +1126,33 @@
                                         <h4>Net Profit</h4>
                                         <p id="net-monthly-profit">₹0</p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- NEW: Revenue Streams -->
+                        <div class="revenue-streams">
+                            <h3>💰 Revenue Streams</h3>
+                            <div class="revenue-grid">
+                                <div class="revenue-card">
+                                    <h4>🎬 Box Office</h4>
+                                    <p class="revenue-amount" id="boxoffice-revenue">₹0</p>
+                                    <small>Theatrical collections</small>
+                                </div>
+                                <div class="revenue-card">
+                                    <h4>📺 TV Rights</h4>
+                                    <p class="revenue-amount" id="tv-revenue">₹0</p>
+                                    <small>Television broadcasts</small>
+                                </div>
+                                <div class="revenue-card">
+                                    <h4>💻 OTT Platforms</h4>
+                                    <p class="revenue-amount" id="ott-revenue">₹0</p>
+                                    <small>Streaming services</small>
+                                </div>
+                                <div class="revenue-card">
+                                    <h4>🌍 International</h4>
+                                    <p class="revenue-amount" id="international-revenue">₹0</p>
+                                    <small>Overseas markets</small>
                                 </div>
                             </div>
                         </div>
@@ -1000,6 +1212,9 @@
                                         <li><code>FREELOAN</code> - Clear all loans</li>
                                         <li><code>TIMETRAVEL</code> - Skip time phases</li>
                                         <li><code>ALLSTAR</code> - Free celebrity hiring</li>
+                                        <li><code>MEGAHIT</code> - Guarantee blockbuster</li>
+                                        <li><code>FASTTRACK</code> - Complete production</li>
+                                        <li><code>AWARDS</code> - Win all awards</li>
                                     </ul>
                                 </div>
                             </div>
@@ -1010,7 +1225,7 @@
         </main>
     </div>
 
-    <!-- NEW: Negotiation Modal for Actor Deals -->
+    <!-- Negotiation Modal -->
     <div class="modal-overlay" id="negotiation-modal" style="display: none;">
         <div class="negotiation-panel">
             <div class="negotiation-header">
@@ -1032,6 +1247,7 @@
                     <button class="deal-tab active" data-deal="fixed">Fixed Fee</button>
                     <button class="deal-tab" data-deal="percentage">Box Office %</button>
                     <button class="deal-tab" data-deal="hybrid">Hybrid Deal</button>
+                    <button class="deal-tab" data-deal="contract">Multi-Movie Contract</button>
                 </div>
                 
                 <div class="deal-content active" id="fixed-deal">
@@ -1069,6 +1285,20 @@
                         <input type="range" id="hybrid-percent" min="1" max="10" value="3">
                     </div>
                 </div>
+
+                <!-- NEW: Multi-Movie Contract -->
+                <div class="deal-content" id="contract-deal">
+                    <h4>📑 Multi-Movie Contract</h4>
+                    <div class="offer-slider">
+                        <label>Number of Movies: <span id="contract-movies">2</span></label>
+                        <input type="range" id="contract-movies-slider" min="2" max="5" value="2">
+                    </div>
+                    <div class="offer-slider">
+                        <label>Per Movie Fee: <span id="contract-fee">₹2 Cr</span></label>
+                        <input type="range" id="contract-fee-slider" min="20" max="80" value="40">
+                    </div>
+                    <p class="contract-benefit">Benefits: 20% discount, exclusive access, priority scheduling</p>
+                </div>
             </div>
             
             <div class="negotiation-result" id="negotiation-result">
@@ -1085,7 +1315,56 @@
         </div>
     </div>
 
-    <!-- Enhanced Modals -->
+    <!-- Script Purchase Modal -->
+    <div class="modal-overlay" id="script-purchase-modal" style="display: none;">
+        <div class="script-purchase-panel">
+            <div class="script-purchase-header">
+                <h3>📚 Purchase Script</h3>
+                <button class="close-btn" id="close-script-purchase">✕</button>
+            </div>
+            
+            <div class="script-details" id="script-details">
+                <!-- Script details populated dynamically -->
+            </div>
+            
+            <div class="purchase-actions">
+                <button class="purchase-btn" id="confirm-script-purchase">Purchase Script</button>
+                <button class="purchase-btn secondary" id="cancel-script-purchase">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Festival Submission Modal -->
+    <div class="modal-overlay" id="festival-modal" style="display: none;">
+        <div class="festival-panel">
+            <div class="festival-header">
+                <h3>🎪 Submit to Festival</h3>
+                <button class="close-btn" id="close-festival">✕</button>
+            </div>
+            
+            <div class="festival-details" id="festival-details">
+                <!-- Festival details populated dynamically -->
+            </div>
+            
+            <div class="movie-selection">
+                <label for="festival-movie-select">Select Movie to Submit:</label>
+                <select id="festival-movie-select">
+                    <option value="">-- Choose a completed movie --</option>
+                </select>
+            </div>
+            
+            <div class="submission-fee">
+                <p>Submission Fee: <span id="festival-fee">₹5,00,000</span></p>
+            </div>
+            
+            <div class="festival-actions">
+                <button class="festival-btn" id="submit-to-festival">Submit Movie</button>
+                <button class="festival-btn secondary" id="cancel-festival-submission">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Notifications -->
     <div class="modal-overlay" id="notification-modal" style="display: none;">
         <div class="enhanced-notification">
             <div class="notification-icon-container">
@@ -1094,57 +1373,6 @@
             <h3 class="notification-title"></h3>
             <p class="notification-message"></p>
             <button class="notification-confirm">Understood</button>
-        </div>
-    </div>
-
-    <!-- Logo Designer Modal -->
-    <div class="modal-overlay" id="logo-designer-modal" style="display: none;">
-        <div class="logo-designer-panel">
-            <h3>🎨 Custom Logo Designer</h3>
-            <div class="designer-workspace">
-                <div class="logo-canvas-container">
-                    <canvas id="logo-canvas" width="300" height="300"></canvas>
-                </div>
-                <div class="design-controls">
-                    <div class="control-group">
-                        <label>Studio Text:</label>
-                        <input type="text" id="logo-text-input" placeholder="Studio Name" maxlength="20">
-                    </div>
-                    <div class="control-group">
-                        <label>Primary Color:</label>
-                        <input type="color" id="logo-primary-color" value="#ffd700">
-                    </div>
-                    <div class="control-group">
-                        <label>Background:</label>
-                        <input type="color" id="logo-bg-color" value="#1a1a1a">
-                    </div>
-                    <div class="control-group">
-                        <label>Font Style:</label>
-                        <select id="logo-font-style">
-                            <option value="Arial">Arial Bold</option>
-                            <option value="Impact">Impact</option>
-                            <option value="Times">Times Roman</option>
-                            <option value="Courier">Courier</option>
-                            <option value="Verdana">Verdana</option>
-                        </select>
-                    </div>
-                    <div class="control-group">
-                        <label>Logo Icon:</label>
-                        <select id="logo-icon-select">
-                            <option value="film">🎬 Film</option>
-                            <option value="star">⭐ Star</option>
-                            <option value="crown">👑 Crown</option>
-                            <option value="diamond">💎 Diamond</option>
-                            <option value="fire">🔥 Fire</option>
-                        </select>
-                    </div>
-                    <div class="design-actions">
-                        <button id="preview-logo">Preview</button>
-                        <button id="save-custom-logo">Save Logo</button>
-                        <button id="close-logo-designer">Close</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
