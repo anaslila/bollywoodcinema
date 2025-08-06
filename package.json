@@ -1,0 +1,38 @@
+{
+  "name": "bollywood-simulator",
+  "version": "1.0.0",
+  "description": "Build your Bollywood cinema empire! Create movies, hire celebrities, and dominate the box office.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8080 -c-1",
+    "build": "echo 'No build process needed for vanilla JS'",
+    "test": "echo 'No tests configured'",
+    "lint": "echo 'No linting configured'",
+    "serve": "npx http-server -p 3000"
+  },
+  "keywords": [
+    "bollywood",
+    "simulator",
+    "game",
+    "pwa",
+    "entertainment",
+    "movies",
+    "cinema"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/bollywood-simulator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/bollywood-simulator/issues"
+  },
+  "homepage": "https://yourusername.github.io/bollywood-simulator",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
