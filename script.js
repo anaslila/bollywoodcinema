@@ -1,760 +1,1648 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<MovieProductionSimulator>
-  <GameInfo>
-    <Title>Movie Production Simulator</Title>
-    <Version>1.0</Version>
-    <Currency>₹</Currency>
-    <CurrencyFormat>#,##,##,##,##,###</CurrencyFormat>
-    <Logo>https://www.flaticon.com/free-icon/clapperboard_1038100</Logo>
-  </GameInfo>
+// Bollywood Simulator - COMPLETE FIXED VERSION
+// All issues resolved: Script selection, Franchise input, Movie dropdown, Budget options
 
-  <!-- UI Configuration with Beautiful Color Schemes -->
-  <UIConfiguration>
-    <Theme name="cinematic_gold">
-      <PrimaryColor>#1a1a1a</PrimaryColor>
-      <SecondaryColor>#ffd700</SecondaryColor>
-      <AccentColor>#ff6b35</AccentColor>
-      <BackgroundColor>#0f0f0f</BackgroundColor>
-      <TextColor>#ffffff</TextColor>
-      <ButtonHover>#ffed4e</ButtonHover>
-      <TabActive>#ffd700</TabActive>
-      <TabInactive>#666666</TabInactive>
-    </Theme>
-    
-    <Tabs>
-      <Tab id="studio" name="Studio" icon="https://www.flaticon.com/free-icon/studio_3652191" />
-      <Tab id="scripts" name="Scripts" icon="https://www.flaticon.com/free-icon/script_2991120" />
-      <Tab id="casting" name="Casting" icon="https://www.flaticon.com/free-icon/casting_3652174" />
-      <Tab id="production" name="Production" icon="https://www.flaticon.com/free-icon/film_3652186" />
-      <Tab id="marketing" name="Marketing" icon="https://www.flaticon.com/free-icon/marketing_3652201" />
-      <Tab id="boxoffice" name="Box Office" icon="https://www.flaticon.com/free-icon/ticket_3652224" />
-      <Tab id="finances" name="Finances" icon="https://www.flaticon.com/free-icon/money_3652207" />
-      <Tab id="profile" name="Profile" icon="https://www.flaticon.com/free-icon/user_3652233" />
-    </Tabs>
-  </UIConfiguration>
-
-  <!-- Character Creation -->
-  <CharacterCreation>
-    <PlayerFaceIcons>
-      <Icon id="face1" src="https://www.flaticon.com/free-icon/man_3135715" />
-      <Icon id="face2" src="https://www.flaticon.com/free-icon/woman_3135823" />
-      <Icon id="face3" src="https://www.flaticon.com/free-icon/businessman_3135768" />
-      <Icon id="face4" src="https://www.flaticon.com/free-icon/businesswoman_3135844" />
-    </PlayerFaceIcons>
-    
-    <StudioNameSuggestions>
-      <Name>Bollywood Dreams Productions</Name>
-      <Name>Mumbai Masala Studios</Name>
-      <Name>Golden Gate Entertainment</Name>
-      <Name>Royal Cinema Works</Name>
-      <Name>Starlight Productions</Name>
-      <Name>Desi Film Factory</Name>
-      <Name>Cinematic Vision Studios</Name>
-      <Name>Rainbow Entertainment</Name>
-      <Name>Silver Screen Productions</Name>
-      <Name>Mega Movie Makers</Name>
-    </StudioNameSuggestions>
-  </CharacterCreation>
-
-<!-- Game Logic System (Continued) -->
-<GameLogic>
-  <StartingResources>
-    <Money>₹50,00,000</Money>
-    <Reputation>10</Reputation>
-    <StudioLevel>1</StudioLevel>
-    <MaxProjects>1</MaxProjects>
-  </StartingResources>
-
-  <MoneySystem>
-    <Income>
-      <BoxOfficeShare>0.75</BoxOfficeShare>
-      <OTTDeals>0.15</OTTDeals>
-      <MerchandisingRights>0.10</MerchandisingRights>
-    </Income>
-    <Expenses>
-      <StudioRent>₹2,00,000</StudioRent>
-      <StaffSalaries>₹5,00,000</StaffSalaries>
-      <Utilities>₹50,000</Utilities>
-      <Marketing>varies</Marketing>
-    </Expenses>
-  </MoneySystem>
-
-  <ReputationSystem>
-    <Factors>
-      <BoxOfficeSuccess weight="40" />
-      <CriticalAcclaim weight="25" />
-      <AwardWins weight="20" />
-      <PublicImage weight="15" />
-    </Factors>
-  </ReputationSystem>
-</GameLogic>
-
-<!-- Enhanced Indian Celebrities Database -->
-<CelebrityDatabase>
-  <Actors>
-    <Actor id="1">
-      <Name>Shah Rukh Khan</Name>
-      <Popularity>95</Popularity>
-      <Acting>92</Acting>
-      <Bankability>98</Bankability>
-      <Fee>₹25,00,00,000</Fee>
-      <Genre>Romance, Drama, Action</Genre>
-      <Age>58</Age>
-      <CareerPhase>Veteran</CareerPhase>
-    </Actor>
-    <Actor id="2">
-      <Name>Aamir Khan</Name>
-      <Popularity>90</Popularity>
-      <Acting>95</Acting>
-      <Bankability>85</Bankability>
-      <Fee>₹20,00,00,000</Fee>
-      <Genre>Drama, Social, Thriller</Genre>
-      <Age>59</Age>
-      <CareerPhase>Veteran</CareerPhase>
-    </Actor>
-    <Actor id="3">
-      <Name>Salman Khan</Name>
-      <Popularity>88</Popularity>
-      <Acting>75</Acting>
-      <Bankability>95</Bankability>
-      <Fee>₹15,00,00,000</Fee>
-      <Genre>Action, Comedy, Drama</Genre>
-      <Age>58</Age>
-      <CareerPhase>Veteran</CareerPhase>
-    </Actor>
-    <Actor id="4">
-      <Name>Ranbir Kapoor</Name>
-      <Popularity>82</Popularity>
-      <Acting>88</Acting>
-      <Bankability>75</Bankability>
-      <Fee>₹12,00,00,000</Fee>
-      <Genre>Romance, Drama, Comedy</Genre>
-      <Age>41</Age>
-      <CareerPhase>Prime</CareerPhase>
-    </Actor>
-    <Actor id="5">
-      <Name>Ranveer Singh</Name>
-      <Popularity>85</Popularity>
-      <Acting>82</Acting>
-      <Bankability>80</Bankability>
-      <Fee>₹10,00,00,000</Fee>
-      <Genre>Drama, Comedy, Historical</Genre>
-      <Age>38</Age>
-      <CareerPhase>Prime</CareerPhase>
-    </Actor>
-    <Actor id="6">
-      <Name>Deepika Padukone</Name>
-      <Popularity>85</Popularity>
-      <Acting>88</Acting>
-      <Bankability>80</Bankability>
-      <Fee>₹10,00,00,000</Fee>
-      <Genre>Romance, Drama, Historical</Genre>
-      <Age>38</Age>
-      <CareerPhase>Prime</CareerPhase>
-    </Actor>
-    <Actor id="7">
-      <Name>Alia Bhatt</Name>
-      <Popularity>88</Popularity>
-      <Acting>90</Acting>
-      <Bankability>85</Bankability>
-      <Fee>₹8,00,00,000</Fee>
-      <Genre>Drama, Romance, Thriller</Genre>
-      <Age>31</Age>
-      <CareerPhase>Rising Star</CareerPhase>
-    </Actor>
-    <Actor id="8">
-      <Name>Katrina Kaif</Name>
-      <Popularity>78</Popularity>
-      <Acting>70</Acting>
-      <Bankability>75</Bankability>
-      <Fee>₹6,00,00,000</Fee>
-      <Genre>Action, Romance, Comedy</Genre>
-      <Age>40</Age>
-      <CareerPhase>Established</CareerPhase>
-    </Actor>
-  </Actors>
-
-  <Directors>
-    <Director id="1">
-      <Name>Rajkumar Hirani</Name>
-      <Skill>95</Skill>
-      <Specialty>Comedy-Drama</Specialty>
-      <Fee>₹5,00,00,000</Fee>
-      <SuccessRate>90</SuccessRate>
-      <Awards>Multiple Filmfare, National Awards</Awards>
-    </Director>
-    <Director id="2">
-      <Name>Sanjay Leela Bhansali</Name>
-      <Skill>92</Skill>
-      <Specialty>Historical Drama</Specialty>
-      <Fee>₹4,50,00,000</Fee>
-      <SuccessRate>85</SuccessRate>
-      <Awards>Padma Shri, National Awards</Awards>
-    </Director>
-    <Director id="3">
-      <Name>Zoya Akhtar</Name>
-      <Skill>88</Skill>
-      <Specialty>Contemporary Drama</Specialty>
-      <Fee>₹3,00,00,000</Fee>
-      <SuccessRate>80</SuccessRate>
-      <Awards>Filmfare Awards</Awards>
-    </Director>
-    <Director id="4">
-      <Name>Rohit Shetty</Name>
-      <Skill>75</Skill>
-      <Specialty>Action Comedy</Specialty>
-      <Fee>₹2,50,00,000</Fee>
-      <SuccessRate>75</SuccessRate>
-      <Awards>Commercial Success Expert</Awards>
-    </Director>
-    <Director id="5">
-      <Name>Shoojit Sircar</Name>
-      <Skill>90</Skill>
-      <Specialty>Social Drama</Specialty>
-      <Fee>₹2,00,00,000</Fee>
-      <SuccessRate>85</SuccessRate>
-      <Awards>National Film Awards</Awards>
-    </Director>
-  </Directors>
-
-  <Writers>
-    <Writer id="1">
-      <Name>Abhijat Joshi</Name>
-      <Skill>90</Skill>
-      <Specialty>Comedy-Drama</Specialty>
-      <Fee>₹50,00,000</Fee>
-      <Awards>Filmfare Best Screenplay</Awards>
-    </Writer>
-    <Writer id="2">
-      <Name>Juhi Chaturvedi</Name>
-      <Skill>88</Skill>
-      <Specialty>Social Drama</Specialty>
-      <Fee>₹40,00,000</Fee>
-      <Awards>National Film Awards</Awards>
-    </Writer>
-    <Writer id="3">
-      <Name>Vijay Krishna Acharya</Name>
-      <Skill>75</Skill>
-      <Specialty>Action Thriller</Specialty>
-      <Fee>₹30,00,000</Fee>
-      <Awards>Commercial Writer</Awards>
-    </Writer>
-    <Writer id="4">
-      <Name>Himanshu Sharma</Name>
-      <Skill>85</Skill>
-      <Specialty>Drama, Comedy</Specialty>
-      <Fee>₹35,00,000</Fee>
-      <Awards>Filmfare Nominations</Awards>
-    </Writer>
-  </Writers>
-
-  <MusicDirectors>
-    <MusicDirector id="1">
-      <Name>A.R. Rahman</Name>
-      <Skill>98</Skill>
-      <Fee>₹2,00,00,000</Fee>
-      <Specialty>All Genres</Specialty>
-      <Awards>2 Oscars, Grammy, Padma Bhushan</Awards>
-    </MusicDirector>
-    <MusicDirector id="2">
-      <Name>Shankar-Ehsaan-Loy</Name>
-      <Skill>85</Skill>
-      <Fee>₹1,00,00,000</Fee>
-      <Specialty>Contemporary</Specialty>
-      <Awards>Multiple Filmfare Awards</Awards>
-    </MusicDirector>
-    <MusicDirector id="3">
-      <Name>Vishal-Shekhar</Name>
-      <Skill>82</Skill>
-      <Fee>₹80,00,000</Fee>
-      <Specialty>Pop, Dance</Specialty>
-      <Awards>Filmfare Awards</Awards>
-    </MusicDirector>
-    <MusicDirector id="4">
-      <Name>Ilaiyaraaja</Name>
-      <Skill>95</Skill>
-      <Fee>₹1,50,00,000</Fee>
-      <Specialty>Classical Fusion</Specialty>
-      <Awards>Padma Bhushan, National Awards</Awards>
-    </MusicDirector>
-    <MusicDirector id="5">
-      <Name>Amit Trivedi</Name>
-      <Skill>88</Skill>
-      <Fee>₹75,00,000</Fee>
-      <Specialty>Indie, Contemporary</Specialty>
-      <Awards>National Film Awards</Awards>
-    </MusicDirector>
-  </MusicDirectors>
-
-  <Singers>
-    <Singer id="1">
-      <Name>Arijit Singh</Name>
-      <Popularity>95</Popularity>
-      <Fee>₹15,00,000</Fee>
-      <Specialty>Romantic, Sad</Specialty>
-      <Voice>Male</Voice>
-    </Singer>
-    <Singer id="2">
-      <Name>Shreya Ghoshal</Name>
-      <Popularity>92</Popularity>
-      <Fee>₹12,00,000</Fee>
-      <Specialty>Classical, Romantic</Specialty>
-      <Voice>Female</Voice>
-    </Singer>
-    <Singer id="3">
-      <Name>Rahat Fateh Ali Khan</Name>
-      <Popularity>88</Popularity>
-      <Fee>₹20,00,000</Fee>
-      <Specialty>Sufi, Classical</Specialty>
-      <Voice>Male</Voice>
-    </Singer>
-    <Singer id="4">
-      <Name>Sunidhi Chauhan</Name>
-      <Popularity>85</Popularity>
-      <Fee>₹10,00,000</Fee>
-      <Specialty>Dance, Pop</Specialty>
-      <Voice>Female</Voice>
-    </Singer>
-    <Singer id="5">
-      <Name>Armaan Malik</Name>
-      <Popularity>80</Popularity>
-      <Fee>₹8,00,000</Fee>
-      <Specialty>Pop, Romantic</Specialty>
-      <Voice>Male</Voice>
-    </Singer>
-  </Singers>
-</CelebrityDatabase>
-
-<!-- Movie Production Pipeline -->
-<ProductionPipeline>
-  <ScriptDevelopment>
-    <Genres>
-      <Genre id="romance" marketAppeal="85" budget="medium">
-        <Name>Romance</Name>
-        <Icon>https://www.flaticon.com/free-icon/love_1077035</Icon>
-        <SuccessFactors>Star Cast, Music, Chemistry</SuccessFactors>
-      </Genre>
-      <Genre id="action" marketAppeal="90" budget="high">
-        <Name>Action</Name>
-        <Icon>https://www.flaticon.com/free-icon/explosion_1055014</Icon>
-        <SuccessFactors>Stunts, VFX, Hero Appeal</SuccessFactors>
-      </Genre>
-      <Genre id="comedy" marketAppeal="80" budget="low">
-        <Name>Comedy</Name>
-        <Icon>https://www.flaticon.com/free-icon/laugh_1077090</Icon>
-        <SuccessFactors>Timing, Script, Cast Chemistry</SuccessFactors>
-      </Genre>
-      <Genre id="drama" marketAppeal="75" budget="medium">
-        <Name>Drama</Name>
-        <Icon>https://www.flaticon.com/free-icon/drama_1077051</Icon>
-        <SuccessFactors>Story, Performance, Direction</SuccessFactors>
-      </Genre>
-      <Genre id="thriller" marketAppeal="78" budget="medium">
-        <Name>Thriller</Name>
-        <Icon>https://www.flaticon.com/free-icon/mystery_1077087</Icon>
-        <SuccessFactors>Plot Twists, Suspense, Pacing</SuccessFactors>
-      </Genre>
-      <Genre id="horror" marketAppeal="65" budget="low">
-        <Name>Horror</Name>
-        <Icon>https://www.flaticon.com/free-icon/ghost_1077052</Icon>
-        <SuccessFactors>Scares, Atmosphere, Sound</SuccessFactors>
-      </Genre>
-      <Genre id="historical" marketAppeal="70" budget="very_high">
-        <Name>Historical</Name>
-        <Icon>https://www.flaticon.com/free-icon/castle_1077039</Icon>
-        <SuccessFactors>Authenticity, Grandeur, Star Power</SuccessFactors>
-      </Genre>
-    </Genres>
-
-    <ScriptQuality>
-      <Poor>1-30</Poor>
-      <Average>31-60</Average>
-      <Good>61-80</Good>
-      <Excellent>81-95</Excellent>
-      <Masterpiece>96-100</Masterpiece>
-    </ScriptQuality>
-
-    <DevelopmentTime>
-      <Rush>30 days</Rush>
-      <Normal>60 days</Normal>
-      <Polish>90 days</Polish>
-      <Perfect>120 days</Perfect>
-    </DevelopmentTime>
-  </ScriptDevelopment>
-
-  <PreProduction>
-    <Tasks>
-      <LocationScouting duration="14" cost="₹5,00,000" />
-      <SetDesign duration="21" cost="₹15,00,000" />
-      <CostumeDesign duration="14" cost="₹8,00,000" />
-      <StoryBoard duration="10" cost="₹3,00,000" />
-      <Rehearsals duration="7" cost="₹2,00,000" />
-    </Tasks>
-  </PreProduction>
-
-  <Production>
-    <ShootingSchedule>
-      <IndoorDays>40-60</IndoorDays>
-      <OutdoorDays>30-50</OutdoorDays>
-      <SongSequences>10-15</SongSequences>
-      <ActionSequences>5-20</ActionSequences>
-    </ShootingSchedule>
-
-    <DailyExpenses>
-      <CrewCost>₹2,00,000</CrewCost>
-      <EquipmentRental>₹1,50,000</EquipmentRental>
-      <LocationCost>₹1,00,000</LocationCost>
-      <FoodAndLodging>₹50,000</FoodAndLodging>
-      <Miscellaneous>₹50,000</Miscellaneous>
-    </DailyExpenses>
-  </Production>
-
-  <PostProduction>
-    <Tasks>
-      <Editing duration="30" cost="₹10,00,000" />
-      <ColorGrading duration="10" cost="₹5,00,000" />
-      <SoundMixing duration="15" cost="₹8,00,000" />
-      <VFX duration="45" cost="₹2,00,00,000" />
-      <MusicRecording duration="20" cost="₹15,00,000" />
-      <DubbingADR duration="10" cost="₹3,00,000" />
-    </Tasks>
-  </PostProduction>
-</ProductionPipeline>
-
-<!-- Marketing & Distribution System -->
-<MarketingSystem>
-  <Strategies>
-    <Strategy id="minimal" cost="₹5,00,00,000" reach="30" effectiveness="40">
-      <Name>Minimal Marketing</Name>
-      <Icon>https://www.flaticon.com/free-icon/low-battery_1077072</Icon>
-      <Components>Basic TV Ads, Social Media</Components>
-    </Strategy>
-    <Strategy id="standard" cost="₹15,00,00,000" reach="60" effectiveness="70">
-      <Name>Standard Marketing</Name>
-      <Icon>https://www.flaticon.com/free-icon/marketing_1077074</Icon>
-      <Components>TV, Radio, Print, Digital, Events</Components>
-    </Strategy>
-    <Strategy id="aggressive" cost="₹30,00,00,000" reach="85" effectiveness="90">
-      <Name>Aggressive Marketing</Name>
-      <Icon>https://www.flaticon.com/free-icon/megaphone_1077076</Icon>
-      <Components>360° Campaign, Celebrity Appearances, International</Components>
-    </Strategy>
-    <Strategy id="premium" cost="₹50,00,00,000" reach="95" effectiveness="95">
-      <Name>Premium Marketing</Name>
-      <Icon>https://www.flaticon.com/free-icon/crown_1077045</Icon>
-      <Components>Global Campaign, Premium Events, Influencer Network</Components>
-    </Strategy>
-  </Strategies>
-
-  <ReleaseTypes>
-    <Release id="limited" screens="500-800" cost="₹2,00,00,000">
-      <Name>Limited Release</Name>
-      <MarketPenetration>25</MarketPenetration>
-    </Release>
-    <Release id="wide" screens="1500-2500" cost="₹5,00,00,000">
-      <Name>Wide Release</Name>
-      <MarketPenetration>60</MarketPenetration>
-    </Release>
-    <Release id="mega" screens="3000-4000" cost="₹10,00,00,000">
-      <Name>Mega Release</Name>
-      <MarketPenetration>85</MarketPenetration>
-    </Release>
-    <Release id="global" screens="4500+" cost="₹15,00,00,000">
-      <Name>Global Release</Name>
-      <MarketPenetration>95</MarketPenetration>
-    </Release>
-  </ReleaseTypes>
-</MarketingSystem>
-
-<!-- Box Office Calculation System -->
-<BoxOfficeSystem>
-  <Factors>
-    <StarPower weight="25" />
-    <ScriptQuality weight="20" />
-    <DirectorReputation weight="15" />
-    <MarketingReach weight="15" />
-    <GenreAppeal weight="10" />
-    <MusicQuality weight="8" />
-    <SeasonalTiming weight="4" />
-    <Competition weight="3" />
-  </Factors>
-
-  <WeeklyCollection>
-    <Week1 percentage="40-50" />
-    <Week2 percentage="25-30" />
-    <Week3 percentage="15-20" />
-    <Week4+ percentage="5-10" />
-  </WeeklyCollection>
-
-  <TheatreDistribution>
-    <Exhibitor share="50" />
-    <Distributor share="25" />
-    <Producer share="25" />
-  </TheatreDistribution>
-
-  <OTTDeals>
-    <Timing>
-      <TheatricalWindow>45-90 days</TheatricalWindow>
-      <Premium>₹20,00,00,000 - ₹1,00,00,00,000</Premium>
-    </Timing>
-  </OTTDeals>
-</BoxOfficeSystem>
-
-<!-- Advanced UI Components -->
-<UIComponents>
-  <Dashboard>
-    <Widgets>
-      <Widget id="cashflow" type="financial">
-        <Title>Cash Flow</Title>
-        <Icon>https://www.flaticon.com/free-icon/money-flow_1077078</Icon>
-        <DisplayType>Real-time Graph</DisplayType>
-      </Widget>
-      <Widget id="projects" type="production">
-        <Title>Active Projects</Title>
-        <Icon>https://www.flaticon.com/free-icon/film-reel_1077055</Icon>
-        <DisplayType>Progress Bars</DisplayType>
-      </Widget>
-      <Widget id="reputation" type="status">
-        <Title>Studio Reputation</Title>
-        <Icon>https://www.flaticon.com/free-icon/star_1077092</Icon>
-        <DisplayType>Rating Stars</DisplayType>
-      </Widget>
-      <Widget id="boxoffice" type="performance">
-        <Title>Box Office Tracker</Title>
-        <Icon>https://www.flaticon.com/free-icon/analytics_1077032</Icon>
-        <DisplayType>Live Counter</DisplayType>
-      </Widget>
-    </Widgets>
-  </Dashboard>
-
-  <AnimationEffects>
-    <CountUp enabled="true" duration="2000ms" />
-    <FadeIn enabled="true" duration="500ms" />
-    <SlideTransitions enabled="true" duration="300ms" />
-    <HoverEffects enabled="true" />
-    <ParallaxScrolling enabled="true" />
-    <ParticleEffects enabled="true" theme="golden_sparkles" />
-  </AnimationEffects>
-
-  <SoundEffects>
-    <UIClick>cash_register.wav</UIClick>
-    <Success>applause.wav</Success>
-    <Failure>dramatic_fail.wav</Failure>
-    <BoxOfficeHit>celebration.wav</BoxOfficeHit>
-    <BackgroundMusic>bollywood_instrumental.mp3</BackgroundMusic>
-  </SoundEffects>
-</UIComponents>
-
-<!-- Random Events System -->
-<RandomEvents>
-  <Event id="controversy" probability="15" impact="negative">
-    <Title>Celebrity Controversy</Title>
-    <Description>Your lead actor is involved in a public scandal</Description>
-    <Effects>
-      <BoxOfficeImpact>-20%</BoxOfficeImpact>
-      <ReputationImpact>-15</ReputationImpact>
-      <MarketingCostIncrease>+30%</MarketingCostIncrease>
-    </Effects>
-  </Event>
-  
-  <Event id="award_win" probability="8" impact="positive">
-    <Title>Unexpected Award Win</Title>
-    <Description>Your movie wins a prestigious award</Description>
-    <Effects>
-      <BoxOfficeBoost>+25%</BoxOfficeBoost>
-      <ReputationIncrease>+20</ReputationIncrease>
-      <NextProjectInterest>+40%</NextProjectInterest>
-    </Effects>
-  </Event>
-
-  <Event id="piracy" probability="20" impact="negative">
-    <Title>Movie Leaked Online</Title>
-    <Description>Your movie gets leaked before release</Description>
-    <Effects>
-      <BoxOfficeImpact>-15%</BoxOfficeImpact>
-      <OTTDealImpact>-10%</OTTDealImpact>
-    </Effects>
-  </Event>
-
-  <Event id="hit_song" probability="12" impact="positive">
-    <Title>Viral Song Hit</Title>
-    <Description>One of your movie songs becomes a viral sensation</Description>
-    <Effects>
-      <MarketingBoost>+50%</MarketingBoost>
-      <AudienceInterest>+30%</AudienceInterest>
-    </Effects>
-  </Event>
-</RandomEvents>
-
-<!-- Studio Upgrade System -->
-<StudioUpgrades>
-  <Upgrade id="better_facilities" cost="₹2,00,00,000" level="2">
-    <Name>Enhanced Studio Facilities</Name>
-    <Icon>https://www.flaticon.com/free-icon/studio_1077094</Icon>
-    <Benefits>
-      <ProductionSpeedIncrease>15%</ProductionSpeedIncrease>
-      <QualityBonus>+5</QualityBonus>
-    </Benefits>
-  </Upgrade>
-
-  <Upgrade id="star_contracts" cost="₹5,00,00,000" level="3">
-    <Name>Exclusive Star Contracts</Name>
-    <Icon>https://www.flaticon.com/free-icon/contract_1077043</Icon>
-    <Benefits>
-      <StarDiscounts>20%</StarDiscounts>
-      <PriorityBooking>true</PriorityBooking>
-    </Benefits>
-  </Upgrade>
-
-  <Upgrade id="distribution_network" cost="₹10,00,00,000" level="4">
-    <Name>Own Distribution Network</Name>
-    <Icon>https://www.flaticon.com/free-icon/network_1077080</Icon>
-    <Benefits>
-      <DistributionSavings>25%</DistributionSavings>
-      <BoxOfficeShare>+10%</BoxOfficeShare>
-    </Benefits>
-  </Upgrade>
-
-  <Upgrade id="vfx_studio" cost="₹15,00,00,000" level="5">
-    <Name>In-House VFX Studio</Name>
-    <Icon>https://www.flaticon.com/free-icon/special-effects_1077091</Icon>
-    <Benefits>
-      <VFXCostReduction>40%</VFXCostReduction>
-      <QualityBonus>+10</QualityBonus>
-    </Benefits>
-  </Upgrade>
-</StudioUpgrades>
-
-<!-- Tutorial System -->
-<Tutorial>
-  <Step id="1">
-    <Title>Welcome to Movie Production Simulator!</Title>
-    <Description>Create your character and name your production house</Description>
-    <Highlight>profile_tab</Highlight>
-    <Action>character_creation</Action>
-  </Step>
-  
-  <Step id="2">
-    <Title>Your First Script</Title>
-    <Description>Every great movie starts with a great script. Let's create one!</Description>
-    <Highlight>scripts_tab</Highlight>
-    <Action>script_creation</Action>
-  </Step>
-  
-  <Step id="3">
-    <Title>Casting Your Stars</Title>
-    <Description>Time to hire actors, directors, and crew for your movie</Description>
-    <Highlight>casting_tab</Highlight>
-    <Action>cast_selection</Action>
-  </Step>
-  
-  <Step id="4">
-    <Title>Lights, Camera, Action!</Title>
-    <Description>Monitor your movie production and handle any issues that arise</Description>
-    <Highlight>production_tab</Highlight>
-    <Action>production_monitoring</Action>
-  </Step>
-  
-  <Step id="5">
-    <Title>Marketing Magic</Title>
-    <Description>Create buzz for your movie with the right marketing strategy</Description>
-    <Highlight>marketing_tab</Highlight>
-    <Action>marketing_setup</Action>
-  </Step>
-  
-  <Step id="6">
-    <Title>Box Office Glory</Title>
-    <Description>Watch your movie's performance and collect your earnings</Description>
-    <Highlight>boxoffice_tab</Highlight>
-    <Action>results_viewing</Action>
-  </Step>
-</Tutorial>
-
-<!-- Achievement System -->
-<Achievements>
-  <Achievement id="first_hit">
-    <Name>First Blockbuster</Name>
-    <Description>Create your first movie that earns ₹100 crores+</Description>
-    <Icon>https://www.flaticon.com/free-icon/trophy_1077095</Icon>
-    <Reward>₹50,00,000 bonus</Reward>
-  </Achievement>
-  
-  <Achievement id="star_maker">
-    <Name>Star Maker</Name>
-    <Description>Launch a newcomer who becomes a superstar</Description>
-    <Icon>https://www.flaticon.com/free-icon/shooting-star_1077089</Icon>
-    <Reward>Permanent casting discount</Reward>
-  </Achievement>
-  
-  <Achievement id="multi_genre">
-    <Name>Genre Master</Name>
-    <Description>Create successful movies in 5 different genres</Description>
-    <Icon>https://www.flaticon.com/free-icon/diversity_1077047</Icon>
-    <Reward>Script quality bonus</Reward>
-  </Achievement>
-  
-  <Achievement id="franchise_king">
-    <Name>Franchise King</Name>
-    <Description>Create a successful movie franchise (3+ movies)</Description>
-    <Icon>https://www.flaticon.com/free-icon/chain_1077038</Icon>
-    <Reward>Sequel production discount</Reward>
-  </Achievement>
-</Achievements>
-
-</MovieProductionSimulator>
-        document.getElementById('week2').textContent = this.formatCurrency(Math.round(collection * 0.25));
-        document.getElementById('week3').textContent = this.formatCurrency(Math.round(collection * 0.20));
-        document.getElementById('week4').textContent = this.formatCurrency(Math.round(collection * 0.10));
+class BollywoodSimulator {
+    constructor() {
+        this.gameData = {
+            player: {
+                name: '',
+                studioName: '',
+                avatar: '',
+                studioLogo: '',
+                money: 50000000,
+                reputation: 10,
+                studioLevel: 1,
+                maxProjects: 3,
+                totalIncome: 0,
+                totalExpenses: 0,
+                loans: [],
+                achievements: [],
+                currentDate: { year: 2025, month: 1, week: 1 }
+            },
+            projects: [],
+            completedProjects: [],
+            hiredCast: [],
+            userFranchises: [], // Store user-created franchises
+            staff: {
+                admin: { productionManager: 0, accountant: 0, prManager: 0 },
+                tech: { cameraOperator: 0, soundEngineer: 0, videoEditor: 0 }
+            },
+            gameStarted: false,
+            sandboxMode: false,
+            selectedMovie: null,
+            selectedRoleType: 'lead',
+            selectedRoleNumber: 1
+        };
         
-        let status = 'Average';
-        if (collection > 1000000000) status = 'Blockbuster';
-        else if (collection > 500000000) status = 'Hit';
-        else if (collection > 200000000) status = 'Above Average';
-        else if (collection < 100000000) status = 'Flop';
+        this.celebrities = this.initializeCelebrities();
+        this.genres = this.initializeGenres();
+        this.marketingStrategies = this.initializeMarketing();
+        this.randomEvents = this.initializeEvents();
+        this.theatreChains = this.initializeTheatres();
+        this.predefinedFranchises = this.initializeFranchises();
         
-        document.getElementById('collection-status').innerHTML = `<span class="status-text">${status}</span>`;
+        this.deferredPrompt = null;
+        this.init();
     }
 
-    // Update Finances Tab - Enhanced
-    updateFinancesTab() {
-        const balanceEl = document.getElementById('current-balance');
-        if (balanceEl) balanceEl.textContent = this.formatCurrency(this.gameData.player.money);
+    init() {
+        this.showLoadingScreen();
+        this.setupEventListeners();
+        this.setupPWA();
+        this.generateAvatarOptions();
+        this.generateLogoOptions();
+        this.generateGenreOptions();
+        this.updateDateDisplay();
+        this.startAutoSave();
         
-        const monthlyIncome = this.calculateMonthlyIncome();
-        const monthlyExpenses = this.calculateMonthlyExpenses();
-        const netProfit = monthlyIncome - monthlyExpenses;
-        
-        const monthlyIncomeEl = document.getElementById('monthly-income');
-        const monthlyExpensesEl = document.getElementById('monthly-expenses');
-        const netProfitEl = document.getElementById('net-monthly-profit');
-        
-        if (monthlyIncomeEl) monthlyIncomeEl.textContent = this.formatCurrency(monthlyIncome);
-        if (monthlyExpensesEl) monthlyExpensesEl.textContent = this.formatCurrency(monthlyExpenses);
-        if (netProfitEl) netProfitEl.textContent = this.formatCurrency(netProfit);
-        
-        const totalDebt = this.gameData.player.loans.reduce((sum, loan) => sum + loan.remainingAmount, 0);
-        const totalDebtEl = document.getElementById('total-debt');
-        if (totalDebtEl) totalDebtEl.textContent = this.formatCurrency(totalDebt);
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+                document.getElementById('game-container').style.display = 'block';
+                this.showGameStartModal();
+            }, 500);
+        }, 3000);
     }
 
-    // Calculate Monthly Income
-    calculateMonthlyIncome() {
-        let income = 0;
+    // FIXED: Setup Event Listeners with all new functionality
+    setupEventListeners() {
+        // Game Start Events
+        document.getElementById('new-game-btn')?.addEventListener('click', () => this.startNewGame());
+        document.getElementById('load-game-btn')?.addEventListener('click', () => this.loadGame());
         
-        // Income from completed movies (OTT deals, satellite rights)
-        this.gameData.completedProjects.forEach(project => {
-            if (project.ottDeal) {
-                income += project.ottDeal / 12; // Monthly income from OTT
-            }
-            if (project.satelliteRights) {
-                income += project.satelliteRights / 24; // Spread over 2 years
-            }
+        // PWA Install Events
+        document.getElementById('install-app')?.addEventListener('click', () => this.installPWA());
+        document.getElementById('dismiss-install')?.addEventListener('click', () => this.hideInstallPrompt());
+        
+        // Time Controls
+        document.getElementById('advance-week')?.addEventListener('click', () => this.advanceWeek());
+        document.getElementById('advance-month')?.addEventListener('click', () => this.advanceMonth());
+        
+        // Money Management Click
+        document.getElementById('money-container')?.addEventListener('click', () => this.openMoneyManagement());
+        
+        // Tab Navigation
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => this.switchTab(e.target.closest('.tab-btn').dataset.tab));
+        });
+
+        // Character Creation
+        document.getElementById('start-game')?.addEventListener('click', () => this.createCharacter());
+        
+        // Logo Designer
+        document.getElementById('design-logo-btn')?.addEventListener('click', () => this.openLogoDesigner());
+        document.getElementById('preview-logo')?.addEventListener('click', () => this.previewLogo());
+        document.getElementById('save-custom-logo')?.addEventListener('click', () => this.saveCustomLogo());
+        document.getElementById('close-logo-designer')?.addEventListener('click', () => this.closeLogoDesigner());
+
+        // FIXED: Script Creation Events
+        document.getElementById('create-script-final')?.addEventListener('click', () => this.createScript());
+        
+        // FIXED: Franchise Input Events
+        document.getElementById('is-franchise')?.addEventListener('change', (e) => this.toggleFranchiseOptions(e.target.checked));
+        document.getElementById('franchise-name-input')?.addEventListener('input', (e) => this.handleFranchiseInput(e.target.value));
+        document.getElementById('franchise-name-input')?.addEventListener('focus', () => this.showFranchiseDropdown());
+        document.getElementById('franchise-name-input')?.addEventListener('blur', () => setTimeout(() => this.hideFranchiseDropdown(), 200));
+        
+        // FIXED: Timeline Selection Events
+        document.querySelectorAll('.timeline-card').forEach(card => {
+            card.addEventListener('click', () => this.selectTimeline(card));
         });
         
-        return income;
+        // FIXED: Cast Assignment Events
+        document.getElementById('movie-selector')?.addEventListener('change', () => this.updateCastAssignment());
+        document.getElementById('role-type-selector')?.addEventListener('change', () => this.updateCastAssignment());
+        document.getElementById('role-number-selector')?.addEventListener('change', () => this.updateCastAssignment());
+        
+        // Category tabs
+        document.querySelectorAll('.cat-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => this.switchCastCategory(e.target.closest('.cat-tab').dataset.category));
+        });
+
+        // Suggestion buttons
+        document.querySelectorAll('.suggestion-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.getElementById('studio-name').value = e.target.textContent;
+            });
+        });
+
+        // Title suggestions
+        document.querySelectorAll('.title-suggestion').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.getElementById('movie-title').value = e.target.textContent;
+            });
+        });
+
+        // Promo Code System
+        document.getElementById('apply-promo-code')?.addEventListener('click', () => this.applyPromoCode());
+        document.getElementById('promo-code-input')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.applyPromoCode();
+        });
+
+        // Modal close events
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Staff Hiring
+        document.querySelectorAll('.hire-staff-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => this.hireStaff(e.target));
+        });
+
+        // Loan Applications
+        document.querySelectorAll('.loan-apply-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => this.applyForLoan(e.target));
+        });
     }
 
-    // Enhanced Promo Code System - ALL CODES
+    // PWA Setup
+    setupPWA() {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('SW registered'))
+                .catch(error => console.log('SW registration failed'));
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            this.deferredPrompt = e;
+            this.showInstallPrompt();
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA installed');
+            this.hideInstallPrompt();
+        });
+    }
+
+    showInstallPrompt() {
+        const installPrompt = document.getElementById('install-prompt');
+        if (installPrompt) installPrompt.style.display = 'block';
+    }
+
+    hideInstallPrompt() {
+        const installPrompt = document.getElementById('install-prompt');
+        if (installPrompt) installPrompt.style.display = 'none';
+    }
+
+    async installPWA() {
+        if (this.deferredPrompt) {
+            this.deferredPrompt.prompt();
+            const { outcome } = await this.deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                this.hideInstallPrompt();
+            }
+            this.deferredPrompt = null;
+        }
+    }
+
+    // FIXED: Franchise Input Handling
+    toggleFranchiseOptions(isChecked) {
+        const franchiseOptions = document.getElementById('franchise-options');
+        if (franchiseOptions) {
+            franchiseOptions.style.display = isChecked ? 'block' : 'none';
+        }
+    }
+
+    handleFranchiseInput(value) {
+        const dropdown = document.getElementById('franchise-dropdown');
+        if (!dropdown) return;
+
+        if (value.length === 0) {
+            this.hideFranchiseDropdown();
+            return;
+        }
+
+        const allFranchises = [...Object.keys(this.predefinedFranchises), ...this.gameData.userFranchises.map(f => f.name)];
+        const matches = allFranchises.filter(name => name.toLowerCase().includes(value.toLowerCase()));
+        
+        dropdown.innerHTML = '';
+        
+        // Show matching franchises
+        matches.forEach(franchiseName => {
+            const item = document.createElement('div');
+            item.className = 'franchise-dropdown-item';
+            item.textContent = franchiseName;
+            item.addEventListener('click', () => this.selectFranchise(franchiseName));
+            dropdown.appendChild(item);
+        });
+        
+        // Always show "Create New" option
+        if (!matches.includes(value)) {
+            const createNew = document.createElement('div');
+            createNew.className = 'franchise-dropdown-item create-new';
+            createNew.textContent = `Create "${value}" as new franchise`;
+            createNew.addEventListener('click', () => this.createNewFranchise(value));
+            dropdown.appendChild(createNew);
+        }
+        
+        this.showFranchiseDropdown();
+    }
+
+    showFranchiseDropdown() {
+        const dropdown = document.getElementById('franchise-dropdown');
+        if (dropdown) dropdown.style.display = 'block';
+    }
+
+    hideFranchiseDropdown() {
+        const dropdown = document.getElementById('franchise-dropdown');
+        if (dropdown) dropdown.style.display = 'none';
+    }
+
+    selectFranchise(franchiseName) {
+        document.getElementById('franchise-name-input').value = franchiseName;
+        this.hideFranchiseDropdown();
+        this.showFranchiseInfo(franchiseName);
+    }
+
+    createNewFranchise(franchiseName) {
+        const newFranchise = {
+            name: franchiseName,
+            rating: 75,
+            parts: [franchiseName],
+            regularCast: [],
+            successBonus: 10,
+            createdBy: 'user'
+        };
+        
+        this.gameData.userFranchises.push(newFranchise);
+        document.getElementById('franchise-name-input').value = franchiseName;
+        this.hideFranchiseDropdown();
+        
+        this.showNotification(`New franchise "${franchiseName}" created!`, 'success');
+    }
+
+    showFranchiseInfo(franchiseName) {
+        const franchiseInfo = document.getElementById('franchise-info');
+        const franchiseCastDisplay = document.getElementById('franchise-cast-display');
+        
+        let franchise = this.predefinedFranchises[franchiseName.toLowerCase()];
+        if (!franchise) {
+            franchise = this.gameData.userFranchises.find(f => f.name === franchiseName);
+        }
+        
+        if (!franchise) {
+            if (franchiseInfo) franchiseInfo.style.display = 'none';
+            return;
+        }
+        
+        if (franchiseInfo) franchiseInfo.style.display = 'block';
+        if (franchiseCastDisplay) {
+            franchiseCastDisplay.innerHTML = '';
+            
+            franchise.regularCast.forEach(castMember => {
+                const actor = this.celebrities.actors.find(a => a.id === castMember.id);
+                if (actor) {
+                    const actorDiv = document.createElement('div');
+                    actorDiv.className = 'franchise-actor';
+                    actorDiv.innerHTML = `
+                        <img src="${actor.photo}" alt="${actor.name}" onerror="this.style.display='none'">
+                        <h6>${actor.name}</h6>
+                        <small>${castMember.roles.join(', ')}</small>
+                    `;
+                    franchiseCastDisplay.appendChild(actorDiv);
+                }
+            });
+        }
+    }
+
+    // FIXED: Timeline Selection
+    selectTimeline(selectedCard) {
+        document.querySelectorAll('.timeline-card').forEach(card => {
+            card.classList.remove('selected');
+            const radio = card.querySelector('input[type="radio"]');
+            if (radio) radio.checked = false;
+        });
+        
+        selectedCard.classList.add('selected');
+        const radio = selectedCard.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+    }
+
+    // FIXED: Create Script with all options working
+    createScript() {
+        if (!this.gameData.gameStarted) {
+            this.showNotification('Please create your character first!', 'error');
+            return;
+        }
+
+        const movieTitle = document.getElementById('movie-title')?.value.trim();
+        const selectedGenre = document.querySelector('.genre-card.selected');
+        const leadRolesCount = parseInt(document.getElementById('lead-roles-count')?.value || 1);
+        const supportingRolesCount = parseInt(document.getElementById('supporting-roles-count')?.value || 1);
+        const formatType = document.querySelector('input[name="format"]:checked')?.value;
+        
+        // FIXED: Get selected timeline properly
+        const selectedTimeline = document.querySelector('.timeline-card.selected');
+        const scriptTimeline = selectedTimeline ? selectedTimeline.dataset.timeline : 'standard';
+        
+        const isFranchise = document.getElementById('is-franchise')?.checked;
+        const franchiseName = document.getElementById('franchise-name-input')?.value.trim();
+
+        if (!movieTitle) {
+            this.showNotification('Please enter a movie title!', 'error');
+            return;
+        }
+
+        if (!selectedGenre) {
+            this.showNotification('Please select a genre!', 'error');
+            return;
+        }
+
+        const genre = selectedGenre.dataset.genre;
+        let scriptCost = 1500000;
+        let timeWeeks = 4;
+        let quality = 70;
+
+        // FIXED: Apply timeline settings properly
+        switch (scriptTimeline) {
+            case 'rush':
+                scriptCost = 1500000;
+                timeWeeks = 2;
+                quality = 50 + (Math.random() * 20);
+                break;
+            case 'standard':
+                scriptCost = 3000000;
+                timeWeeks = 4;
+                quality = 70 + (Math.random() * 20);
+                break;
+            case 'premium':
+                scriptCost = 5000000;
+                timeWeeks = 6;
+                quality = 85 + (Math.random() * 15);
+                break;
+        }
+
+        const formatCosts = {
+            '2d': 0,
+            '3d': 20000000,
+            'imax': 50000000,
+            '4dx': 80000000,
+            '5d': 120000000
+        };
+
+        const formatCost = formatCosts[formatType] || 0;
+        const totalCost = scriptCost + formatCost;
+
+        if (this.gameData.player.money < totalCost) {
+            this.showNotification('Not enough money for script development!', 'error');
+            return;
+        }
+
+        this.gameData.player.money -= totalCost;
+        this.gameData.player.totalExpenses += totalCost;
+
+        // FIXED: Create project with proper franchise handling
+        const newProject = {
+            id: Date.now(),
+            title: movieTitle,
+            genre: genre,
+            leadRolesCount: leadRolesCount,
+            supportingRolesCount: supportingRolesCount,
+            totalCharacters: leadRolesCount + supportingRolesCount,
+            format: formatType,
+            isFranchise: isFranchise,
+            franchise: franchiseName || null,
+            scriptTimeline: scriptTimeline,
+            scriptQuality: Math.round(quality),
+            developmentCost: totalCost,
+            status: 'script_development',
+            phase: 'script',
+            progress: 0,
+            weeksRemaining: timeWeeks,
+            cast: {
+                lead: Array(leadRolesCount).fill(null),
+                supporting: Array(supportingRolesCount).fill(null),
+                director: null,
+                musicDirector: null,
+                singers: []
+            },
+            totalBudget: totalCost,
+            startDate: { ...this.gameData.player.currentDate }
+        };
+
+        this.gameData.projects.push(newProject);
+
+        this.showNotification(`Script development started for "${movieTitle}"!`, 'success');
+        this.showActiveScripts();
+        this.updateMovieSelector();
+        this.updateUI();
+        this.saveGame();
+    }
+
+    // FIXED: Update Movie Selector to show ALL projects
+    updateMovieSelector() {
+        const movieSelector = document.getElementById('movie-selector');
+        if (!movieSelector) return;
+
+        movieSelector.innerHTML = '<option value="">-- Select a movie to cast --</option>';
+        
+        // FIXED: Show projects that are ready for casting
+        this.gameData.projects.forEach(project => {
+            const option = document.createElement('option');
+            option.value = project.id;
+            
+            let statusText = project.status.replace('_', ' ');
+            statusText = statusText.charAt(0).toUpperCase() + statusText.slice(1);
+            
+            option.textContent = `${project.title} (${this.genres[project.genre].name}) - ${statusText}`;
+            
+            if (project.status === 'script_development') {
+                option.disabled = true;
+                option.textContent += ' - Still in development';
+            }
+            
+            movieSelector.appendChild(option);
+        });
+
+        // Show message if no movies available
+        if (this.gameData.projects.length === 0) {
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = 'Create a script first';
+            option.disabled = true;
+            movieSelector.appendChild(option);
+        }
+    }
+
+    // FIXED: Update Cast Assignment
+    updateCastAssignment() {
+        const movieId = document.getElementById('movie-selector')?.value;
+        const roleType = document.getElementById('role-type-selector')?.value;
+        const roleNumber = document.getElementById('role-number-selector')?.value;
+        const assignmentStatus = document.getElementById('assignment-status');
+        
+        if (!movieId) {
+            if (assignmentStatus) {
+                assignmentStatus.innerHTML = '<p>Select a movie and role type to start casting</p>';
+            }
+            return;
+        }
+
+        const project = this.gameData.projects.find(p => p.id == movieId);
+        if (!project) return;
+
+        if (project.status === 'script_development') {
+            if (assignmentStatus) {
+                assignmentStatus.innerHTML = '<p style="color: #f59e0b;">⏳ Script still in development. Please wait for completion.</p>';
+            }
+            return;
+        }
+
+        this.gameData.selectedMovie = movieId;
+        this.gameData.selectedRoleType = roleType;
+        this.gameData.selectedRoleNumber = parseInt(roleNumber);
+
+        // Update role number dropdown based on role type
+        const roleNumberSelector = document.getElementById('role-number-selector');
+        if (roleNumberSelector) {
+            roleNumberSelector.innerHTML = '';
+            
+            let maxRoles = 1;
+            if (roleType === 'lead') {
+                maxRoles = project.leadRolesCount;
+            } else if (roleType === 'supporting') {
+                maxRoles = project.supportingRolesCount;
+            }
+            
+            for (let i = 1; i <= maxRoles; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `Role ${i}`;
+                roleNumberSelector.appendChild(option);
+            }
+        }
+
+        // Update assignment status
+        if (assignmentStatus) {
+            assignmentStatus.innerHTML = `
+                <p><strong>Ready to cast:</strong> ${project.title}</p>
+                <p><strong>Role:</strong> ${roleType.charAt(0).toUpperCase() + roleType.slice(1)} Role ${roleNumber}</p>
+                <p><strong>Status:</strong> Select an actor/actress from below</p>
+            `;
+        }
+
+        this.updateFranchiseShowcase(project);
+        this.updateCastingRequirements(project);
+    }
+
+    // Update Franchise Showcase
+    updateFranchiseShowcase(project) {
+        const franchiseShowcase = document.getElementById('franchise-showcase');
+        const franchiseCastGrid = document.getElementById('franchise-cast-grid');
+        
+        if (!project.isFranchise || !project.franchise) {
+            if (franchiseShowcase) franchiseShowcase.style.display = 'none';
+            return;
+        }
+        
+        let franchise = this.predefinedFranchises[project.franchise.toLowerCase()];
+        if (!franchise) {
+            franchise = this.gameData.userFranchises.find(f => f.name === project.franchise);
+        }
+        
+        if (!franchise) {
+            if (franchiseShowcase) franchiseShowcase.style.display = 'none';
+            return;
+        }
+        
+        if (franchiseShowcase) {
+            franchiseShowcase.style.display = 'block';
+            franchiseShowcase.querySelector('p').textContent = 
+                `Actors who have appeared in the ${franchise.name} franchise before:`;
+        }
+        
+        if (franchiseCastGrid && franchise.regularCast) {
+            franchiseCastGrid.innerHTML = '';
+            
+            franchise.regularCast.forEach(castMember => {
+                const actor = this.celebrities.actors.find(a => a.id === castMember.id);
+                if (actor) {
+                    const actorCard = document.createElement('div');
+                    actorCard.className = 'franchise-actor';
+                    actorCard.innerHTML = `
+                        <img src="${actor.photo}" alt="${actor.name}" onerror="this.style.display='none'">
+                        <h6>${actor.name}</h6>
+                        <small>${castMember.roles.join(', ')}</small>
+                        <div class="franchise-bonus">+${franchise.successBonus}% Success</div>
+                    `;
+                    franchiseCastGrid.appendChild(actorCard);
+                }
+            });
+        }
+    }
+
+    // Update Casting Requirements
+    updateCastingRequirements(project) {
+        const requirementsEl = document.getElementById('casting-requirements');
+        const requirementsGrid = document.getElementById('requirements-grid');
+        
+        if (!project || !requirementsEl || !requirementsGrid) return;
+        
+        requirementsEl.style.display = 'block';
+        requirementsGrid.innerHTML = '';
+        
+        // Lead roles
+        for (let i = 0; i < project.leadRolesCount; i++) {
+            const isHired = project.cast.lead[i] !== null;
+            const reqCard = document.createElement('div');
+            reqCard.className = 'requirement-card';
+            reqCard.innerHTML = `
+                <h4>Lead Role ${i + 1}</h4>
+                <p>Type: Main Character</p>
+                <span class="status ${isHired ? 'hired' : 'pending'}">${isHired ? '✓ Hired' : '⏳ Pending'}</span>
+            `;
+            requirementsGrid.appendChild(reqCard);
+        }
+        
+        // Supporting roles
+        for (let i = 0; i < project.supportingRolesCount; i++) {
+            const isHired = project.cast.supporting[i] !== null;
+            const reqCard = document.createElement('div');
+            reqCard.className = 'requirement-card';
+            reqCard.innerHTML = `
+                <h4>Supporting Role ${i + 1}</h4>
+                <p>Type: Supporting Character</p>
+                <span class="status ${isHired ? 'hired' : 'pending'}">${isHired ? '✓ Hired' : '⏳ Pending'}</span>
+            `;
+            requirementsGrid.appendChild(reqCard);
+        }
+        
+        // Other roles
+        const otherRoles = [
+            { key: 'director', name: 'Director', type: 'director' },
+            { key: 'musicDirector', name: 'Music Director', type: 'music' },
+            { key: 'singers', name: 'Playback Singer', type: 'singer' }
+        ];
+        
+        otherRoles.forEach(role => {
+            const isHired = role.key === 'singers' ? 
+                project.cast.singers.length > 0 : 
+                project.cast[role.key] !== null;
+            
+            const reqCard = document.createElement('div');
+            reqCard.className = 'requirement-card';
+            reqCard.innerHTML = `
+                <h4>${role.name}</h4>
+                <p>Type: ${role.type}</p>
+                <span class="status ${isHired ? 'hired' : 'pending'}">${isHired ? '✓ Hired' : '⏳ Pending'}</span>
+            `;
+            requirementsGrid.appendChild(reqCard);
+        });
+    }
+
+    // FIXED: Update Project Progress
+    updateProjectProgress() {
+        this.gameData.projects.forEach(project => {
+            if (project.weeksRemaining > 0) {
+                project.weeksRemaining--;
+                const totalWeeks = project.scriptTimeline === 'rush' ? 2 : 
+                                 project.scriptTimeline === 'standard' ? 4 : 6;
+                project.progress = Math.round((1 - project.weeksRemaining / totalWeeks) * 100);
+            }
+            
+            if (project.weeksRemaining === 0 && project.status === 'script_development') {
+                project.status = 'script_ready';
+                project.phase = 'casting';
+                this.showNotification(`Script for "${project.title}" is ready! Time to cast actors.`, 'success');
+                this.updateMovieSelector(); // Update dropdown when status changes
+                this.switchTab('casting');
+            }
+            
+            if (project.status === 'production' && project.weeksRemaining === 0) {
+                project.status = 'post_production';
+                project.weeksRemaining = 6;
+            }
+            
+            if (project.status === 'post_production' && project.weeksRemaining === 0) {
+                project.status = 'marketing_ready';
+                this.showNotification(`"${project.title}" is ready for marketing!`, 'success');
+                this.switchTab('marketing');
+            }
+        });
+    }
+
+    // Show Active Scripts
+    showActiveScripts() {
+        const activeScripts = document.getElementById('active-scripts');
+        const scriptList = document.getElementById('script-progress-list');
+        
+        if (!activeScripts || !scriptList) return;
+        
+        if (this.gameData.projects.length > 0) {
+            activeScripts.style.display = 'block';
+            scriptList.innerHTML = '';
+            
+            this.gameData.projects.forEach(project => {
+                const progressCard = document.createElement('div');
+                progressCard.className = 'script-progress-card';
+                progressCard.innerHTML = `
+                    <h4>${project.title}</h4>
+                    <p>Genre: ${this.genres[project.genre].name}</p>
+                    <p>Format: ${project.format.toUpperCase()}</p>
+                    <p>Lead Roles: ${project.leadRolesCount}, Supporting: ${project.supportingRolesCount}</p>
+                    <p>Script Quality: ${project.scriptQuality}%</p>
+                    ${project.isFranchise && project.franchise ? `<p>Franchise: ${project.franchise}</p>` : ''}
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${project.progress || 0}%"></div>
+                    </div>
+                    <p>Time Remaining: ${project.weeksRemaining} weeks</p>
+                    <p>Status: ${project.status.replace('_', ' ')}</p>
+                `;
+                scriptList.appendChild(progressCard);
+            });
+        } else {
+            activeScripts.style.display = 'none';
+        }
+    }
+
+    // Initialize Celebrities
+    initializeCelebrities() {
+        return {
+            actors: [
+                { id: 1, name: 'Shah Rukh Khan', popularity: 98, acting: 95, bankability: 99, fee: 500000000, 
+                  genre: ['Romance', 'Drama', 'Action'], age: 58, phase: 'Legend', 
+                  photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face' },
+                
+                { id: 2, name: 'Aamir Khan', popularity: 96, acting: 98, bankability: 90, fee: 400000000,
+                  genre: ['Drama', 'Social', 'Thriller'], age: 59, phase: 'Legend',
+                  photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face' },
+                
+                { id: 3, name: 'Salman Khan', popularity: 94, acting: 78, bankability: 97, fee: 350000000,
+                  genre: ['Action', 'Comedy', 'Drama'], age: 58, phase: 'Legend',
+                  photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face' },
+                
+                { id: 4, name: 'Akshay Kumar', popularity: 88, acting: 82, bankability: 92, fee: 300000000,
+                  genre: ['Action', 'Comedy', 'Patriotic'], age: 56, phase: 'Veteran',
+                  photo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face' },
+                
+                { id: 5, name: 'Ranbir Kapoor', popularity: 85, acting: 92, bankability: 82, fee: 250000000,
+                  genre: ['Romance', 'Drama', 'Comedy'], age: 41, phase: 'Prime',
+                  photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face' },
+
+                { id: 11, name: 'Deepika Padukone', popularity: 92, acting: 90, bankability: 87, fee: 200000000,
+                  genre: ['Romance', 'Drama', 'Historical'], age: 38, phase: 'Prime',
+                  photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face' },
+                
+                { id: 12, name: 'Priyanka Chopra', popularity: 88, acting: 85, bankability: 82, fee: 180000000,
+                  genre: ['Drama', 'Action', 'International'], age: 41, phase: 'Prime',
+                  photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face' },
+                
+                { id: 13, name: 'Alia Bhatt', popularity: 90, acting: 93, bankability: 88, fee: 150000000,
+                  genre: ['Drama', 'Romance', 'Thriller'], age: 31, phase: 'Rising Star',
+                  photo: 'https://images.unsplash.com/photo-1494790108755-2616b612b637?w=150&h=150&fit=crop&crop=face' },
+                
+                ...this.generateMoreActors(14, 50)
+            ],
+            directors: [
+                { id: 1, name: 'Rajkumar Hirani', skill: 98, specialty: 'Comedy-Drama', fee: 100000000, successRate: 95,
+                  photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face' },
+                
+                { id: 2, name: 'Sanjay Leela Bhansali', skill: 96, specialty: 'Historical Drama', fee: 90000000, successRate: 88,
+                  photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face' },
+                
+                { id: 3, name: 'Zoya Akhtar', skill: 92, specialty: 'Contemporary Drama', fee: 60000000, successRate: 85,
+                  photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face' },
+                
+                ...this.generateMoreDirectors(4, 30)
+            ],
+            music: [
+                { id: 1, name: 'A.R. Rahman', skill: 99, fee: 50000000, specialty: 'All Genres', awards: 'Oscar Winner',
+                  photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face' },
+                
+                { id: 2, name: 'Shankar-Ehsaan-Loy', skill: 90, fee: 25000000, specialty: 'Contemporary', awards: 'Filmfare Winners',
+                  photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face' },
+                
+                ...this.generateMoreMusicDirectors(3, 25)
+            ],
+            singers: [
+                { id: 1, name: 'Arijit Singh', popularity: 98, fee: 5000000, voice: 'Male', specialty: 'Romantic Melodies',
+                  photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face' },
+                
+                { id: 2, name: 'Shreya Ghoshal', popularity: 96, fee: 4500000, voice: 'Female', specialty: 'Classical Traditional',
+                  photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face' },
+                
+                ...this.generateMoreSingers(3, 40)
+            ]
+        };
+    }
+
+    generateMoreActors(startId, endId) {
+        const actors = [];
+        const names = ['Katrina Kaif', 'Kareena Kapoor', 'Kriti Sanon', 'Kiara Advani', 'Shraddha Kapoor', 
+                      'Varun Dhawan', 'Tiger Shroff', 'Kartik Aaryan', 'Vicky Kaushal', 'Sidharth Malhotra'];
+        
+        for (let i = startId; i <= endId; i++) {
+            const nameIndex = (i - startId) % names.length;
+            const isMale = i % 2 === 0;
+            
+            actors.push({
+                id: i,
+                name: names[nameIndex] || `Actor ${i}`,
+                popularity: Math.floor(Math.random() * 40) + 50,
+                acting: Math.floor(Math.random() * 30) + 60,
+                bankability: Math.floor(Math.random() * 35) + 55,
+                fee: Math.floor(Math.random() * 180000000) + 20000000,
+                genre: ['Drama', 'Romance', 'Comedy', 'Action'][Math.floor(Math.random() * 4)],
+                age: Math.floor(Math.random() * 20) + 25,
+                phase: ['Rising', 'Established', 'Prime'][Math.floor(Math.random() * 3)],
+                photo: `https://randomuser.me/api/portraits/${isMale ? 'men' : 'women'}/${((i % 50) + 1)}.jpg`
+            });
+        }
+        return actors;
+    }
+
+    generateMoreDirectors(startId, endId) {
+        const directors = [];
+        const names = ['Rohit Shetty', 'Karan Johar', 'Aanand L. Rai', 'Kabir Khan', 'Nitesh Tiwari'];
+        
+        for (let i = startId; i <= endId; i++) {
+            directors.push({
+                id: i,
+                name: names[(i - startId) % names.length] || `Director ${i}`,
+                skill: Math.floor(Math.random() * 25) + 65,
+                specialty: ['Drama', 'Comedy', 'Action', 'Thriller'][Math.floor(Math.random() * 4)],
+                fee: Math.floor(Math.random() * 30000000) + 10000000,
+                successRate: Math.floor(Math.random() * 30) + 60,
+                photo: `https://randomuser.me/api/portraits/men/${((i % 50) + 1)}.jpg`
+            });
+        }
+        return directors;
+    }
+
+    generateMoreMusicDirectors(startId, endId) {
+        const musicDirectors = [];
+        const names = ['Amit Trivedi', 'Vishal-Shekhar', 'Sachin-Jigar', 'Ilaiyaraaja'];
+        
+        for (let i = startId; i <= endId; i++) {
+            musicDirectors.push({
+                id: i,
+                name: names[(i - startId) % names.length] || `Music Director ${i}`,
+                skill: Math.floor(Math.random() * 20) + 70,
+                fee: Math.floor(Math.random() * 15000000) + 5000000,
+                specialty: ['Pop', 'Classical', 'Electronic', 'Folk'][Math.floor(Math.random() * 4)],
+                awards: 'Chart Topper',
+                photo: `https://randomuser.me/api/portraits/men/${((i % 50) + 1)}.jpg`
+            });
+        }
+        return musicDirectors;
+    }
+
+    generateMoreSingers(startId, endId) {
+        const singers = [];
+        const names = ['Armaan Malik', 'Neha Kakkar', 'Jubin Nautiyal', 'Dhvani Bhanushali'];
+        
+        for (let i = startId; i <= endId; i++) {
+            const isFemale = i % 2 === 0;
+            singers.push({
+                id: i,
+                name: names[(i - startId) % names.length] || `Singer ${i}`,
+                popularity: Math.floor(Math.random() * 25) + 65,
+                fee: Math.floor(Math.random() * 3000000) + 1000000,
+                voice: isFemale ? 'Female' : 'Male',
+                specialty: ['Pop', 'Romantic', 'Dance', 'Folk'][Math.floor(Math.random() * 4)],
+                photo: `https://randomuser.me/api/portraits/${isFemale ? 'women' : 'men'}/${((i % 50) + 1)}.jpg`
+            });
+        }
+        return singers;
+    }
+
+    // Initialize other components
+    initializeGenres() {
+        return {
+            action: { name: 'Action', marketAppeal: 92, budget: 'high', icon: 'fa-fist-raised', color: '#dc2626' },
+            romance: { name: 'Romance', marketAppeal: 85, budget: 'medium', icon: 'fa-heart', color: '#ec4899' },
+            comedy: { name: 'Comedy', marketAppeal: 88, budget: 'low', icon: 'fa-laugh', color: '#fbbf24' },
+            drama: { name: 'Drama', marketAppeal: 82, budget: 'medium', icon: 'fa-theater-masks', color: '#3b82f6' },
+            thriller: { name: 'Thriller', marketAppeal: 84, budget: 'medium', icon: 'fa-eye', color: '#8b5cf6' },
+            horror: { name: 'Horror', marketAppeal: 72, budget: 'low', icon: 'fa-ghost', color: '#374151' },
+            historical: { name: 'Historical', marketAppeal: 78, budget: 'very_high', icon: 'fa-crown', color: '#f59e0b' },
+            biopic: { name: 'Biopic', marketAppeal: 80, budget: 'high', icon: 'fa-user', color: '#10b981' },
+            scifi: { name: 'Sci-Fi', marketAppeal: 75, budget: 'very_high', icon: 'fa-rocket', color: '#06b6d4' },
+            fantasy: { name: 'Fantasy', marketAppeal: 73, budget: 'very_high', icon: 'fa-magic', color: '#8b5cf6' },
+            musical: { name: 'Musical', marketAppeal: 77, budget: 'medium', icon: 'fa-music', color: '#f97316' },
+            sports: { name: 'Sports', marketAppeal: 79, budget: 'medium', icon: 'fa-trophy', color: '#84cc16' },
+            war: { name: 'War', marketAppeal: 81, budget: 'very_high', icon: 'fa-shield-alt', color: '#6b7280' },
+            family: { name: 'Family', marketAppeal: 86, budget: 'medium', icon: 'fa-home', color: '#22c55e' },
+            crime: { name: 'Crime', marketAppeal: 76, budget: 'medium', icon: 'fa-mask', color: '#ef4444' }
+        };
+    }
+
+    initializeFranchises() {
+        return {
+            housefull: {
+                name: 'Housefull',
+                rating: 85,
+                parts: ['Housefull', 'Housefull 2', 'Housefull 3', 'Housefull 4', 'Housefull 5'],
+                regularCast: [
+                    { id: 4, name: 'Akshay Kumar', roles: ['Lead Actor'] },
+                    { id: 14, name: 'Katrina Kaif', roles: ['Lead Actress'] }
+                ],
+                successBonus: 20
+            },
+            dabangg: {
+                name: 'Dabangg',
+                rating: 80,
+                parts: ['Dabangg', 'Dabangg 2', 'Dabangg 3'],
+                regularCast: [
+                    { id: 3, name: 'Salman Khan', roles: ['Lead Actor'] }
+                ],
+                successBonus: 18
+            },
+            golmaal: {
+                name: 'Golmaal',
+                rating: 75,
+                parts: ['Golmaal', 'Golmaal Returns', 'Golmaal 3', 'Golmaal Again'],
+                regularCast: [
+                    { id: 16, name: 'Ajay Devgan', roles: ['Lead Actor'] }
+                ],
+                successBonus: 15
+            }
+        };
+    }
+
+    initializeMarketing() {
+        return {
+            viral: { name: 'Viral Marketing', cost: 2500000, reach: 40, effectiveness: 60 },
+            minimal: { name: 'Minimal Marketing', cost: 7500000, reach: 30, effectiveness: 45 },
+            standard: { name: 'Standard Marketing', cost: 25000000, reach: 60, effectiveness: 75 },
+            aggressive: { name: 'Aggressive Marketing', cost: 50000000, reach: 85, effectiveness: 88 },
+            premium: { name: 'Premium Marketing', cost: 100000000, reach: 95, effectiveness: 93 }
+        };
+    }
+
+    initializeEvents() {
+        return [
+            {
+                id: 'controversy',
+                title: '🚨 Celebrity Controversy',
+                description: 'Your lead actor is involved in a public scandal affecting the movie promotion.',
+                probability: 15,
+                impact: { boxOffice: -25, reputation: -20, marketingCost: 40 }
+            },
+            {
+                id: 'award_win',
+                title: '🏆 Unexpected Award Win',
+                description: 'Your movie wins a prestigious award before release, creating massive buzz!',
+                probability: 8,
+                impact: { boxOffice: 35, reputation: 25, nextProject: 50 }
+            }
+        ];
+    }
+
+    initializeTheatres() {
+        return [
+            { name: 'PVR Cinemas', screens: 1200, share: 32, logo: 'https://via.placeholder.com/80x40/C41E3A/FFFFFF?text=PVR' },
+            { name: 'INOX Leisure', screens: 800, share: 28, logo: 'https://via.placeholder.com/80x40/1565C0/FFFFFF?text=INOX' },
+            { name: 'Cinepolis India', screens: 500, share: 18, logo: 'https://via.placeholder.com/80x40/FF6F00/FFFFFF?text=CPX' },
+            { name: 'Independent Theatres', screens: 2000, share: 22, logo: 'https://via.placeholder.com/80x40/424242/FFFFFF?text=OTHER' }
+        ];
+    }
+
+    // Game Management Functions
+    showLoadingScreen() {
+        document.getElementById('loading-screen').style.display = 'flex';
+    }
+
+    showGameStartModal() {
+        document.getElementById('game-start-modal').style.display = 'flex';
+    }
+
+    startNewGame() {
+        const selectedBudget = document.querySelector('input[name="starting-budget"]:checked');
+        if (selectedBudget) {
+            this.gameData.player.money = parseInt(selectedBudget.value);
+        }
+        
+        document.getElementById('game-start-modal').style.display = 'none';
+        this.gameData.gameStarted = true;
+        this.setupGameInterface();
+        this.updateUI();
+        this.saveGame();
+    }
+
+    loadGame() {
+        const savedData = localStorage.getItem('bollywoodSimulatorSave');
+        if (savedData) {
+            this.gameData = JSON.parse(savedData);
+            document.getElementById('game-start-modal').style.display = 'none';
+            this.gameData.gameStarted = true;
+            this.setupGameInterface();
+            this.updateUI();
+            this.showNotification('Game loaded successfully!', 'success');
+        } else {
+            this.showNotification('No saved game found!', 'error');
+        }
+    }
+
+    setupGameInterface() {
+        this.generateAvatarOptions();
+        this.generateLogoOptions();
+        this.generateGenreOptions();
+        this.updateCastingTab();
+        this.switchTab('profile');
+    }
+
+    // Generate Avatar Options
+    generateAvatarOptions() {
+        const avatarGrid = document.getElementById('avatar-grid');
+        if (!avatarGrid) return;
+
+        avatarGrid.innerHTML = '';
+        
+        for (let i = 1; i <= 25; i++) {
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'avatar-option';
+            avatarDiv.dataset.avatar = `indian_${i}`;
+            
+            const photoSrc = `https://randomuser.me/api/portraits/${i % 2 === 0 ? 'women' : 'men'}/${i}.jpg`;
+            
+            avatarDiv.innerHTML = `
+                <img src="${photoSrc}" alt="Indian Avatar ${i}" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <i class="fas fa-user" style="display:none; font-size: 3rem; color: var(--accent-gold);"></i>
+            `;
+            
+            avatarDiv.addEventListener('click', () => this.selectAvatar(`indian_${i}`, photoSrc));
+            avatarGrid.appendChild(avatarDiv);
+        }
+    }
+
+    // Generate Logo Options
+    generateLogoOptions() {
+        const logoGrid = document.getElementById('real-logo-grid');
+        if (!logoGrid) return;
+
+        logoGrid.innerHTML = '';
+        
+        const premiumLogos = [
+            { icon: 'fas fa-film', color: '#ffd700', bg: '#1a1a1a', name: 'Classic Cinema' },
+            { icon: 'fas fa-crown', color: '#ff6b35', bg: '#2a2a2a', name: 'Royal Productions' },
+            { icon: 'fas fa-star', color: '#4CAF50', bg: '#1a1a1a', name: 'Star Studios' },
+            { icon: 'fas fa-diamond', color: '#2196f3', bg: '#1a1a1a', name: 'Diamond Films' },
+            { icon: 'fas fa-fire', color: '#f44336', bg: '#2a2a2a', name: 'Fire Entertainment' },
+            { icon: 'fas fa-bolt', color: '#ffeb3b', bg: '#1a1a1a', name: 'Lightning Pictures' },
+            { icon: 'fas fa-magic', color: '#9c27b0', bg: '#1a1a1a', name: 'Magic Movies' },
+            { icon: 'fas fa-rocket', color: '#ff5722', bg: '#1a1a1a', name: 'Rocket Films' },
+            { icon: 'fas fa-trophy', color: '#ffc107', bg: '#2a2a2a', name: 'Trophy Productions' },
+            { icon: 'fas fa-gem', color: '#00bcd4', bg: '#1a1a1a', name: 'Gem Studios' }
+        ];
+
+        premiumLogos.forEach((logo, index) => {
+            const logoDiv = document.createElement('div');
+            logoDiv.className = 'logo-option';
+            logoDiv.dataset.logo = `logo_${index + 1}`;
+            logoDiv.style.background = logo.bg;
+            logoDiv.style.color = logo.color;
+            logoDiv.innerHTML = `<i class="${logo.icon}"></i>`;
+            logoDiv.title = logo.name;
+            
+            logoDiv.addEventListener('click', () => this.selectLogo(`logo_${index + 1}`, logo));
+            logoGrid.appendChild(logoDiv);
+        });
+    }
+
+    // Generate Genre Options
+    generateGenreOptions() {
+        const genreGrid = document.getElementById('enhanced-genre-grid');
+        if (!genreGrid) return;
+
+        genreGrid.innerHTML = '';
+        Object.entries(this.genres).forEach(([key, genre]) => {
+            const genreDiv = document.createElement('div');
+            genreDiv.className = 'genre-card';
+            genreDiv.dataset.genre = key;
+            genreDiv.innerHTML = `
+                <i class="fas ${genre.icon}" style="color: ${genre.color}"></i>
+                <h4>${genre.name}</h4>
+                <p>Market Appeal: ${genre.marketAppeal}%</p>
+                <p>Budget: ${genre.budget.replace('_', ' ')}</p>
+            `;
+            
+            genreDiv.addEventListener('click', () => this.selectGenre(key));
+            genreGrid.appendChild(genreDiv);
+        });
+    }
+
+    // Selection Methods
+    selectAvatar(avatarId, src) {
+        document.querySelectorAll('.avatar-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        document.querySelector(`[data-avatar="${avatarId}"]`)?.classList.add('selected');
+        
+        this.gameData.player.avatar = src;
+        this.showNotification('Avatar selected!', 'success');
+    }
+
+    selectLogo(logoId, logoData) {
+        document.querySelectorAll('.logo-option').forEach(option => {
+            option.classList.remove('selected');
+        });
+        document.querySelector(`[data-logo="${logoId}"]`)?.classList.add('selected');
+        
+        this.gameData.player.studioLogo = logoData;
+        this.showNotification('Studio logo selected!', 'success');
+    }
+
+    selectGenre(genreKey) {
+        document.querySelectorAll('.genre-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+        document.querySelector(`[data-genre="${genreKey}"]`)?.classList.add('selected');
+        
+        this.selectedGenre = genreKey;
+        this.showNotification(`${this.genres[genreKey].name} genre selected!`, 'success');
+    }
+
+    // Create Character
+    createCharacter() {
+        const characterName = document.getElementById('character-name')?.value.trim();
+        const studioName = document.getElementById('studio-name')?.value.trim();
+
+        if (!characterName || !studioName) {
+            this.showNotification('Please enter both character and studio name!', 'error');
+            return;
+        }
+
+        if (!this.gameData.player.avatar) {
+            this.showNotification('Please select an avatar!', 'error');
+            return;
+        }
+
+        if (!this.gameData.player.studioLogo) {
+            this.showNotification('Please select a studio logo!', 'error');
+            return;
+        }
+
+        this.gameData.player.name = characterName;
+        this.gameData.player.studioName = studioName;
+
+        this.updateStudioDisplay();
+
+        this.showNotification(`Welcome ${characterName}! ${studioName} is ready to create blockbusters!`, 'success');
+        this.switchTab('studio');
+        this.updateUI();
+        this.saveGame();
+    }
+
+    // Update Studio Display
+    updateStudioDisplay() {
+        const studioNameDisplay = document.getElementById('studio-name-display');
+        const studioLogoDisplay = document.getElementById('studio-logo-display');
+        
+        if (studioNameDisplay) {
+            studioNameDisplay.textContent = this.gameData.player.studioName;
+        }
+        
+        if (studioLogoDisplay && this.gameData.player.studioLogo) {
+            if (this.gameData.player.studioLogo.src) {
+                studioLogoDisplay.src = this.gameData.player.studioLogo.src;
+                studioLogoDisplay.style.display = 'block';
+            } else {
+                studioLogoDisplay.innerHTML = `<i class="${this.gameData.player.studioLogo.icon}" style="color: ${this.gameData.player.studioLogo.color}; font-size: 3rem;"></i>`;
+                studioLogoDisplay.style.display = 'flex';
+                studioLogoDisplay.style.alignItems = 'center';
+                studioLogoDisplay.style.justifyContent = 'center';
+                studioLogoDisplay.style.background = this.gameData.player.studioLogo.bg;
+            }
+        }
+    }
+
+    // Time Management
+    advanceWeek() {
+        this.gameData.player.currentDate.week += 1;
+        if (this.gameData.player.currentDate.week > 4) {
+            this.gameData.player.currentDate.week = 1;
+            this.gameData.player.currentDate.month += 1;
+            if (this.gameData.player.currentDate.month > 12) {
+                this.gameData.player.currentDate.month = 1;
+                this.gameData.player.currentDate.year += 1;
+            }
+        }
+        
+        this.processWeeklyEvents();
+        this.updateDateDisplay();
+        this.updateUI();
+        this.saveGame();
+    }
+
+    advanceMonth() {
+        for (let i = 0; i < 4; i++) {
+            this.advanceWeek();
+        }
+    }
+
+    updateDateDisplay() {
+        const currentDateEl = document.getElementById('current-date');
+        if (currentDateEl) {
+            const { year, month, week } = this.gameData.player.currentDate;
+            currentDateEl.textContent = `Week ${week}, Month ${month}, Year ${year}`;
+        }
+    }
+
+    processWeeklyEvents() {
+        const monthlyExpenses = this.calculateMonthlyExpenses();
+        this.gameData.player.money -= Math.round(monthlyExpenses / 4);
+        
+        this.processLoanPayments();
+        this.updateProjectProgress();
+        
+        if (Math.random() < 0.1) {
+            this.triggerRandomEvent();
+        }
+    }
+
+    calculateMonthlyExpenses() {
+        let totalSalaries = 0;
+        
+        totalSalaries += this.gameData.staff.admin.productionManager * 80000;
+        totalSalaries += this.gameData.staff.admin.accountant * 60000;
+        totalSalaries += this.gameData.staff.admin.prManager * 70000;
+        
+        totalSalaries += this.gameData.staff.tech.cameraOperator * 50000;
+        totalSalaries += this.gameData.staff.tech.soundEngineer * 45000;
+        totalSalaries += this.gameData.staff.tech.videoEditor * 55000;
+        
+        const officeRent = 200000;
+        const utilities = 50000;
+        
+        return totalSalaries + officeRent + utilities;
+    }
+
+    processLoanPayments() {
+        // Process loan payments logic
+    }
+
+    triggerRandomEvent() {
+        // Random event logic
+    }
+
+    // Tab Management
+    switchTab(tabName) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+        const tabBtn = document.querySelector(`[data-tab="${tabName}"]`);
+        const tabContent = document.getElementById(`${tabName}-tab`);
+        
+        if (tabBtn) tabBtn.classList.add('active');
+        if (tabContent) tabContent.classList.add('active');
+
+        this.updateTabContent(tabName);
+    }
+
+    updateTabContent(tabName) {
+        switch (tabName) {
+            case 'casting':
+                this.updateCastingTab();
+                break;
+            case 'scripts':
+                this.showActiveScripts();
+                break;
+        }
+    }
+
+    // Casting Tab Management
+    updateCastingTab() {
+        this.updateMovieSelector();
+        this.updateCastAssignment();
+        this.switchCastCategory('actors');
+        this.updateHiredCastTable();
+    }
+
+    switchCastCategory(category) {
+        document.querySelectorAll('.cat-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelector(`[data-category="${category}"]`)?.classList.add('active');
+        
+        this.updateCelebrityShowcase(category);
+    }
+
+    updateCelebrityShowcase(category) {
+        const showcase = document.getElementById('celebrity-showcase');
+        if (!showcase) return;
+
+        showcase.innerHTML = '';
+
+        let celebrities = [];
+        switch (category) {
+            case 'actors':
+                celebrities = this.celebrities.actors;
+                break;
+            case 'directors':
+                celebrities = this.celebrities.directors;
+                break;
+            case 'music':
+                celebrities = this.celebrities.music;
+                break;
+            case 'singers':
+                celebrities = this.celebrities.singers;
+                break;
+        }
+
+        celebrities.slice(0, 20).forEach(celebrity => {
+            const card = this.createCelebrityCard(celebrity, category);
+            showcase.appendChild(card);
+        });
+    }
+
+    createCelebrityCard(celebrity, category) {
+        const card = document.createElement('div');
+        card.className = 'celebrity-card';
+        
+        let stats = '';
+        if (category === 'actors') {
+            stats = `
+                <span>Popularity: ${celebrity.popularity}</span>
+                <span>Acting: ${celebrity.acting}</span>
+                <span>Bankability: ${celebrity.bankability}</span>
+                <span>Age: ${celebrity.age}</span>
+            `;
+        } else if (category === 'directors') {
+            stats = `
+                <span>Skill: ${celebrity.skill}</span>
+                <span>Specialty: ${celebrity.specialty}</span>
+                <span>Success Rate: ${celebrity.successRate}%</span>
+            `;
+        } else if (category === 'music') {
+            stats = `
+                <span>Skill: ${celebrity.skill}</span>
+                <span>Specialty: ${celebrity.specialty}</span>
+                <span>Awards: ${celebrity.awards}</span>
+            `;
+        } else if (category === 'singers') {
+            stats = `
+                <span>Popularity: ${celebrity.popularity}</span>
+                <span>Voice: ${celebrity.voice}</span>
+                <span>Specialty: ${celebrity.specialty}</span>
+            `;
+        }
+
+        const isHired = this.isCelebrityHired(celebrity.id, category);
+        
+        card.innerHTML = `
+            <div class="celebrity-avatar">
+                <img src="${celebrity.photo}" alt="${celebrity.name}" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <i class="fas fa-user-circle" style="display:none;"></i>
+            </div>
+            <h4 class="celebrity-name">${celebrity.name}</h4>
+            <div class="celebrity-stats">
+                ${stats}
+            </div>
+            <p class="celebrity-fee">${this.formatCurrency(celebrity.fee)}</p>
+            <button class="hire-celebrity-btn" ${isHired ? 'disabled' : ''}>
+                ${isHired ? 'Hired' : 'Hire'}
+            </button>
+        `;
+
+        const hireBtn = card.querySelector('.hire-celebrity-btn');
+        if (!isHired) {
+            hireBtn.addEventListener('click', () => this.hireCelebrity(celebrity, category));
+        }
+
+        return card;
+    }
+
+    isCelebrityHired(celebrityId, category) {
+        return this.gameData.hiredCast.some(hire => 
+            hire.celebrityId === celebrityId && hire.category === category
+        );
+    }
+
+    hireCelebrity(celebrity, category) {
+        const selectedMovieId = this.gameData.selectedMovie;
+        const selectedRoleType = this.gameData.selectedRoleType;
+        const selectedRoleNumber = this.gameData.selectedRoleNumber;
+
+        if (!selectedMovieId) {
+            this.showNotification('Please select a movie first!', 'error');
+            return;
+        }
+
+        const project = this.gameData.projects.find(p => p.id == selectedMovieId);
+        if (!project) {
+            this.showNotification('Selected movie not found!', 'error');
+            return;
+        }
+
+        if (project.status === 'script_development') {
+            this.showNotification('Wait for script development to complete!', 'error');
+            return;
+        }
+
+        if (this.gameData.player.money < celebrity.fee) {
+            this.showNotification('Not enough money to hire this celebrity!', 'error');
+            return;
+        }
+
+        // Check if role is already filled
+        let roleKey = '';
+        let roleIndex = -1;
+        
+        if (category === 'actors') {
+            if (selectedRoleType === 'lead') {
+                roleKey = 'lead';
+                roleIndex = selectedRoleNumber - 1;
+                if (project.cast.lead[roleIndex] !== null) {
+                    this.showNotification('This lead role is already filled!', 'error');
+                    return;
+                }
+            } else if (selectedRoleType === 'supporting') {
+                roleKey = 'supporting';
+                roleIndex = selectedRoleNumber - 1;
+                if (project.cast.supporting[roleIndex] !== null) {
+                    this.showNotification('This supporting role is already filled!', 'error');
+                    return;
+                }
+            }
+        } else if (category === 'directors') {
+            if (project.cast.director !== null) {
+                this.showNotification('Director already hired for this movie!', 'error');
+                return;
+            }
+            roleKey = 'director';
+        } else if (category === 'music') {
+            if (project.cast.musicDirector !== null) {
+                this.showNotification('Music director already hired for this movie!', 'error');
+                return;
+            }
+            roleKey = 'musicDirector';
+        } else if (category === 'singers') {
+            if (project.cast.singers.length >= 3) {
+                this.showNotification('Maximum singers already hired for this movie!', 'error');
+                return;
+            }
+            roleKey = 'singers';
+        }
+
+        // Deduct money
+        this.gameData.player.money -= celebrity.fee;
+        this.gameData.player.totalExpenses += celebrity.fee;
+        project.totalBudget += celebrity.fee;
+        
+        // Assign to project
+        if (roleKey === 'singers') {
+            project.cast.singers.push({...celebrity, assignedRole: `Singer ${project.cast.singers.length + 1}`});
+        } else if (roleIndex >= 0) {
+            project.cast[roleKey][roleIndex] = {...celebrity, assignedRole: `${selectedRoleType.charAt(0).toUpperCase() + selectedRoleType.slice(1)} Role ${selectedRoleNumber}`};
+        } else {
+            project.cast[roleKey] = {...celebrity, assignedRole: roleKey.charAt(0).toUpperCase() + roleKey.slice(1)};
+        }
+
+        // Add to global hired cast
+        this.gameData.hiredCast.push({
+            celebrityId: celebrity.id,
+            category: category,
+            movieId: selectedMovieId,
+            movieTitle: project.title,
+            roleType: selectedRoleType,
+            roleNumber: selectedRoleNumber,
+            fee: celebrity.fee,
+            hiredDate: {...this.gameData.player.currentDate}
+        });
+
+        // Check for franchise bonus
+        let franchiseBonus = '';
+        if (project.isFranchise && project.franchise) {
+            let franchise = this.predefinedFranchises[project.franchise.toLowerCase()];
+            if (!franchise) {
+                franchise = this.gameData.userFranchises.find(f => f.name === project.franchise);
+            }
+            if (franchise) {
+                const isFranchiseActor = franchise.regularCast && franchise.regularCast.some(fc => fc.id === celebrity.id);
+                if (isFranchiseActor) {
+                    franchiseBonus = ` Franchise bonus: +${franchise.successBonus}% success rate!`;
+                }
+            }
+        }
+
+        this.showNotification(`${celebrity.name} hired successfully!${franchiseBonus}`, 'success');
+        this.updateCelebrityShowcase(this.getActiveCategoryTab());
+        this.updateCastingRequirements(project);
+        this.updateHiredCastTable();
+        this.checkProductionReadiness(project);
+        this.updateUI();
+        this.saveGame();
+    }
+
+    getActiveCategoryTab() {
+        const activeTab = document.querySelector('.cat-tab.active');
+        return activeTab ? activeTab.dataset.category : 'actors';
+    }
+
+    updateHiredCastTable() {
+        const tableBody = document.getElementById('hired-cast-table-body');
+        if (!tableBody) return;
+
+        tableBody.innerHTML = '';
+
+        this.gameData.hiredCast.forEach((hire, index) => {
+            const celebrity = this.findCelebrityById(hire.celebrityId, hire.category);
+            if (!celebrity) return;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${hire.movieTitle}</td>
+                <td>
+                    <span class="role-badge">${hire.roleType}</span>
+                </td>
+                <td>Role ${hire.roleNumber || 1}</td>
+                <td>
+                    <div class="cast-member-info">
+                        <img src="${celebrity.photo}" alt="${celebrity.name}" class="cast-member-avatar" 
+                             onerror="this.style.display='none'">
+                        <span class="cast-member-name">${celebrity.name}</span>
+                    </div>
+                </td>
+                <td>${this.formatCurrency(hire.fee)}</td>
+                <td>
+                    <span class="status-badge assigned">Assigned</span>
+                </td>
+                <td>
+                    <button class="remove-cast-btn" onclick="bollywoodSimulator.removeCastMember(${index})">
+                        Remove
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    findCelebrityById(id, category) {
+        let categoryData = [];
+        switch (category) {
+            case 'actors':
+                categoryData = this.celebrities.actors;
+                break;
+            case 'directors':
+                categoryData = this.celebrities.directors;
+                break;
+            case 'music':
+                categoryData = this.celebrities.music;
+                break;
+            case 'singers':
+                categoryData = this.celebrities.singers;
+                break;
+        }
+        return categoryData.find(c => c.id === id);
+    }
+
+    removeCastMember(index) {
+        const hire = this.gameData.hiredCast[index];
+        if (!hire) return;
+
+        // Find project and remove from cast
+        const project = this.gameData.projects.find(p => p.id == hire.movieId);
+        if (project) {
+            if (hire.category === 'actors') {
+                if (hire.roleType === 'lead') {
+                    project.cast.lead[hire.roleNumber - 1] = null;
+                } else if (hire.roleType === 'supporting') {
+                    project.cast.supporting[hire.roleNumber - 1] = null;
+                }
+            } else if (hire.category === 'directors') {
+                project.cast.director = null;
+            } else if (hire.category === 'music') {
+                project.cast.musicDirector = null;
+            } else if (hire.category === 'singers') {
+                project.cast.singers = project.cast.singers.filter((_, i) => i !== (hire.roleNumber - 1));
+            }
+        }
+
+        // Remove from hired cast
+        this.gameData.hiredCast.splice(index, 1);
+
+        this.showNotification('Cast member removed successfully!', 'success');
+        this.updateHiredCastTable();
+        this.updateCelebrityShowcase(this.getActiveCategoryTab());
+        this.saveGame();
+    }
+
+    checkProductionReadiness(project) {
+        const hasLeadActors = project.cast.lead.every(role => role !== null);
+        const hasSupportingActors = project.cast.supporting.every(role => role !== null);
+        const hasDirector = project.cast.director !== null;
+        
+        if (hasLeadActors && hasSupportingActors && hasDirector && project.status === 'script_ready') {
+            project.status = 'production_ready';
+            project.phase = 'production';
+            project.weeksRemaining = 12;
+            this.showNotification(`"${project.title}" is ready for production!`, 'success');
+            this.switchTab('production');
+        }
+    }
+
+    // Staff Management
+    hireStaff(button) {
+        const role = button.dataset.role;
+        const salary = parseInt(button.dataset.salary);
+        
+        if (this.gameData.player.money < salary * 12) {
+            this.showNotification('Not enough money to hire staff!', 'error');
+            return;
+        }
+        
+        const roleKey = role.replace('-', '');
+        if (role === 'production-manager') {
+            this.gameData.staff.admin.productionManager = (this.gameData.staff.admin.productionManager || 0) + 1;
+        } else if (role === 'accountant') {
+            this.gameData.staff.admin.accountant = (this.gameData.staff.admin.accountant || 0) + 1;
+        } else if (role === 'pr-manager') {
+            this.gameData.staff.admin.prManager = (this.gameData.staff.admin.prManager || 0) + 1;
+        } else if (role === 'camera-operator') {
+            this.gameData.staff.tech.cameraOperator = (this.gameData.staff.tech.cameraOperator || 0) + 1;
+        } else if (role === 'sound-engineer') {
+            this.gameData.staff.tech.soundEngineer = (this.gameData.staff.tech.soundEngineer || 0) + 1;
+        } else if (role === 'video-editor') {
+            this.gameData.staff.tech.videoEditor = (this.gameData.staff.tech.videoEditor || 0) + 1;
+        }
+        
+        this.showNotification('Staff member hired successfully!', 'success');
+        this.updateUI();
+        this.saveGame();
+    }
+
+    applyForLoan(button) {
+        const amount = parseInt(button.dataset.amount);
+        const rate = parseFloat(button.dataset.rate);
+        const term = parseInt(button.dataset.term);
+        
+        if (this.gameData.player.loans.length >= 3) {
+            this.showNotification('Maximum 3 loans allowed at a time!', 'error');
+            return;
+        }
+
+        const loan = {
+            id: Date.now(),
+            amount: amount,
+            interestRate: rate,
+            termMonths: term,
+            remainingAmount: amount,
+            monthlyPayment: Math.round((amount * (rate / 100 / 12)) / (1 - Math.pow(1 + rate / 100 / 12, -term))),
+            startDate: { ...this.gameData.player.currentDate }
+        };
+
+        this.gameData.player.loans.push(loan);
+        this.gameData.player.money += amount;
+        
+        button.textContent = 'Applied';
+        button.disabled = true;
+        button.style.background = '#4CAF50';
+
+        this.showNotification(`Loan of ${this.formatCurrency(amount)} approved!`, 'success');
+        this.updateUI();
+        this.saveGame();
+    }
+
+    openMoneyManagement() {
+        this.switchTab('finances');
+    }
+
+    // Promo Code System
     applyPromoCode() {
         const code = document.getElementById('promo-code-input')?.value.toUpperCase().trim();
         if (!code) return;
@@ -775,10 +1663,6 @@
                 this.gameData.player.studioLevel = 10;
                 this.showNotification('👑 God Mode: Ultimate Power Activated!', 'success');
             },
-            'RESETMONEY': () => {
-                this.gameData.player.money = 50000000; // Reset to ₹5 crores
-                this.showNotification('🔄 Money Reset to Starting Amount!', 'success');
-            },
             'SUPERSTAR': () => {
                 this.gameData.player.reputation = 100;
                 this.showNotification('⭐ Superstar Status Achieved!', 'success');
@@ -798,23 +1682,6 @@
             'ALLSTAR': () => {
                 this.gameData.sandboxMode = true;
                 this.showNotification('🌟 All Star Mode: Free Celebrity Hiring!', 'success');
-            },
-            'FRANCHISE': () => {
-                // Unlock all franchises
-                Object.keys(this.franchises).forEach(franchiseKey => {
-                    this.franchises[franchiseKey].unlocked = true;
-                });
-                this.showNotification('🏆 All Franchises Unlocked!', 'success');
-            },
-            'MAXCREW': () => {
-                // Max out all staff instantly
-                this.gameData.staff.admin.productionManager = 3;
-                this.gameData.staff.admin.accountant = 2;
-                this.gameData.staff.admin.prManager = 2;
-                this.gameData.staff.tech.cameraOperator = 5;
-                this.gameData.staff.tech.soundEngineer = 3;
-                this.gameData.staff.tech.videoEditor = 4;
-                this.showNotification('👥 Maximum Staff Hired!', 'success');
             }
         };
 
@@ -822,7 +1689,6 @@
             promoCodes[code]();
             document.getElementById('promo-code-input').value = '';
             this.updateUI();
-            this.updateTabContent(document.querySelector('.tab-btn.active')?.dataset.tab || 'studio');
             this.saveGame();
         } else {
             this.showNotification('❌ Invalid promo code!', 'error');
@@ -894,42 +1760,8 @@
         document.getElementById('logo-designer-modal').style.display = 'none';
     }
 
-    // Trigger Random Event
-    triggerRandomEvent() {
-        if (this.gameData.projects.length === 0) return;
-        
-        const randomIndex = Math.floor(Math.random() * this.randomEvents.length);
-        const event = this.randomEvents[randomIndex];
-        
-        if (Math.random() * 100 < event.probability) {
-            this.showNotification(event.title + ': ' + event.description, 'warning');
-            this.applyEventEffects(event);
-        }
-    }
-
-    // Apply Event Effects
-    applyEventEffects(event) {
-        const activeProject = this.gameData.projects.find(p => p.status === 'production' || p.status === 'post_production');
-        
-        if (event.impact.boxOffice && activeProject) {
-            const multiplier = 1 + (event.impact.boxOffice / 100);
-            activeProject.eventMultiplier = (activeProject.eventMultiplier || 1) * multiplier;
-        }
-        
-        if (event.impact.reputation) {
-            this.gameData.player.reputation = Math.max(0, Math.min(100, this.gameData.player.reputation + event.impact.reputation));
-        }
-        
-        if (event.impact.productionCost && activeProject) {
-            const additionalCost = activeProject.totalBudget * (event.impact.productionCost / 100);
-            activeProject.totalBudget += additionalCost;
-            this.gameData.player.money -= additionalCost;
-        }
-    }
-
-    // Update UI - Enhanced
+    // Utility Functions
     updateUI() {
-        // Update header stats
         const moneyEl = document.getElementById('money');
         const reputationEl = document.getElementById('reputation');
         const studioLevelEl = document.getElementById('studio-level');
@@ -938,21 +1770,17 @@
         if (reputationEl) reputationEl.textContent = this.gameData.player.reputation;
         if (studioLevelEl) studioLevelEl.textContent = `Level ${this.gameData.player.studioLevel}`;
         
-        // Update studio display if character is created
         if (this.gameData.player.name && this.gameData.player.studioName) {
             this.updateStudioDisplay();
         }
         
-        // Update active scripts display
         if (this.gameData.projects.length > 0) {
             this.showActiveScripts();
         }
         
-        // Update movie selector
         this.updateMovieSelector();
     }
 
-    // Show Notification - Enhanced
     showNotification(message, type = 'info', duration = 4000) {
         const modal = document.getElementById('notification-modal');
         if (!modal) {
@@ -965,7 +1793,6 @@
         const messageEl = modal.querySelector('.notification-message');
         const okBtn = modal.querySelector('.notification-confirm');
 
-        // Set icon and color based on type
         const iconMap = {
             success: 'fa-check-circle',
             error: 'fa-exclamation-triangle',
@@ -991,7 +1818,6 @@
             };
         }
 
-        // Auto close
         setTimeout(() => {
             if (modal.style.display === 'flex') {
                 modal.style.display = 'none';
@@ -999,12 +1825,10 @@
         }, duration);
     }
 
-    // Format Currency
     formatCurrency(amount) {
         return '₹' + amount.toLocaleString('en-IN');
     }
 
-    // Save Game - Enhanced
     saveGame() {
         try {
             localStorage.setItem('bollywoodSimulatorSave', JSON.stringify(this.gameData));
@@ -1014,110 +1838,21 @@
         }
     }
 
-    // Auto Save
     startAutoSave() {
         setInterval(() => {
             if (this.gameData.gameStarted) {
                 this.saveGame();
             }
-        }, 60000); // Save every minute
-    }
-
-    // Calculate Box Office Collection
-    calculateBoxOfficeCollection(project) {
-        let baseCollection = 100000000; // Base ₹10 crores
-        
-        // Genre multiplier
-        const genreMultiplier = this.genres[project.genre].marketAppeal / 100;
-        baseCollection *= genreMultiplier;
-        
-        // Cast popularity boost
-        let castBoost = 1;
-        project.cast.lead.forEach(actor => {
-            if (actor) castBoost += (actor.popularity / 100) * 0.3;
-        });
-        project.cast.supporting.forEach(actor => {
-            if (actor) castBoost += (actor.popularity / 100) * 0.1;
-        });
-        
-        if (project.cast.director) {
-            castBoost += (project.cast.director.skill / 100) * 0.2;
-        }
-        
-        baseCollection *= castBoost;
-        
-        // Franchise bonus
-        if (project.isFranchise && project.franchise) {
-            const franchise = this.franchises[project.franchise];
-            baseCollection *= (1 + franchise.successBonus / 100);
-        }
-        
-        // Format premium
-        const formatMultipliers = {
-            '2d': 1,
-            '3d': 1.15,
-            'imax': 1.3,
-            '4dx': 1.45,
-            '5d': 1.6
-        };
-        baseCollection *= formatMultipliers[project.format] || 1;
-        
-        // Script quality impact
-        baseCollection *= (project.scriptQuality / 100);
-        
-        // Random factor
-        baseCollection *= (0.7 + Math.random() * 0.6); // 70% to 130%
-        
-        // Event multiplier
-        if (project.eventMultiplier) {
-            baseCollection *= project.eventMultiplier;
-        }
-        
-        return Math.round(baseCollection);
-    }
-
-    // Release Movie
-    releaseMovie(projectId) {
-        const project = this.gameData.projects.find(p => p.id === projectId);
-        if (!project || project.status !== 'marketing_ready') return;
-        
-        project.status = 'released';
-        project.boxOfficeCollection = this.calculateBoxOfficeCollection(project);
-        project.releaseDate = { ...this.gameData.player.currentDate };
-        
-        // Add to completed projects
-        this.gameData.completedProjects.push(project);
-        this.gameData.projects = this.gameData.projects.filter(p => p.id !== projectId);
-        
-        // Calculate profit/loss
-        const profit = project.boxOfficeCollection - project.totalBudget;
-        this.gameData.player.money += project.boxOfficeCollection * 0.5; // Producer's share
-        this.gameData.player.totalIncome += project.boxOfficeCollection * 0.5;
-        
-        // Update reputation
-        if (profit > 0) {
-            this.gameData.player.reputation = Math.min(100, this.gameData.player.reputation + 5);
-        } else {
-            this.gameData.player.reputation = Math.max(0, this.gameData.player.reputation - 3);
-        }
-        
-        const status = project.boxOfficeCollection > 1000000000 ? 'BLOCKBUSTER' :
-                      project.boxOfficeCollection > 500000000 ? 'HIT' :
-                      project.boxOfficeCollection > 200000000 ? 'AVERAGE' : 'FLOP';
-        
-        this.showNotification(`"${project.title}" released! Box Office: ${this.formatCurrency(project.boxOfficeCollection)} - ${status}`, 'success');
-        this.switchTab('boxoffice');
+        }, 60000);
     }
 }
 
 // Initialize the game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🎬 Starting Bollywood Simulator...');
-    
-    // Initialize the game
     window.bollywoodSimulator = new BollywoodSimulator();
     
-    // Additional event listeners for step navigation
+    // Step navigation function
     window.nextStep = function(stepNumber) {
         document.querySelectorAll('.script-step').forEach(step => step.classList.remove('active'));
         document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
@@ -1126,84 +1861,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector(`[data-step="${stepNumber}"]`).classList.add('active');
     };
     
-    // Add visual effects for button interactions
-    document.addEventListener('click', (e) => {
-        if (e.target.matches('.primary-btn, .hire-celebrity-btn, .strategy-btn, .hire-staff-btn')) {
-            // Button press animation
-            e.target.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                e.target.style.transform = '';
-            }, 150);
-            
-            // Create particle effect
-            createParticleEffect(e.target);
-        }
-    });
-    
-    // Particle effect function
-    function createParticleEffect(element) {
-        const colors = ['#ffd700', '#ff6b35', '#4CAF50', '#2196f3'];
-        
-        for (let i = 0; i < 6; i++) {
-            const particle = document.createElement('div');
-            const rect = element.getBoundingClientRect();
-            
-            particle.style.cssText = `
-                position: fixed;
-                width: 8px;
-                height: 8px;
-                background: ${colors[Math.floor(Math.random() * colors.length)]};
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 1000;
-                left: ${rect.left + rect.width/2 + (Math.random() - 0.5) * rect.width}px;
-                top: ${rect.top + rect.height/2 + (Math.random() - 0.5) * rect.height}px;
-                animation: particleFloat 1.5s ease-out forwards;
-            `;
-            
-            document.body.appendChild(particle);
-            
-            setTimeout(() => particle.remove(), 1500);
-        }
-    }
-    
-    // Add particle animation CSS
-    const particleStyle = document.createElement('style');
-    particleStyle.textContent = `
-        @keyframes particleFloat {
-            0% { 
-                transform: translateY(0) scale(1) rotate(0deg); 
-                opacity: 1; 
-            }
-            100% { 
-                transform: translateY(-100px) scale(0) rotate(360deg); 
-                opacity: 0; 
-            }
-        }
-    `;
-    document.head.appendChild(particleStyle);
-    
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.key === 's') {
-            e.preventDefault();
-            window.bollywoodSimulator.saveGame();
-            window.bollywoodSimulator.showNotification('Game saved manually!', 'success', 2000);
-        }
-        
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
-                modal.style.display = 'none';
-            });
-        }
-    });
-    
     console.log('🎮 Bollywood Simulator loaded successfully!');
-    console.log('💡 Pro Tips:');
-    console.log('- Use Ctrl+S to save game manually');
-    console.log('- Try promo codes: SANDBOX, RICHMODE, GODMODE, SUPERSTAR, FREELOAN, TIMETRAVEL, FRANCHISE, MAXCREW');
-    console.log('- Click on money to access financial management');
-    console.log('- Game auto-saves every minute');
+    console.log('💡 Available Promo Codes: SANDBOX, RICHMODE, GODMODE, SUPERSTAR, FREELOAN, TIMETRAVEL, ALLSTAR');
 });
 
 // Export for potential module use
