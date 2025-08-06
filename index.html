@@ -52,7 +52,7 @@
     </div>
 
     <div id="game-container" class="game-container" style="display: none;">
-        <!-- Game Start Modal -->
+        <!-- Game Start Modal - FIXED: Limited to 3 options & no scrolling -->
         <div id="game-start-modal" class="modal-overlay">
             <div class="start-modal">
                 <div class="start-header">
@@ -64,15 +64,8 @@
                 <div class="start-options">
                     <div class="money-selection">
                         <h3>Choose Your Starting Capital</h3>
-                        <div class="budget-options">
-                            <label class="budget-option">
-                                <input type="radio" name="starting-budget" value="10000000">
-                                <div class="option-card beginner">
-                                    <h4>📱 YouTuber</h4>
-                                    <p>₹1 Crore</p>
-                                    <small>Start Small</small>
-                                </div>
-                            </label>
+                        <!-- FIXED: Only 3 options, no scrolling -->
+                        <div class="budget-options budget-options-limited">
                             <label class="budget-option">
                                 <input type="radio" name="starting-budget" value="50000000" checked>
                                 <div class="option-card normal">
@@ -349,7 +342,7 @@
                 </div>
             </div>
 
-            <!-- Enhanced Scripts Tab with Movie Naming -->
+            <!-- Enhanced Scripts Tab with FIXED Franchise Input -->
             <div class="tab-content" id="scripts-tab">
                 <div class="scripts-section">
                     <h2>🎬 Script Development</h2>
@@ -409,7 +402,7 @@
                                     </select>
                                 </div>
 
-                                <!-- NEW: Franchise Selection -->
+                                <!-- FIXED: Franchise Input with Text Box & Dropdown -->
                                 <div class="form-group">
                                     <label>
                                         <input type="checkbox" id="is-franchise"> 
@@ -418,18 +411,15 @@
                                 </div>
 
                                 <div class="form-group franchise-selection" id="franchise-options" style="display: none;">
-                                    <label for="franchise-select">🏆 Select Franchise</label>
-                                    <select id="franchise-select">
-                                        <option value="">-- Select Franchise --</option>
-                                        <option value="housefull" data-rating="85">Housefull (Rating: 85%)</option>
-                                        <option value="dabangg" data-rating="80">Dabangg (Rating: 80%)</option>
-                                        <option value="golmaal" data-rating="75">Golmaal (Rating: 75%)</option>
-                                        <option value="singham" data-rating="78">Singham (Rating: 78%)</option>
-                                        <option value="dhoom" data-rating="82">Dhoom (Rating: 82%)</option>
-                                        <option value="don" data-rating="79">Don (Rating: 79%)</option>
-                                        <option value="race" data-rating="76">Race (Rating: 76%)</option>
-                                        <option value="welcome" data-rating="74">Welcome (Rating: 74%)</option>
-                                    </select>
+                                    <label for="franchise-name-input">🏆 Franchise Name</label>
+                                    <div class="franchise-input-container">
+                                        <input type="text" id="franchise-name-input" placeholder="Enter franchise name..." maxlength="30">
+                                        <div class="franchise-dropdown" id="franchise-dropdown" style="display: none;">
+                                            <!-- Existing franchises will be populated here -->
+                                        </div>
+                                    </div>
+                                    <small>Type to search existing franchises or create a new one</small>
+                                    
                                     <div id="franchise-info" class="franchise-info" style="display: none;">
                                         <h4>Franchise Cast History:</h4>
                                         <div id="franchise-cast-display" class="franchise-cast">
@@ -499,21 +489,21 @@
                         <div class="script-step" id="step-3">
                             <h3>Step 3: Script Development Timeline</h3>
                             <div class="timeline-options">
-                                <div class="timeline-card">
+                                <div class="timeline-card" data-timeline="rush">
                                     <h4>⚡ Rush Script</h4>
                                     <p><strong>Duration:</strong> 2-3 weeks</p>
                                     <p><strong>Quality:</strong> 40-60%</p>
                                     <p><strong>Cost:</strong> ₹15 Lakhs</p>
                                     <input type="radio" name="script-timeline" value="rush">
                                 </div>
-                                <div class="timeline-card recommended">
+                                <div class="timeline-card recommended" data-timeline="standard">
                                     <h4>📝 Standard Script</h4>
                                     <p><strong>Duration:</strong> 4-6 weeks</p>
                                     <p><strong>Quality:</strong> 60-80%</p>
                                     <p><strong>Cost:</strong> ₹30 Lakhs</p>
                                     <input type="radio" name="script-timeline" value="standard" checked>
                                 </div>
-                                <div class="timeline-card">
+                                <div class="timeline-card" data-timeline="premium">
                                     <h4>✨ Premium Script</h4>
                                     <p><strong>Duration:</strong> 6-8 weeks</p>
                                     <p><strong>Quality:</strong> 80-95%</p>
@@ -538,19 +528,19 @@
                 </div>
             </div>
 
-            <!-- Enhanced Casting Tab with Dropdown Assignment -->
+            <!-- FIXED: Enhanced Casting Tab with Movie Dropdown -->
             <div class="tab-content" id="casting-tab">
                 <div class="casting-section">
                     <h2>⭐ Cast & Crew Selection</h2>
                     
-                    <!-- NEW: Cast Assignment Dropdown Container -->
+                    <!-- FIXED: Cast Assignment Dropdown Container -->
                     <div class="cast-assignment-panel">
                         <div class="assignment-controls">
                             <div class="control-group">
                                 <label for="movie-selector">📽️ Select Movie:</label>
                                 <select id="movie-selector">
                                     <option value="">-- Select a movie to cast --</option>
-                                    <!-- Populated dynamically with active movies -->
+                                    <!-- FIXED: Populated dynamically with active movies -->
                                 </select>
                             </div>
                             
@@ -637,7 +627,7 @@
                         </div>
                     </div>
 
-                    <!-- NEW: Hired Cast Display with Movie Assignment -->
+                    <!-- Hired Cast Display with Movie Assignment -->
                     <div class="hired-cast-section">
                         <h3>✅ Hired Cast & Crew</h3>
                         <div class="hired-cast-table-container">
@@ -662,7 +652,8 @@
                 </div>
             </div>
 
-            <!-- Enhanced Production Tab with Week-by-Week Progress -->
+            <!-- Rest of the tabs remain the same -->
+            <!-- Production Tab -->
             <div class="tab-content" id="production-tab">
                 <div class="production-section">
                     <h2>🎬 Movie Production Pipeline</h2>
@@ -758,7 +749,7 @@
                 </div>
             </div>
 
-            <!-- Enhanced Box Office with Theatre Chains -->
+            <!-- Box Office Tab -->
             <div class="tab-content" id="boxoffice-tab">
                 <div class="boxoffice-section">
                     <h2>🎫 Box Office Performance</h2>
@@ -835,12 +826,11 @@
                 </div>
             </div>
 
-            <!-- Enhanced Finances Tab -->
+            <!-- Finances Tab -->
             <div class="tab-content" id="finances-tab">
                 <div class="finances-section">
                     <h2>💼 Financial Management</h2>
                     
-                    <!-- Money Management Panel -->
                     <div class="money-management">
                         <div class="balance-overview">
                             <div class="balance-card">
@@ -911,7 +901,6 @@
                             </div>
                         </div>
                         
-                        <!-- Enhanced Cheat Panel -->
                         <div class="developer-panel">
                             <h3>🔧 Developer Console</h3>
                             <div class="cheat-interface">
@@ -1001,20 +990,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Service Worker Registration for PWA -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                        console.log('ServiceWorker registration successful');
-                    }, function(err) {
-                        console.log('ServiceWorker registration failed: ', err);
-                    });
-            });
-        }
-    </script>
 
     <script src="script.js"></script>
 </body>
