@@ -1855,6 +1855,338 @@ body::after {
 
 /* FIXED: Movie Selector Enhancement */
 #movie-selector {
+    background: var(--card-bg) !important;
+    border: 2px solid var(--accent-gold) !important;
+    color: var(--text-primary) !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    transition: all var(--transition-normal) !important;
+    pointer-events: auto !important;
+}
+
+#movie-selector:focus {
+    outline: none !important;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3) !important;
+    border-color: var(--hover-gold) !important;
+}
+
+#movie-selector option {
+    background: var(--card-bg) !important;
+    color: var(--text-primary) !important;
+    padding: 10px !important;
+    font-weight: normal !important;
+}
+
+#movie-selector option:disabled {
+    color: var(--text-muted) !important;
+    font-style: italic !important;
+    background: var(--secondary-dark) !important;
+}
+
+/* FIXED: Franchise Options Smooth Animation */
+.franchise-selection {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.franchise-input-container {
+    position: relative;
+    margin-bottom: 15px;
+    transition: all 0.3s ease !important;
+}
+
+#is-franchise {
+    transform: scale(1) !important;
+    transition: transform 0.2s ease !important;
+}
+
+#is-franchise:hover {
+    transform: scale(1.05) !important;
+}
+
+#is-franchise:active {
+    transform: scale(0.95) !important;
+}
+
+/* Remove any glitchy button effects */
+label:has(#is-franchise) {
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+label:has(#is-franchise):hover {
+    color: var(--accent-gold) !important;
+}
+
+/* FIXED: Enhanced Genre Cards with Proper Icon Display */
+.enhanced-genre-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+    padding: 20px;
+}
+
+.genre-card {
+    background: var(--card-bg);
+    padding: 35px 25px;
+    border-radius: 20px;
+    text-align: center;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.genre-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+    transition: left var(--transition-slow);
+}
+
+.genre-card:hover::before {
+    left: 100%;
+}
+
+.genre-card:hover,
+.genre-card.selected {
+    border-color: var(--accent-gold);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+}
+
+.genre-card i {
+    font-size: 4rem !important;
+    margin-bottom: 20px !important;
+    display: block !important;
+    text-align: center !important;
+    line-height: 1 !important;
+}
+
+.genre-card h4 {
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.genre-card p {
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+/* FIXED: Theater Chain Cards with Realistic Branding */
+.chain-card {
+    background: var(--card-bg);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+}
+
+.chain-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+    transition: left var(--transition-slow);
+}
+
+.chain-card:hover::before {
+    left: 100%;
+}
+
+.chain-card:hover {
+    border-color: var(--accent-blue);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3);
+}
+
+.chain-logo {
+    width: 100px;
+    height: 80px;
+    border-radius: 15px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    line-height: 1.2;
+}
+
+.pvr-inox-logo {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important;
+    border-color: #fca5a5 !important;
+}
+
+.cinepolis-logo {
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%) !important;
+    border-color: #93c5fd !important;
+}
+
+.carnival-logo {
+    background: linear-gradient(135deg, #7c2d12 0%, #451a03 100%) !important;
+    border-color: #fdba74 !important;
+}
+
+.wave-logo {
+    background: linear-gradient(135deg, #374151 0%, #1f2937 100%) !important;
+    border-color: #9ca3af !important;
+}
+
+.chain-card h4 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.chain-card p {
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.chain-card p:last-child {
+    color: var(--accent-blue);
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+/* FIXED: Assignment Status Enhanced Styling */
+.assignment-status {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    margin-top: 20px;
+}
+
+/* FIXED: Role Selectors Enhancement */
+.control-group select {
+    background: var(--card-bg) !important;
+    border: 2px solid var(--accent-gold) !important;
+    color: var(--text-primary) !important;
+    font-weight: bold !important;
+    transition: all var(--transition-normal) !important;
+}
+
+.control-group select:focus {
+    outline: none !important;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3) !important;
+    border-color: var(--hover-gold) !important;
+}
+
+.control-group select option {
+    background: var(--card-bg) !important;
+    color: var(--text-primary) !important;
+    padding: 8px !important;
+}
+
+/* FIXED: Selected Genres Display */
+.selected-genres-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.selected-genre-tag {
+    background: var(--gradient-gold);
+    color: var(--text-dark);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+    transition: all var(--transition-normal);
+}
+
+.selected-genre-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.remove-genre {
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 5px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.remove-genre:hover {
+    background: rgba(239, 68, 68, 0.8);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* FIXED: Responsive Improvements */
+@media (max-width: 768px) {
+    .enhanced-genre-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .genre-card {
+        padding: 25px 15px;
+        min-height: 180px;
+    }
+    
+    .genre-card i {
+        font-size: 3rem !important;
+    }
+    
+    .chains-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .assignment-controls {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+
+
+/* FIXED: Movie Selector Enhancement */
+#movie-selector {
     min-width: 250px;
     font-weight: bold;
 }
