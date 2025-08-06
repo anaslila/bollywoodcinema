@@ -3757,3 +3757,307 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = BollywoodSimulator;
 }
+// FIXED: Movie Dropdown Selection Issue
+updateMovieSelector() {
+    const movieSelector = document.getElementById('movie-selector');
+    if (!movieSelector) return;
+
+    // Clear existing options
+    movieSelector.innerHTML = '<option value="">-- Select a movie to cast --</option>';
+    
+    const readyMovies = this.gameData.projects.filter(p => 
+        p.status === 'script_ready' || p.status === 'casting' || p.status === 'production_ready'
+    );
+    
+    readyMovies.forEach(project => {
+        const option = document.createElement('option');
+        option.value = project.id;
+        option.textContent = `${project.title} (${project.status.replace('_', ' ')})`;
+        option.dataset.projectId = project.id; // Add data attribute for easier selection
+        movieSelector.appendChild(option);
+    });
+
+    if (readyMovies.length === 0) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No movies ready for casting';
+        option.disabled = true;
+        option.style.fontStyle = 'italic';
+        option.style.color = 'var(--text-muted)';
+        movieSelector.appendChild(option);
+    }
+
+    // FIXED: Ensure the dropdown is properly enabled and functional
+    movieSelector.disabled = false;
+    movieSelector.style.pointerEvents = 'auto';
+}
+
+// FIXED: Enhanced updateCastAssignment with proper selection handling
+updateCastAssignment() {
+    const movieSelector = document.getElementById('movie-selector');
+    const roleTypeSelector = document.getElementById('role-type-selector');
+    const roleNumberSelector = document.getElementById('role-number-selector');
+    const assignmentStatus = document.getElementById('assignment-status');
+    const castingRequirements = document.getElementById('casting-requirements');
+    
+    if (!movieSelector || !roleTypeSelector || !roleNumberSelector) return;
+
+    // Update movie selector first
+    this.updateMovieSelector();
+    
+    const selectedMovieId = movieSelector.value;
+    const selectedRoleType = roleTypeSelector.value;
+    
+    if (!selectedMovieId || selectedMovieId === '') {
+        assignmentStatus.innerHTML = '<p style="color: var(--text-muted); font-style: italic;">Select a movie to start casting</p>';
+        castingRequirements.style.display = 'none';
+        return;
+    }
+    
+    const project = this.gameData.projects.find(p => p.id == selectedMovieId);
+    if (!project) {
+        assignmentStatus.innerHTML = '<p style="color: var(--error);">Movie not found!</p>';
+        castingRequirements.style.display = 'none';
+        return;
+    }
+
+    // Update role number selector based on role type
+    roleNumberSelector.innerHTML = '';
+    let maxRoles = 1;
+    
+    if (selectedRoleType === 'lead') {
+        maxRoles = project.leadRolesCount || 1;
+    } else if (selectedRoleType === 'supporting') {
+        maxRoles = project.supportingRolesCount || 1;
+    }
+    
+    for (let i = 1; i <= maxRoles; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = `Role ${i}`;
+        roleNumberSelector.appendChild(option);
+    }
+    
+    // Store selections globally
+    this.gameData.selectedMovie = selectedMovieId;
+    this.gameData.selectedRoleType = selectedRoleType;
+    this.gameData.selectedRoleNumber = parseInt(roleNumberSelector.value || 1);
+    
+    // Update status display with enhanced styling
+    assignmentStatus.innerHTML = `
+        <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3);">
+            <p><strong style="color: var(--accent-gold);">Movie:</strong> <span style="color: var(--text-primary);">${project.title}</span></p>
+            <p><strong style="color: var(--accent-gold);">Role:</strong> <span style="color: var(--text-primary);">${selectedRoleType} ${this.gameData.selectedRoleNumber}</span></p>
+            <p><strong style="color: var(--accent-gold);">Status:</strong> <span style="color: var(--success);">Ready for casting</span></p>
+        </div>
+    `;
+    
+    this.updateCastingRequirements(project);
+    castingRequirements.style.display = 'block';
+}
+
+// FIXED: Franchise Button Glitch Effect
+toggleFranchiseOptions(isChecked) {
+    const franchiseOptions = document.getElementById('franchise-options');
+    const franchiseCheckbox = document.getElementById('is-franchise');
+    
+    if (franchiseOptions) {
+        if (isChecked) {
+            franchiseOptions.style.display = 'block';
+            franchiseOptions.style.opacity = '0';
+            franchiseOptions.style.transform = 'translateY(-10px)';
+            
+            // Smooth animation instead of glitchy effect
+            setTimeout(() => {
+                franchiseOptions.style.transition = 'all 0.3s ease';
+                franchiseOptions.style.opacity = '1';
+                franchiseOptions.style.transform = 'translateY(0)';
+            }, 10);
+        } else {
+            franchiseOptions.style.transition = 'all 0.3s ease';
+            franchiseOptions.style.opacity = '0';
+            franchiseOptions.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                franchiseOptions.style.display = 'none';
+            }, 300);
+            
+            // Clear franchise input
+            const franchiseInput = document.getElementById('franchise-name-input');
+            if (franchiseInput) franchiseInput.value = '';
+        }
+    }
+    
+    // Remove any glitchy button effects
+    if (franchiseCheckbox) {
+        franchiseCheckbox.style.transition = 'all 0.2s ease';
+        franchiseCheckbox.style.transform = 'none';
+    }
+}
+
+// FIXED: Enhanced Genre Options with Proper Icons
+generateGenreOptions() {
+    const genreGrid = document.getElementById('enhanced-genre-grid');
+    if (!genreGrid) return;
+
+    genreGrid.innerHTML = '';
+    
+    // FIXED: Updated genres with proper FontAwesome icons
+    const fixedGenres = {
+        action: { 
+            name: 'Action', 
+            marketAppeal: 92, 
+            budget: 'high', 
+            icon: 'fas fa-fist-raised', 
+            color: '#dc2626' 
+        },
+        romance: { 
+            name: 'Romance', 
+            marketAppeal: 85, 
+            budget: 'medium', 
+            icon: 'fas fa-heart', 
+            color: '#ec4899' 
+        },
+        comedy: { 
+            name: 'Comedy', 
+            marketAppeal: 88, 
+            budget: 'low', 
+            icon: 'fas fa-laugh-beam', 
+            color: '#fbbf24' 
+        },
+        drama: { 
+            name: 'Drama', 
+            marketAppeal: 82, 
+            budget: 'medium', 
+            icon: 'fas fa-theater-masks', 
+            color: '#3b82f6' 
+        },
+        thriller: { 
+            name: 'Thriller', 
+            marketAppeal: 84, 
+            budget: 'medium', 
+            icon: 'fas fa-eye', 
+            color: '#8b5cf6' 
+        },
+        horror: { 
+            name: 'Horror', 
+            marketAppeal: 72, 
+            budget: 'low', 
+            icon: 'fas fa-ghost', 
+            color: '#374151' 
+        },
+        historical: { 
+            name: 'Historical', 
+            marketAppeal: 78, 
+            budget: 'very_high', 
+            icon: 'fas fa-crown', 
+            color: '#f59e0b' 
+        },
+        biopic: { 
+            name: 'Biopic', 
+            marketAppeal: 80, 
+            budget: 'high', 
+            icon: 'fas fa-user-circle', 
+            color: '#10b981' 
+        }
+    };
+    
+    Object.entries(fixedGenres).forEach(([key, genre]) => {
+        const genreCard = document.createElement('div');
+        genreCard.className = 'genre-card';
+        genreCard.dataset.genre = key;
+        genreCard.innerHTML = `
+            <i class="${genre.icon}" style="color: ${genre.color}; font-size: 4rem; margin-bottom: 20px; display: block;"></i>
+            <h4>${genre.name}</h4>
+            <p>Market Appeal: ${genre.marketAppeal}%</p>
+            <p>Budget: ${genre.budget}</p>
+        `;
+        
+        // Enhanced click handling
+        genreCard.addEventListener('click', () => {
+            this.selectGenre(genreCard);
+        });
+        
+        genreGrid.appendChild(genreCard);
+    });
+    
+    // Initialize selected genres display
+    this.updateSelectedGenresDisplay();
+}
+
+// FIXED: Theater Chain Logos with Realistic Branding
+updateTheatreChains() {
+    const chainsGrid = document.getElementById('chains-grid');
+    if (!chainsGrid) return;
+    
+    chainsGrid.innerHTML = '';
+    
+    // FIXED: Enhanced theater chains with realistic logos and data
+    const theaterChains = [
+        {
+            name: 'PVR INOX',
+            screens: 1850,
+            cities: 115,
+            revenue: '45%',
+            logo: 'pvr-inox-logo',
+            gradient: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+            description: 'India\'s largest cinema exhibitor'
+        },
+        {
+            name: 'Cinepolis',
+            screens: 450,
+            cities: 68,
+            revenue: '25%',
+            logo: 'cinepolis-logo', 
+            gradient: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
+            description: 'Premium international cinema chain'
+        },
+        {
+            name: 'Carnival Cinemas',
+            screens: 520,
+            cities: 85,
+            revenue: '18%',
+            logo: 'carnival-logo',
+            gradient: 'linear-gradient(135deg, #7c2d12 0%, #451a03 100%)',
+            description: 'Growing multiplex network'
+        },
+        {
+            name: 'Wave Cinemas',
+            screens: 180,
+            cities: 45,
+            revenue: '12%',
+            logo: 'wave-logo',
+            gradient: 'linear-gradient(135deg, #374151 0%, #1f2937 100%)',
+            description: 'Regional cinema chain'
+        }
+    ];
+    
+    theaterChains.forEach(chain => {
+        const chainCard = document.createElement('div');
+        chainCard.className = 'chain-card';
+        chainCard.innerHTML = `
+            <div class="chain-logo ${chain.logo}" style="background: ${chain.gradient};">
+                ${this.getTheaterChainIcon(chain.name)}
+            </div>
+            <h4>${chain.name}</h4>
+            <p><strong>Screens:</strong> ${chain.screens}</p>
+            <p><strong>Cities:</strong> ${chain.cities}</p>
+            <p><strong>Market Share:</strong> ${chain.revenue}</p>
+            <p style="font-style: italic; color: var(--text-muted);">${chain.description}</p>
+        `;
+        chainsGrid.appendChild(chainCard);
+    });
+}
+
+// FIXED: Theater Chain Icons Helper
+getTheaterChainIcon(chainName) {
+    const iconMap = {
+        'PVR INOX': '<span style="font-weight: bold; font-size: 1.4rem;">PVR<br><small style="font-size: 0.8rem;">INOX</small></span>',
+        'Cinepolis': '<span style="font-weight: bold; font-size: 1.2rem;">CINÉPOLIS</span>',
+        'Carnival Cinemas': '<i class="fas fa-masks-theater" style="font-size: 2rem;"></i>',
+        'Wave Cinemas': '<i class="fas fa-water" style="font-size: 2rem;"></i>'
+    };
+    
+    return iconMap[chainName] || '<i class="fas fa-film" style="font-size: 2rem;"></i>';
+}
+
