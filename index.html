@@ -3,17 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Production Simulator - Enhanced Edition</title>
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmZkNzAwIiBkPSJNNTEyIDI1NmMwIDE0MS4zNy0xMTQuNjMgMjU2LTI1NiAyNTZTMCAzOTcuMzcgMCAyNTYgMTE0LjYzIDAgMjU2IDBzMjU2IDExNC42MyAyNTYgMjU2ek0yNTYgMjU2bC0xMDcuNy0xMjhIMTI4djI1NmgxMzUuN0wyNTYgMjU2em0tMTA3LjcgMzJIMTI4djEyOGgxMzUuN0w0OC4zIDI4OHptMjE1LjQgMEg0ODAuM0wyNTYgNDE2IDQ4LjMgMjg4aDEzNS43TDQwMCAxNjBoNjR2MjU2aDEzNS43TDI1NiAyNTZ6Ii8+PC9zdmc+">
-    <link rel="stylesheet" href="styles.css">
+    <title>Bollywood Simulator</title>
+    
+    <!-- Favicon - Changed to Bollywood Simulator Logo -->
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iI0ZGRDcwMCIvPgo8cGF0aCBkPSJNMTYgOEw4IDI0SDE2TDI0IDhIMTZaIiBmaWxsPSIjMUExQTFBIi8+CjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjMiIGZpbGw9IiNGRkQ3MDAiLz4KPC9zdmc+" type="image/svg+xml">
+    
+    <!-- PWA Support - Installation Compatibility -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffd700">
+    
+    <!-- Apple iOS Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Bollywood Simulator">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    
+    <!-- Android Support -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- External Libraries -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Loading Screen -->
-    <div class="loading-screen" id="loading-screen">
+    <div id="loading-screen" class="loading-screen">
         <div class="loading-animation">
             <i class="fas fa-film spinning"></i>
-            <h2>Loading Bollywood Production Simulator...</h2>
+            <h2>Loading Bollywood Simulator...</h2>
             <div class="loading-bar">
                 <div class="loading-progress"></div>
             </div>
@@ -21,13 +38,26 @@
         </div>
     </div>
 
-    <div class="game-container" id="game-container" style="display: none;">
+    <!-- PWA Install Prompt -->
+    <div id="install-prompt" class="install-prompt" style="display: none;">
+        <div class="install-content">
+            <i class="fas fa-mobile-alt"></i>
+            <h3>Install Bollywood Simulator</h3>
+            <p>Add to your home screen for the best experience!</p>
+            <div class="install-buttons">
+                <button id="install-app" class="install-btn primary">Install App</button>
+                <button id="dismiss-install" class="install-btn secondary">Later</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-container" class="game-container" style="display: none;">
         <!-- Game Start Modal -->
-        <div class="modal-overlay" id="game-start-modal">
+        <div id="game-start-modal" class="modal-overlay">
             <div class="start-modal">
                 <div class="start-header">
                     <i class="fas fa-film"></i>
-                    <h1>Bollywood Production Simulator</h1>
+                    <h1>Bollywood Simulator</h1>
                     <p>Create Your Cinema Legacy!</p>
                 </div>
                 
@@ -39,7 +69,7 @@
                                 <input type="radio" name="starting-budget" value="10000000">
                                 <div class="option-card beginner">
                                     <h4>📱 YouTuber</h4>
-                                    <p>₹1,00,00,000</p>
+                                    <p>₹1 Crore</p>
                                     <small>Start Small</small>
                                 </div>
                             </label>
@@ -47,7 +77,7 @@
                                 <input type="radio" name="starting-budget" value="50000000" checked>
                                 <div class="option-card normal">
                                     <h4>🎬 Producer</h4>
-                                    <p>₹5,00,00,000</p>
+                                    <p>₹5 Crore</p>
                                     <small>Normal Mode</small>
                                 </div>
                             </label>
@@ -55,7 +85,7 @@
                                 <input type="radio" name="starting-budget" value="200000000">
                                 <div class="option-card hard">
                                     <h4>🏢 Studio Head</h4>
-                                    <p>₹20,00,00,000</p>
+                                    <p>₹20 Crore</p>
                                     <small>Big Budget</small>
                                 </div>
                             </label>
@@ -63,7 +93,7 @@
                                 <input type="radio" name="starting-budget" value="1000000000">
                                 <div class="option-card expert">
                                     <h4>👑 Media Mogul</h4>
-                                    <p>₹100,00,00,000</p>
+                                    <p>₹100 Crore</p>
                                     <small>Unlimited Power</small>
                                 </div>
                             </label>
@@ -347,22 +377,65 @@
                                     <label for="movie-title">🎭 Movie Title</label>
                                     <input type="text" id="movie-title" placeholder="Enter your movie title" maxlength="50">
                                     <div class="title-suggestions">
-                                        <button class="title-suggestion" data-genre="action">Tiger Zinda Hai 2</button>
+                                        <button class="title-suggestion" data-genre="action">Tiger Zinda Hai 3</button>
                                         <button class="title-suggestion" data-genre="romance">Kabir Singh Returns</button>
-                                        <button class="title-suggestion" data-genre="comedy">Housefull 5</button>
+                                        <button class="title-suggestion" data-genre="comedy">Housefull 6</button>
                                         <button class="title-suggestion" data-genre="drama">83: The Sequel</button>
                                     </div>
                                 </div>
-                                
+
+                                <!-- NEW: Lead Roles Input -->
                                 <div class="form-group">
-                                    <label for="movie-characters">👥 Number of Main Characters</label>
-                                    <select id="movie-characters">
-                                        <option value="1">1 Character (Solo Hero)</option>
-                                        <option value="2" selected>2 Characters (Hero + Heroine)</option>
-                                        <option value="3">3 Characters (Love Triangle)</option>
-                                        <option value="4">4 Characters (Ensemble)</option>
-                                        <option value="5">5+ Characters (Multi-starrer)</option>
+                                    <label for="lead-roles-count">👥 Number of Lead Roles</label>
+                                    <select id="lead-roles-count">
+                                        <option value="1" selected>1 Lead Role</option>
+                                        <option value="2">2 Lead Roles</option>
+                                        <option value="3">3 Lead Roles</option>
+                                        <option value="4">4 Lead Roles</option>
+                                        <option value="5">5 Lead Roles</option>
                                     </select>
+                                </div>
+
+                                <!-- NEW: Supporting Roles Input -->
+                                <div class="form-group">
+                                    <label for="supporting-roles-count">🎭 Number of Supporting Roles</label>
+                                    <select id="supporting-roles-count">
+                                        <option value="0">0 Supporting Roles</option>
+                                        <option value="1" selected>1 Supporting Role</option>
+                                        <option value="2">2 Supporting Roles</option>
+                                        <option value="3">3 Supporting Roles</option>
+                                        <option value="4">4 Supporting Roles</option>
+                                        <option value="5">5 Supporting Roles</option>
+                                    </select>
+                                </div>
+
+                                <!-- NEW: Franchise Selection -->
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="is-franchise"> 
+                                        Is this part of a franchise?
+                                    </label>
+                                </div>
+
+                                <div class="form-group franchise-selection" id="franchise-options" style="display: none;">
+                                    <label for="franchise-select">🏆 Select Franchise</label>
+                                    <select id="franchise-select">
+                                        <option value="">-- Select Franchise --</option>
+                                        <option value="housefull" data-rating="85">Housefull (Rating: 85%)</option>
+                                        <option value="dabangg" data-rating="80">Dabangg (Rating: 80%)</option>
+                                        <option value="golmaal" data-rating="75">Golmaal (Rating: 75%)</option>
+                                        <option value="singham" data-rating="78">Singham (Rating: 78%)</option>
+                                        <option value="dhoom" data-rating="82">Dhoom (Rating: 82%)</option>
+                                        <option value="don" data-rating="79">Don (Rating: 79%)</option>
+                                        <option value="race" data-rating="76">Race (Rating: 76%)</option>
+                                        <option value="welcome" data-rating="74">Welcome (Rating: 74%)</option>
+                                    </select>
+                                    <div id="franchise-info" class="franchise-info" style="display: none;">
+                                        <h4>Franchise Cast History:</h4>
+                                        <div id="franchise-cast-display" class="franchise-cast">
+                                            <!-- Franchise cast members displayed here -->
+                                        </div>
+                                    </div>
                                 </div>
                                 
                                 <div class="form-group">
@@ -465,15 +538,61 @@
                 </div>
             </div>
 
-            <!-- Enhanced Casting Tab with Real Celebrity Photos -->
+            <!-- Enhanced Casting Tab with Dropdown Assignment -->
             <div class="tab-content" id="casting-tab">
                 <div class="casting-section">
                     <h2>⭐ Cast & Crew Selection</h2>
                     
+                    <!-- NEW: Cast Assignment Dropdown Container -->
+                    <div class="cast-assignment-panel">
+                        <div class="assignment-controls">
+                            <div class="control-group">
+                                <label for="movie-selector">📽️ Select Movie:</label>
+                                <select id="movie-selector">
+                                    <option value="">-- Select a movie to cast --</option>
+                                    <!-- Populated dynamically with active movies -->
+                                </select>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="role-type-selector">🎭 Role Type:</label>
+                                <select id="role-type-selector">
+                                    <option value="lead">Lead Role</option>
+                                    <option value="supporting">Supporting Role</option>
+                                    <option value="director">Director</option>
+                                    <option value="music">Music Director</option>
+                                    <option value="singer">Playback Singer</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="role-number-selector">🔢 Role Number:</label>
+                                <select id="role-number-selector">
+                                    <option value="1">Role 1</option>
+                                    <!-- Populated dynamically based on role requirements -->
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="assignment-status" id="assignment-status">
+                            <p>Select a movie and role type to start casting</p>
+                        </div>
+                    </div>
+
+                    <!-- Franchise Cast Display - Shows previous franchise actors -->
+                    <div class="franchise-showcase" id="franchise-showcase" style="display: none;">
+                        <h3>🏆 Franchise Stars</h3>
+                        <p>Actors who have appeared in this franchise before:</p>
+                        <div class="franchise-cast-grid" id="franchise-cast-grid">
+                            <!-- Previous franchise actors displayed here -->
+                        </div>
+                    </div>
+
+                    <!-- Cast Hiring Requirements -->
                     <div class="casting-requirements" id="casting-requirements" style="display: none;">
                         <h3>📋 Current Movie Requirements</h3>
                         <div class="requirements-grid" id="requirements-grid">
-                            <!-- Dynamic requirements based on character count -->
+                            <!-- Dynamic requirements based on selected movie -->
                         </div>
                     </div>
                     
@@ -515,6 +634,29 @@
                         
                         <div class="celebrity-showcase" id="celebrity-showcase">
                             <!-- Real celebrity cards with actual photos -->
+                        </div>
+                    </div>
+
+                    <!-- NEW: Hired Cast Display with Movie Assignment -->
+                    <div class="hired-cast-section">
+                        <h3>✅ Hired Cast & Crew</h3>
+                        <div class="hired-cast-table-container">
+                            <table class="hired-cast-table">
+                                <thead>
+                                    <tr>
+                                        <th>Movie</th>
+                                        <th>Role Type</th>
+                                        <th>Role Number</th>
+                                        <th>Celebrity</th>
+                                        <th>Fee</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="hired-cast-table-body">
+                                    <!-- Hired cast entries populated dynamically -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -737,7 +879,7 @@
                                 <div class="loan-card">
                                     <h4>🏪 Small Business Loan</h4>
                                     <div class="loan-details">
-                                        <p><strong>Amount:</strong> ₹2,00,00,000</p>
+                                        <p><strong>Amount:</strong> ₹2 Crore</p>
                                         <p><strong>Interest:</strong> 11.5% per year</p>
                                         <p><strong>Term:</strong> 24 months</p>
                                         <p><strong>Monthly EMI:</strong> ₹9,85,000</p>
@@ -748,7 +890,7 @@
                                 <div class="loan-card">
                                     <h4>🎬 Film Production Loan</h4>
                                     <div class="loan-details">
-                                        <p><strong>Amount:</strong> ₹10,00,00,000</p>
+                                        <p><strong>Amount:</strong> ₹10 Crore</p>
                                         <p><strong>Interest:</strong> 13.5% per year</p>
                                         <p><strong>Term:</strong> 36 months</p>
                                         <p><strong>Monthly EMI:</strong> ₹34,50,000</p>
@@ -759,7 +901,7 @@
                                 <div class="loan-card premium">
                                     <h4>👑 Mega Budget Loan</h4>
                                     <div class="loan-details">
-                                        <p><strong>Amount:</strong> ₹50,00,00,000</p>
+                                        <p><strong>Amount:</strong> ₹50 Crore</p>
                                         <p><strong>Interest:</strong> 15.5% per year</p>
                                         <p><strong>Term:</strong> 60 months</p>
                                         <p><strong>Monthly EMI:</strong> ₹1,20,00,000</p>
@@ -786,6 +928,7 @@
                                         <li><code>SUPERSTAR</code> - Max reputation</li>
                                         <li><code>FREELOAN</code> - Clear all loans</li>
                                         <li><code>TIMETRAVEL</code> - Skip time phases</li>
+                                        <li><code>ALLSTAR</code> - Free celebrity hiring</li>
                                     </ul>
                                 </div>
                             </div>
@@ -858,6 +1001,20 @@
             </div>
         </div>
     </div>
+
+    <!-- Service Worker Registration for PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    }, function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
 
     <script src="script.js"></script>
 </body>
