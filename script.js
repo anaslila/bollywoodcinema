@@ -4060,4 +4060,18 @@ getTheaterChainIcon(chainName) {
     
     return iconMap[chainName] || '<i class="fas fa-film" style="font-size: 2rem;"></i>';
 }
+function updateCastingMovieDropdown() {
+    const movieSelector = document.getElementById('movie-selector');
+    const readyMovies = gameState.scripts.filter(script => 
+        script.status === 'completed' && !script.fullycast
+    );
+    
+    movieSelector.innerHTML = '<option value="">-- Select a movie to cast --</option>';
+    readyMovies.forEach(movie => {
+        const option = document.createElement('option');
+        option.value = movie.id;
+        option.textContent = movie.title;
+        movieSelector.appendChild(option);
+    });
+}
 
