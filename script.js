@@ -4074,4 +4074,23 @@ function updateCastingMovieDropdown() {
         movieSelector.appendChild(option);
     });
 }
+const realBollywoodCelebrities = {
+    actors: [
+        {
+            name: "Shah Rukh Khan",
+            photo: "path/to/srk.jpg",
+            popularity: 95,
+            fee: 500000000, // 50 Cr
+            specialties: ["romance", "drama"]
+        },
+        {
+            name: "Aamir Khan", 
+            photo: "path/to/aamir.jpg",
+            popularity: 94,
+            fee: 450000000, // 45 Cr
+            specialties: ["drama", "social"]
+        }
+        // Add more real celebrities
+    ]
+};
 
