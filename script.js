@@ -8,13 +8,13 @@ const GameState = {
     currentScreen: 'dashboard',
     gameTime: {
         week: 1,
-        year: 2025,
+        year: 1985,
         totalWeeks: 1
     },
     player: {
         studioName: "Your Studio",
-        money: 100,
-        reputation: 50,
+        money: 10000,
+        reputation: 0,
         totalProjects: 0,
         completedProjects: 0,
         hitMovies: 0,
@@ -2469,3 +2469,4 @@ window.GameState = GameState;
 window.switchScreen = switchScreen;
 window.saveGame = saveGame;
 window.toggleTheme = toggleTheme;
+
