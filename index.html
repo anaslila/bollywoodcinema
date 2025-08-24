@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bollywood Cinema - Text-based movie production simulation game">
-    <meta name="keywords" content="Bollywood, cinema, simulation, game, movie, production">
+    <meta name="description" content="Bollywood Cinema v2.0 - Advanced movie production simulation game">
+    <meta name="keywords" content="Bollywood, cinema, simulation, game, movie, production, web series">
     <meta name="author" content="Bollywood Cinema Game">
     
     <!-- PWA Meta Tags -->
@@ -12,9 +12,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Bollywood Cinema">
+    <meta name="apple-mobile-web-app-title" content="Bollywood Cinema v2.0">
     
-    <title>Bollywood Cinema v1.0</title>
+    <title>Bollywood Cinema v2.0 - Professional Production Simulator</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/BbXWMgtk/image.png">
@@ -31,8 +31,13 @@
     <header class="header">
         <div class="header-content">
             <img src="https://i.postimg.cc/BbXWMgtk/image.png" alt="Bollywood Cinema Logo" class="logo">
-            <h1 class="game-title">Bollywood Cinema</h1>
-            <span class="version">v1.0</span>
+            <div class="title-section">
+                <h1 class="game-title">Bollywood Cinema</h1>
+                <span class="version">v2.0 Professional</span>
+            </div>
+            <div class="game-time" id="gameTime">
+                <span id="currentWeek">Week 1</span> | <span id="currentMonth">January 2025</span>
+            </div>
         </div>
     </header>
 
@@ -40,181 +45,803 @@
     <div class="container">
         <!-- Menu Section -->
         <div id="menu" class="menu-section">
-            <h2>Welcome to Bollywood Cinema!</h2>
-            <p class="tagline">Build your movie empire in the glamorous world of Bollywood</p>
+            <h2>Welcome to Bollywood Cinema v2.0!</h2>
+            <p class="tagline">Experience the complete movie production pipeline from script to box office</p>
             
             <div class="menu-buttons">
-                <button id="startGame" class="menu-btn primary">Start Game</button>
-                <button id="storyMode" class="menu-btn">Story Mode</button>
-                <button id="freeMode" class="menu-btn">Free Mode</button>
-                <button id="instructions" class="menu-btn">Instructions</button>
+                <button id="newGameBtn" class="menu-btn primary">New Game</button>
+                <button id="loadGameBtn" class="menu-btn">Load Game</button>
+                <button id="instructionsBtn" class="menu-btn">How to Play</button>
+                <button id="creditsBtn" class="menu-btn">Credits</button>
+            </div>
+            
+            <div class="version-highlights">
+                <h3>New in v2.0:</h3>
+                <ul>
+                    <li>🎬 Complete production pipeline (Script → Release)</li>
+                    <li>📺 Create Movies, Web Series & TV Serials</li>
+                    <li>🎵 Music department with composers & singers</li>
+                    <li>📱 Advanced marketing & distribution system</li>
+                    <li>🗞️ Dynamic industry news & competition</li>
+                    <li>💾 Save/Load game progress</li>
+                </ul>
             </div>
         </div>
 
-        <!-- Instructions Section -->
+        <!-- Instructions Panel -->
         <div id="instructionsPanel" class="instructions-panel hidden">
-            <h3>How to Play</h3>
+            <h3>How to Play Bollywood Cinema v2.0</h3>
             <div class="instructions-content">
-                <h4>Objective:</h4>
-                <p>Become the most successful producer in Bollywood by creating hit movies and managing your reputation.</p>
+                <div class="instruction-stage">
+                    <h4>🎭 Production Pipeline</h4>
+                    <p>Follow the complete 6-stage production process:</p>
+                    <ol>
+                        <li><strong>Script Creation:</strong> Choose project type, hire writers, develop story</li>
+                        <li><strong>Crew Hiring:</strong> Assemble cast, director, and music team</li>
+                        <li><strong>Production:</strong> Manage filming with potential events and challenges</li>
+                        <li><strong>Marketing:</strong> Plan promotional campaigns and target audiences</li>
+                        <li><strong>Distribution:</strong> Select distribution partners and release regions</li>
+                        <li><strong>Release:</strong> Launch your project and track box office performance</li>
+                    </ol>
+                </div>
                 
-                <h4>Game Modes:</h4>
-                <ul>
-                    <li><strong>Story Mode:</strong> Start from scratch and grow your production house</li>
-                    <li><strong>Free Mode:</strong> Unlimited resources to experiment freely</li>
-                </ul>
+                <div class="instruction-stage">
+                    <h4>💰 Resource Management</h4>
+                    <ul>
+                        <li>Balance budget across all production stages</li>
+                        <li>Higher quality crew costs more but improves success chances</li>
+                        <li>Marketing investment directly affects audience awareness</li>
+                        <li>Time management - delays cost money and reputation</li>
+                    </ul>
+                </div>
                 
-                <h4>Movie Production:</h4>
-                <ul>
-                    <li>Choose genre (Romance, Action, Comedy, Drama, Thriller)</li>
-                    <li>Set budget and select cast</li>
-                    <li>Pick directors and release dates</li>
-                    <li>Monitor box office performance</li>
-                </ul>
-                
-                <h4>Success Factors:</h4>
-                <ul>
-                    <li>Cast popularity and chemistry</li>
-                    <li>Budget allocation</li>
-                    <li>Release timing</li>
-                    <li>Random events and competition</li>
-                </ul>
+                <div class="instruction-stage">
+                    <h4>🌟 Success Factors</h4>
+                    <ul>
+                        <li>Script quality and genre appeal</li>
+                        <li>Star power and cast chemistry</li>
+                        <li>Director's track record and specialty match</li>
+                        <li>Music quality and viral potential</li>
+                        <li>Marketing reach and timing</li>
+                        <li>Release date strategy and competition</li>
+                    </ul>
+                </div>
             </div>
-            <button id="backToMenu" class="menu-btn">Back to Menu</button>
+            <button id="backToMenuBtn" class="menu-btn">Back to Menu</button>
         </div>
 
-        <!-- Game Area -->
-        <div id="gameArea" class="game-area hidden">
+        <!-- Game Dashboard -->
+        <div id="gameDashboard" class="game-dashboard hidden">
             <!-- Player Stats -->
             <div class="stats-panel">
-                <h3>Producer Stats</h3>
+                <h3>Studio Dashboard</h3>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <span class="stat-label">Money:</span>
-                        <span id="playerMoney" class="stat-value">₹0</span>
+                        <span class="stat-label">Budget:</span>
+                        <span id="playerBudget" class="stat-value">₹0 Cr</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Reputation:</span>
-                        <span id="playerReputation" class="stat-value">0</span>
+                        <span id="playerReputation" class="stat-value">0%</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Films Released:</span>
-                        <span id="filmsReleased" class="stat-value">0</span>
+                        <span class="stat-label">Projects:</span>
+                        <span id="projectsCount" class="stat-value">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Hit/Flop Ratio:</span>
-                        <span id="hitFlopRatio" class="stat-value">0/0</span>
+                        <span class="stat-label">Success Rate:</span>
+                        <span id="successRate" class="stat-value">0%</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Game Options -->
-            <div class="options-panel">
-                <h3>Producer Dashboard</h3>
-                <div class="option-buttons">
-                    <button id="produceMovie" class="option-btn">Produce New Movie</button>
-                    <button id="viewPortfolio" class="option-btn">View Portfolio</button>
-                    <button id="checkAwards" class="option-btn">Awards & Recognition</button>
-                    <button id="manageFranchise" class="option-btn">Manage Franchises</button>
-                    <button id="industryNews" class="option-btn">Industry News</button>
-                </div>
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button id="newProjectBtn" class="action-btn primary">Start New Project</button>
+                <button id="portfolioBtn" class="action-btn">Portfolio</button>
+                <button id="industryNewsBtn" class="action-btn">Industry News</button>
+                <button id="saveGameBtn" class="action-btn">Save Game</button>
             </div>
 
-            <!-- Movie Production Panel -->
-            <div id="productionPanel" class="production-panel hidden">
-                <h3>New Movie Production</h3>
-                
-                <div class="production-form">
-                    <div class="form-group">
-                        <label for="movieTitle">Movie Title:</label>
-                        <input type="text" id="movieTitle" placeholder="Enter movie title">
+            <!-- Current Project Status -->
+            <div id="currentProjectStatus" class="project-status-panel hidden">
+                <h3>Current Project: <span id="currentProjectTitle">Untitled</span></h3>
+                <div class="project-progress">
+                    <div class="progress-stages">
+                        <div class="stage" data-stage="script">
+                            <span class="stage-number">1</span>
+                            <span class="stage-name">Script</span>
+                            <div class="stage-status" id="scriptStatus">Pending</div>
+                        </div>
+                        <div class="stage" data-stage="crew">
+                            <span class="stage-number">2</span>
+                            <span class="stage-name">Crew</span>
+                            <div class="stage-status" id="crewStatus">Locked</div>
+                        </div>
+                        <div class="stage" data-stage="production">
+                            <span class="stage-number">3</span>
+                            <span class="stage-name">Production</span>
+                            <div class="stage-status" id="productionStatus">Locked</div>
+                        </div>
+                        <div class="stage" data-stage="marketing">
+                            <span class="stage-number">4</span>
+                            <span class="stage-name">Marketing</span>
+                            <div class="stage-status" id="marketingStatus">Locked</div>
+                        </div>
+                        <div class="stage" data-stage="distribution">
+                            <span class="stage-number">5</span>
+                            <span class="stage-name">Distribution</span>
+                            <div class="stage-status" id="distributionStatus">Locked</div>
+                        </div>
+                        <div class="stage" data-stage="release">
+                            <span class="stage-number">6</span>
+                            <span class="stage-name">Release</span>
+                            <div class="stage-status" id="releaseStatus">Locked</div>
+                        </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="movieGenre">Genre:</label>
-                        <select id="movieGenre">
-                            <option value="">Select Genre</option>
-                            <option value="romance">Romance</option>
-                            <option value="action">Action</option>
-                            <option value="comedy">Comedy</option>
-                            <option value="drama">Drama</option>
-                            <option value="thriller">Thriller</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="movieBudget">Budget:</label>
-                        <select id="movieBudget">
-                            <option value="">Select Budget</option>
-                            <option value="low">Low (₹5 Cr)</option>
-                            <option value="medium">Medium (₹25 Cr)</option>
-                            <option value="high">High (₹50 Cr)</option>
-                            <option value="blockbuster">Blockbuster (₹100 Cr)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="leadActor">Lead Actor:</label>
-                        <select id="leadActor">
-                            <option value="">Select Actor</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="leadActress">Lead Actress:</label>
-                        <select id="leadActress">
-                            <option value="">Select Actress</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="movieDirector">Director:</label>
-                        <select id="movieDirector">
-                            <option value="">Select Director</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="releaseDate">Release Season:</label>
-                        <select id="releaseDate">
-                            <option value="">Select Release Season</option>
-                            <option value="summer">Summer (High Competition)</option>
-                            <option value="monsoon">Monsoon (Medium Competition)</option>
-                            <option value="winter">Winter (Low Competition)</option>
-                            <option value="festival">Festival Season (Very High Competition)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="production-buttons">
-                        <button id="startProduction" class="production-btn primary">Start Production</button>
-                        <button id="cancelProduction" class="production-btn secondary">Cancel</button>
-                    </div>
+                    <button id="continueProjectBtn" class="continue-btn">Continue Project</button>
                 </div>
-            </div>
-
-            <!-- Results Panel -->
-            <div id="resultsPanel" class="results-panel hidden">
-                <h3>Box Office Results</h3>
-                <div id="resultsContent" class="results-content">
-                    <!-- Results will be populated by JavaScript -->
-                </div>
-                <button id="continueGame" class="result-btn">Continue</button>
             </div>
         </div>
 
-        <!-- Event Box -->
-        <div id="eventBox" class="event-box hidden">
-            <h4>Breaking News!</h4>
-            <p id="eventText">Industry event will appear here...</p>
-            <button id="acknowledgeEvent" class="event-btn">Got it!</button>
+        <!-- Stage 1: Script Creation -->
+        <div id="scriptStage" class="production-stage hidden">
+            <div class="stage-header">
+                <h2>📝 Script Creation Stage</h2>
+                <p>Define your project and hire the perfect writer</p>
+            </div>
+            
+            <div class="stage-content">
+                <div class="form-section">
+                    <h3>Project Details</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="projectType">Project Type:</label>
+                            <select id="projectType">
+                                <option value="">Select Type</option>
+                                <option value="movie">Movie (2-3 hours)</option>
+                                <option value="webseries">Web Series (6-12 episodes)</option>
+                                <option value="tvserial">TV Serial (Daily episodes)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="workingTitle">Working Title:</label>
+                            <input type="text" id="workingTitle" placeholder="Enter project title">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectGenre">Genre:</label>
+                            <select id="projectGenre">
+                                <option value="">Select Genre</option>
+                                <option value="romance">Romance</option>
+                                <option value="action">Action/Thriller</option>
+                                <option value="comedy">Comedy</option>
+                                <option value="drama">Drama</option>
+                                <option value="horror">Horror</option>
+                                <option value="family">Family</option>
+                                <option value="historical">Historical</option>
+                                <option value="sci-fi">Sci-Fi/Fantasy</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectLength">Script Length/Quality:</label>
+                            <select id="projectLength">
+                                <option value="">Select Length</option>
+                                <option value="short">Short & Simple (3 weeks, lower cost)</option>
+                                <option value="medium">Standard Length (4-5 weeks, balanced)</option>
+                                <option value="long">Epic/Complex (6+ weeks, premium quality)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mainCastCount">Main Cast Required:</label>
+                            <select id="mainCastCount">
+                                <option value="2">2 (Lead pair)</option>
+                                <option value="3">3 (Triangle/Trio)</option>
+                                <option value="4">4 (Ensemble cast)</option>
+                                <option value="5">5+ (Multi-starrer)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="supportingCastCount">Supporting Cast Required:</label>
+                            <select id="supportingCastCount">
+                                <option value="2">2-3 characters</option>
+                                <option value="4">4-5 characters</option>
+                                <option value="6">6+ characters</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="writer-selection">
+                    <h3>Hire Writer</h3>
+                    <div class="search-box">
+                        <input type="text" id="writerSearch" placeholder="Search writers by name or specialty...">
+                    </div>
+                    <div id="writerList" class="talent-list">
+                        <!-- Writers will be populated by JavaScript -->
+                    </div>
+                    <div id="selectedWriter" class="selected-talent hidden">
+                        <h4>Selected Writer:</h4>
+                        <div class="talent-details"></div>
+                    </div>
+                </div>
+                
+                <div class="stage-actions">
+                    <button id="startScriptBtn" class="stage-btn primary">Start Script Development</button>
+                    <button id="cancelScriptBtn" class="stage-btn secondary">Cancel Project</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stage 2: Crew Hiring -->
+        <div id="crewStage" class="production-stage hidden">
+            <div class="stage-header">
+                <h2>🎬 Crew Hiring Stage</h2>
+                <p>Assemble your dream team of actors, directors, and music professionals</p>
+            </div>
+            
+            <div class="stage-content">
+                <div class="crew-categories">
+                    <!-- Director Selection -->
+                    <div class="crew-category">
+                        <h3>🎯 Director</h3>
+                        <div class="search-box">
+                            <input type="text" id="directorSearch" placeholder="Search directors...">
+                        </div>
+                        <div id="directorList" class="talent-list"></div>
+                        <div id="selectedDirector" class="selected-talent hidden"></div>
+                    </div>
+                    
+                    <!-- Lead Cast Selection -->
+                    <div class="crew-category">
+                        <h3>🌟 Lead Actors</h3>
+                        <div class="lead-cast-grid">
+                            <div class="cast-slot">
+                                <h4>Lead Actor</h4>
+                                <div class="search-box">
+                                    <input type="text" id="leadActorSearch" placeholder="Search male actors...">
+                                </div>
+                                <div id="leadActorList" class="talent-list"></div>
+                                <div id="selectedLeadActor" class="selected-talent hidden"></div>
+                            </div>
+                            
+                            <div class="cast-slot">
+                                <h4>Lead Actress</h4>
+                                <div class="search-box">
+                                    <input type="text" id="leadActressSearch" placeholder="Search female actors...">
+                                </div>
+                                <div id="leadActressList" class="talent-list"></div>
+                                <div id="selectedLeadActress" class="selected-talent hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Supporting Cast -->
+                    <div class="crew-category">
+                        <h3>🎭 Supporting Cast</h3>
+                        <div id="supportingCastContainer">
+                            <!-- Supporting cast slots will be generated based on requirements -->
+                        </div>
+                    </div>
+                    
+                    <!-- Music Department -->
+                    <div class="crew-category">
+                        <h3>🎵 Music Department</h3>
+                        <div class="music-grid">
+                            <div class="music-slot">
+                                <h4>Music Director</h4>
+                                <div class="search-box">
+                                    <input type="text" id="musicDirectorSearch" placeholder="Search music directors...">
+                                </div>
+                                <div id="musicDirectorList" class="talent-list"></div>
+                                <div id="selectedMusicDirector" class="selected-talent hidden"></div>
+                            </div>
+                            
+                            <div class="music-slot">
+                                <h4>Playback Singers</h4>
+                                <div class="singer-selection">
+                                    <div class="search-box">
+                                        <input type="text" id="singerSearch" placeholder="Search singers...">
+                                    </div>
+                                    <div id="singerList" class="talent-list"></div>
+                                    <div id="selectedSingers" class="selected-singers"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="music-slot">
+                                <h4>Lyricist</h4>
+                                <div class="search-box">
+                                    <input type="text" id="lyricistSearch" placeholder="Search lyricists...">
+                                </div>
+                                <div id="lyricistList" class="talent-list"></div>
+                                <div id="selectedLyricist" class="selected-talent hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="crew-summary">
+                    <h3>Crew Budget Summary</h3>
+                    <div id="crewBudgetBreakdown" class="budget-breakdown">
+                        <!-- Budget breakdown will be populated by JavaScript -->
+                    </div>
+                    <div class="total-cost">
+                        <strong>Total Crew Cost: ₹<span id="totalCrewCost">0</span> Cr</strong>
+                    </div>
+                </div>
+                
+                <div class="stage-actions">
+                    <button id="finalizeCrewBtn" class="stage-btn primary">Finalize Crew & Start Production</button>
+                    <button id="backToScriptBtn" class="stage-btn secondary">Back to Script</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stage 3: Production -->
+        <div id="productionStage" class="production-stage hidden">
+            <div class="stage-header">
+                <h2>🎥 Production Stage</h2>
+                <p>Filming is underway! Monitor progress and handle unexpected events</p>
+            </div>
+            
+            <div class="stage-content">
+                <div class="production-dashboard">
+                    <div class="production-progress">
+                        <h3>Production Progress</h3>
+                        <div class="progress-bar">
+                            <div id="productionProgressBar" class="progress-fill"></div>
+                            <span id="productionProgressText">0%</span>
+                        </div>
+                        <div class="time-info">
+                            <span>Weeks Completed: <span id="productionWeeksCompleted">0</span></span>
+                            <span>Estimated Completion: <span id="productionEstimatedEnd">TBD</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="production-stats">
+                        <h3>Production Health</h3>
+                        <div class="health-indicators">
+                            <div class="health-item">
+                                <span class="health-label">Budget Status:</span>
+                                <span id="budgetHealth" class="health-value">On Track</span>
+                            </div>
+                            <div class="health-item">
+                                <span class="health-label">Schedule:</span>
+                                <span id="scheduleHealth" class="health-value">On Time</span>
+                            </div>
+                            <div class="health-item">
+                                <span class="health-label">Cast Morale:</span>
+                                <span id="moraleHealth" class="health-value">Good</span>
+                            </div>
+                            <div class="health-item">
+                                <span class="health-label">Quality Score:</span>
+                                <span id="qualityScore" class="health-value">TBD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="production-actions">
+                    <button id="skipProductionBtn" class="stage-btn primary">Fast Forward Production</button>
+                    <button id="pauseProductionBtn" class="stage-btn secondary">Pause Production</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stage 4: Marketing -->
+        <div id="marketingStage" class="production-stage hidden">
+            <div class="stage-header">
+                <h2>📢 Marketing Stage</h2>
+                <p>Create buzz and awareness for your upcoming release</p>
+            </div>
+            
+            <div class="stage-content">
+                <div class="marketing-strategy">
+                    <h3>Marketing Channels</h3>
+                    <div class="marketing-options">
+                        <div class="marketing-channel">
+                            <h4>🏢 Traditional Media</h4>
+                            <div class="channel-options">
+                                <label class="marketing-option">
+                                    <input type="checkbox" id="billboards" value="billboards">
+                                    <span class="option-details">
+                                        <strong>Billboards & Print Ads</strong>
+                                        <small>₹5-15 Cr | Wide urban reach</small>
+                                    </span>
+                                </label>
+                                <label class="marketing-option">
+                                    <input type="checkbox" id="tvAds" value="tvAds">
+                                    <span class="option-details">
+                                        <strong>TV Advertisements</strong>
+                                        <small>₹10-25 Cr | Mass audience reach</small>
+                                    </span>
+                                </label>
+                                <label class="marketing-option">
+                                    <input type="checkbox" id="radioPromo" value="radioPromo">
+                                    <span class="option-details">
+                                        <strong>Radio Promotions</strong>
+                                        <small>₹2-8 Cr | Local market penetration</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="marketing-channel">
+                            <h4>📱 Digital Marketing</h4>
+                            <div class="channel-options">
+                                <label class="marketing-option">
+                                    <input type="checkbox" id="socialMedia" value="socialMedia">
+                                    <span class="option-details">
+                                        <strong>Social Media Campaign</strong>
+                                        <small>₹3-12 Cr | Viral potential</small>
+                                    </span>
+                                </label>
+                                <label class="marketing-option">
+                                    <input type="checkbox" id="youtubeAds" value="youtubeAds">
+                                    <span class="option-details">
+                                        <strong>YouTube & Streaming Ads</strong>
+                                        <small>₹5-18 Cr | Targeted demographics</small>
+                                    </span>
+                                </label>
+                                <label class="marketing-option">
+                                    <input type="checkbox" id="influencerCollab" value="influencerCollab">
+                                    <span class="option-details">
+                                        <strong>Influencer Collaborations</strong>
+                                        <small>₹2-10 Cr | Niche audience engagement</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="marketing-channel">
+                            <h4>🎪 Event Marketing</h4>
+                            <div class="channel-options">
+                                <label class="marketing-option">
+                                    <input type="checkbox" id="premiereEvents" value="premiereEvents">
+                                    <span class="option-details">
+                                        <strong>Premiere Events</strong>
+                                        <small>₹8-20 Cr | Industry buzz & media coverage</small>
+                                    </span>
+                                </label>
+                                <label class="marketing-option">
+                                    <input type="checkbox" id="cityTours" value="cityTours">
+                                    <span class="option-details">
+                                        <strong>Multi-city Promotional Tours</strong>
+                                        <small>₹6-15 Cr | Direct fan engagement</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="target-regions">
+                    <h3>Target Release Regions</h3>
+                    <div class="region-options">
+                        <label class="region-option">
+                            <input type="checkbox" id="domesticIndia" value="domestic" checked>
+                            <span class="region-details">
+                                <strong>Domestic (India & South Asia)</strong>
+                                <small>Primary market, highest ROI potential</small>
+                            </span>
+                        </label>
+                        <label class="region-option">
+                            <input type="checkbox" id="overseas" value="overseas">
+                            <span class="region-details">
+                                <strong>Overseas (USA, UK, Canada)</strong>
+                                <small>Premium pricing, diaspora audience</small>
+                            </span>
+                        </label>
+                        <label class="region-option">
+                            <input type="checkbox" id="international" value="international">
+                            <span class="region-details">
+                                <strong>International (China, Middle East)</strong>
+                                <small>Emerging markets, higher distribution costs</small>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="marketing-budget">
+                    <h3>Marketing Budget Allocation</h3>
+                    <div class="budget-slider">
+                        <label for="marketingBudgetRange">Marketing Budget: ₹<span id="marketingBudgetValue">10</span> Cr</label>
+                        <input type="range" id="marketingBudgetRange" min="5" max="50" value="10" step="1">
+                        <small>Recommended: 15-25% of production budget</small>
+                    </div>
+                    <div class="budget-impact">
+                        <div class="impact-indicator">
+                            <span>Expected Awareness Level: <span id="awarenessLevel">Medium</span></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stage-actions">
+                    <button id="launchMarketingBtn" class="stage-btn primary">Launch Marketing Campaign</button>
+                    <button id="backToProductionBtn" class="stage-btn secondary">Back to Production</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stage 5: Distribution -->
+        <div id="distributionStage" class="production-stage hidden">
+            <div class="stage-header">
+                <h2>🎪 Distribution Stage</h2>
+                <p>Choose your distribution partner and release strategy</p>
+            </div>
+            
+            <div class="stage-content">
+                <div class="distributor-selection">
+                    <h3>Select Distribution Partner</h3>
+                    <div id="distributorList" class="distributor-list">
+                        <!-- Distributors will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="release-strategy">
+                    <h3>Release Strategy</h3>
+                    <div class="strategy-options">
+                        <div class="theater-selection">
+                            <h4>Theater Release</h4>
+                            <label class="strategy-option">
+                                <input type="radio" name="releaseScale" value="limited">
+                                <span class="option-details">
+                                    <strong>Limited Release</strong>
+                                    <small>500-1000 screens | Lower cost, limited reach</small>
+                                </span>
+                            </label>
+                            <label class="strategy-option">
+                                <input type="radio" name="releaseScale" value="wide" checked>
+                                <span class="option-details">
+                                    <strong>Wide Release</strong>
+                                    <small>2000-3500 screens | Standard commercial release</small>
+                                </span>
+                            </label>
+                            <label class="strategy-option">
+                                <input type="radio" name="releaseScale" value="mega">
+                                <span class="option-details">
+                                    <strong>Mega Release</strong>
+                                    <small>4000+ screens | Blockbuster treatment</small>
+                                </span>
+                            </label>
+                        </div>
+                        
+                        <div class="ott-strategy">
+                            <h4>OTT Release Strategy</h4>
+                            <label class="strategy-option">
+                                <input type="radio" name="ottTiming" value="simultaneous">
+                                <span class="option-details">
+                                    <strong>Simultaneous Release</strong>
+                                    <small>Theater + OTT same day | Higher OTT revenue, lower theater footfall</small>
+                                </span>
+                            </label>
+                            <label class="strategy-option">
+                                <input type="radio" name="ottTiming" value="delayed" checked>
+                                <span class="option-details">
+                                    <strong>Delayed OTT Release</strong>
+                                    <small>OTT after 4-8 weeks | Maximize theater revenue first</small>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="distribution-costs">
+                    <h3>Distribution Cost Breakdown</h3>
+                    <div id="distributionCostBreakdown" class="cost-breakdown">
+                        <!-- Costs will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="stage-actions">
+                    <button id="finalizeDistributionBtn" class="stage-btn primary">Finalize Distribution Deal</button>
+                    <button id="backToMarketingBtn" class="stage-btn secondary">Back to Marketing</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stage 6: Release -->
+        <div id="releaseStage" class="production-stage hidden">
+            <div class="stage-header">
+                <h2>🚀 Release Stage</h2>
+                <p>Set your release date and prepare for box office results</p>
+            </div>
+            
+            <div class="stage-content">
+                <div class="release-calendar">
+                    <h3>Choose Release Date</h3>
+                    <div class="calendar-widget">
+                        <div class="calendar-controls">
+                            <button id="prevMonth" class="calendar-nav">‹</button>
+                            <span id="calendarMonth" class="calendar-title">January 2025</span>
+                            <button id="nextMonth" class="calendar-nav">›</button>
+                        </div>
+                        <div id="calendarGrid" class="calendar-grid">
+                            <!-- Calendar will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="selected-date-info">
+                        <div id="selectedDateDetails" class="date-details hidden">
+                            <!-- Selected date info will be shown here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="competition-analysis">
+                    <h3>Market Competition Analysis</h3>
+                    <div id="competitionList" class="competition-list">
+                        <!-- Competition info will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="pre-release-summary">
+                    <h3>Pre-Release Summary</h3>
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <h4>Production Quality</h4>
+                            <div class="quality-rating">
+                                <span id="productionQuality">Calculating...</span>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Star Power Index</h4>
+                            <div class="star-rating">
+                                <span id="starPowerIndex">Calculating...</span>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Market Buzz</h4>
+                            <div class="buzz-rating">
+                                <span id="marketBuzz">Calculating...</span>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Total Investment</h4>
+                            <div class="investment-total">
+                                <span id="totalInvestment">₹0 Cr</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stage-actions">
+                    <button id="confirmReleaseBtn" class="stage-btn primary">Confirm Release</button>
+                    <button id="backToDistributionBtn" class="stage-btn secondary">Back to Distribution</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results & Box Office -->
+        <div id="resultsStage" class="production-stage hidden">
+            <div class="stage-header">
+                <h2>📊 Box Office Results</h2>
+                <p>Your project's performance and industry impact</p>
+            </div>
+            
+            <div class="stage-content">
+                <div class="box-office-results">
+                    <div class="results-overview">
+                        <h3 id="projectResultTitle">Project Title - Status</h3>
+                        <div class="overall-verdict">
+                            <span id="overallVerdict" class="verdict-status">Calculating...</span>
+                        </div>
+                    </div>
+                    
+                    <div class="financial-breakdown">
+                        <h3>Financial Performance</h3>
+                        <div class="financial-grid">
+                            <div class="financial-item">
+                                <span class="financial-label">Total Investment:</span>
+                                <span id="totalInvestmentResult" class="financial-value">₹0 Cr</span>
+                            </div>
+                            <div class="financial-item">
+                                <span class="financial-label">Opening Weekend:</span>
+                                <span id="openingWeekend" class="financial-value">₹0 Cr</span>
+                            </div>
+                            <div class="financial-item">
+                                <span class="financial-label">Domestic Total:</span>
+                                <span id="domesticTotal" class="financial-value">₹0 Cr</span>
+                            </div>
+                            <div class="financial-item">
+                                <span class="financial-label">Overseas Total:</span>
+                                <span id="overseasTotal" class="financial-value">₹0 Cr</span>
+                            </div>
+                            <div class="financial-item">
+                                <span class="financial-label">OTT Revenue:</span>
+                                <span id="ottRevenue" class="financial-value">₹0 Cr</span>
+                            </div>
+                            <div class="financial-item profit-loss">
+                                <span class="financial-label">Net Profit/Loss:</span>
+                                <span id="netProfitLoss" class="financial-value">₹0 Cr</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="performance-metrics">
+                        <h3>Performance Metrics</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-item">
+                                <span class="metric-label">Audience Rating:</span>
+                                <span id="audienceRating" class="metric-value">0/10</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Critics Score:</span>
+                                <span id="criticsScore" class="metric-value">0%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Music Success:</span>
+                                <span id="musicSuccess" class="metric-value">Average</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Weeks in Top 10:</span>
+                                <span id="weeksInTop10" class="metric-value">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="industry-impact">
+                        <h3>Industry Impact</h3>
+                        <div id="industryImpactResults" class="impact-results">
+                            <!-- Impact results will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="awards-recognition">
+                        <h3>Awards & Recognition</h3>
+                        <div id="awardsResults" class="awards-results">
+                            <!-- Awards will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stage-actions">
+                    <button id="continueToNextProjectBtn" class="stage-btn primary">Start Next Project</button>
+                    <button id="viewDetailedAnalyticsBtn" class="stage-btn secondary">Detailed Analytics</button>
+                    <button id="backToDashboardBtn" class="stage-btn">Back to Dashboard</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Industry News Panel -->
+        <div id="newsPanel" class="news-panel hidden">
+            <h3>🗞️ Industry News & Updates</h3>
+            <div id="newsList" class="news-list">
+                <!-- News items will be populated by JavaScript -->
+            </div>
+            <button id="closeNewsBtn" class="close-btn">Close</button>
+        </div>
+
+        <!-- Event Notification -->
+        <div id="eventNotification" class="event-notification hidden">
+            <div class="notification-content">
+                <h4 id="eventTitle">Event Title</h4>
+                <p id="eventDescription">Event description will appear here</p>
+                <div class="notification-actions">
+                    <button id="handleEventBtn" class="event-btn primary">Handle Event</button>
+                    <button id="dismissEventBtn" class="event-btn secondary">Dismiss</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loadingScreen" class="loading-screen hidden">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <h3 id="loadingText">Processing...</h3>
+                <p id="loadingSubtext">Please wait</p>
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <p>&copy; 2025 Bollywood Cinema Game v1.0 | A Text-based Management Simulation</p>
-            <p>Inspired by the glamour and drama of Bollywood</p>
+            <p>&copy; 2025 Bollywood Cinema v2.0 | Professional Movie Production Simulator</p>
+            <p>Experience the complete journey from script to stardom</p>
         </div>
     </footer>
 
