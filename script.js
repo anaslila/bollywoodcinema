@@ -1,2219 +1,2389 @@
+// ====================================
+// BOLLYWOOD CINEMA v2.5 - COMPLETE GAME LOGIC
+// ====================================
+
 // Game State Management
-let gameState = {
-    version: "2.0",
-    mode: null,
-    currentStage: 'menu',
+const GameState = {
+    version: "2.5",
+    currentSection: 'dashboard',
     gameTime: {
         week: 1,
-        month: 1,
         year: 2025,
-        monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 
-                     'July', 'August', 'September', 'October', 'November', 'December']
+        totalWeeks: 1
     },
     player: {
-        name: "Studio Head",
-        budget: 0,
+        studioName: "Your Studio",
+        money: 100,
         reputation: 50,
-        projectsCompleted: 0,
         totalProjects: 0,
-        successRate: 0,
-        awards: 0,
-        industry_standing: "Newcomer"
+        completedProjects: 0,
+        hitMovies: 0,
+        flopMovies: 0,
+        totalRevenue: 0,
+        totalAwards: 0,
+        achievementsUnlocked: ['first-steps']
     },
     currentProject: null,
+    activeProjects: [],
     portfolio: [],
-    gameEvents: [],
+    competitors: [],
+    franchises: [],
+    awards: [],
     industryNews: [],
-    competitorMovies: [],
-    isGameActive: false,
-    autosaveEnabled: true
+    nextCompetitorWeek: 6,
+    settings: {
+        darkMode: false,
+        soundEnabled: true,
+        autosave: true
+    }
 };
 
-// Bollywood Industry Database
-const industryData = {
+// Industry Database
+const IndustryData = {
     writers: [
-        { id: 1, name: "Javed Akhtar", fee: 2, skill: 95, speed: 80, specialty: "drama", reputation: 98, hitRate: 0.85 },
-        { id: 2, name: "Gulzar Singh", fee: 3, skill: 92, speed: 70, specialty: "romance", reputation: 95, hitRate: 0.82 },
-        { id: 3, name: "Rajesh Kumar", fee: 1.5, skill: 78, speed: 90, specialty: "comedy", reputation: 75, hitRate: 0.65 },
-        { id: 4, name: "Priya Sharma", fee: 2.5, skill: 88, speed: 85, specialty: "action", reputation: 82, hitRate: 0.72 },
-        { id: 5, name: "Amit Trivedi", fee: 1.8, skill: 82, speed: 88, specialty: "horror", reputation: 78, hitRate: 0.68 },
-        { id: 6, name: "Shabana Azmi", fee: 3.5, skill: 96, speed: 65, specialty: "family", reputation: 92, hitRate: 0.88 },
-        { id: 7, name: "Vishal Bhardwaj", fee: 4, skill: 94, speed: 75, specialty: "thriller", reputation: 89, hitRate: 0.80 },
-        { id: 8, name: "Zoya Akhtar", fee: 3.2, skill: 90, speed: 82, specialty: "drama", reputation: 87, hitRate: 0.78 },
-        { id: 9, name: "Anurag Kashyap", fee: 2.8, skill: 89, speed: 70, specialty: "thriller", reputation: 85, hitRate: 0.73 },
-        { id: 10, name: "Reema Kagti", fee: 2.2, skill: 84, speed: 88, specialty: "historical", reputation: 79, hitRate: 0.69 }
+        { id: 'w1', name: 'Aarav Mehta', fee: 3, skill: 88, speed: 92, specialty: 'romance', reputation: 85 },
+        { id: 'w2', name: 'Kavita Joshi', fee: 4, skill: 92, speed: 85, specialty: 'drama', reputation: 90 },
+        { id: 'w3', name: 'Sameer Khan', fee: 2, skill: 78, speed: 95, specialty: 'action', reputation: 75 },
+        { id: 'w4', name: 'Priya Iyer', fee: 3.5, skill: 85, speed: 88, specialty: 'comedy', reputation: 80 },
+        { id: 'w5', name: 'Rohit Chawla', fee: 5, skill: 95, speed: 80, specialty: 'thriller', reputation: 92 }
     ],
-    
     directors: [
-        { id: 1, name: "Yash Chopra", fee: 8, reputation: 98, specialty: "romance", hitRate: 0.92, experience: 35 },
-        { id: 2, name: "Karan Johar", fee: 6, reputation: 88, specialty: "romance", hitRate: 0.78, experience: 25 },
-        { id: 3, name: "Rohit Shetty", fee: 7, reputation: 85, specialty: "action", hitRate: 0.82, experience: 20 },
-        { id: 4, name: "Sanjay Leela Bhansali", fee: 10, reputation: 95, specialty: "drama", hitRate: 0.88, experience: 28 },
-        { id: 5, name: "Rajkumar Hirani", fee: 9, reputation: 92, specialty: "comedy", hitRate: 0.95, experience: 18 },
-        { id: 6, name: "Anurag Basu", fee: 4, reputation: 78, specialty: "thriller", hitRate: 0.65, experience: 15 },
-        { id: 7, name: "Imtiaz Ali", fee: 5, reputation: 82, specialty: "romance", hitRate: 0.70, experience: 16 },
-        { id: 8, name: "David Dhawan", fee: 3, reputation: 75, specialty: "comedy", hitRate: 0.68, experience: 30 },
-        { id: 9, name: "Farah Khan", fee: 5.5, reputation: 80, specialty: "family", hitRate: 0.72, experience: 20 },
-        { id: 10, name: "Zoya Akhtar", fee: 6.5, reputation: 87, specialty: "drama", hitRate: 0.79, experience: 12 }
+        { id: 'd1', name: 'Rajan Kapoor', fee: 12, reputation: 95, specialty: 'romance', hitRate: 0.88 },
+        { id: 'd2', name: 'Neha Deshmukh', fee: 8, reputation: 82, specialty: 'drama', hitRate: 0.75 },
+        { id: 'd3', name: 'Arjun Bhatia', fee: 15, reputation: 92, specialty: 'action', hitRate: 0.85 },
+        { id: 'd4', name: 'Meera Verma', fee: 10, reputation: 88, specialty: 'comedy', hitRate: 0.80 },
+        { id: 'd5', name: 'Kabir Saxena', fee: 18, reputation: 98, specialty: 'thriller', hitRate: 0.92 }
     ],
-    
-    actors: [
-        { id: 1, name: "Shah Rukh Khan", fee: 50, popularity: 95, specialty: "romance", age: 58, marketValue: 98 },
-        { id: 2, name: "Salman Khan", fee: 45, popularity: 92, specialty: "action", age: 58, marketValue: 95 },
-        { id: 3, name: "Aamir Khan", fee: 55, popularity: 94, specialty: "drama", age: 60, marketValue: 97 },
-        { id: 4, name: "Hrithik Roshan", fee: 40, popularity: 88, specialty: "action", age: 51, marketValue: 90 },
-        { id: 5, name: "Ranbir Kapoor", fee: 35, popularity: 85, specialty: "romance", age: 42, marketValue: 88 },
-        { id: 6, name: "Ranveer Singh", fee: 38, popularity: 89, specialty: "comedy", age: 39, marketValue: 92 },
-        { id: 7, name: "Varun Dhawan", fee: 25, popularity: 78, specialty: "comedy", age: 37, marketValue: 82 },
-        { id: 8, name: "Tiger Shroff", fee: 20, popularity: 72, specialty: "action", age: 34, marketValue: 75 },
-        { id: 9, name: "Ayushmann Khurrana", fee: 18, popularity: 80, specialty: "comedy", age: 40, marketValue: 85 },
-        { id: 10, name: "Rajkummar Rao", fee: 15, popularity: 76, specialty: "drama", age: 39, marketValue: 78 }
+    maleActors: [
+        { id: 'ma1', name: 'Aamir Khanna', fee: 45, popularity: 95, specialty: 'drama', marketValue: 98 },
+        { id: 'ma2', name: 'Raj Malhotra', fee: 40, popularity: 88, specialty: 'romance', marketValue: 92 },
+        { id: 'ma3', name: 'Dev Kapoor', fee: 50, popularity: 92, specialty: 'action', marketValue: 95 },
+        { id: 'ma4', name: 'Vikram Rathore', fee: 35, popularity: 85, specialty: 'action', marketValue: 88 },
+        { id: 'ma5', name: 'Aryan Singh', fee: 25, popularity: 78, specialty: 'comedy', marketValue: 82 }
     ],
-    
-    actresses: [
-        { id: 1, name: "Deepika Padukone", fee: 20, popularity: 92, specialty: "romance", age: 39, marketValue: 95 },
-        { id: 2, name: "Priyanka Chopra", fee: 18, popularity: 88, specialty: "action", age: 42, marketValue: 90 },
-        { id: 3, name: "Katrina Kaif", fee: 16, popularity: 85, specialty: "action", age: 40, marketValue: 88 },
-        { id: 4, name: "Alia Bhatt", fee: 22, popularity: 90, specialty: "drama", age: 31, marketValue: 93 },
-        { id: 5, name: "Kareena Kapoor", fee: 15, popularity: 83, specialty: "romance", age: 44, marketValue: 85 },
-        { id: 6, name: "Anushka Sharma", fee: 14, popularity: 81, specialty: "comedy", age: 36, marketValue: 83 },
-        { id: 7, name: "Shraddha Kapoor", fee: 12, popularity: 75, specialty: "romance", age: 37, marketValue: 78 },
-        { id: 8, name: "Jacqueline Fernandez", fee: 10, popularity: 70, specialty: "action", age: 38, marketValue: 72 },
-        { id: 9, name: "Kriti Sanon", fee: 13, popularity: 77, specialty: "comedy", age: 34, marketValue: 80 },
-        { id: 10, name: "Sara Ali Khan", fee: 8, popularity: 68, specialty: "romance", age: 29, marketValue: 70 }
+    femaleActors: [
+        { id: 'fa1', name: 'Priya Sharma', fee: 25, popularity: 92, specialty: 'romance', marketValue: 95 },
+        { id: 'fa2', name: 'Anjali Nair', fee: 20, popularity: 85, specialty: 'drama', marketValue: 88 },
+        { id: 'fa3', name: 'Meera Kapoor', fee: 30, popularity: 90, specialty: 'action', marketValue: 92 },
+        { id: 'fa4', name: 'Radhika Sen', fee: 18, popularity: 82, specialty: 'comedy', marketValue: 85 },
+        { id: 'fa5', name: 'Sonia Chawla', fee: 15, popularity: 78, specialty: 'family', marketValue: 80 }
     ],
-    
     supportingActors: [
-        { id: 1, name: "Nawazuddin Siddiqui", fee: 3, skill: 95, specialty: "drama" },
-        { id: 2, name: "Pankaj Tripathi", fee: 2.5, skill: 92, specialty: "comedy" },
-        { id: 3, name: "Manoj Bajpayee", fee: 3.5, skill: 94, specialty: "thriller" },
-        { id: 4, name: "Kay Kay Menon", fee: 2, skill: 88, specialty: "thriller" },
-        { id: 5, name: "Irrfan Khan Jr.", fee: 4, skill: 90, specialty: "drama" },
-        { id: 6, name: "Rajesh Sharma", fee: 1.5, skill: 85, specialty: "comedy" },
-        { id: 7, name: "Kumud Mishra", fee: 2.2, skill: 87, specialty: "drama" },
-        { id: 8, name: "Divya Dutta", fee: 2.8, skill: 89, specialty: "drama" },
-        { id: 9, name: "Ratna Pathak", fee: 3, skill: 91, specialty: "family" },
-        { id: 10, name: "Seema Pahwa", fee: 1.8, skill: 86, specialty: "comedy" }
+        { id: 'sa1', name: 'Ramesh Yadav', fee: 2, skill: 85, specialty: 'comedy' },
+        { id: 'sa2', name: 'Kiran Joshi', fee: 3, skill: 88, specialty: 'drama' },
+        { id: 'sa3', name: 'Pooja Sharma', fee: 2.5, skill: 82, specialty: 'family' },
+        { id: 'sa4', name: 'Akash Verma', fee: 3.5, skill: 90, specialty: 'action' }
     ],
-    
-    musicDirectors: [
-        { id: 1, name: "A.R. Rahman", fee: 5, reputation: 98, specialty: "all", hitRate: 0.92 },
-        { id: 2, name: "Shankar-Ehsaan-Loy", fee: 4, reputation: 88, specialty: "romance", hitRate: 0.82 },
-        { id: 3, name: "Vishal-Shekhar", fee: 3.5, reputation: 85, specialty: "dance", hitRate: 0.78 },
-        { id: 4, name: "Amit Trivedi", fee: 3, reputation: 87, specialty: "indie", hitRate: 0.80 },
-        { id: 5, name: "Ilaiyaraaja", fee: 4.5, reputation: 95, specialty: "classical", hitRate: 0.88 },
-        { id: 6, name: "Sanjay Leela Bhansali", fee: 6, reputation: 92, specialty: "classical", hitRate: 0.85 },
-        { id: 7, name: "Pritam", fee: 3.8, reputation: 82, specialty: "commercial", hitRate: 0.75 },
-        { id: 8, name: "Harris Jayaraj", fee: 2.5, reputation: 78, specialty: "melody", hitRate: 0.72 },
-        { id: 9, name: "Anirudh Ravichander", fee: 2.8, reputation: 81, specialty: "youth", hitRate: 0.74 },
-        { id: 10, name: "Ajay-Atul", fee: 3.2, reputation: 84, specialty: "folk", hitRate: 0.77 }
+    musicProducers: [
+        { id: 'mp1', name: 'Aditya Bose', fee: 8, reputation: 92, specialty: 'romantic', hitRate: 0.85 },
+        { id: 'mp2', name: 'Rehan Ali', fee: 10, reputation: 95, specialty: 'classical', hitRate: 0.90 },
+        { id: 'mp3', name: 'Sunil Sharma', fee: 6, reputation: 82, specialty: 'commercial', hitRate: 0.75 }
     ],
-    
     playbackSingers: [
-        { id: 1, name: "Arijit Singh", fee: 2, popularity: 95, specialty: "romantic" },
-        { id: 2, name: "Shreya Ghoshal", fee: 1.8, popularity: 92, specialty: "classical" },
-        { id: 3, name: "Rahat Fateh Ali Khan", fee: 2.5, popularity: 88, specialty: "sufi" },
-        { id: 4, name: "Sunidhi Chauhan", fee: 1.5, popularity: 85, specialty: "dance" },
-        { id: 5, name: "Armaan Malik", fee: 1.2, popularity: 82, specialty: "romantic" },
-        { id: 6, name: "Asees Kaur", fee: 1, popularity: 78, specialty: "folk" },
-        { id: 7, name: "Jubin Nautiyal", fee: 1.3, popularity: 80, specialty: "romantic" },
-        { id: 8, name: "Neha Kakkar", fee: 1.6, popularity: 87, specialty: "dance" },
-        { id: 9, name: "B Praak", fee: 1.4, popularity: 83, specialty: "emotional" },
-        { id: 10, name: "Dhvani Bhanushali", fee: 0.8, popularity: 75, specialty: "youth" }
+        { id: 'ps1', name: 'Alisha Verma', fee: 3, popularity: 88, specialty: 'romantic' },
+        { id: 'ps2', name: 'Rohan Das', fee: 2.5, popularity: 85, specialty: 'classical' },
+        { id: 'ps3', name: 'Sneha Patel', fee: 4, popularity: 92, specialty: 'dance' }
     ],
-    
     lyricists: [
-        { id: 1, name: "Gulzar", fee: 1.5, skill: 98, specialty: "poetic" },
-        { id: 2, name: "Javed Akhtar", fee: 1.8, skill: 95, specialty: "romantic" },
-        { id: 3, name: "Irshad Kamil", fee: 1.2, skill: 88, specialty: "contemporary" },
-        { id: 4, name: "Amitabh Bhattacharya", fee: 1.4, skill: 92, specialty: "quirky" },
-        { id: 5, name: "Manoj Muntashir", fee: 1, skill: 85, specialty: "devotional" },
-        { id: 6, name: "Kausar Munir", fee: 0.8, skill: 82, specialty: "emotional" },
-        { id: 7, name: "Anvita Dutt", fee: 1.1, skill: 87, specialty: "modern" },
-        { id: 8, name: "Varun Grover", fee: 0.9, skill: 84, specialty: "satirical" },
-        { id: 9, name: "Shellee", fee: 0.7, skill: 78, specialty: "commercial" },
-        { id: 10, name: "Rajshekhar", fee: 0.6, skill: 75, specialty: "folk" }
+        { id: 'l1', name: 'Manish Sinha', fee: 1.5, skill: 88, specialty: 'romantic' },
+        { id: 'l2', name: 'Kavya Rao', fee: 2, skill: 92, specialty: 'poetic' },
+        { id: 'l3', name: 'Deepak Nair', fee: 1.2, skill: 82, specialty: 'commercial' }
     ],
-    
     distributors: [
         { 
-            id: 1, name: "Yash Raj Films Distribution", 
-            fee: 25, reach: 95, reliability: 92, 
-            specialties: ["romance", "family"], 
-            description: "Premium distributor with nationwide reach and excellent marketing." 
+            id: 'dist1', name: 'StarMax Studios', fee: 22, reach: 95, reliability: 92,
+            description: 'Premium distributor with nationwide reach and excellent marketing.'
         },
         { 
-            id: 2, name: "Dharma Productions Network", 
-            fee: 22, reach: 88, reliability: 89, 
-            specialties: ["romance", "drama"], 
-            description: "Strong urban presence with young audience appeal." 
+            id: 'dist2', name: 'CineWorld India', fee: 18, reach: 88, reliability: 85,
+            description: 'Strong presence in urban markets with modern digital distribution.'
         },
         { 
-            id: 3, name: "Excel Entertainment Distribution", 
-            fee: 20, reach: 85, reliability: 87, 
-            specialties: ["action", "thriller"], 
-            description: "Modern approach with strong digital marketing." 
-        },
-        { 
-            id: 4, name: "Red Chillies Distribution", 
-            fee: 28, reach: 92, reliability: 90, 
-            specialties: ["all"], 
-            description: "Star power backing with international reach." 
-        },
-        { 
-            id: 5, name: "Eros International", 
-            fee: 18, reach: 82, reliability: 84, 
-            specialties: ["commercial", "mass"], 
-            description: "Budget-friendly with decent reach in tier-2 cities." 
-        },
-        { 
-            id: 6, name: "Balaji Motion Pictures", 
-            fee: 15, reach: 75, reliability: 78, 
-            specialties: ["horror", "thriller"], 
-            description: "Niche distributor with specialized marketing." 
+            id: 'dist3', name: 'Bharat Films', fee: 15, reach: 82, reliability: 88,
+            description: 'Traditional distributor with deep rural market penetration.'
         }
     ]
 };
 
-// Project Types Configuration
-const projectTypes = {
-    movie: {
-        name: "Feature Film",
-        baseBudget: 25,
-        productionWeeks: 12,
-        marketingMultiplier: 1.0,
-        revenueMultiplier: 1.0
-    },
-    webseries: {
-        name: "Web Series",
-        baseBudget: 15,
-        productionWeeks: 8,
-        marketingMultiplier: 0.7,
-        revenueMultiplier: 0.8
-    },
-    tvserial: {
-        name: "TV Serial",
-        baseBudget: 5,
-        productionWeeks: 4,
-        marketingMultiplier: 0.4,
-        revenueMultiplier: 0.6
-    }
-};
-
-// Calendar and Competition System
-const festivalDates = {
-    2025: [
-        { date: "2025-01-26", name: "Republic Day", impact: 1.2 },
-        { date: "2025-03-14", name: "Holi", impact: 1.15 },
-        { date: "2025-08-15", name: "Independence Day", impact: 1.25 },
-        { date: "2025-10-24", name: "Diwali", impact: 1.3 },
-        { date: "2025-12-25", name: "Christmas", impact: 1.1 }
-    ]
-};
-
-let competitionCalendar = {};
+// Festival Calendar
+const FestivalWeeks = [
+    { week: 4, name: 'Republic Day', multiplier: 1.25, competition: 'high' },
+    { week: 12, name: 'Holi Festival', multiplier: 1.15, competition: 'medium' },
+    { week: 20, name: 'Eid Celebration', multiplier: 1.20, competition: 'medium' },
+    { week: 32, name: 'Independence Day', multiplier: 1.30, competition: 'high' },
+    { week: 45, name: 'Diwali', multiplier: 1.35, competition: 'very-high' },
+    { week: 52, name: 'New Year', multiplier: 1.12, competition: 'medium' }
+];
 
 // DOM Elements Cache
-const elements = {
-    // Menu elements
-    menu: document.getElementById('menu'),
-    gameDashboard: document.getElementById('gameDashboard'),
-    instructionsPanel: document.getElementById('instructionsPanel'),
-    
-    // Time display
-    currentWeek: document.getElementById('currentWeek'),
-    currentMonth: document.getElementById('currentMonth'),
-    
-    // Stats
-    playerBudget: document.getElementById('playerBudget'),
-    playerReputation: document.getElementById('playerReputation'),
-    projectsCount: document.getElementById('projectsCount'),
-    successRate: document.getElementById('successRate'),
-    
-    // Project status
-    currentProjectStatus: document.getElementById('currentProjectStatus'),
-    currentProjectTitle: document.getElementById('currentProjectTitle'),
-    
-    // All stages
-    scriptStage: document.getElementById('scriptStage'),
-    crewStage: document.getElementById('crewStage'),
-    productionStage: document.getElementById('productionStage'),
-    marketingStage: document.getElementById('marketingStage'),
-    distributionStage: document.getElementById('distributionStage'),
-    releaseStage: document.getElementById('releaseStage'),
-    resultsStage: document.getElementById('resultsStage'),
-    
-    // Panels
-    newsPanel: document.getElementById('newsPanel'),
-    eventNotification: document.getElementById('eventNotification'),
-    loadingScreen: document.getElementById('loadingScreen')
-};
+let Elements = {};
 
-// Initialize Game
+// ====================================
+// INITIALIZATION
+// ====================================
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎬 Bollywood Cinema v2.5 Loading...');
+    
+    initializeElements();
+    setupEventListeners();
+    loadSavedGame();
     initializeGame();
-    attachEventListeners();
-    loadGameData();
+    
+    console.log('🎭 Game Ready!');
 });
 
-function initializeGame() {
-    console.log("Initializing Bollywood Cinema v2.0...");
-    showSection('menu');
-    updateTimeDisplay();
-    generateCompetition();
-    generateIndustryNews();
-    
-    // Load saved game if exists
-    if (localStorage.getItem('bollywoodCinema_v2_save')) {
-        document.getElementById('loadGameBtn').style.display = 'block';
-    }
+function initializeElements() {
+    Elements = {
+        // Header
+        studioName: document.getElementById('studioName'),
+        currentWeek: document.getElementById('currentWeek'),
+        currentYear: document.getElementById('currentYear'),
+        playerMoney: document.getElementById('playerMoney'),
+        playerReputation: document.getElementById('playerReputation'),
+        
+        // Dashboard
+        totalProjects: document.getElementById('totalProjects'),
+        hitMovies: document.getElementById('hitMovies'),
+        totalAwards: document.getElementById('totalAwards'),
+        successRate: document.getElementById('successRate'),
+        newsTicker: document.getElementById('newsTicker'),
+        
+        // Navigation
+        navTabs: document.querySelectorAll('.nav-tab'),
+        
+        // Modals
+        tutorialModal: document.getElementById('tutorialModal'),
+        eventModal: document.getElementById('eventModal')
+    };
 }
 
-function attachEventListeners() {
-    // Menu buttons
-    document.getElementById('newGameBtn').addEventListener('click', startNewGame);
-    document.getElementById('loadGameBtn').addEventListener('click', loadGame);
-    document.getElementById('instructionsBtn').addEventListener('click', () => showSection('instructions'));
-    document.getElementById('backToMenuBtn').addEventListener('click', () => showSection('menu'));
+function setupEventListeners() {
+    // Navigation
+    Elements.navTabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            const section = tab.getAttribute('data-section');
+            switchSection(section);
+        });
+    });
+    
+    // Header buttons
+    document.getElementById('nextWeekBtn').addEventListener('click', advanceWeek);
+    document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
     
     // Dashboard buttons
-    document.getElementById('newProjectBtn').addEventListener('click', startNewProject);
-    document.getElementById('portfolioBtn').addEventListener('click', showPortfolio);
-    document.getElementById('industryNewsBtn').addEventListener('click', showIndustryNews);
+    document.getElementById('newProjectBtn').addEventListener('click', () => switchSection('script-stage'));
+    document.getElementById('tutorialBtn').addEventListener('click', showTutorial);
     document.getElementById('saveGameBtn').addEventListener('click', saveGame);
-    document.getElementById('continueProjectBtn').addEventListener('click', continueCurrentProject);
     
     // Script stage
     document.getElementById('startScriptBtn').addEventListener('click', startScriptDevelopment);
-    document.getElementById('cancelScriptBtn').addEventListener('click', cancelProject);
-    document.getElementById('writerSearch').addEventListener('input', filterWriters);
+    document.getElementById('cancelProjectBtn').addEventListener('click', cancelProject);
     
     // Crew stage
-    document.getElementById('finalizeCrewBtn').addEventListener('click', finalizeCrewAndStartProduction);
-    document.getElementById('backToScriptBtn').addEventListener('click', () => showStage('script'));
-    attachCrewSearchListeners();
+    document.getElementById('finalizeCrewBtn').addEventListener('click', finalizeCrewHiring);
+    document.getElementById('backToScriptBtn').addEventListener('click', () => switchSection('script-stage'));
     
     // Production stage
-    document.getElementById('skipProductionBtn').addEventListener('click', skipToPostProduction);
+    document.getElementById('skipProductionBtn').addEventListener('click', skipProduction);
     
     // Marketing stage
     document.getElementById('launchMarketingBtn').addEventListener('click', launchMarketing);
-    document.getElementById('marketingBudgetRange').addEventListener('input', updateMarketingBudget);
+    document.getElementById('marketingBudgetSlider').addEventListener('input', updateMarketingPreview);
     
     // Distribution stage
     document.getElementById('finalizeDistributionBtn').addEventListener('click', finalizeDistribution);
     
     // Release stage
     document.getElementById('confirmReleaseBtn').addEventListener('click', confirmRelease);
-    document.getElementById('prevMonth').addEventListener('click', () => changeCalendarMonth(-1));
-    document.getElementById('nextMonth').addEventListener('click', () => changeCalendarMonth(1));
     
     // Results stage
-    document.getElementById('continueToNextProjectBtn').addEventListener('click', () => showSection('dashboard'));
-    document.getElementById('backToDashboardBtn').addEventListener('click', () => showSection('dashboard'));
+    document.getElementById('startNewProjectFromResults').addEventListener('click', () => switchSection('script-stage'));
+    document.getElementById('createSequelBtn').addEventListener('click', createSequel);
     
-    // Event handling
-    document.getElementById('dismissEventBtn').addEventListener('click', dismissEvent);
-    document.getElementById('handleEventBtn').addEventListener('click', handleEvent);
+    // Modal events
+    document.getElementById('closeTutorial').addEventListener('click', hideTutorial);
+    document.getElementById('closeEventModal').addEventListener('click', closeEventModal);
     
-    // News panel
-    document.getElementById('closeNewsBtn').addEventListener('click', () => elements.newsPanel.classList.add('hidden'));
+    // Setup dropdown population
+    populateDropdowns();
+    
+    // Setup marketing checkboxes
+    document.querySelectorAll('.marketing-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', updateMarketingPreview);
+    });
+    
+    document.querySelectorAll('.region-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', updateMarketingPreview);
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', handleKeyboardShortcuts);
 }
 
-// Game Flow Functions
-function startNewGame() {
-    gameState.player = {
-        name: "Studio Head",
-        budget: 100, // Starting with 100 crores
-        reputation: 30,
-        projectsCompleted: 0,
-        totalProjects: 0,
-        successRate: 0,
-        awards: 0,
-        industry_standing: "Newcomer"
-    };
+function initializeGame() {
+    updateUI();
+    generateInitialNews();
+    generateInitialCompetitors();
     
-    gameState.currentProject = null;
-    gameState.portfolio = [];
-    gameState.gameEvents = [];
-    gameState.isGameActive = true;
-    
-    updateStats();
-    showSection('dashboard');
-    
-    setTimeout(() => {
-        showEvent({
-            title: "Welcome to Bollywood!",
-            description: "You've started your journey as a film producer. Time to create your first masterpiece!",
-            type: "welcome"
-        });
-    }, 1000);
+    // Start with tutorial for new games
+    if (GameState.gameTime.totalWeeks === 1) {
+        setTimeout(() => showTutorial(), 1000);
+    }
 }
 
-function loadGame() {
-    const savedData = localStorage.getItem('bollywoodCinema_v2_save');
-    if (savedData) {
-        gameState = JSON.parse(savedData);
-        updateStats();
-        updateTimeDisplay();
-        
-        if (gameState.currentProject) {
-            showProjectStatus();
+// ====================================
+// TIME SYSTEM
+// ====================================
+
+function advanceWeek() {
+    GameState.gameTime.week++;
+    GameState.gameTime.totalWeeks++;
+    
+    // Handle year progression
+    if (GameState.gameTime.week > 52) {
+        GameState.gameTime.week = 1;
+        GameState.gameTime.year++;
+    }
+    
+    // Process active projects
+    updateActiveProjects();
+    
+    // Generate competitors periodically
+    if (GameState.gameTime.totalWeeks >= GameState.nextCompetitorWeek) {
+        generateCompetitor();
+        GameState.nextCompetitorWeek = GameState.gameTime.totalWeeks + Math.floor(Math.random() * 3) + 4; // 4-6 weeks
+    }
+    
+    // Generate industry news
+    if (Math.random() < 0.3) {
+        generateNewsItem();
+    }
+    
+    // Check for festival weeks
+    checkFestivalWeek();
+    
+    // Update UI
+    updateUI();
+    
+    // Autosave
+    if (GameState.settings.autosave && GameState.gameTime.totalWeeks % 5 === 0) {
+        saveGame();
+    }
+}
+
+function updateActiveProjects() {
+    GameState.activeProjects.forEach(project => {
+        if (project.stage === 'script' && project.scriptWeeksRemaining > 0) {
+            project.scriptWeeksRemaining--;
+            if (project.scriptWeeksRemaining <= 0) {
+                completeScriptStage(project);
+            }
+        } else if (project.stage === 'production' && project.productionWeeksRemaining > 0) {
+            project.productionWeeksRemaining--;
+            
+            // Random production events
+            if (Math.random() < 0.15) {
+                triggerProductionEvent(project);
+            }
+            
+            if (project.productionWeeksRemaining <= 0) {
+                completeProductionStage(project);
+            }
         }
-        
-        showSection('dashboard');
+    });
+}
+
+function checkFestivalWeek() {
+    const currentWeekInYear = GameState.gameTime.week;
+    const festival = FestivalWeeks.find(f => f.week === currentWeekInYear);
+    
+    if (festival) {
         showEvent({
-            title: "Game Loaded",
-            description: "Welcome back to your Bollywood empire!",
-            type: "info"
+            title: `${festival.name}! 🎉`,
+            description: `This is a great time for releases! Box office boost of ${Math.round((festival.multiplier - 1) * 100)}% expected.`,
+            type: 'positive',
+            icon: '🎊'
+        });
+        
+        generateNewsItem(`🎉 ${festival.name} celebrations boost box office expectations across the industry!`);
+    }
+}
+
+// ====================================
+// NAVIGATION SYSTEM
+// ====================================
+
+function switchSection(sectionName) {
+    // Hide all sections
+    document.querySelectorAll('.section-content').forEach(section => {
+        section.classList.add('hidden');
+    });
+    
+    // Remove active from all tabs
+    Elements.navTabs.forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Show target section
+    const targetSection = document.getElementById(sectionName);
+    if (targetSection) {
+        targetSection.classList.remove('hidden');
+    }
+    
+    // Add active to current tab
+    const activeTab = document.querySelector(`[data-section="${sectionName}"]`);
+    if (activeTab) {
+        activeTab.classList.add('active');
+    }
+    
+    GameState.currentSection = sectionName;
+    
+    // Initialize section-specific content
+    switch(sectionName) {
+        case 'crew-stage':
+            initializeCrewStage();
+            break;
+        case 'marketing-stage':
+            updateMarketingPreview();
+            break;
+        case 'distribution-stage':
+            populateDistributors();
+            break;
+        case 'release-stage':
+            generateReleaseCalendar();
+            break;
+        case 'portfolio-panel':
+            loadPortfolio();
+            break;
+        case 'competitors-panel':
+            loadCompetitors();
+            break;
+    }
+}
+
+function updateUI() {
+    // Update header
+    Elements.studioName.textContent = GameState.player.studioName;
+    Elements.currentWeek.textContent = `Week ${GameState.gameTime.week}`;
+    Elements.currentYear.textContent = GameState.gameTime.year;
+    Elements.playerMoney.textContent = `₹${GameState.player.money} Cr`;
+    Elements.playerReputation.textContent = `${GameState.player.reputation}%`;
+    
+    // Update dashboard stats
+    Elements.totalProjects.textContent = GameState.player.totalProjects;
+    Elements.hitMovies.textContent = GameState.player.hitMovies;
+    Elements.totalAwards.textContent = GameState.player.totalAwards;
+    
+    const successRate = GameState.player.completedProjects > 0 ? 
+        Math.round((GameState.player.hitMovies / GameState.player.completedProjects) * 100) : 0;
+    Elements.successRate.textContent = `${successRate}%`;
+    
+    // Update news ticker
+    updateNewsTicker();
+    
+    // Update active projects display
+    updateActiveProjectsDisplay();
+}
+
+function updateActiveProjectsDisplay() {
+    const container = document.getElementById('activeProjectsList');
+    const activeProjectsSection = document.getElementById('activeProjects');
+    
+    if (!container || !activeProjectsSection) return;
+    
+    if (GameState.activeProjects.length === 0) {
+        activeProjectsSection.classList.add('hidden');
+        return;
+    }
+    
+    activeProjectsSection.classList.remove('hidden');
+    container.innerHTML = '';
+    
+    GameState.activeProjects.forEach(project => {
+        const card = document.createElement('div');
+        card.className = 'bg-white/10 rounded-lg p-4 border border-white/20';
+        
+        const progress = calculateProjectProgress(project);
+        
+        card.innerHTML = `
+            <div class="flex items-center justify-between mb-2">
+                <h4 class="font-bold text-gold">"${project.title}"</h4>
+                <span class="text-xs bg-blue-600 px-2 py-1 rounded-full">${project.stage}</span>
+            </div>
+            <div class="text-sm text-gray-300 mb-3">${project.type} • ${project.genre}</div>
+            <div class="progress-bar mb-3">
+                <div class="progress-fill" style="width: ${progress}%"></div>
+            </div>
+            <div class="flex justify-between text-xs">
+                <span class="text-gray-400">Progress: ${progress}%</span>
+                ${project.stage === 'script' && project.scriptWeeksRemaining ? 
+                    `<span class="text-gold">${project.scriptWeeksRemaining} weeks left</span>` :
+                project.stage === 'production' && project.productionWeeksRemaining ?
+                    `<span class="text-gold">${project.productionWeeksRemaining} weeks left</span>` : ''}
+            </div>
+        `;
+        
+        container.appendChild(card);
+    });
+}
+
+function calculateProjectProgress(project) {
+    const stages = ['script', 'crew', 'production', 'marketing', 'distribution', 'release'];
+    const currentIndex = stages.indexOf(project.stage);
+    
+    if (project.stage === 'script' && project.scriptWeeksRemaining) {
+        const scriptProgress = ((project.scriptWeeksTotal - project.scriptWeeksRemaining) / project.scriptWeeksTotal) * (100 / stages.length);
+        return Math.round(scriptProgress);
+    } else if (project.stage === 'production' && project.productionWeeksRemaining) {
+        const baseProgress = (1 / stages.length) * 100; // Script complete
+        baseProgress += (1 / stages.length) * 100; // Crew complete
+        const productionProgress = ((project.productionWeeksTotal - project.productionWeeksRemaining) / project.productionWeeksTotal) * (100 / stages.length);
+        return Math.round(baseProgress + productionProgress);
+    }
+    
+    return Math.round((currentIndex / stages.length) * 100);
+}
+
+// ====================================
+// SCRIPT DEVELOPMENT
+// ====================================
+
+function populateDropdowns() {
+    // Populate writer dropdown
+    const writerSelect = document.getElementById('writerSearch');
+    if (writerSelect) {
+        IndustryData.writers.forEach(writer => {
+            const option = document.createElement('option');
+            option.value = writer.id;
+            option.textContent = `${writer.name} (₹${writer.fee}Cr, ${writer.skill}% skill, ${writer.specialty})`;
+            writerSelect.appendChild(option);
+        });
+    }
+    
+    // Populate director dropdown
+    const directorSelect = document.getElementById('directorSearch');
+    if (directorSelect) {
+        IndustryData.directors.forEach(director => {
+            const option = document.createElement('option');
+            option.value = director.id;
+            option.textContent = `${director.name} (₹${director.fee}Cr, ${director.reputation}% reputation, ${director.specialty})`;
+            directorSelect.appendChild(option);
+        });
+    }
+    
+    // Populate male actors
+    const maleLeadSelect = document.getElementById('maleLeadSearch');
+    if (maleLeadSelect) {
+        IndustryData.maleActors.forEach(actor => {
+            const option = document.createElement('option');
+            option.value = actor.id;
+            option.textContent = `${actor.name} (₹${actor.fee}Cr, ${actor.popularity}% popularity, ${actor.specialty})`;
+            maleLeadSelect.appendChild(option);
+        });
+    }
+    
+    // Populate female actors
+    const femaleLeadSelect = document.getElementById('femaleLeadSearch');
+    if (femaleLeadSelect) {
+        IndustryData.femaleActors.forEach(actress => {
+            const option = document.createElement('option');
+            option.value = actress.id;
+            option.textContent = `${actress.name} (₹${actress.fee}Cr, ${actress.popularity}% popularity, ${actress.specialty})`;
+            femaleLeadSelect.appendChild(option);
+        });
+    }
+    
+    // Populate music producers
+    const musicProducerSelect = document.getElementById('musicProducerSearch');
+    if (musicProducerSelect) {
+        IndustryData.musicProducers.forEach(producer => {
+            const option = document.createElement('option');
+            option.value = producer.id;
+            option.textContent = `${producer.name} (₹${producer.fee}Cr, ${producer.reputation}% reputation, ${producer.specialty})`;
+            musicProducerSelect.appendChild(option);
         });
     }
 }
 
-function saveGame() {
-    localStorage.setItem('bollywoodCinema_v2_save', JSON.stringify(gameState));
-    showEvent({
-        title: "Game Saved",
-        description: "Your progress has been saved successfully!",
-        type: "success"
-    });
-}
-
-// Project Management
-function startNewProject() {
-    gameState.currentProject = {
-        id: Date.now(),
+function startScriptDevelopment() {
+    if (!validateScriptForm()) return;
+    
+    const writerId = document.getElementById('writerSearch').value;
+    const writer = IndustryData.writers.find(w => w.id === writerId);
+    
+    if (!writer) {
+        showError('Please select a writer');
+        return;
+    }
+    
+    const complexity = document.getElementById('scriptLength').value;
+    const scriptCost = calculateScriptCost(writer, complexity);
+    
+    if (GameState.player.money < scriptCost) {
+        showError(`Insufficient funds! You need ₹${scriptCost} Cr but have ₹${GameState.player.money} Cr`);
+        return;
+    }
+    
+    // Create new project
+    const project = {
+        id: generateId(),
+        title: document.getElementById('projectTitle').value,
+        type: document.getElementById('projectType').value,
+        genre: document.getElementById('projectGenre').value,
+        complexity: complexity,
         stage: 'script',
-        title: '',
-        type: '',
-        genre: '',
-        length: '',
-        cast: {
-            writer: null,
-            director: null,
-            leadActor: null,
-            leadActress: null,
-            supportingCast: [],
-            musicDirector: null,
-            singers: [],
-            lyricist: null
-        },
+        writer: writer,
+        crew: {},
         budget: {
-            script: 0,
-            cast: 0,
+            script: scriptCost,
+            crew: 0,
             production: 0,
             marketing: 0,
             distribution: 0,
-            total: 0
+            total: scriptCost
         },
-        timeline: {
-            scriptStart: null,
-            scriptEnd: null,
-            productionStart: null,
-            productionEnd: null,
-            releaseDate: null
-        },
-        marketing: {
-            channels: [],
-            budget: 0,
-            regions: []
-        },
-        distribution: {
-            partner: null,
-            strategy: ''
-        },
-        events: [],
         quality: {
             script: 0,
             production: 0,
             music: 0,
             marketing: 0
-        }
+        },
+        events: [],
+        scriptWeeksTotal: calculateScriptWeeks(complexity, writer.speed),
+        scriptWeeksRemaining: 0
     };
     
-    gameState.totalProjects++;
-    showStage('script');
-}
-
-function showStage(stageName) {
-    // Hide all stages
-    hideAllStages();
-    
-    // Show current stage
-    const stageElement = document.getElementById(stageName + 'Stage');
-    if (stageElement) {
-        stageElement.classList.remove('hidden');
-    }
-    
-    // Update project status
-    updateProjectProgress(stageName);
-    
-    // Initialize stage-specific data
-    switch(stageName) {
-        case 'script':
-            initializeScriptStage();
-            break;
-        case 'crew':
-            initializeCrewStage();
-            break;
-        case 'production':
-            initializeProductionStage();
-            break;
-        case 'marketing':
-            initializeMarketingStage();
-            break;
-        case 'distribution':
-            initializeDistributionStage();
-            break;
-        case 'release':
-            initializeReleaseStage();
-            break;
-    }
-}
-
-function hideAllStages() {
-    const stages = ['script', 'crew', 'production', 'marketing', 'distribution', 'release', 'results'];
-    stages.forEach(stage => {
-        const element = document.getElementById(stage + 'Stage');
-        if (element) {
-            element.classList.add('hidden');
-        }
-    });
-    
-    elements.gameDashboard.classList.add('hidden');
-    elements.menu.classList.add('hidden');
-    elements.instructionsPanel.classList.add('hidden');
-}
-
-function showSection(sectionName) {
-    hideAllStages();
-    
-    switch(sectionName) {
-        case 'menu':
-            elements.menu.classList.remove('hidden');
-            break;
-        case 'dashboard':
-            elements.gameDashboard.classList.remove('hidden');
-            if (gameState.currentProject) {
-                showProjectStatus();
-            }
-            break;
-        case 'instructions':
-            elements.instructionsPanel.classList.remove('hidden');
-            break;
-    }
-}
-
-// Script Stage Implementation
-function initializeScriptStage() {
-    populateWriters();
-    clearScriptForm();
-}
-
-function populateWriters() {
-    const writerList = document.getElementById('writerList');
-    writerList.innerHTML = '';
-    
-    industryData.writers.forEach(writer => {
-        const writerItem = createTalentItem(writer, 'writer');
-        writerList.appendChild(writerItem);
-    });
-}
-
-function createTalentItem(talent, type) {
-    const item = document.createElement('div');
-    item.className = 'talent-item';
-    item.dataset.id = talent.id;
-    item.dataset.type = type;
-    
-    let specialtyText = '';
-    if (type === 'writer') {
-        specialtyText = `${talent.specialty} specialist | ${talent.skill}% skill | ${talent.speed}% speed`;
-    } else if (type === 'director') {
-        specialtyText = `${talent.specialty} specialist | ${talent.reputation}% reputation | ${Math.round(talent.hitRate * 100)}% hit rate`;
-    } else if (type === 'actor' || type === 'actress') {
-        specialtyText = `${talent.specialty} specialist | ${talent.popularity}% popularity | Age: ${talent.age}`;
-    } else if (type === 'supporting') {
-        specialtyText = `${talent.specialty} specialist | ${talent.skill}% skill rating`;
-    } else if (type === 'musicDirector') {
-        specialtyText = `${talent.specialty} specialist | ${talent.reputation}% reputation | ${Math.round(talent.hitRate * 100)}% hit rate`;
-    } else if (type === 'singer') {
-        specialtyText = `${talent.specialty} specialist | ${talent.popularity}% popularity`;
-    } else if (type === 'lyricist') {
-        specialtyText = `${talent.specialty} specialist | ${talent.skill}% skill rating`;
-    }
-    
-    item.innerHTML = `
-        <div class="talent-info">
-            <div class="talent-name">${talent.name}</div>
-            <div class="talent-details">${specialtyText}</div>
-        </div>
-        <div class="talent-stats">
-            <span class="talent-fee">₹${talent.fee} Cr</span>
-            <span class="talent-rating">${getTalentRating(talent, type)}</span>
-        </div>
-    `;
-    
-    item.addEventListener('click', () => selectTalent(talent, type, item));
-    return item;
-}
-
-function getTalentRating(talent, type) {
-    switch(type) {
-        case 'writer': return `${talent.skill}★`;
-        case 'director': return `${talent.reputation}★`;
-        case 'actor':
-        case 'actress': return `${talent.popularity}★`;
-        case 'supporting': return `${talent.skill}★`;
-        case 'musicDirector': return `${talent.reputation}★`;
-        case 'singer': return `${talent.popularity}★`;
-        case 'lyricist': return `${talent.skill}★`;
-        default: return '★';
-    }
-}
-
-function selectTalent(talent, type, itemElement) {
-    // Remove previous selection
-    const talentList = itemElement.parentElement;
-    talentList.querySelectorAll('.talent-item').forEach(item => {
-        item.classList.remove('selected');
-    });
-    
-    // Add selection to clicked item
-    itemElement.classList.add('selected');
-    
-    // Store selection
-    if (type === 'writer') {
-        gameState.currentProject.cast.writer = talent;
-        showSelectedTalent('selectedWriter', talent, type);
-    } else if (type === 'director') {
-        gameState.currentProject.cast.director = talent;
-        showSelectedTalent('selectedDirector', talent, type);
-    } else if (type === 'actor') {
-        gameState.currentProject.cast.leadActor = talent;
-        showSelectedTalent('selectedLeadActor', talent, type);
-    } else if (type === 'actress') {
-        gameState.currentProject.cast.leadActress = talent;
-        showSelectedTalent('selectedLeadActress', talent, type);
-    } else if (type === 'musicDirector') {
-        gameState.currentProject.cast.musicDirector = talent;
-        showSelectedTalent('selectedMusicDirector', talent, type);
-    } else if (type === 'singer') {
-        addSinger(talent);
-    } else if (type === 'lyricist') {
-        gameState.currentProject.cast.lyricist = talent;
-        showSelectedTalent('selectedLyricist', talent, type);
-    }
-    
-    updateCrewBudget();
-}
-
-function showSelectedTalent(elementId, talent, type) {
-    const element = document.getElementById(elementId);
-    if (element) {
-        element.classList.remove('hidden');
-        element.querySelector('.talent-details').innerHTML = `
-            <div class="selected-talent-info">
-                <strong>${talent.name}</strong>
-                <p>Fee: ₹${talent.fee} Cr | Specialty: ${talent.specialty}</p>
-                <p>${getDetailedTalentInfo(talent, type)}</p>
-            </div>
-        `;
-    }
-}
-
-function getDetailedTalentInfo(talent, type) {
-    switch(type) {
-        case 'writer': 
-            return `Skill: ${talent.skill}% | Speed: ${talent.speed}% | Hit Rate: ${Math.round(talent.hitRate * 100)}%`;
-        case 'director': 
-            return `Reputation: ${talent.reputation}% | Experience: ${talent.experience} years | Hit Rate: ${Math.round(talent.hitRate * 100)}%`;
-        case 'actor':
-        case 'actress': 
-            return `Popularity: ${talent.popularity}% | Market Value: ${talent.marketValue}% | Age: ${talent.age}`;
-        case 'musicDirector': 
-            return `Reputation: ${talent.reputation}% | Hit Rate: ${Math.round(talent.hitRate * 100)}%`;
-        case 'singer': 
-            return `Popularity: ${talent.popularity}% | Specialty: ${talent.specialty}`;
-        case 'lyricist': 
-            return `Skill: ${talent.skill}% | Specialty: ${talent.specialty}`;
-        default: 
-            return '';
-    }
-}
-
-function filterWriters() {
-    const searchTerm = document.getElementById('writerSearch').value.toLowerCase();
-    const writerItems = document.querySelectorAll('#writerList .talent-item');
-    
-    writerItems.forEach(item => {
-        const name = item.querySelector('.talent-name').textContent.toLowerCase();
-        const details = item.querySelector('.talent-details').textContent.toLowerCase();
-        
-        if (name.includes(searchTerm) || details.includes(searchTerm)) {
-            item.style.display = 'flex';
-        } else {
-            item.style.display = 'none';
-        }
-    });
-}
-
-function startScriptDevelopment() {
-    // Validate form
-    if (!validateScriptForm()) {
-        return;
-    }
-    
-    // Set project details
-    gameState.currentProject.title = document.getElementById('workingTitle').value;
-    gameState.currentProject.type = document.getElementById('projectType').value;
-    gameState.currentProject.genre = document.getElementById('projectGenre').value;
-    gameState.currentProject.length = document.getElementById('projectLength').value;
-    
-    // Calculate script cost
-    const scriptCost = gameState.currentProject.cast.writer.fee;
-    gameState.currentProject.budget.script = scriptCost;
-    
-    if (gameState.player.budget < scriptCost) {
-        showEvent({
-            title: "Insufficient Budget",
-            description: `You need ₹${scriptCost} Cr for script development but only have ₹${gameState.player.budget} Cr.`,
-            type: "error"
-        });
-        return;
-    }
+    // Set script development time
+    project.scriptWeeksRemaining = project.scriptWeeksTotal;
     
     // Deduct money
-    gameState.player.budget -= scriptCost;
+    GameState.player.money -= scriptCost;
+    GameState.player.totalProjects++;
     
-    // Start script development
-    const lengthMultiplier = { short: 1, medium: 1.5, long: 2 }[gameState.currentProject.length];
-    const developmentWeeks = Math.ceil(3 + lengthMultiplier + Math.random() * 2);
-    
-    gameState.currentProject.timeline.scriptStart = { ...gameState.gameTime };
-    advanceTime(developmentWeeks);
-    gameState.currentProject.timeline.scriptEnd = { ...gameState.gameTime };
-    
-    // Calculate script quality
-    const writer = gameState.currentProject.cast.writer;
-    const genreMatch = writer.specialty === gameState.currentProject.genre ? 1.2 : 1.0;
-    const qualityScore = (writer.skill * genreMatch + Math.random() * 20) / 120;
-    gameState.currentProject.quality.script = Math.min(1, qualityScore);
-    
-    updateStats();
-    updateTimeDisplay();
+    // Add to active projects
+    GameState.activeProjects.push(project);
+    GameState.currentProject = project;
     
     showEvent({
-        title: "Script Development Complete!",
-        description: `"${gameState.currentProject.title}" script is ready. Time to assemble your crew!`,
-        type: "success"
+        title: 'Script Development Started! 📝',
+        description: `"${project.title}" script development will take ${project.scriptWeeksTotal} weeks. Your writer is hard at work!`,
+        type: 'positive',
+        icon: '✍️'
     });
     
-    // Move to crew stage
-    gameState.currentProject.stage = 'crew';
-    showStage('crew');
+    updateUI();
+    switchSection('dashboard');
 }
 
 function validateScriptForm() {
-    const requiredFields = ['workingTitle', 'projectType', 'projectGenre', 'projectLength', 'mainCastCount', 'supportingCastCount'];
+    const title = document.getElementById('projectTitle').value.trim();
+    const type = document.getElementById('projectType').value;
+    const genre = document.getElementById('projectGenre').value;
+    const complexity = document.getElementById('scriptLength').value;
+    const writerId = document.getElementById('writerSearch').value;
     
-    for (let field of requiredFields) {
-        if (!document.getElementById(field).value) {
-            showEvent({
-                title: "Form Incomplete",
-                description: "Please fill in all required fields.",
-                type: "error"
-            });
-            return false;
-        }
+    if (!title) {
+        showError('Please enter a project title');
+        return false;
     }
     
-    if (!gameState.currentProject.cast.writer) {
-        showEvent({
-            title: "No Writer Selected",
-            description: "Please select a writer for your project.",
-            type: "error"
-        });
+    if (!type || !genre || !complexity) {
+        showError('Please fill in all project details');
+        return false;
+    }
+    
+    if (!writerId) {
+        showError('Please select a writer');
         return false;
     }
     
     return true;
 }
 
-function clearScriptForm() {
-    document.getElementById('workingTitle').value = '';
-    document.getElementById('projectType').value = '';
-    document.getElementById('projectGenre').value = '';
-    document.getElementById('projectLength').value = '';
-    document.getElementById('mainCastCount').value = '2';
-    document.getElementById('supportingCastCount').value = '2';
+function calculateScriptCost(writer, complexity) {
+    const complexityMultiplier = {
+        simple: 1.0,
+        standard: 1.5,
+        complex: 2.2
+    };
     
-    // Clear writer selection
-    gameState.currentProject = gameState.currentProject || { cast: {} };
-    gameState.currentProject.cast.writer = null;
-    
-    const selectedWriter = document.getElementById('selectedWriter');
-    if (selectedWriter) {
-        selectedWriter.classList.add('hidden');
-    }
+    return Math.round(writer.fee * complexityMultiplier[complexity]);
 }
 
-// Crew Stage Implementation
+function calculateScriptWeeks(complexity, writerSpeed) {
+    const baseWeeks = {
+        simple: 4,
+        standard: 6,
+        complex: 8
+    };
+    
+    const speedFactor = writerSpeed / 100;
+    const weeks = baseWeeks[complexity] / speedFactor;
+    
+    return Math.max(3, Math.round(weeks));
+}
+
+function completeScriptStage(project) {
+    project.stage = 'crew';
+    
+    // Calculate script quality
+    const writer = project.writer;
+    let quality = writer.skill / 100;
+    
+    // Genre matching bonus
+    if (writer.specialty === project.genre) {
+        quality *= 1.25;
+    }
+    
+    // Add randomness
+    quality *= (0.8 + Math.random() * 0.4);
+    project.quality.script = Math.min(1, quality);
+    
+    showEvent({
+        title: 'Script Complete! 📋',
+        description: `"${project.title}" script is ready! Quality: ${Math.round(project.quality.script * 100)}%. Time to hire your crew!`,
+        type: 'positive',
+        icon: '✅'
+    });
+    
+    generateNewsItem(`📝 "${project.title}" script development completed at ${GameState.player.studioName}!`);
+}
+
+function cancelProject() {
+    if (GameState.currentProject) {
+        // Remove from active projects
+        GameState.activeProjects = GameState.activeProjects.filter(p => p.id !== GameState.currentProject.id);
+        GameState.currentProject = null;
+        GameState.player.totalProjects--;
+    }
+    
+    switchSection('dashboard');
+}
+
+// ====================================
+// CREW HIRING
+// ====================================
+
 function initializeCrewStage() {
-    populateDirectors();
-    populateActors();
-    populateActresses();
-    populateSupportingCast();
-    populateMusicDepartment();
-    updateCrewBudget();
-}
-
-function populateDirectors() {
-    const directorList = document.getElementById('directorList');
-    directorList.innerHTML = '';
-    
-    industryData.directors.forEach(director => {
-        const directorItem = createTalentItem(director, 'director');
-        directorList.appendChild(directorItem);
-    });
-}
-
-function populateActors() {
-    const actorList = document.getElementById('leadActorList');
-    actorList.innerHTML = '';
-    
-    industryData.actors.forEach(actor => {
-        const actorItem = createTalentItem(actor, 'actor');
-        actorList.appendChild(actorItem);
-    });
-}
-
-function populateActresses() {
-    const actressList = document.getElementById('leadActressList');
-    actressList.innerHTML = '';
-    
-    industryData.actresses.forEach(actress => {
-        const actressItem = createTalentItem(actress, 'actress');
-        actressList.appendChild(actressItem);
-    });
-}
-
-function populateSupportingCast() {
-    const container = document.getElementById('supportingCastContainer');
-    const requiredCount = parseInt(document.getElementById('supportingCastCount').value) || 2;
-    
-    container.innerHTML = '';
-    
-    for (let i = 0; i < requiredCount; i++) {
-        const slotDiv = document.createElement('div');
-        slotDiv.className = 'cast-slot';
-        slotDiv.innerHTML = `
-            <h4>Supporting Actor ${i + 1}</h4>
-            <div class="search-box">
-                <input type="text" placeholder="Search supporting actors..." onInput="filterSupportingActors(${i})">
-            </div>
-            <div id="supportingActorList${i}" class="talent-list"></div>
-            <div id="selectedSupportingActor${i}" class="selected-talent hidden"></div>
-        `;
-        container.appendChild(slotDiv);
-        
-        // Populate supporting actors for this slot
-        const list = document.getElementById(`supportingActorList${i}`);
-        industryData.supportingActors.forEach(actor => {
-            const item = createTalentItem(actor, 'supporting');
-            item.addEventListener('click', () => selectSupportingActor(actor, i, item));
-            list.appendChild(item);
-        });
-    }
-}
-
-function populateMusicDepartment() {
-    // Music Directors
-    const musicDirectorList = document.getElementById('musicDirectorList');
-    musicDirectorList.innerHTML = '';
-    
-    industryData.musicDirectors.forEach(director => {
-        const item = createTalentItem(director, 'musicDirector');
-        musicDirectorList.appendChild(item);
-    });
-    
-    // Singers
-    const singerList = document.getElementById('singerList');
-    singerList.innerHTML = '';
-    
-    industryData.playbackSingers.forEach(singer => {
-        const item = createTalentItem(singer, 'singer');
-        singerList.appendChild(item);
-    });
-    
-    // Lyricists
-    const lyricistList = document.getElementById('lyricistList');
-    lyricistList.innerHTML = '';
-    
-    industryData.lyricists.forEach(lyricist => {
-        const item = createTalentItem(lyricist, 'lyricist');
-        lyricistList.appendChild(item);
-    });
-}
-
-function attachCrewSearchListeners() {
-    // Add search functionality for all crew categories
-    const searchInputs = [
-        'directorSearch',
-        'leadActorSearch', 
-        'leadActressSearch',
-        'musicDirectorSearch',
-        'singerSearch',
-        'lyricistSearch'
-    ];
-    
-    searchInputs.forEach(inputId => {
-        const input = document.getElementById(inputId);
-        if (input) {
-            input.addEventListener('input', () => filterTalent(inputId));
-        }
-    });
-}
-
-function filterTalent(inputId) {
-    const searchTerm = document.getElementById(inputId).value.toLowerCase();
-    const listId = inputId.replace('Search', 'List');
-    const talentItems = document.querySelectorAll(`#${listId} .talent-item`);
-    
-    talentItems.forEach(item => {
-        const name = item.querySelector('.talent-name').textContent.toLowerCase();
-        const details = item.querySelector('.talent-details').textContent.toLowerCase();
-        
-        if (name.includes(searchTerm) || details.includes(searchTerm)) {
-            item.style.display = 'flex';
-        } else {
-            item.style.display = 'none';
-        }
-    });
-}
-
-function selectSupportingActor(actor, slotIndex, itemElement) {
-    // Clear previous selection in this slot
-    const list = document.getElementById(`supportingActorList${slotIndex}`);
-    list.querySelectorAll('.talent-item').forEach(item => {
-        item.classList.remove('selected');
-    });
-    
-    // Select current item
-    itemElement.classList.add('selected');
-    
-    // Store selection
-    if (!gameState.currentProject.cast.supportingCast) {
-        gameState.currentProject.cast.supportingCast = [];
-    }
-    gameState.currentProject.cast.supportingCast[slotIndex] = actor;
-    
-    // Show selected talent
-    showSelectedTalent(`selectedSupportingActor${slotIndex}`, actor, 'supporting');
-    
-    updateCrewBudget();
-}
-
-function addSinger(singer) {
-    if (!gameState.currentProject.cast.singers) {
-        gameState.currentProject.cast.singers = [];
-    }
-    
-    // Check if singer already selected
-    const alreadySelected = gameState.currentProject.cast.singers.find(s => s.id === singer.id);
-    if (alreadySelected) {
-        showEvent({
-            title: "Singer Already Selected",
-            description: `${singer.name} is already part of your music team.`,
-            type: "warning"
-        });
+    if (!GameState.currentProject) {
+        switchSection('dashboard');
         return;
     }
     
-    // Add singer
-    gameState.currentProject.cast.singers.push(singer);
-    
-    // Update UI
-    updateSelectedSingers();
+    setupCrewEventListeners();
     updateCrewBudget();
 }
 
-function updateSelectedSingers() {
-    const container = document.getElementById('selectedSingers');
-    container.innerHTML = '';
+function setupCrewEventListeners() {
+    // Director selection
+    const directorSelect = document.getElementById('directorSearch');
+    if (directorSelect) {
+        directorSelect.addEventListener('change', () => selectCrewMember('director', directorSelect.value));
+    }
     
-    if (gameState.currentProject.cast.singers.length > 0) {
-        gameState.currentProject.cast.singers.forEach((singer, index) => {
-            const tag = document.createElement('div');
-            tag.className = 'singer-tag';
-            tag.innerHTML = `
-                ${singer.name} (₹${singer.fee} Cr)
-                <button class="remove-singer" onclick="removeSinger(${index})">×</button>
-            `;
-            container.appendChild(tag);
-        });
+    // Male lead selection
+    const maleLeadSelect = document.getElementById('maleLeadSearch');
+    if (maleLeadSelect) {
+        maleLeadSelect.addEventListener('change', () => selectCrewMember('maleLead', maleLeadSelect.value));
+    }
+    
+    // Female lead selection
+    const femaleLeadSelect = document.getElementById('femaleLeadSearch');
+    if (femaleLeadSelect) {
+        femaleLeadSelect.addEventListener('change', () => selectCrewMember('femaleLead', femaleLeadSelect.value));
+    }
+    
+    // Music producer selection
+    const musicProducerSelect = document.getElementById('musicProducerSearch');
+    if (musicProducerSelect) {
+        musicProducerSelect.addEventListener('change', () => selectCrewMember('musicProducer', musicProducerSelect.value));
     }
 }
 
-function removeSinger(index) {
-    gameState.currentProject.cast.singers.splice(index, 1);
-    updateSelectedSingers();
+function selectCrewMember(role, memberId) {
+    if (!GameState.currentProject || !memberId) return;
+    
+    const member = findCrewMember(role, memberId);
+    if (!member) return;
+    
+    GameState.currentProject.crew[role] = member;
+    
+    // Show selection
+    showSelectedCrewMember(role, member);
+    
+    // Update budget
     updateCrewBudget();
+    
+    // Check if crew is complete
+    checkCrewCompletion();
+}
+
+function findCrewMember(role, memberId) {
+    switch(role) {
+        case 'director':
+            return IndustryData.directors.find(d => d.id === memberId);
+        case 'maleLead':
+            return IndustryData.maleActors.find(a => a.id === memberId);
+        case 'femaleLead':
+            return IndustryData.femaleActors.find(a => a.id === memberId);
+        case 'musicProducer':
+            return IndustryData.musicProducers.find(m => m.id === memberId);
+        default:
+            return null;
+    }
+}
+
+function showSelectedCrewMember(role, member) {
+    const containers = {
+        director: 'selectedDirector',
+        maleLead: 'selectedMaleLead',
+        femaleLead: 'selectedFemaleLead',
+        musicProducer: 'selectedMusicProducer'
+    };
+    
+    const containerId = containers[role];
+    const container = document.getElementById(containerId);
+    
+    if (container) {
+        container.classList.remove('hidden');
+        container.innerHTML = `
+            <h4 class="text-green-400 font-bold mb-2">Selected: ${member.name}</h4>
+            <div class="text-sm text-gray-300">
+                <div>Fee: ₹${member.fee} Cr</div>
+                <div>Specialty: ${member.specialty}</div>
+                ${member.reputation ? `<div>Reputation: ${member.reputation}%</div>` : ''}
+                ${member.popularity ? `<div>Popularity: ${member.popularity}%</div>` : ''}
+            </div>
+        `;
+    }
 }
 
 function updateCrewBudget() {
-    const breakdown = document.getElementById('crewBudgetBreakdown');
-    const totalElement = document.getElementById('totalCrewCost');
+    if (!GameState.currentProject) return;
     
     let total = 0;
-    let html = '<div class="budget-items">';
+    const breakdown = [];
     
-    const cast = gameState.currentProject.cast;
-    
-    if (cast.director) {
-        html += `<div class="budget-item">Director: ₹${cast.director.fee} Cr</div>`;
-        total += cast.director.fee;
-    }
-    
-    if (cast.leadActor) {
-        html += `<div class="budget-item">Lead Actor: ₹${cast.leadActor.fee} Cr</div>`;
-        total += cast.leadActor.fee;
-    }
-    
-    if (cast.leadActress) {
-        html += `<div class="budget-item">Lead Actress: ₹${cast.leadActress.fee} Cr</div>`;
-        total += cast.leadActress.fee;
-    }
-    
-    if (cast.supportingCast && cast.supportingCast.length > 0) {
-        const supportingTotal = cast.supportingCast.reduce((sum, actor) => sum + (actor ? actor.fee : 0), 0);
-        if (supportingTotal > 0) {
-            html += `<div class="budget-item">Supporting Cast: ₹${supportingTotal} Cr</div>`;
-            total += supportingTotal;
+    Object.entries(GameState.currentProject.crew).forEach(([role, member]) => {
+        if (member && member.fee) {
+            total += member.fee;
+            breakdown.push({
+                role: formatRoleName(role),
+                name: member.name,
+                fee: member.fee
+            });
         }
+    });
+    
+    const breakdownContainer = document.getElementById('crewBudgetBreakdown');
+    if (breakdownContainer) {
+        breakdownContainer.innerHTML = breakdown.map(item => `
+            <div class="budget-item">
+                <span class="budget-category">${item.role}: ${item.name}</span>
+                <span class="budget-amount">₹${item.fee} Cr</span>
+            </div>
+        `).join('');
     }
     
-    if (cast.musicDirector) {
-        html += `<div class="budget-item">Music Director: ₹${cast.musicDirector.fee} Cr</div>`;
-        total += cast.musicDirector.fee;
+    const totalElement = document.getElementById('totalCrewCost');
+    if (totalElement) {
+        totalElement.textContent = `₹${total} Cr`;
     }
     
-    if (cast.singers && cast.singers.length > 0) {
-        const singersTotal = cast.singers.reduce((sum, singer) => sum + singer.fee, 0);
-        html += `<div class="budget-item">Playback Singers: ₹${singersTotal} Cr</div>`;
-        total += singersTotal;
-    }
-    
-    if (cast.lyricist) {
-        html += `<div class="budget-item">Lyricist: ₹${cast.lyricist.fee} Cr</div>`;
-        total += cast.lyricist.fee;
-    }
-    
-    html += '</div>';
-    breakdown.innerHTML = html;
-    totalElement.textContent = total.toFixed(1);
-    
-    gameState.currentProject.budget.cast = total;
+    GameState.currentProject.budget.crew = total;
 }
 
-function finalizeCrewAndStartProduction() {
-    // Validate crew selection
-    if (!validateCrewSelection()) {
-        return;
+function formatRoleName(role) {
+    const names = {
+        director: 'Director',
+        maleLead: 'Male Lead',
+        femaleLead: 'Female Lead',
+        musicProducer: 'Music Producer'
+    };
+    return names[role] || role;
+}
+
+function checkCrewCompletion() {
+    if (!GameState.currentProject) return;
+    
+    const crew = GameState.currentProject.crew;
+    const isComplete = crew.director && crew.maleLead && crew.femaleLead;
+    
+    const finalizeBtn = document.getElementById('finalizeCrewBtn');
+    if (finalizeBtn) {
+        finalizeBtn.disabled = !isComplete;
+        if (isComplete) {
+            finalizeBtn.classList.remove('opacity-50');
+        } else {
+            finalizeBtn.classList.add('opacity-50');
+        }
     }
+}
+
+function finalizeCrewHiring() {
+    if (!GameState.currentProject) return;
     
-    const totalCost = gameState.currentProject.budget.cast;
+    const totalCost = GameState.currentProject.budget.crew;
     
-    if (gameState.player.budget < totalCost) {
-        showEvent({
-            title: "Insufficient Budget",
-            description: `You need ₹${totalCost} Cr for crew but only have ₹${gameState.player.budget} Cr.`,
-            type: "error"
-        });
+    if (GameState.player.money < totalCost) {
+        showError(`Insufficient funds! You need ₹${totalCost} Cr but have ₹${GameState.player.money} Cr`);
         return;
     }
     
     // Deduct money
-    gameState.player.budget -= totalCost;
+    GameState.player.money -= totalCost;
     
-    // Move to production stage
-    gameState.currentProject.stage = 'production';
-    showStage('production');
-    
-    updateStats();
+    // Move to production
+    GameState.currentProject.stage = 'production';
+    GameState.currentProject.productionWeeksTotal = calculateProductionWeeks(GameState.currentProject.type);
+    GameState.currentProject.productionWeeksRemaining = GameState.currentProject.productionWeeksTotal;
     
     showEvent({
-        title: "Crew Finalized!",
-        description: `Your dream team is assembled. Production begins now!`,
-        type: "success"
+        title: 'Crew Finalized! 🎬',
+        description: `Your dream team is assembled! Production will take ${GameState.currentProject.productionWeeksTotal} weeks.`,
+        type: 'positive',
+        icon: '🎯'
     });
+    
+    generateNewsItem(`🎬 ${GameState.currentProject.crew.maleLead.name} and ${GameState.currentProject.crew.femaleLead.name} start shooting for "${GameState.currentProject.title}"!`);
+    
+    updateUI();
+    switchSection('dashboard');
 }
 
-function validateCrewSelection() {
-    const cast = gameState.currentProject.cast;
+function calculateProductionWeeks(projectType) {
+    const baseWeeks = {
+        movie: 14,
+        webseries: 10,
+        tvserial: 6
+    };
     
-    if (!cast.director) {
-        showEvent({
-            title: "Missing Director",
-            description: "Please select a director for your project.",
-            type: "error"
-        });
-        return false;
-    }
-    
-    if (!cast.leadActor) {
-        showEvent({
-            title: "Missing Lead Actor",
-            description: "Please select a lead actor for your project.",
-            type: "error"
-        });
-        return false;
-    }
-    
-    if (!cast.leadActress) {
-        showEvent({
-            title: "Missing Lead Actress",
-            description: "Please select a lead actress for your project.",
-            type: "error"
-        });
-        return false;
-    }
-    
-    return true;
+    return baseWeeks[projectType] + Math.floor(Math.random() * 3); // Add 0-2 random weeks
 }
 
-// Production Stage Implementation
-function initializeProductionStage() {
-    startProductionSimulation();
-}
+// ====================================
+// PRODUCTION STAGE
+// ====================================
 
-function startProductionSimulation() {
-    const projectType = projectTypes[gameState.currentProject.type];
-    const productionWeeks = projectType.productionWeeks;
-    
-    gameState.currentProject.timeline.productionStart = { ...gameState.gameTime };
-    
-    // Simulate production progress
-    simulateProductionProgress(productionWeeks);
-}
-
-function simulateProductionProgress(totalWeeks) {
-    let currentWeek = 0;
-    const progressBar = document.getElementById('productionProgressBar');
-    const progressText = document.getElementById('productionProgressText');
-    const weeksCompleted = document.getElementById('productionWeeksCompleted');
-    
-    const interval = setInterval(() => {
-        currentWeek++;
-        const progress = Math.min(100, (currentWeek / totalWeeks) * 100);
-        
-        progressBar.style.width = progress + '%';
-        progressText.textContent = Math.round(progress) + '%';
-        weeksCompleted.textContent = currentWeek;
-        
-        // Random production events
-        if (Math.random() < 0.2) {
-            triggerProductionEvent();
-        }
-        
-        if (currentWeek >= totalWeeks) {
-            clearInterval(interval);
-            completeProduction();
-        }
-        
-        advanceTime(1);
-        updateTimeDisplay();
-        
-    }, 1000); // 1 second per week for demo, adjust as needed
-}
-
-function triggerProductionEvent() {
+function triggerProductionEvent(project) {
     const events = [
         {
-            title: "Weather Delays",
-            description: "Monsoon rains have delayed outdoor shooting by a few days.",
-            impact: { budget: -2, schedule: -1, quality: 0 },
-            type: "negative"
+            title: 'Outstanding Performance! 🌟',
+            description: `${project.crew.maleLead.name} delivered an exceptional scene! Early buzz is very positive.`,
+            type: 'positive',
+            icon: '⭐',
+            effect: { quality: 0.1, reputation: 2 }
         },
         {
-            title: "Outstanding Performance",
-            description: "Your lead actor delivered an exceptional scene that's getting early buzz!",
-            impact: { budget: 0, schedule: 0, quality: 5 },
-            type: "positive"
+            title: 'Weather Delays ⛈️',
+            description: 'Heavy rains delayed outdoor shooting. Extra costs incurred for extended schedule.',
+            type: 'negative',
+            icon: '🌧️',
+            effect: { weeks: 1, money: -3 }
         },
         {
-            title: "Technical Issues",
-            description: "Camera equipment malfunction caused some delays in shooting.",
-            impact: { budget: -1, schedule: -2, quality: -1 },
-            type: "negative"
+            title: 'Viral Song Recording! 📱',
+            description: 'Music recording session went viral on social media! Massive pre-release buzz generated.',
+            type: 'positive',
+            icon: '🎵',
+            effect: { quality: 0.15, marketing: 0.2 }
         },
         {
-            title: "Viral Song Recording",
-            description: "The music recording session went exceptionally well. This could be a chartbuster!",
-            impact: { budget: 0, schedule: 1, quality: 8 },
-            type: "positive"
+            title: 'Equipment Malfunction 🔧',
+            description: 'Camera equipment breakdown caused shooting delays and additional rental costs.',
+            type: 'negative',
+            icon: '⚠️',
+            effect: { weeks: 1, money: -2 }
         },
         {
-            title: "Location Permission Issues",
-            description: "Had to change shooting location due to permit issues.",
-            impact: { budget: -3, schedule: -2, quality: -2 },
-            type: "negative"
+            title: 'Perfect Chemistry! 💕',
+            description: `${project.crew.maleLead.name} and ${project.crew.femaleLead.name} have amazing on-screen chemistry!`,
+            type: 'positive',
+            icon: '✨',
+            effect: { quality: 0.12 }
+        },
+        {
+            title: 'Injury on Set 🚑',
+            description: 'Minor injury to supporting actor caused production delays. Safety protocols reviewed.',
+            type: 'negative',
+            icon: '🏥',
+            effect: { weeks: 2, money: -1 }
         }
     ];
     
     const event = events[Math.floor(Math.random() * events.length)];
-    gameState.currentProject.events.push(event);
     
-    // Apply event effects
-    if (event.impact.budget) {
-        gameState.player.budget += event.impact.budget;
+    // Apply effects
+    if (event.effect.quality) {
+        project.quality.production += event.effect.quality;
     }
+    if (event.effect.marketing) {
+        project.quality.marketing += event.effect.marketing;
+    }
+    if (event.effect.reputation) {
+        GameState.player.reputation = Math.max(0, Math.min(100, GameState.player.reputation + event.effect.reputation));
+    }
+    if (event.effect.money) {
+        GameState.player.money = Math.max(0, GameState.player.money + event.effect.money);
+    }
+    if (event.effect.weeks) {
+        project.productionWeeksRemaining += event.effect.weeks;
+    }
+    
+    // Store event
+    project.events.push(event);
     
     showEvent(event);
+    generateNewsItem(`🎬 "${project.title}" production update: ${event.description}`);
 }
 
-function completeProduction() {
-    gameState.currentProject.timeline.productionEnd = { ...gameState.gameTime };
+function completeProductionStage(project) {
+    project.stage = 'marketing';
     
     // Calculate production quality
-    calculateProductionQuality();
-    
-    // Update production health
-    updateProductionHealth();
+    calculateProductionQuality(project);
     
     showEvent({
-        title: "Production Wrap!",
-        description: "Filming is complete! Time to plan your marketing strategy.",
-        type: "success"
+        title: 'Production Complete! 🎉',
+        description: `"${project.title}" filming wrapped! Quality: ${Math.round(project.quality.production * 100)}%. Time for marketing!`,
+        type: 'positive',
+        icon: '🏁'
     });
     
-    // Move to marketing stage
-    gameState.currentProject.stage = 'marketing';
+    generateNewsItem(`🎬 "${project.title}" completes production! ${project.crew.director.name} praises the entire cast and crew.`);
 }
 
-function calculateProductionQuality() {
-    const cast = gameState.currentProject.cast;
-    let quality = 0;
+function calculateProductionQuality(project) {
+    let quality = project.quality.script;
     
-    // Director influence
-    const genreMatch = cast.director.specialty === gameState.currentProject.genre ? 1.2 : 1.0;
-    quality += (cast.director.reputation * genreMatch) / 100;
-    
-    // Cast influence
-    quality += (cast.leadActor.popularity * 0.3) / 100;
-    quality += (cast.leadActress.popularity * 0.3) / 100;
-    
-    // Supporting cast
-    if (cast.supportingCast) {
-        const supportingAvg = cast.supportingCast.reduce((sum, actor) => sum + (actor ? actor.skill : 0), 0) / cast.supportingCast.length;
-        quality += (supportingAvg * 0.2) / 100;
+    // Director impact
+    const director = project.crew.director;
+    if (director) {
+        const directorBonus = director.reputation / 100;
+        const genreMatch = director.specialty === project.genre ? 1.2 : 1.0;
+        quality += (directorBonus * genreMatch * 0.3);
     }
     
-    // Music quality
-    if (cast.musicDirector) {
-        const musicGenreMatch = cast.musicDirector.specialty === 'all' || 
-                                cast.musicDirector.specialty === gameState.currentProject.genre ? 1.2 : 1.0;
-        quality += (cast.musicDirector.reputation * musicGenreMatch * 0.4) / 100;
+    // Lead actors impact
+    const maleLead = project.crew.maleLead;
+    const femaleLead = project.crew.femaleLead;
+    if (maleLead && femaleLead) {
+        const actorQuality = (maleLead.popularity + femaleLead.popularity) / 200;
+        quality += (actorQuality * 0.25);
+        
+        // Chemistry bonus
+        if (maleLead.specialty === project.genre && femaleLead.specialty === project.genre) {
+            quality += 0.1;
+        }
     }
     
-    // Random events impact
-    const eventImpact = gameState.currentProject.events.reduce((sum, event) => sum + (event.impact.quality || 0), 0);
-    quality += eventImpact / 100;
+    // Music impact
+    if (project.crew.musicProducer) {
+        const musicQuality = project.crew.musicProducer.reputation / 100;
+        quality += (musicQuality * 0.15);
+    }
     
     // Random factor
-    quality += (Math.random() * 0.2) - 0.1;
+    quality += (Math.random() * 0.2 - 0.1);
     
-    gameState.currentProject.quality.production = Math.max(0, Math.min(1, quality));
+    project.quality.production = Math.max(0, Math.min(1, quality));
 }
 
-function updateProductionHealth() {
-    // Update health indicators based on current status
-    document.getElementById('budgetHealth').textContent = gameState.player.budget > 50 ? "On Track" : "Tight";
-    document.getElementById('scheduleHealth').textContent = "On Time";
-    document.getElementById('moraleHealth').textContent = "Good";
-    document.getElementById('qualityScore').textContent = Math.round(gameState.currentProject.quality.production * 100) + "%";
+function skipProduction() {
+    if (!GameState.currentProject) return;
     
-    // Apply CSS classes based on health
-    const budgetHealth = document.getElementById('budgetHealth');
-    budgetHealth.className = 'health-value ' + (gameState.player.budget > 50 ? 'good' : 'warning');
+    GameState.currentProject.productionWeeksRemaining = 0;
+    completeProductionStage(GameState.currentProject);
+    updateUI();
 }
 
-function skipToPostProduction() {
-    // Skip the production animation and go directly to marketing
-    gameState.currentProject.stage = 'marketing';
-    showStage('marketing');
-}
+// ====================================
+// MARKETING STAGE
+// ====================================
 
-// Marketing Stage Implementation
-function initializeMarketingStage() {
-    setupMarketingChannels();
-    updateMarketingBudget();
-}
-
-function setupMarketingChannels() {
-    // Marketing channels are already in HTML, just need to setup event listeners
-    const marketingOptions = document.querySelectorAll('.marketing-option input[type="checkbox"]');
-    marketingOptions.forEach(option => {
-        option.addEventListener('change', updateMarketingBudget);
+function updateMarketingPreview() {
+    const selectedChannels = [];
+    const selectedRegions = [];
+    
+    // Get selected channels
+    document.querySelectorAll('.marketing-checkbox:checked').forEach(checkbox => {
+        selectedChannels.push(checkbox.getAttribute('data-channel'));
     });
     
-    const regionOptions = document.querySelectorAll('.region-option input[type="checkbox"]');
-    regionOptions.forEach(option => {
-        option.addEventListener('change', updateMarketingBudget);
+    // Get selected regions
+    document.querySelectorAll('.region-checkbox:checked').forEach(checkbox => {
+        selectedRegions.push(checkbox.getAttribute('data-region'));
     });
-}
-
-function updateMarketingBudget() {
-    const budgetSlider = document.getElementById('marketingBudgetRange');
+    
+    // Get budget
+    const budgetSlider = document.getElementById('marketingBudgetSlider');
+    const budget = budgetSlider ? parseInt(budgetSlider.value) : 20;
+    
+    // Update display
     const budgetValue = document.getElementById('marketingBudgetValue');
+    if (budgetValue) budgetValue.textContent = budget;
+    
+    const selectedChannelsDisplay = document.getElementById('selectedChannels');
+    if (selectedChannelsDisplay) {
+        selectedChannelsDisplay.textContent = selectedChannels.length > 0 ? 
+            selectedChannels.map(formatChannelName).join(', ') : 'None';
+    }
+    
+    const totalCostDisplay = document.getElementById('totalMarketingCost');
+    if (totalCostDisplay) totalCostDisplay.textContent = `₹${budget} Cr`;
+    
+    // Calculate reach and awareness
+    const reach = calculateMarketingReach(selectedChannels, selectedRegions, budget);
     const awarenessLevel = document.getElementById('awarenessLevel');
+    if (awarenessLevel) awarenessLevel.textContent = `${reach}%`;
+}
+
+function formatChannelName(channel) {
+    const names = {
+        'tv-ads': 'TV Ads',
+        'print-ads': 'Print & Billboards',
+        'radio': 'Radio',
+        'social-media': 'Social Media',
+        'youtube': 'YouTube',
+        'influencer': 'Influencers',
+        'premiere': 'Premiere Events',
+        'city-tour': 'City Tours'
+    };
+    return names[channel] || channel;
+}
+
+function calculateMarketingReach(channels, regions, budget) {
+    const channelMultiplier = Math.min(channels.length * 0.15 + 0.3, 1.0);
+    const regionMultiplier = Math.min(regions.length * 0.2 + 0.4, 1.0);
+    const budgetMultiplier = Math.min(budget / 50, 1.0);
     
-    const budget = parseInt(budgetSlider.value);
-    budgetValue.textContent = budget;
-    
-    // Calculate awareness level based on budget
-    let awarenessText = "Low";
-    if (budget >= 40) awarenessText = "Very High";
-    else if (budget >= 30) awarenessText = "High";
-    else if (budget >= 20) awarenessText = "Medium";
-    else if (budget >= 15) awarenessText = "Fair";
-    
-    awarenessLevel.textContent = awarenessText;
-    
-    gameState.currentProject.marketing.budget = budget;
+    const totalReach = channelMultiplier * regionMultiplier * budgetMultiplier * 100;
+    return Math.round(totalReach);
 }
 
 function launchMarketing() {
-    // Collect selected marketing channels
+    if (!GameState.currentProject) return;
+    
     const selectedChannels = [];
-    const marketingOptions = document.querySelectorAll('.marketing-option input[type="checkbox"]:checked');
-    marketingOptions.forEach(option => {
-        selectedChannels.push(option.value);
+    document.querySelectorAll('.marketing-checkbox:checked').forEach(checkbox => {
+        selectedChannels.push(checkbox.getAttribute('data-channel'));
     });
     
-    // Collect selected regions
     const selectedRegions = [];
-    const regionOptions = document.querySelectorAll('.region-option input[type="checkbox"]:checked');
-    regionOptions.forEach(option => {
-        selectedRegions.push(option.value);
+    document.querySelectorAll('.region-checkbox:checked').forEach(checkbox => {
+        selectedRegions.push(checkbox.getAttribute('data-region'));
     });
+    
+    const budget = parseInt(document.getElementById('marketingBudgetSlider').value);
     
     if (selectedChannels.length === 0) {
-        showEvent({
-            title: "No Marketing Channels Selected",
-            description: "Please select at least one marketing channel.",
-            type: "error"
-        });
+        showError('Please select at least one marketing channel');
         return;
     }
     
     if (selectedRegions.length === 0) {
-        showEvent({
-            title: "No Regions Selected",
-            description: "Please select at least one release region.",
-            type: "error"
-        });
+        showError('Please select at least one release region');
         return;
     }
     
-    const marketingBudget = gameState.currentProject.marketing.budget;
-    
-    if (gameState.player.budget < marketingBudget) {
-        showEvent({
-            title: "Insufficient Budget",
-            description: `You need ₹${marketingBudget} Cr for marketing but only have ₹${gameState.player.budget} Cr.`,
-            type: "error"
-        });
+    if (GameState.player.money < budget) {
+        showError(`Insufficient funds! You need ₹${budget} Cr but have ₹${GameState.player.money} Cr`);
         return;
     }
     
-    // Deduct marketing budget
-    gameState.player.budget -= marketingBudget;
-    gameState.currentProject.budget.marketing = marketingBudget;
+    // Deduct budget
+    GameState.player.money -= budget;
     
-    // Store marketing choices
-    gameState.currentProject.marketing.channels = selectedChannels;
-    gameState.currentProject.marketing.regions = selectedRegions;
+    // Store marketing data
+    GameState.currentProject.marketing = {
+        channels: selectedChannels,
+        regions: selectedRegions,
+        budget: budget
+    };
+    
+    GameState.currentProject.budget.marketing = budget;
     
     // Calculate marketing quality
-    const channelMultiplier = selectedChannels.length * 0.15 + 0.4;
-    const budgetMultiplier = (marketingBudget / 50) * 0.6 + 0.4;
-    gameState.currentProject.quality.marketing = Math.min(1, channelMultiplier * budgetMultiplier);
+    const reach = calculateMarketingReach(selectedChannels, selectedRegions, budget);
+    GameState.currentProject.quality.marketing = reach / 100;
     
-    updateStats();
+    // Move to distribution
+    GameState.currentProject.stage = 'distribution';
     
     showEvent({
-        title: "Marketing Campaign Launched!",
-        description: "Your promotional campaign is creating buzz across the industry!",
-        type: "success"
+        title: 'Marketing Campaign Launched! 📢',
+        description: `₹${budget} Cr campaign is creating buzz! Expected reach: ${reach}%`,
+        type: 'positive',
+        icon: '🚀'
     });
     
-    // Move to distribution stage
-    gameState.currentProject.stage = 'distribution';
-    showStage('distribution');
+    generateNewsItem(`📢 "${GameState.currentProject.title}" marketing campaign creates massive buzz across ${selectedRegions.join(' and ')} markets!`);
+    
+    updateUI();
+    switchSection('distribution-stage');
 }
 
-// Distribution Stage Implementation
-function initializeDistributionStage() {
-    populateDistributors();
-    updateDistributionCosts();
-}
+// ====================================
+// DISTRIBUTION STAGE
+// ====================================
 
 function populateDistributors() {
-    const distributorList = document.getElementById('distributorList');
-    distributorList.innerHTML = '';
+    const container = document.getElementById('distributorList');
+    if (!container) return;
     
-    industryData.distributors.forEach(distributor => {
-        const item = document.createElement('div');
-        item.className = 'distributor-item';
-        item.dataset.id = distributor.id;
+    container.innerHTML = '';
+    
+    IndustryData.distributors.forEach(distributor => {
+        const card = document.createElement('div');
+        card.className = 'distributor-item';
+        card.setAttribute('data-distributor-id', distributor.id);
         
-        item.innerHTML = `
+        card.innerHTML = `
             <div class="distributor-name">${distributor.name}</div>
             <div class="distributor-details">${distributor.description}</div>
             <div class="distributor-stats">
-                <span class="distributor-fee">${distributor.fee}% share</span>
-                <span class="distributor-reach">${distributor.reach}% reach</span>
+                <span class="distributor-fee">${distributor.fee}% Fee</span>
+                <span class="distributor-reach">${distributor.reach}% Reach</span>
             </div>
         `;
         
-        item.addEventListener('click', () => selectDistributor(distributor, item));
-        distributorList.appendChild(item);
+        card.addEventListener('click', () => selectDistributor(distributor, card));
+        container.appendChild(card);
     });
 }
 
-function selectDistributor(distributor, itemElement) {
+function selectDistributor(distributor, element) {
     // Clear previous selections
     document.querySelectorAll('.distributor-item').forEach(item => {
         item.classList.remove('selected');
     });
     
-    // Select current distributor
-    itemElement.classList.add('selected');
-    gameState.currentProject.distribution.partner = distributor;
+    // Select current
+    element.classList.add('selected');
     
-    updateDistributionCosts();
+    if (GameState.currentProject) {
+        GameState.currentProject.distributor = distributor;
+        updateDistributionCosts();
+    }
 }
 
 function updateDistributionCosts() {
-    const breakdown = document.getElementById('distributionCostBreakdown');
+    if (!GameState.currentProject || !GameState.currentProject.distributor) return;
     
-    if (!gameState.currentProject.distribution.partner) {
-        breakdown.innerHTML = '<p>Please select a distribution partner to see cost breakdown.</p>';
-        return;
-    }
-    
-    const distributor = gameState.currentProject.distribution.partner;
+    const distributor = GameState.currentProject.distributor;
     const releaseScale = document.querySelector('input[name="releaseScale"]:checked')?.value || 'wide';
     
-    let baseCost = 0;
-    let screenCount = 0;
+    const costs = calculateDistributionCosts(distributor, releaseScale);
     
-    switch (releaseScale) {
-        case 'limited':
-            baseCost = 8;
-            screenCount = '500-1000';
-            break;
-        case 'wide':
-            baseCost = 15;
-            screenCount = '2000-3500';
-            break;
-        case 'mega':
-            baseCost = 25;
-            screenCount = '4000+';
-            break;
+    const costsContainer = document.getElementById('distributionCosts');
+    if (costsContainer) {
+        costsContainer.innerHTML = `
+            <div class="flex justify-between">
+                <span>Distributor Fee (${distributor.fee}%):</span>
+                <span>₹${costs.distributorFee} Cr</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Print & Advertising:</span>
+                <span>₹${costs.printCost} Cr</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Theater Rentals:</span>
+                <span>₹${costs.theaterRentals} Cr</span>
+            </div>
+            <div class="flex justify-between border-t border-gray-600 pt-2 font-bold">
+                <span>Total Distribution Cost:</span>
+                <span class="text-gold">₹${costs.total} Cr</span>
+            </div>
+        `;
     }
     
-    const distributorFee = Math.round(baseCost * (distributor.fee / 100));
-    const totalCost = baseCost + distributorFee;
+    GameState.currentProject.distributionCosts = costs;
+}
+
+function calculateDistributionCosts(distributor, scale) {
+    const scaleCosts = {
+        limited: { print: 5, theater: 3, screens: '500-1000' },
+        wide: { print: 12, theater: 8, screens: '2000-3500' },
+        mega: { print: 20, theater: 15, screens: '4000+' }
+    };
     
-    breakdown.innerHTML = `
-        <div class="cost-item">Base Distribution Cost: ₹${baseCost} Cr</div>
-        <div class="cost-item">Distributor Fee (${distributor.fee}%): ₹${distributorFee} Cr</div>
-        <div class="cost-item">Screen Count: ${screenCount} screens</div>
-        <div class="cost-item total">Total Distribution Cost: ₹${totalCost} Cr</div>
-    `;
+    const costs = scaleCosts[scale];
+    const distributorFee = Math.round((GameState.currentProject.budget.total * distributor.fee) / 100);
+    const total = distributorFee + costs.print + costs.theater;
     
-    gameState.currentProject.budget.distribution = totalCost;
+    return {
+        distributorFee,
+        printCost: costs.print,
+        theaterRentals: costs.theater,
+        total,
+        screens: costs.screens
+    };
 }
 
 function finalizeDistribution() {
-    if (!gameState.currentProject.distribution.partner) {
-        showEvent({
-            title: "No Distributor Selected",
-            description: "Please select a distribution partner.",
-            type: "error"
-        });
+    if (!GameState.currentProject || !GameState.currentProject.distributor) {
+        showError('Please select a distributor');
         return;
     }
     
     const releaseScale = document.querySelector('input[name="releaseScale"]:checked')?.value;
-    const ottTiming = document.querySelector('input[name="ottTiming"]:checked')?.value;
+    const ottStrategy = document.querySelector('input[name="ottStrategy"]:checked')?.value;
     
-    if (!releaseScale || !ottTiming) {
-        showEvent({
-            title: "Release Strategy Incomplete",
-            description: "Please select both theater and OTT release strategies.",
-            type: "error"
-        });
+    if (!releaseScale || !ottStrategy) {
+        showError('Please select release and OTT strategies');
         return;
     }
     
-    const distributionCost = gameState.currentProject.budget.distribution;
-    
-    if (gameState.player.budget < distributionCost) {
-        showEvent({
-            title: "Insufficient Budget",
-            description: `You need ₹${distributionCost} Cr for distribution but only have ₹${gameState.player.budget} Cr.`,
-            type: "error"
-        });
+    const costs = GameState.currentProject.distributionCosts;
+    if (GameState.player.money < costs.total) {
+        showError(`Insufficient funds! You need ₹${costs.total} Cr but have ₹${GameState.player.money} Cr`);
         return;
     }
     
-    // Deduct distribution cost
-    gameState.player.budget -= distributionCost;
+    // Deduct costs
+    GameState.player.money -= costs.total;
     
-    // Store distribution choices
-    gameState.currentProject.distribution.strategy = {
+    // Store distribution data
+    GameState.currentProject.distribution = {
+        partner: GameState.currentProject.distributor,
         releaseScale: releaseScale,
-        ottTiming: ottTiming
+        ottStrategy: ottStrategy,
+        costs: costs
     };
     
-    updateStats();
+    GameState.currentProject.budget.distribution = costs.total;
+    GameState.currentProject.stage = 'release';
     
     showEvent({
-        title: "Distribution Deal Finalized!",
-        description: "Your movie is set for release. Time to choose the perfect date!",
-        type: "success"
+        title: 'Distribution Deal Finalized! 🤝',
+        description: `Partnership with ${GameState.currentProject.distributor.name} confirmed. Ready for release!`,
+        type: 'positive',
+        icon: '✅'
     });
     
-    // Move to release stage
-    gameState.currentProject.stage = 'release';
-    showStage('release');
+    updateUI();
+    switchSection('release-stage');
 }
 
-// Release Stage Implementation
-function initializeReleaseStage() {
-    generateReleaseCalendar();
-    calculatePreReleaseSummary();
-}
+// ====================================
+// RELEASE STAGE
+// ====================================
 
 function generateReleaseCalendar() {
-    const calendarGrid = document.getElementById('calendarGrid');
-    const calendarMonth = document.getElementById('calendarMonth');
+    const calendar = document.getElementById('releaseCalendar');
+    if (!calendar) return;
     
-    const currentDate = new Date(gameState.gameTime.year, gameState.gameTime.month - 1, 1);
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
+    calendar.innerHTML = '';
     
-    calendarMonth.textContent = `${gameState.gameTime.monthNames[month]} ${year}`;
-    
-    // Clear calendar
-    calendarGrid.innerHTML = '';
-    
-    // Get first day of month and number of days
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    
-    // Add empty cells for days before month starts
-    for (let i = 0; i < firstDay; i++) {
-        const emptyCell = document.createElement('div');
-        emptyCell.className = 'calendar-day empty';
-        calendarGrid.appendChild(emptyCell);
-    }
-    
-    // Add days of the month
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dayCell = document.createElement('div');
-        dayCell.className = 'calendar-day';
-        dayCell.textContent = day;
-        dayCell.dataset.date = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    // Generate next 8 weeks
+    for (let i = 1; i <= 8; i++) {
+        const week = GameState.gameTime.week + i;
+        const displayWeek = week > 52 ? week - 52 : week;
+        const year = week > 52 ? GameState.gameTime.year + 1 : GameState.gameTime.year;
+        
+        const weekDiv = document.createElement('div');
+        weekDiv.className = 'calendar-day';
+        weekDiv.textContent = `Week ${displayWeek}`;
+        weekDiv.dataset.week = week;
+        weekDiv.dataset.year = year;
         
         // Check for festivals
-        const dateStr = dayCell.dataset.date;
-        const festival = festivalDates[year]?.find(f => f.date === dateStr);
+        const festival = FestivalWeeks.find(f => f.week === (displayWeek));
         if (festival) {
-            dayCell.classList.add('festival');
-            dayCell.title = festival.name;
+            weekDiv.classList.add('festival');
+            weekDiv.title = `${festival.name} - ${Math.round((festival.multiplier - 1) * 100)}% boost`;
         }
         
         // Check for competition
-        if (competitionCalendar[dateStr]) {
-            dayCell.classList.add('competition');
+        const competition = GameState.competitors.filter(c => c.releaseWeek === week);
+        if (competition.length > 0) {
+            weekDiv.classList.add('competition');
+            weekDiv.title = `${competition.length} competing releases`;
         }
         
-        // Check for optimal dates (low competition, non-festival)
-        if (!festival && !competitionCalendar[dateStr] && day % 7 === 5) { // Fridays with no competition
-            dayCell.classList.add('optimal');
+        // Mark as optimal if no festival and no competition
+        if (!festival && competition.length === 0) {
+            weekDiv.classList.add('optimal');
+            weekDiv.title = 'Optimal release window';
         }
         
-        dayCell.addEventListener('click', () => selectReleaseDate(dateStr, dayCell));
-        calendarGrid.appendChild(dayCell);
+        weekDiv.addEventListener('click', () => selectReleaseWeek(week, weekDiv));
+        calendar.appendChild(weekDiv);
     }
 }
 
-function changeCalendarMonth(direction) {
-    gameState.gameTime.month += direction;
-    
-    if (gameState.gameTime.month > 12) {
-        gameState.gameTime.month = 1;
-        gameState.gameTime.year++;
-    } else if (gameState.gameTime.month < 1) {
-        gameState.gameTime.month = 12;
-        gameState.gameTime.year--;
-    }
-    
-    generateReleaseCalendar();
-}
-
-function selectReleaseDate(dateStr, dayCell) {
+function selectReleaseWeek(week, element) {
     // Clear previous selection
-    document.querySelectorAll('.calendar-day').forEach(cell => {
-        cell.classList.remove('selected');
+    document.querySelectorAll('.calendar-day').forEach(day => {
+        day.classList.remove('selected');
     });
     
-    // Select current date
-    dayCell.classList.add('selected');
-    gameState.currentProject.timeline.releaseDate = dateStr;
+    // Select current
+    element.classList.add('selected');
     
-    // Show date details
-    showDateDetails(dateStr);
+    if (GameState.currentProject) {
+        GameState.currentProject.releaseWeek = week;
+        showReleaseWeekDetails(week);
+        
+        // Enable confirm button
+        const confirmBtn = document.getElementById('confirmReleaseBtn');
+        if (confirmBtn) {
+            confirmBtn.disabled = false;
+            confirmBtn.classList.remove('opacity-50');
+        }
+    }
 }
 
-function showDateDetails(dateStr) {
-    const detailsElement = document.getElementById('selectedDateDetails');
-    detailsElement.classList.remove('hidden');
+function showReleaseWeekDetails(week) {
+    const infoContainer = document.getElementById('selectedDateInfo');
+    const detailsContainer = document.getElementById('dateDetails');
+    const competitionContainer = document.getElementById('competitionAnalysis');
     
-    const date = new Date(dateStr);
-    const festival = festivalDates[gameState.gameTime.year]?.find(f => f.date === dateStr);
-    const competition = competitionCalendar[dateStr];
+    if (!infoContainer || !detailsContainer || !competitionContainer) return;
     
-    let competitionLevel = "Low";
-    let competitionClass = "competition-low";
+    infoContainer.classList.remove('hidden');
     
-    if (competition && competition.length > 0) {
-        competitionLevel = competition.length > 2 ? "High" : "Medium";
-        competitionClass = competition.length > 2 ? "competition-high" : "competition-medium";
-    }
+    const displayWeek = week > 52 ? week - 52 : week;
+    const festival = FestivalWeeks.find(f => f.week === displayWeek);
+    const competition = GameState.competitors.filter(c => c.releaseWeek === week);
     
+    let competitionLevel = 'Low';
     if (festival) {
-        competitionLevel = "Very High";
-        competitionClass = "competition-high";
+        competitionLevel = festival.competition === 'very-high' ? 'Very High' : 
+                          festival.competition === 'high' ? 'High' : 'Medium';
+    } else if (competition.length > 2) {
+        competitionLevel = 'High';
+    } else if (competition.length > 0) {
+        competitionLevel = 'Medium';
     }
     
-    let html = `
-        <h4>Release Date: ${date.toLocaleDateString('en-IN', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        })}</h4>
-        <div class="date-info">
-            Competition Level: <span class="${competitionClass}">${competitionLevel}</span>
-        </div>
+    detailsContainer.innerHTML = `
+        <div>Selected: Week ${displayWeek}</div>
+        <div>Competition Level: <span class="competition-${competitionLevel.toLowerCase().replace(' ', '-')}">${competitionLevel}</span></div>
+        ${festival ? `<div class="text-green-400">🎉 ${festival.name} - ${Math.round((festival.multiplier - 1) * 100)}% boost expected!</div>` : ''}
     `;
     
-    if (festival) {
-        html += `<div class="date-info">🎉 <strong>${festival.name}</strong> - Increased audience but high competition</div>`;
+    if (competition.length > 0) {
+        competitionContainer.innerHTML = `
+            <div class="font-bold text-red-400 mb-2">Competing Releases:</div>
+            ${competition.map(c => `
+                <div class="bg-red-900/20 p-2 rounded border border-red-500/30 mb-2">
+                    <div class="font-bold">"${c.title}"</div>
+                    <div class="text-xs text-gray-400">${c.genre} • ${c.studio}</div>
+                </div>
+            `).join('')}
+        `;
+    } else {
+        competitionContainer.innerHTML = `
+            <div class="text-green-400">✅ Clear release window - No major competition!</div>
+        `;
     }
-    
-    if (competition && competition.length > 0) {
-        html += '<div class="date-info"><strong>Competing Releases:</strong></div>';
-        competition.forEach(movie => {
-            html += `<div class="date-info">• ${movie.title} (${movie.genre})</div>`;
-        });
-    }
-    
-    if (!festival && !competition) {
-        html += '<div class="date-info">✅ Clear date with minimal competition</div>';
-    }
-    
-    detailsElement.innerHTML = html;
-}
-
-function calculatePreReleaseSummary() {
-    const project = gameState.currentProject;
-    
-    // Production Quality
-    const productionQuality = Math.round(project.quality.production * 100);
-    document.getElementById('productionQuality').textContent = `${productionQuality}%`;
-    
-    // Star Power Index
-    const starPower = Math.round((project.cast.leadActor.popularity + project.cast.leadActress.popularity) / 2);
-    document.getElementById('starPowerIndex').textContent = `${starPower}%`;
-    
-    // Market Buzz
-    const marketBuzz = Math.round(project.quality.marketing * 100);
-    document.getElementById('marketBuzz').textContent = `${marketBuzz}%`;
-    
-    // Total Investment
-    const totalInvestment = project.budget.script + project.budget.cast + 
-                          project.budget.marketing + project.budget.distribution;
-    document.getElementById('totalInvestment').textContent = `₹${totalInvestment} Cr`;
-    
-    project.budget.total = totalInvestment;
 }
 
 function confirmRelease() {
-    if (!gameState.currentProject.timeline.releaseDate) {
-        showEvent({
-            title: "No Release Date Selected",
-            description: "Please select a release date from the calendar.",
-            type: "error"
-        });
+    if (!GameState.currentProject || !GameState.currentProject.releaseWeek) {
+        showError('Please select a release week');
         return;
     }
     
-    showLoadingScreen("Calculating box office results...", "The industry awaits your movie's fate");
+    GameState.currentProject.stage = 'results';
     
-    // Simulate box office calculation
+    showEvent({
+        title: 'Release Confirmed! 🚀',
+        description: `"${GameState.currentProject.title}" is set to release in Week ${GameState.currentProject.releaseWeek}. The countdown begins!`,
+        type: 'positive',
+        icon: '🎬'
+    });
+    
+    // Calculate results after a short delay
     setTimeout(() => {
         calculateBoxOfficeResults();
-        hideLoadingScreen();
-        showStage('results');
-    }, 3000);
+        switchSection('results-stage');
+    }, 2000);
 }
 
-// Results Stage Implementation
+// ====================================
+// BOX OFFICE RESULTS
+// ====================================
+
 function calculateBoxOfficeResults() {
-    const project = gameState.currentProject;
+    const project = GameState.currentProject;
+    if (!project) return;
     
-    // Base score calculation
     let baseScore = 50; // Starting baseline
     
-    // Script quality impact (20%)
-    baseScore += project.quality.script * 20;
+    // Script quality (20%)
+    baseScore += (project.quality.script * 20);
     
-    // Production quality impact (25%)
-    baseScore += project.quality.production * 25;
+    // Production quality (25%)
+    baseScore += (project.quality.production * 25);
     
-    // Cast popularity impact (20%)
-    const castScore = (project.cast.leadActor.popularity + 
-                      project.cast.leadActress.popularity + 
-                      project.cast.director.reputation) / 3;
-    baseScore += (castScore / 100) * 20;
+    // Star power (20%)
+    const starPower = (project.crew.maleLead.popularity + project.crew.femaleLead.popularity) / 2;
+    baseScore += (starPower / 100 * 20);
     
-    // Marketing impact (15%)
-    baseScore += project.quality.marketing * 15;
+    // Marketing (15%)
+    baseScore += (project.quality.marketing * 15);
     
-    // Genre matching bonuses (10%)
+    // Genre matching (10%)
     let genreBonus = 0;
-    if (project.cast.director.specialty === project.genre) genreBonus += 3;
-    if (project.cast.leadActor.specialty === project.genre) genreBonus += 2;
-    if (project.cast.leadActress.specialty === project.genre) genreBonus += 2;
-    if (project.cast.musicDirector && project.cast.musicDirector.specialty === project.genre) genreBonus += 3;
+    if (project.crew.director.specialty === project.genre) genreBonus += 5;
+    if (project.crew.maleLead.specialty === project.genre) genreBonus += 3;
+    if (project.crew.femaleLead.specialty === project.genre) genreBonus += 3;
     baseScore += genreBonus;
     
-    // Release date impact (10%)
-    const releaseDate = project.timeline.releaseDate;
-    const festival = festivalDates[gameState.gameTime.year]?.find(f => f.date === releaseDate);
-    const competition = competitionCalendar[releaseDate];
-    
-    if (festival) {
-        baseScore += 8; // Festival bonus
-        baseScore -= (competition?.length || 0) * 3; // Competition penalty
-    } else if (competition && competition.length > 0) {
-        baseScore -= competition.length * 2;
-    } else {
-        baseScore += 5; // Clear date bonus
-    }
-    
-    // Random events impact
-    const eventImpact = project.events.reduce((sum, event) => {
-        return sum + (event.impact.quality || 0);
-    }, 0);
-    baseScore += eventImpact;
+    // Release timing (10%)
+    const releaseBonus = calculateReleaseBonus(project.releaseWeek);
+    baseScore += releaseBonus;
     
     // Random factor (±10)
-    baseScore += (Math.random() * 20) - 10;
+    baseScore += (Math.random() * 20 - 10);
     
-    // Ensure score is within bounds
+    // Ensure within bounds
     baseScore = Math.max(0, Math.min(100, baseScore));
     
     // Calculate financial results
-    const budget = project.budget.total;
-    const projectTypeMultiplier = projectTypes[project.type].revenueMultiplier;
-    
-    // Opening weekend (based on marketing and star power)
-    const openingMultiplier = (project.quality.marketing + (castScore / 100)) / 2;
-    const openingWeekend = budget * 0.2 * openingMultiplier * projectTypeMultiplier;
-    
-    // Total domestic collection
-    const sustainabilityFactor = baseScore / 100;
-    const domesticTotal = openingWeekend * (2 + sustainabilityFactor * 8);
-    
-    // Overseas collection (depends on star power and marketing regions)
-    let overseasTotal = 0;
-    if (project.marketing.regions.includes('overseas')) {
-        overseasTotal = domesticTotal * 0.3 * (castScore / 100);
-    }
-    if (project.marketing.regions.includes('international')) {
-        overseasTotal += domesticTotal * 0.15;
-    }
-    
-    // OTT revenue
-    const ottMultiplier = project.distribution.strategy.ottTiming === 'simultaneous' ? 1.5 : 1.0;
-    const ottRevenue = budget * 0.25 * ottMultiplier;
-    
-    // Calculate total revenue and profit
-    const totalRevenue = domesticTotal + overseasTotal + ottRevenue;
-    const netResult = totalRevenue - budget;
+    const financials = calculateFinancials(project, baseScore);
     
     // Determine verdict
-    let verdict = "Flop";
-    let verdictClass = "flop";
+    const verdict = determineVerdict(financials.profit, project.budget.total);
     
-    if (netResult > budget * 1.5) {
-        verdict = "Blockbuster";
-        verdictClass = "blockbuster";
-    } else if (netResult > budget * 0.5) {
-        verdict = "Hit";
-        verdictClass = "hit";
-    } else if (netResult > 0) {
-        verdict = "Average";
-        verdictClass = "average";
-    }
-    
-    // Calculate performance metrics
-    const audienceRating = Math.round(baseScore / 10);
-    const criticsScore = Math.round(project.quality.script * 100);
-    const musicSuccess = project.cast.musicDirector ? 
-        (project.cast.musicDirector.hitRate > 0.8 ? "Superhit" : 
-         project.cast.musicDirector.hitRate > 0.6 ? "Hit" : "Average") : "No Music";
-    const weeksInTop10 = Math.max(1, Math.round(sustainabilityFactor * 8));
-    
-    // Store results
-    project.results = {
+    // Update project with results
+    project.boxOffice = {
+        ...financials,
         verdict: verdict,
-        verdictClass: verdictClass,
-        openingWeekend: Math.round(openingWeekend),
-        domesticTotal: Math.round(domesticTotal),
-        overseasTotal: Math.round(overseasTotal),
-        ottRevenue: Math.round(ottRevenue),
-        totalRevenue: Math.round(totalRevenue),
-        netResult: Math.round(netResult),
-        audienceRating: audienceRating,
-        criticsScore: criticsScore,
-        musicSuccess: musicSuccess,
-        weeksInTop10: weeksInTop10,
-        baseScore: Math.round(baseScore)
+        baseScore: Math.round(baseScore),
+        audienceRating: Math.round((baseScore / 10) * 10) / 10,
+        criticsScore: Math.round(project.quality.script * 80 + Math.random() * 20),
+        musicSuccess: project.crew.musicProducer ? 
+            (project.crew.musicProducer.hitRate > 0.8 ? 'Superhit' : 'Hit') : 'Average',
+        weeksInTop10: Math.max(1, Math.round(baseScore / 15))
     };
     
     // Update player stats
-    gameState.player.budget += totalRevenue;
+    updatePlayerStatsFromResults(project, verdict);
     
-    if (verdict === "Blockbuster" || verdict === "Hit") {
-        gameState.player.reputation = Math.min(100, gameState.player.reputation + (verdict === "Blockbuster" ? 15 : 10));
-        gameState.projectsCompleted++;
-        
-        // Update cast reputation
-        updateCastReputation(true);
-    } else {
-        gameState.player.reputation = Math.max(0, gameState.player.reputation - (verdict === "Flop" ? 8 : 3));
-        updateCastReputation(false);
-    }
-    
-    // Calculate success rate
-    gameState.player.successRate = Math.round((gameState.projectsCompleted / gameState.totalProjects) * 100);
-    
-    // Add to portfolio
-    gameState.portfolio.push(project);
+    // Move to portfolio
+    moveProjectToPortfolio(project);
     
     // Display results
-    displayBoxOfficeResults();
+    displayResults(project);
     
-    // Generate awards if applicable
-    generateAwards();
+    // Check for franchise opportunity
+    checkFranchiseOpportunity(project, verdict);
     
-    // Update industry impact
-    updateIndustryImpact();
-    
-    updateStats();
+    // Generate industry news
+    generateResultNews(project, verdict);
 }
 
-function displayBoxOfficeResults() {
-    const project = gameState.currentProject;
-    const results = project.results;
+function calculateReleaseBonus(releaseWeek) {
+    let bonus = 0;
+    
+    // Check for festivals
+    const displayWeek = releaseWeek > 52 ? releaseWeek - 52 : releaseWeek;
+    const festival = FestivalWeeks.find(f => f.week === displayWeek);
+    if (festival) {
+        bonus += ((festival.multiplier - 1) * 50); // Convert to points
+        
+        // Competition penalty during festivals
+        const competition = GameState.competitors.filter(c => c.releaseWeek === releaseWeek);
+        bonus -= (competition.length * 5);
+    }
+    
+    // Regular competition penalty
+    const competition = GameState.competitors.filter(c => c.releaseWeek === releaseWeek);
+    bonus -= (competition.length * 3);
+    
+    return bonus;
+}
+
+function calculateFinancials(project, baseScore) {
+    const totalBudget = project.budget.total || 
+        (project.budget.script + project.budget.crew + project.budget.marketing + project.budget.distribution);
+    
+    const scoreMultiplier = baseScore / 100;
+    
+    // Opening weekend
+    const marketingImpact = project.quality.marketing;
+    const starPower = (project.crew.maleLead.popularity + project.crew.femaleLead.popularity) / 200;
+    const openingMultiplier = (marketingImpact + starPower) / 2;
+    const openingWeekend = Math.round(totalBudget * 0.3 * openingMultiplier);
+    
+    // First week
+    const firstWeek = Math.round(openingWeekend * 1.8);
+    
+    // Domestic total
+    const sustainabilityFactor = scoreMultiplier;
+    const domesticMultiplier = 1 + (sustainabilityFactor * 3);
+    const domesticTotal = Math.round(totalBudget * domesticMultiplier);
+    
+    // Overseas (if selected in marketing)
+    let overseasTotal = 0;
+    if (project.marketing.regions.includes('overseas')) {
+        overseasTotal = Math.round(domesticTotal * 0.25 * starPower);
+    }
+    
+    // OTT rights
+    const ottMultiplier = project.distribution.ottStrategy === 'simultaneous' ? 0.4 : 0.25;
+    const ottRevenue = Math.round(totalBudget * ottMultiplier);
+    
+    // Total revenue and profit
+    const totalRevenue = domesticTotal + overseasTotal + ottRevenue;
+    const profit = totalRevenue - totalBudget;
+    
+    return {
+        totalBudget,
+        openingWeekend,
+        firstWeek,
+        domesticTotal,
+        overseasTotal,
+        ottRevenue,
+        totalRevenue,
+        profit
+    };
+}
+
+function determineVerdict(profit, budget) {
+    const profitRatio = profit / budget;
+    
+    if (profitRatio >= 2.0) return 'blockbuster';
+    if (profitRatio >= 1.0) return 'superhit';
+    if (profitRatio >= 0.5) return 'hit';
+    if (profitRatio >= 0.0) return 'average';
+    return 'flop';
+}
+
+function updatePlayerStatsFromResults(project, verdict) {
+    GameState.player.completedProjects++;
+    
+    if (['blockbuster', 'superhit', 'hit'].includes(verdict)) {
+        GameState.player.hitMovies++;
+    } else {
+        GameState.player.flopMovies++;
+    }
+    
+    GameState.player.totalRevenue += project.boxOffice.totalRevenue;
+    GameState.player.money += project.boxOffice.profit;
+    
+    // Reputation changes
+    const reputationChange = {
+        'blockbuster': 15,
+        'superhit': 10,
+        'hit': 5,
+        'average': 0,
+        'flop': -8
+    };
+    
+    GameState.player.reputation = Math.max(0, Math.min(100, 
+        GameState.player.reputation + reputationChange[verdict]));
+    
+    // Awards for exceptional performance
+    if (verdict === 'blockbuster' && project.boxOffice.criticsScore >= 85) {
+        GameState.player.totalAwards++;
+        GameState.awards.push({
+            name: 'Best Film Award',
+            project: project.title,
+            year: GameState.gameTime.year
+        });
+    }
+}
+
+function moveProjectToPortfolio(project) {
+    // Remove from active projects
+    GameState.activeProjects = GameState.activeProjects.filter(p => p.id !== project.id);
+    
+    // Add to portfolio
+    GameState.portfolio.push(project);
+    
+    // Clear current project
+    GameState.currentProject = null;
+}
+
+function displayResults(project) {
+    const boxOffice = project.boxOffice;
     
     // Update title and verdict
-    document.getElementById('projectResultTitle').textContent = 
-        `"${project.title}" - ${results.verdict}`;
+    const titleElement = document.getElementById('movieTitle');
+    const verdictElement = document.getElementById('movieVerdict');
     
-    const verdictElement = document.getElementById('overallVerdict');
-    verdictElement.textContent = results.verdict;
-    verdictElement.className = `verdict-status ${results.verdictClass}`;
+    if (titleElement) titleElement.textContent = `"${project.title}"`;
     
-    // Update financial breakdown
-    document.getElementById('totalInvestmentResult').textContent = `₹${project.budget.total} Cr`;
-    document.getElementById('openingWeekend').textContent = `₹${results.openingWeekend} Cr`;
-    document.getElementById('domesticTotal').textContent = `₹${results.domesticTotal} Cr`;
-    document.getElementById('overseasTotal').textContent = `₹${results.overseasTotal} Cr`;
-    document.getElementById('ottRevenue').textContent = `₹${results.ottRevenue} Cr`;
+    if (verdictElement) {
+        const verdictText = {
+            'blockbuster': 'BLOCKBUSTER HIT! 🏆',
+            'superhit': 'SUPERHIT! ⭐',
+            'hit': 'HIT! 👏',
+            'average': 'AVERAGE 😐',
+            'flop': 'FLOP 💥'
+        };
+        
+        verdictElement.textContent = verdictText[boxOffice.verdict];
+        verdictElement.className = `text-xl font-bold px-6 py-2 rounded-full inline-block verdict-${boxOffice.verdict}`;
+    }
     
-    const netElement = document.getElementById('netProfitLoss');
-    netElement.textContent = `₹${Math.abs(results.netResult)} Cr`;
-    netElement.className = `financial-value ${results.netResult >= 0 ? 'profit' : 'loss'}`;
+    // Update financial display
+    updateFinancialDisplay(boxOffice);
     
     // Update performance metrics
-    document.getElementById('audienceRating').textContent = `${results.audienceRating}/10`;
-    document.getElementById('criticsScore').textContent = `${results.criticsScore}%`;
-    document.getElementById('musicSuccess').textContent = results.musicSuccess;
-    document.getElementById('weeksInTop10').textContent = results.weeksInTop10;
-}
-
-function updateCastReputation(success) {
-    const adjustmentFactor = success ? 2 : -1;
+    updatePerformanceDisplay(boxOffice);
     
-    // Update actor/actress market values based on success
-    const leadActor = gameState.currentProject.cast.leadActor;
-    const leadActress = gameState.currentProject.cast.leadActress;
-    const director = gameState.currentProject.cast.director;
-    
-    // In a real implementation, you'd update the global data
-    // For now, we'll just track it in the game state
-}
-
-function generateAwards() {
-    const project = gameState.currentProject;
-    const results = project.results;
-    const awards = [];
-    
-    if (results.verdict === "Blockbuster") {
-        awards.push("🏆 Best Film Award");
-        if (results.criticsScore > 90) {
-            awards.push("🎭 Critics Choice Award");
-        }
-    }
-    
-    if (results.audienceRating >= 9) {
-        awards.push("❤️ Audience Favorite Award");
-    }
-    
-    if (results.musicSuccess === "Superhit") {
-        awards.push("🎵 Best Music Award");
-    }
-    
-    if (project.cast.director.reputation > 95 && results.verdict !== "Flop") {
-        awards.push("🎬 Best Director Award");
-    }
-    
-    // Display awards
-    const awardsContainer = document.getElementById('awardsResults');
-    if (awards.length > 0) {
-        awardsContainer.innerHTML = awards.map(award => 
-            `<div class="award-item">${award}</div>`
-        ).join('');
-        gameState.player.awards += awards.length;
-    } else {
-        awardsContainer.innerHTML = '<p>No awards this time. Keep making great movies!</p>';
+    // Show franchise opportunity for hits
+    const franchiseDiv = document.getElementById('franchiseOpportunity');
+    if (franchiseDiv && ['blockbuster', 'superhit', 'hit'].includes(boxOffice.verdict)) {
+        franchiseDiv.classList.remove('hidden');
     }
 }
 
-function updateIndustryImpact() {
-    const project = gameState.currentProject;
-    const results = project.results;
-    const impacts = [];
+function updateFinancialDisplay(boxOffice) {
+    const elements = [
+        'totalInvestment', 'openingWeekend', 'firstWeek', 
+        'domesticTotal', 'overseasTotal', 'ottRights', 'netProfit'
+    ];
     
-    if (results.verdict === "Blockbuster") {
-        impacts.push("📈 Your reputation in the industry has significantly increased");
-        impacts.push("🌟 Top talent is now eager to work with you");
-    } else if (results.verdict === "Hit") {
-        impacts.push("✅ Solid performance strengthens your market position");
-        impacts.push("🤝 More production opportunities are opening up");
-    } else if (results.verdict === "Average") {
-        impacts.push("😐 Mixed reception, but you maintain your current standing");
-        impacts.push("💼 Continue building relationships for future projects");
-    } else {
-        impacts.push("📉 The failure has impacted your industry reputation");
-        impacts.push("⚠️ You'll need to be more careful with future projects");
-    }
-    
-    // Display industry impact
-    const impactContainer = document.getElementById('industryImpactResults');
-    impactContainer.innerHTML = impacts.map(impact => 
-        `<div class="impact-item">${impact}</div>`
-    ).join('');
-}
-
-// Utility Functions
-function updateStats() {
-    elements.playerBudget.textContent = `₹${gameState.player.budget} Cr`;
-    elements.playerReputation.textContent = `${gameState.player.reputation}%`;
-    elements.projectsCount.textContent = gameState.totalProjects;
-    elements.successRate.textContent = `${gameState.player.successRate}%`;
-}
-
-function updateTimeDisplay() {
-    elements.currentWeek.textContent = `Week ${gameState.gameTime.week}`;
-    elements.currentMonth.textContent = 
-        `${gameState.gameTime.monthNames[gameState.gameTime.month - 1]} ${gameState.gameTime.year}`;
-}
-
-function advanceTime(weeks) {
-    gameState.gameTime.week += weeks;
-    
-    while (gameState.gameTime.week > 4) {
-        gameState.gameTime.week -= 4;
-        gameState.gameTime.month++;
-        
-        if (gameState.gameTime.month > 12) {
-            gameState.gameTime.month = 1;
-            gameState.gameTime.year++;
-        }
-    }
-    
-    // Autosave periodically
-    if (gameState.autosaveEnabled && Math.random() < 0.1) {
-        saveGame();
-    }
-}
-
-function showProjectStatus() {
-    elements.currentProjectStatus.classList.remove('hidden');
-    elements.currentProjectTitle.textContent = gameState.currentProject.title || "New Project";
-    updateProjectProgress(gameState.currentProject.stage);
-}
-
-function updateProjectProgress(currentStage) {
-    const stages = ['script', 'crew', 'production', 'marketing', 'distribution', 'release'];
-    const stageElements = document.querySelectorAll('.stage');
-    
-    stages.forEach((stage, index) => {
-        const element = document.querySelector(`.stage[data-stage="${stage}"]`);
+    elements.forEach(id => {
+        const element = document.getElementById(id);
         if (element) {
-            element.classList.remove('active', 'completed');
-            
-            const currentIndex = stages.indexOf(currentStage);
-            if (index < currentIndex) {
-                element.classList.add('completed');
-                element.querySelector('.stage-status').textContent = 'Completed';
-            } else if (index === currentIndex) {
-                element.classList.add('active');
-                element.querySelector('.stage-status').textContent = 'In Progress';
-            } else {
-                element.querySelector('.stage-status').textContent = 'Locked';
+            switch(id) {
+                case 'totalInvestment':
+                    element.textContent = `₹${boxOffice.totalBudget} Cr`;
+                    break;
+                case 'netProfit':
+                    element.textContent = `₹${Math.abs(boxOffice.profit)} Cr`;
+                    element.className = boxOffice.profit >= 0 ? 'text-gold' : 'text-red-400';
+                    break;
+                case 'ottRights':
+                    element.textContent = `₹${boxOffice.ottRevenue} Cr`;
+                    break;
+                default:
+                    element.textContent = `₹${boxOffice[id] || 0} Cr`;
             }
         }
     });
 }
 
-function continueCurrentProject() {
-    if (gameState.currentProject) {
-        showStage(gameState.currentProject.stage);
+function updatePerformanceDisplay(boxOffice) {
+    const audienceElement = document.getElementById('audienceRating');
+    const criticsElement = document.getElementById('criticsScore');
+    const weeksElement = document.getElementById('weeksInTop10');
+    const musicElement = document.getElementById('musicSuccess');
+    
+    if (audienceElement) audienceElement.textContent = `${boxOffice.audienceRating}/10`;
+    if (criticsElement) criticsElement.textContent = `${boxOffice.criticsScore}%`;
+    if (weeksElement) weeksElement.textContent = `${boxOffice.weeksInTop10} weeks`;
+    if (musicElement) musicElement.textContent = boxOffice.musicSuccess;
+    
+    // Update progress bars
+    const audienceBar = document.getElementById('audienceRatingBar');
+    const criticsBar = document.getElementById('criticsScoreBar');
+    
+    if (audienceBar) audienceBar.style.width = `${boxOffice.audienceRating * 10}%`;
+    if (criticsBar) criticsBar.style.width = `${boxOffice.criticsScore}%`;
+}
+
+function checkFranchiseOpportunity(project, verdict) {
+    if (['blockbuster', 'superhit', 'hit'].includes(verdict) && Math.random() < 0.6) {
+        const existingFranchise = GameState.franchises.find(f => f.originalTitle === project.title);
+        if (!existingFranchise) {
+            GameState.franchises.push({
+                id: generateId(),
+                originalTitle: project.title,
+                genre: project.genre,
+                movies: [project],
+                potential: verdict === 'blockbuster' ? 'Very High' : 'High'
+            });
+        }
     }
 }
 
-function cancelProject() {
-    gameState.currentProject = null;
-    showSection('dashboard');
-    elements.currentProjectStatus.classList.add('hidden');
-}
-
-// Event System
-function showEvent(event) {
-    elements.eventNotification.classList.remove('hidden');
-    document.getElementById('eventTitle').textContent = event.title;
-    document.getElementById('eventDescription').textContent = event.description;
+function generateResultNews(project, verdict) {
+    const templates = {
+        'blockbuster': [
+            `🔥 "${project.title}" creates box office history with ₹${project.boxOffice.totalRevenue} Cr collection!`,
+            `⭐ ${project.crew.maleLead.name} and ${project.crew.femaleLead.name} deliver career-best performances!`
+        ],
+        'hit': [
+            `✅ "${project.title}" proves to be a profitable venture with ₹${project.boxOffice.profit} Cr profit!`,
+            `👏 "${project.title}" receives positive response from audiences and critics alike!`
+        ],
+        'flop': [
+            `📉 "${project.title}" disappoints at box office despite star cast!`,
+            `💸 "${project.title}" becomes a major box office disappointment!`
+        ]
+    };
     
-    // Store current event for handling
-    gameState.currentEvent = event;
+    const newsTemplates = templates[verdict] || [`📰 "${project.title}" completes its theatrical run.`];
+    const news = newsTemplates[Math.floor(Math.random() * newsTemplates.length)];
+    
+    generateNewsItem(news);
 }
 
-function handleEvent() {
-    // Handle specific event logic here
-    dismissEvent();
+function createSequel() {
+    if (!GameState.currentProject) return;
+    
+    const originalProject = GameState.currentProject;
+    const sequelNumber = GameState.franchises.find(f => f.originalTitle === originalProject.title)?.movies.length + 1 || 2;
+    
+    switchSection('script-stage');
+    
+    setTimeout(() => {
+        document.getElementById('projectTitle').value = `${originalProject.title} ${sequelNumber}`;
+        document.getElementById('projectType').value = originalProject.type;
+        document.getElementById('projectGenre').value = originalProject.genre;
+        
+        showEvent({
+            title: 'Sequel Planning! 🎬',
+            description: `Planning sequel for "${originalProject.title}". Fans are excited!`,
+            type: 'positive',
+            icon: '🎭'
+        });
+    }, 500);
 }
 
-function dismissEvent() {
-    elements.eventNotification.classList.add('hidden');
-    gameState.currentEvent = null;
-}
+// ====================================
+// COMPETITOR SYSTEM
+// ====================================
 
-function showLoadingScreen(title, subtitle) {
-    elements.loadingScreen.classList.remove('hidden');
-    document.getElementById('loadingText').textContent = title;
-    document.getElementById('loadingSubtext').textContent = subtitle;
-}
-
-function hideLoadingScreen() {
-    elements.loadingScreen.classList.add('hidden');
-}
-
-// Industry News and Competition
-function generateIndustryNews() {
-    const newsTemplates = [
-        "📈 OTT platforms are increasing their content acquisition budgets",
-        "🎬 Regional cinema is gaining more mainstream recognition", 
-        "🌟 International co-productions are trending this season",
-        "💰 Production costs are rising due to inflation",
-        "🎵 Music streaming revenues are boosting film soundtracks",
-        "📱 Social media marketing is becoming crucial for success",
-        "🏆 Award season brings focus to content-driven films",
-        "🎭 Theater chains are expanding in tier-2 cities",
-        "🔥 Celebrity endorsements are driving marketing costs up",
-        "📺 Web series format is attracting A-list talent"
+function generateInitialCompetitors() {
+    const titles = [
+        'Dil Se Dil Tak', 'Action Hero Returns', 'Love Story', 'Family Values',
+        'Thriller Night', 'Comedy Express', 'Drama Queen', 'Historical Epic'
     ];
     
-    gameState.industryNews = newsTemplates.map((news, index) => ({
-        id: index,
-        headline: news,
-        date: `${gameState.gameTime.monthNames[gameState.gameTime.month - 1]} ${gameState.gameTime.year}`,
-        impact: Math.random() > 0.5 ? 'positive' : 'neutral'
+    const studios = [
+        'StarMax Productions', 'CineWorld Studios', 'Golden Pictures', 'Silver Screen Entertainment'
+    ];
+    
+    const genres = ['romance', 'action', 'comedy', 'drama', 'thriller', 'family'];
+    
+    // Generate 6-8 initial competitors
+    for (let i = 0; i < 7; i++) {
+        generateCompetitor();
+    }
+}
+
+function generateCompetitor() {
+    const titles = [
+        'Blockbuster Dreams', 'Love Revolution', 'Action Thunder', 'Comedy Nights',
+        'Family Reunion', 'Thriller Zone', 'Drama Story', 'Musical Magic'
+    ];
+    
+    const studios = [
+        'Rival Studios', 'Competition Films', 'Box Office Productions', 'Star Entertainment'
+    ];
+    
+    const genres = ['romance', 'action', 'comedy', 'drama', 'thriller', 'family'];
+    
+    const competitor = {
+        id: generateId(),
+        title: titles[Math.floor(Math.random() * titles.length)],
+        genre: genres[Math.floor(Math.random() * genres.length)],
+        studio: studios[Math.floor(Math.random() * studios.length)],
+        budget: Math.floor(Math.random() * 60) + 20,
+        releaseWeek: GameState.gameTime.totalWeeks + Math.floor(Math.random() * 12) + 2,
+        status: 'upcoming'
+    };
+    
+    GameState.competitors.push(competitor);
+    
+    // Keep only recent competitors
+    GameState.competitors = GameState.competitors
+        .filter(c => c.releaseWeek >= GameState.gameTime.totalWeeks - 10)
+        .slice(0, 15);
+    
+    generateNewsItem(`🎬 ${competitor.studio} announces "${competitor.title}", a ${competitor.genre} film with ₹${competitor.budget} Cr budget!`);
+}
+
+// ====================================
+// INDUSTRY NEWS SYSTEM
+// ====================================
+
+function generateInitialNews() {
+    const newsItems = [
+        '🎬 Welcome to Bollywood Cinema v2.5! Create your cinematic empire!',
+        '🌟 OTT platforms increasing content acquisition budgets significantly',
+        '💰 Box office revenues show promising growth trends this quarter',
+        '🎭 Regional cinema gaining mainstream recognition and support',
+        '📱 Social media marketing becomes crucial for movie success',
+        '🎵 Music streaming revenues boosting film soundtrack earnings'
+    ];
+    
+    GameState.industryNews = newsItems.map((news, index) => ({
+        id: generateId(),
+        text: news,
+        week: GameState.gameTime.totalWeeks - index,
+        type: 'info'
     }));
 }
 
-function showIndustryNews() {
-    const newsList = document.getElementById('newsList');
-    newsList.innerHTML = '';
-    
-    gameState.industryNews.forEach(news => {
-        const newsItem = document.createElement('div');
-        newsItem.className = 'news-item';
-        newsItem.innerHTML = `
-            <div class="news-headline">${news.headline}</div>
-            <div class="news-date">${news.date}</div>
-            <div class="news-impact ${news.impact}">${news.impact.toUpperCase()}</div>
-        `;
-        newsList.appendChild(newsItem);
-    });
-    
-    elements.newsPanel.classList.remove('hidden');
-}
-
-function generateCompetition() {
-    const competitorTitles = [
-        "Dilwale Returns", "Action Hero 3", "Romance Reloaded", "Comedy Nights",
-        "Thriller Zone", "Family Drama", "Historical Epic", "Sci-Fi Adventure",
-        "Musical Bonanza", "Crime Story", "Love Triangle", "Superhero Origins"
+function generateNewsItem(customText = null) {
+    const templates = [
+        '📈 Industry box office collections show strong performance this quarter',
+        '🎬 New production houses entering market with innovative content',
+        '⭐ Rising talent commanding higher fees amid growing demand',
+        '💻 Technology advances transforming movie production workflows',
+        '🌍 International collaborations increasing in Indian cinema',
+        '📺 Streaming platforms competing for exclusive content rights',
+        '🎪 Film festivals promoting independent cinema across regions',
+        '💡 Innovation in marketing strategies driving audience engagement',
+        '🎭 Theater chains expanding operations in tier-2 cities',
+        '📊 Digital analytics revolutionizing movie distribution strategies'
     ];
     
-    const genres = ["action", "romance", "comedy", "drama", "thriller", "family"];
+    const newsText = customText || templates[Math.floor(Math.random() * templates.length)];
     
-    // Generate competition for the next 12 months
-    for (let month = 0; month < 12; month++) {
-        const date = new Date(gameState.gameTime.year, gameState.gameTime.month - 1 + month, 
-                              Math.floor(Math.random() * 28) + 1);
-        const dateStr = date.toISOString().split('T')[0];
-        
-        if (!competitionCalendar[dateStr]) {
-            competitionCalendar[dateStr] = [];
-        }
-        
-        // 30% chance of competition on any given date
-        if (Math.random() < 0.3) {
-            const title = competitorTitles[Math.floor(Math.random() * competitorTitles.length)];
-            const genre = genres[Math.floor(Math.random() * genres.length)];
-            
-            competitionCalendar[dateStr].push({
-                title: title,
-                genre: genre,
-                studio: "Rival Studio"
-            });
-        }
-    }
+    GameState.industryNews.unshift({
+        id: generateId(),
+        text: newsText,
+        week: GameState.gameTime.totalWeeks,
+        type: customText ? 'project' : 'industry'
+    });
+    
+    // Keep only recent news (last 15 items)
+    GameState.industryNews = GameState.industryNews.slice(0, 15);
 }
 
-function showPortfolio() {
-    if (gameState.portfolio.length === 0) {
-        showEvent({
-            title: "Empty Portfolio",
-            description: "You haven't completed any projects yet. Time to start creating!",
-            type: "info"
-        });
+function updateNewsTicker() {
+    if (!Elements.newsTicker || GameState.industryNews.length === 0) return;
+    
+    const recentNews = GameState.industryNews.slice(0, 5);
+    const newsText = recentNews.map(news => news.text).join(' • ');
+    
+    Elements.newsTicker.innerHTML = `<span class="ticker-item">${newsText}</span>`;
+}
+
+// ====================================
+// PORTFOLIO & PANELS
+// ====================================
+
+function loadPortfolio() {
+    const portfolioGrid = document.getElementById('portfolioGrid');
+    if (!portfolioGrid) return;
+    
+    portfolioGrid.innerHTML = '';
+    
+    if (GameState.portfolio.length === 0) {
+        portfolioGrid.innerHTML = `
+            <div class="portfolio-placeholder bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg p-8 text-center col-span-full">
+                <div class="text-4xl mb-4">🎬</div>
+                <div class="text-gray-400 mb-4">Your projects will appear here</div>
+                <button class="btn-primary" onclick="switchSection('script-stage')">Create First Project</button>
+            </div>
+        `;
         return;
     }
     
-    let portfolioHTML = '<div class="portfolio-overview"><h3>Your Portfolio</h3>';
+    // Update portfolio stats
+    updatePortfolioStats();
     
-    gameState.portfolio.forEach(project => {
-        const results = project.results;
-        portfolioHTML += `
-            <div class="portfolio-project ${results.verdictClass}">
-                <h4>"${project.title}" (${results.verdict})</h4>
-                <p><strong>Genre:</strong> ${project.genre} | <strong>Type:</strong> ${projectTypes[project.type].name}</p>
-                <p><strong>Investment:</strong> ₹${project.budget.total} Cr | <strong>Returns:</strong> ₹${results.totalRevenue} Cr</p>
-                <p><strong>Profit/Loss:</strong> ₹${results.netResult} Cr | <strong>Rating:</strong> ${results.audienceRating}/10</p>
-                <div class="project-cast">
-                    <small><strong>Cast:</strong> ${project.cast.leadActor.name}, ${project.cast.leadActress.name} | <strong>Director:</strong> ${project.cast.director.name}</small>
-                </div>
-            </div>
-        `;
+    // Display projects
+    GameState.portfolio.forEach(project => {
+        const card = createPortfolioCard(project);
+        portfolioGrid.appendChild(card);
     });
-    
-    portfolioHTML += '</div>';
-    
-    elements.resultsContent = elements.resultsContent || document.getElementById('resultsContent');
-    elements.resultsContent.innerHTML = portfolioHTML;
-    elements.resultsPanel.classList.remove('hidden');
 }
 
-// Save/Load Functions
-function loadGameData() {
-    // Load any persistent game data
-    const savedData = localStorage.getItem('bollywoodCinema_v2_save');
-    if (savedData) {
-        try {
-            const data = JSON.parse(savedData);
-            // Validate and merge saved data
-            if (data.version === gameState.version) {
-                // Show load button
-                document.getElementById('loadGameBtn').style.display = 'inline-block';
-            }
-        } catch (e) {
-            console.log("Save data corrupted, starting fresh");
-            localStorage.removeItem('bollywoodCinema_v2_save');
+function updatePortfolioStats() {
+    const hits = GameState.portfolio.filter(p => 
+        ['blockbuster', 'superhit', 'hit'].includes(p.boxOffice?.verdict)).length;
+    const flops = GameState.portfolio.filter(p => 
+        ['flop', 'average'].includes(p.boxOffice?.verdict)).length;
+    const totalRevenue = GameState.portfolio.reduce((sum, p) => 
+        sum + (p.boxOffice?.totalRevenue || 0), 0);
+    
+    const elements = {
+        portfolioHits: document.getElementById('portfolioHits'),
+        portfolioFlops: document.getElementById('portfolioFlops'),
+        portfolioRevenue: document.getElementById('portfolioRevenue'),
+        portfolioAwards: document.getElementById('portfolioAwards')
+    };
+    
+    if (elements.portfolioHits) elements.portfolioHits.textContent = hits;
+    if (elements.portfolioFlops) elements.portfolioFlops.textContent = flops;
+    if (elements.portfolioRevenue) elements.portfolioRevenue.textContent = `₹${totalRevenue}`;
+    if (elements.portfolioAwards) elements.portfolioAwards.textContent = GameState.player.totalAwards;
+}
+
+function createPortfolioCard(project) {
+    const card = document.createElement('div');
+    const verdict = project.boxOffice?.verdict || 'unknown';
+    card.className = `portfolio-item ${verdict}`;
+    
+    const profit = project.boxOffice?.profit || 0;
+    const profitClass = profit >= 0 ? 'text-green-400' : 'text-red-400';
+    
+    card.innerHTML = `
+        <div class="mb-4">
+            <h3 class="text-lg font-bold text-white mb-1">"${project.title}"</h3>
+            <div class="text-sm text-gray-400">${project.type} • ${project.genre}</div>
+        </div>
+        
+        <div class="space-y-2 text-sm mb-4">
+            <div class="flex justify-between">
+                <span>Budget:</span>
+                <span class="text-gold">₹${project.budget.total || 0} Cr</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Revenue:</span>
+                <span class="text-blue-400">₹${project.boxOffice?.totalRevenue || 0} Cr</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Profit:</span>
+                <span class="${profitClass}">₹${Math.abs(profit)} Cr</span>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <div class="text-sm">
+                <div>Rating: ${project.boxOffice?.audienceRating || 'N/A'}/10</div>
+                <div>Critics: ${project.boxOffice?.criticsScore || 'N/A'}%</div>
+            </div>
+            <div class="text-right">
+                <div class="verdict-badge verdict-${verdict}">${verdict.toUpperCase()}</div>
+            </div>
+        </div>
+    `;
+    
+    return card;
+}
+
+function loadCompetitors() {
+    const competitorsList = document.getElementById('competitorsList');
+    if (!competitorsList) return;
+    
+    competitorsList.innerHTML = '';
+    
+    if (GameState.competitors.length === 0) {
+        competitorsList.innerHTML = `
+            <div class="text-center text-gray-400 py-8">
+                No competitor data available yet
+            </div>
+        `;
+        return;
+    }
+    
+    // Sort by release week
+    const sortedCompetitors = [...GameState.competitors]
+        .sort((a, b) => a.releaseWeek - b.releaseWeek)
+        .slice(0, 10); // Show only next 10
+    
+    sortedCompetitors.forEach(competitor => {
+        const card = document.createElement('div');
+        card.className = 'competitor-item';
+        
+        const weekDiff = competitor.releaseWeek - GameState.gameTime.totalWeeks;
+        const timeText = weekDiff > 0 ? `Releases in ${weekDiff} weeks` : 
+                        weekDiff === 0 ? 'Releasing this week' : 
+                        `Released ${Math.abs(weekDiff)} weeks ago`;
+        
+        card.innerHTML = `
+            <div class="competitor-info">
+                <h4>"${competitor.title}"</h4>
+                <p>${competitor.genre} • ${competitor.studio}</p>
+                <p class="text-xs text-gray-500">${timeText}</p>
+            </div>
+            <div class="competitor-stats">
+                <span class="competitor-budget">₹${competitor.budget} Cr</span>
+                <span class="competitor-status ${competitor.status}">${competitor.status.toUpperCase()}</span>
+            </div>
+        `;
+        
+        competitorsList.appendChild(card);
+    });
+}
+
+// ====================================
+// SAVE/LOAD SYSTEM
+// ====================================
+
+function saveGame() {
+    const saveData = {
+        version: GameState.version,
+        timestamp: Date.now(),
+        gameState: GameState
+    };
+    
+    try {
+        localStorage.setItem('bollywoodCinema_v2.5_save', JSON.stringify(saveData));
+        console.log('Game saved successfully');
+        
+        // Show confirmation
+        const saveBtn = document.getElementById('saveGameBtn');
+        if (saveBtn) {
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+            
+            setTimeout(() => {
+                saveBtn.innerHTML = originalText;
+            }, 2000);
+        }
+        
+    } catch (error) {
+        console.error('Save failed:', error);
+        showError('Failed to save game. Please try again.');
+    }
+}
+
+function loadSavedGame() {
+    try {
+        const savedData = localStorage.getItem('bollywoodCinema_v2.5_save');
+        if (!savedData) return false;
+        
+        const data = JSON.parse(savedData);
+        
+        if (data.version !== GameState.version) {
+            console.warn('Save version mismatch, starting fresh');
+            return false;
+        }
+        
+        // Load game state
+        Object.assign(GameState, data.gameState);
+        
+        console.log('Game loaded successfully');
+        return true;
+        
+    } catch (error) {
+        console.error('Load failed:', error);
+        return false;
+    }
+}
+
+// ====================================
+// UTILITY FUNCTIONS
+// ====================================
+
+function generateId() {
+    return 'id_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now().toString(36);
+}
+
+function showEvent(event) {
+    const modal = Elements.eventModal;
+    const icon = document.getElementById('eventIcon');
+    const title = document.getElementById('eventTitle');
+    const description = document.getElementById('eventDescription');
+    
+    if (icon) icon.textContent = event.icon || '🎬';
+    if (title) title.textContent = event.title;
+    if (description) description.textContent = event.description;
+    
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+    
+    // Auto-close after 5 seconds
+    setTimeout(() => {
+        if (modal && !modal.classList.contains('hidden')) {
+            closeEventModal();
+        }
+    }, 5000);
+}
+
+function closeEventModal() {
+    const modal = Elements.eventModal;
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+function showError(message) {
+    showEvent({
+        title: 'Error',
+        description: message,
+        type: 'error',
+        icon: '⚠️'
+    });
+}
+
+function showSuccess(message) {
+    showEvent({
+        title: 'Success',
+        description: message,
+        type: 'success',
+        icon: '✅'
+    });
+}
+
+function toggleDarkMode() {
+    GameState.settings.darkMode = !GameState.settings.darkMode;
+    document.documentElement.classList.toggle('dark', GameState.settings.darkMode);
+    
+    const icon = document.querySelector('#darkModeToggle i');
+    if (icon) {
+        icon.className = GameState.settings.darkMode ? 'fas fa-sun' : 'fas fa-moon';
+    }
+    
+    saveGame();
+}
+
+function showTutorial() {
+    const modal = Elements.tutorialModal;
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+}
+
+function hideTutorial() {
+    const modal = Elements.tutorialModal;
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+    
+    // Start tutorial project
+    const startBtn = document.getElementById('startTutorialProject');
+    if (startBtn) {
+        startBtn.addEventListener('click', () => {
+            hideTutorial();
+            switchSection('script-stage');
+            
+            setTimeout(() => {
+                document.getElementById('projectTitle').value = 'My First Bollywood Film';
+                document.getElementById('projectType').value = 'movie';
+                document.getElementById('projectGenre').value = 'romance';
+                document.getElementById('scriptLength').value = 'simple';
+                
+                showEvent({
+                    title: 'Tutorial Started! 🎓',
+                    description: 'Create your first successful Bollywood movie! Fill in the details and select a writer.',
+                    type: 'tutorial',
+                    icon: '📚'
+                });
+            }, 500);
+        });
+    }
+}
+
+function handleKeyboardShortcuts(event) {
+    // Don't interfere with form inputs
+    if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT' || event.target.tagName === 'TEXTAREA') {
+        return;
+    }
+    
+    const key = event.key.toLowerCase();
+    const ctrl = event.ctrlKey || event.metaKey;
+    
+    if (ctrl) {
+        switch(key) {
+            case 's':
+                event.preventDefault();
+                saveGame();
+                break;
+            case 'n':
+                event.preventDefault();
+                switchSection('script-stage');
+                break;
+        }
+    } else {
+        switch(key) {
+            case ' ':
+            case 'spacebar':
+                event.preventDefault();
+                advanceWeek();
+                break;
+            case '1':
+                switchSection('dashboard');
+                break;
+            case '2':
+                switchSection('script-stage');
+                break;
+            case '3':
+                switchSection('crew-stage');
+                break;
+            case '4':
+                switchSection('production-stage');
+                break;
+            case '5':
+                switchSection('marketing-stage');
+                break;
+            case '6':
+                switchSection('distribution-stage');
+                break;
+            case '7':
+                switchSection('release-stage');
+                break;
+            case '8':
+                switchSection('results-stage');
+                break;
+            case 'p':
+                switchSection('portfolio-panel');
+                break;
+            case 'c':
+                switchSection('competitors-panel');
+                break;
+            case 'escape':
+                closeEventModal();
+                hideTutorial();
+                break;
         }
     }
 }
 
-// PWA Service Worker Registration
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
+// ====================================
+// ADDITIONAL GAME MECHANICS
+// ====================================
+
+function calculateTotalBudget(project) {
+    return (project.budget.script || 0) + 
+           (project.budget.crew || 0) + 
+           (project.budget.marketing || 0) + 
+           (project.budget.distribution || 0);
 }
 
-// Initialize tooltips and help system
-function initializeHelpers() {
-    // Add tooltips to complex UI elements
-    const tooltips = document.querySelectorAll('[data-tooltip]');
-    tooltips.forEach(element => {
-        element.addEventListener('mouseenter', showTooltip);
-        element.addEventListener('mouseleave', hideTooltip);
-    });
-}
-
-function showTooltip(e) {
-    // Implement tooltip system if needed
-}
-
-function hideTooltip(e) {
-    // Hide tooltips
-}
-
-// Performance monitoring
-function trackPerformance() {
-    // Track key metrics for game performance
-    const performanceMetrics = {
-        gameStartTime: Date.now(),
-        projectsCompleted: gameState.projectsCompleted,
-        sessionDuration: 0
-    };
+function getRandomProductionEvent() {
+    const events = [
+        {
+            title: 'Perfect Weather! ☀️',
+            description: 'Beautiful weather conditions speed up outdoor shooting!',
+            type: 'positive',
+            effect: { weeks: -1 }
+        },
+        {
+            title: 'Crew Appreciation! 👏',
+            description: 'The entire crew is working with exceptional dedication!',
+            type: 'positive',
+            effect: { quality: 0.05 }
+        },
+        {
+            title: 'Budget Overrun! 💸',
+            description: 'Unexpected expenses increase production costs.',
+            type: 'negative',
+            effect: { money: -5 }
+        },
+        {
+            title: 'Technical Innovation! 🔬',
+            description: 'New filming technique creates stunning visual sequences!',
+            type: 'positive',
+            effect: { quality: 0.1 }
+        }
+    ];
     
-    // Save metrics periodically
-    setInterval(() => {
-        performanceMetrics.sessionDuration = Date.now() - performanceMetrics.gameStartTime;
-        localStorage.setItem('bollywood_metrics', JSON.stringify(performanceMetrics));
-    }, 60000); // Every minute
+    return events[Math.floor(Math.random() * events.length)];
 }
 
-// Initialize performance tracking
-trackPerformance();
+function updateReputationBasedOnHistory() {
+    const recentProjects = GameState.portfolio.slice(-5);
+    if (recentProjects.length === 0) return;
+    
+    const successCount = recentProjects.filter(p => 
+        ['blockbuster', 'superhit', 'hit'].includes(p.boxOffice?.verdict)).length;
+    
+    const successRate = successCount / recentProjects.length;
+    
+    // Gradual reputation adjustment based on recent performance
+    if (successRate > 0.8) {
+        GameState.player.reputation = Math.min(100, GameState.player.reputation + 1);
+    } else if (successRate < 0.2) {
+        GameState.player.reputation = Math.max(0, GameState.player.reputation - 1);
+    }
+}
 
-console.log("Bollywood Cinema v2.0 initialized successfully!");
+function checkAchievements() {
+    const achievements = [
+        {
+            id: 'first-hit',
+            name: 'First Hit',
+            description: 'Create your first hit movie',
+            condition: () => GameState.player.hitMovies >= 1
+        },
+        {
+            id: '100-crore-club',
+            name: '100 Crore Club',
+            description: 'Create a movie that earns ₹100+ Cr',
+            condition: () => GameState.portfolio.some(p => (p.boxOffice?.totalRevenue || 0) >= 100)
+        },
+        {
+            id: 'reputation-master',
+            name: 'Reputation Master',
+            description: 'Reach 90% reputation',
+            condition: () => GameState.player.reputation >= 90
+        },
+        {
+            id: 'franchise-builder',
+            name: 'Franchise Builder',
+            description: 'Create your first franchise',
+            condition: () => GameState.franchises.length >= 1
+        }
+    ];
+    
+    achievements.forEach(achievement => {
+        if (!GameState.player.achievementsUnlocked.includes(achievement.id) && 
+            achievement.condition()) {
+            
+            GameState.player.achievementsUnlocked.push(achievement.id);
+            
+            showEvent({
+                title: `Achievement Unlocked! 🏅`,
+                description: `${achievement.name}: ${achievement.description}`,
+                type: 'achievement',
+                icon: '🏆'
+            });
+        }
+    });
+}
+
+// ====================================
+// RANDOM EVENT TRIGGERS
+// ====================================
+
+function triggerRandomIndustryEvent() {
+    const events = [
+        {
+            title: 'Tax Benefits Announced! 💰',
+            description: 'Government announces new tax incentives for film production.',
+            type: 'positive',
+            icon: '🏛️'
+        },
+        {
+            title: 'New Streaming Platform! 📺',
+            description: 'Major tech company launches new streaming service, increasing OTT competition.',
+            type: 'positive',
+            icon: '💻'
+        },
+        {
+            title: 'Celebrity Endorsements Rise! ⭐',
+            description: 'Brand endorsement rates for movie stars increase significantly.',
+            type: 'neutral',
+            icon: '📈'
+        },
+        {
+            title: 'International Recognition! 🌍',
+            description: 'Bollywood films gain recognition at major international film festivals.',
+            type: 'positive',
+            icon: '🎬'
+        }
+    ];
+    
+    const event = events[Math.floor(Math.random() * events.length)];
+    
+    showEvent(event);
+    generateNewsItem(event.description);
+}
+
+// ====================================
+// FINAL INITIALIZATION AND EXPORTS
+// ====================================
+
+// Weekly update checker
+setInterval(() => {
+    if (GameState.gameTime.totalWeeks > 1) {
+        updateReputationBasedOnHistory();
+        checkAchievements();
+        
+        // Random industry events
+        if (Math.random() < 0.05) {
+            triggerRandomIndustryEvent();
+        }
+    }
+}, 30000); // Check every 30 seconds
+
+// Export functions for global access
+window.switchSection = switchSection;
+
+console.log('🎭 Bollywood Cinema v2.5 - Complete Game Logic Loaded!');
+console.log('🎬 Features: Time System ✓ | Script Development ✓ | Crew Hiring ✓');
+console.log('🎯 Production Events ✓ | Marketing ✓ | Distribution ✓ | Box Office ✓');
+console.log('📊 Competitors ✓ | News System ✓ | Franchises ✓ | Save/Load ✓');
+console.log('🚀 Ready to create Bollywood magic!');
