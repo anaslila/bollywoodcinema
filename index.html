@@ -3,464 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bollywood Cinema v3.0 - Premium movie production simulation game">
-    <meta name="keywords" content="Bollywood, cinema, simulation, game, movie, production, web series">
-    <meta name="author" content="Anas Lila">
-    
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#6366F1">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Bollywood Cinema v3.0">
-    
-    <title>Bollywood Cinema v3.0 - Premium Production Simulator</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/BbXWMgtk/image.png">
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/BbXWMgtk/image.png">
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- External CSS -->
+    <title>Bollywood Cinema v3.0 - Premium Simulation</title>
     <link rel="stylesheet" href="styles.css">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="Build your Bollywood empire from script to box office success">
 </head>
-<body class="bg-gradient-light dark:bg-gradient-dark transition-all duration-300">
-    
-    <!-- Top Status Bar -->
+<body>
+    <!-- Status Bar -->
     <div class="status-bar">
         <div class="status-content">
             <div class="studio-info">
-                <img src="https://i.postimg.cc/BbXWMgtk/image.png" alt="Studio Logo" class="studio-avatar">
+                <div class="studio-avatar">🎬</div>
                 <div class="studio-details">
-                    <h1 id="studioName" class="studio-name">Your Studio</h1>
+                    <div class="studio-name" id="studioName" onclick="editStudioName()">Your Studio</div>
                     <div class="game-time">
                         <span id="currentWeek">Week 1</span> • <span id="currentYear">2025</span>
                     </div>
                 </div>
             </div>
-            
             <div class="player-stats">
                 <div class="stat-item">
                     <div class="stat-icon">💰</div>
                     <div class="stat-details">
-                        <div class="stat-label">Budget</div>
-                        <div id="playerMoney" class="stat-value">₹100 Cr</div>
+                        <div class="stat-label">Money</div>
+                        <div class="stat-value" id="playerMoney">₹100 Cr</div>
                     </div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-icon">⭐</div>
                     <div class="stat-details">
                         <div class="stat-label">Reputation</div>
-                        <div id="playerReputation" class="stat-value">50%</div>
+                        <div class="stat-value" id="playerReputation">50%</div>
                     </div>
                 </div>
             </div>
-            
             <div class="action-buttons">
-                <button id="nextWeekBtn" class="btn-primary-small">
-                    <span class="btn-icon">⏩</span>
-                    Next Week
-                </button>
-                <button id="themeToggle" class="btn-icon-only" aria-label="Toggle Theme">
-                    <span id="themeIcon">🌙</span>
-                </button>
+                <button class="btn-icon-only" id="themeToggle" title="Toggle Theme">🌙</button>
+                <button class="btn-primary-small" id="nextWeekBtn">Next Week</button>
             </div>
         </div>
     </div>
 
-    <!-- Main Content Area -->
-    <main class="main-content">
-        
+    <!-- Main Content -->
+    <div class="main-content">
         <!-- Dashboard Screen -->
         <div id="dashboard" class="screen active">
             <div class="screen-header">
-                <h2 class="screen-title">Dashboard</h2>
-                <p class="screen-subtitle">Welcome to your Bollywood empire</p>
+                <div>
+                    <h1 class="screen-title">Dashboard</h1>
+                    <p class="screen-subtitle">Welcome to your Bollywood empire</p>
+                </div>
             </div>
-            
-            <!-- Quick Stats Cards -->
+
+            <!-- Quick Stats -->
             <div class="stats-grid">
-                <div class="stat-card">
+                <div class="stat-card success">
                     <div class="stat-card-icon">🎬</div>
                     <div class="stat-card-content">
                         <div class="stat-card-value" id="totalProjects">0</div>
                         <div class="stat-card-label">Total Projects</div>
                     </div>
                 </div>
-                <div class="stat-card success">
+                <div class="stat-card warning">
                     <div class="stat-card-icon">🏆</div>
                     <div class="stat-card-content">
                         <div class="stat-card-value" id="hitMovies">0</div>
                         <div class="stat-card-label">Hit Movies</div>
                     </div>
                 </div>
-                <div class="stat-card warning">
-                    <div class="stat-card-icon">🎯</div>
+                <div class="stat-card info">
+                    <div class="stat-card-icon">📊</div>
                     <div class="stat-card-content">
                         <div class="stat-card-value" id="successRate">0%</div>
                         <div class="stat-card-label">Success Rate</div>
                     </div>
                 </div>
-                <div class="stat-card info">
-                    <div class="stat-card-icon">🏅</div>
+                <div class="stat-card success">
+                    <div class="stat-card-icon">🎖️</div>
                     <div class="stat-card-content">
                         <div class="stat-card-value" id="totalAwards">0</div>
                         <div class="stat-card-label">Awards Won</div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Active Projects -->
             <div id="activeProjectsContainer" class="card-section hidden">
-                <div class="section-header">
-                    <h3 class="section-title">🎬 Active Projects</h3>
-                </div>
-                <div id="activeProjectsList" class="projects-grid">
-                    <!-- Active projects will be populated here -->
-                </div>
+                <h3 class="card-title">🎬 Active Projects</h3>
+                <div id="activeProjectsList"></div>
             </div>
-            
-            <!-- Industry News Ticker -->
+
+            <!-- Industry News -->
             <div class="card-section">
-                <div class="section-header">
-                    <h3 class="section-title">📰 Industry News</h3>
-                </div>
+                <h3 class="card-title">📰 Industry News</h3>
                 <div class="news-ticker-container">
-                    <div id="newsTicker" class="news-ticker">
-                        <div class="ticker-content">
-                            <span class="ticker-item">Welcome to Bollywood Cinema v3.0! 🎬 Start your journey to cinematic success...</span>
+                    <div class="news-ticker">
+                        <div class="ticker-content" id="newsTicker">
+                            Welcome to Bollywood Cinema v3.0! 🎬 Start your journey to cinematic success...
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Quick Actions -->
             <div class="quick-actions">
-                <button class="action-card primary" data-screen="script">
-                    <div class="action-icon">📝</div>
+                <div class="action-card primary" data-screen="script">
+                    <div class="action-icon">✍️</div>
                     <div class="action-content">
                         <div class="action-title">Start New Project</div>
                         <div class="action-subtitle">Create your next blockbuster</div>
                     </div>
                     <div class="action-arrow">→</div>
-                </button>
-                
-                <button class="action-card" data-screen="competitors">
-                    <div class="action-icon">🏆</div>
-                    <div class="action-content">
-                        <div class="action-title">View Competitors</div>
-                        <div class="action-subtitle">Check rival releases</div>
-                    </div>
-                    <div class="action-arrow">→</div>
-                </button>
+                </div>
             </div>
         </div>
 
         <!-- Script Development Screen -->
         <div id="script" class="screen">
             <div class="screen-header">
-                <button class="btn-back" data-screen="dashboard">← Back</button>
                 <div>
-                    <h2 class="screen-title">Script Development</h2>
+                    <h1 class="screen-title">Script Development</h1>
                     <p class="screen-subtitle">Create your story</p>
                 </div>
+                <button class="btn-back" data-screen="dashboard">
+                    <span class="btn-icon">←</span> Back
+                </button>
             </div>
-            
+
             <div class="form-container">
                 <!-- Project Details Card -->
                 <div class="form-card">
                     <h3 class="card-title">📋 Project Details</h3>
                     
                     <div class="form-group">
-                        <label class="form-label">Project Type</label>
-                        <div class="select-buttons">
-                            <button type="button" class="select-btn" data-value="movie">
-                                <span class="select-icon">🎬</span>
-                                <span class="select-text">Feature Film</span>
-                            </button>
-                            <button type="button" class="select-btn" data-value="webseries">
-                                <span class="select-icon">📺</span>
-                                <span class="select-text">Web Series</span>
-                            </button>
-                            <button type="button" class="select-btn" data-value="tvserial">
-                                <span class="select-icon">📻</span>
-                                <span class="select-text">TV Serial</span>
-                            </button>
-                        </div>
-                        <input type="hidden" id="projectType">
+                        <label class="form-label">Project Title</label>
+                        <input type="text" class="form-input" id="projectTitle" placeholder="Enter your movie title">
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="projectTitle" class="form-label">Project Title</label>
-                        <input type="text" id="projectTitle" class="form-input" placeholder="Enter your project title">
+                        <label class="form-label">Project Type</label>
+                        <div class="select-buttons grid-3" id="projectTypeButtons">
+                            <div class="select-btn" data-type="movie">
+                                <div class="select-content">
+                                    <div class="select-icon">🎬</div>
+                                    <div class="select-text">Feature Film</div>
+                                    <div class="select-desc">₹30 Cr Base • 14 weeks</div>
+                                </div>
+                            </div>
+                            <div class="select-btn" data-type="webseries">
+                                <div class="select-content">
+                                    <div class="select-icon">📺</div>
+                                    <div class="select-text">Web Series</div>
+                                    <div class="select-desc">₹18 Cr Base • 10 weeks</div>
+                                </div>
+                            </div>
+                            <div class="select-btn" data-type="tvserial">
+                                <div class="select-content">
+                                    <div class="select-icon">📻</div>
+                                    <div class="select-text">TV Serial</div>
+                                    <div class="select-desc">₹8 Cr Base • 6 weeks</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Genre</label>
-                        <div class="select-buttons grid-3">
-                            <button type="button" class="select-btn small" data-value="romance">💕 Romance</button>
-                            <button type="button" class="select-btn small" data-value="action">💥 Action</button>
-                            <button type="button" class="select-btn small" data-value="comedy">😂 Comedy</button>
-                            <button type="button" class="select-btn small" data-value="drama">🎭 Drama</button>
-                            <button type="button" class="select-btn small" data-value="thriller">🔥 Thriller</button>
-                            <button type="button" class="select-btn small" data-value="family">👨‍👩‍👧‍👦 Family</button>
-                            <button type="button" class="select-btn small" data-value="horror">👻 Horror</button>
-                            <button type="button" class="select-btn small" data-value="historical">🏛️ Historical</button>
-                            <button type="button" class="select-btn small" data-value="sci-fi">🚀 Sci-Fi</button>
+                        <div class="select-buttons" id="genreButtons">
+                            <div class="select-btn" data-genre="romance">
+                                <div class="select-content">
+                                    <div class="select-icon">💕</div>
+                                    <div class="select-text">Romance</div>
+                                </div>
+                            </div>
+                            <div class="select-btn" data-genre="action">
+                                <div class="select-content">
+                                    <div class="select-icon">💥</div>
+                                    <div class="select-text">Action</div>
+                                </div>
+                            </div>
+                            <div class="select-btn" data-genre="comedy">
+                                <div class="select-content">
+                                    <div class="select-icon">😄</div>
+                                    <div class="select-text">Comedy</div>
+                                </div>
+                            </div>
+                            <div class="select-btn" data-genre="drama">
+                                <div class="select-content">
+                                    <div class="select-icon">🎭</div>
+                                    <div class="select-text">Drama</div>
+                                </div>
+                            </div>
+                            <div class="select-btn" data-genre="thriller">
+                                <div class="select-content">
+                                    <div class="select-icon">🔪</div>
+                                    <div class="select-text">Thriller</div>
+                                </div>
+                            </div>
+                            <div class="select-btn" data-genre="family">
+                                <div class="select-content">
+                                    <div class="select-icon">👨‍👩‍👧‍👦</div>
+                                    <div class="select-text">Family</div>
+                                </div>
+                            </div>
+                            <div class="select-btn" data-genre="historical">
+                                <div class="select-content">
+                                    <div class="select-icon">🏛️</div>
+                                    <div class="select-text">Historical</div>
+                                </div>
+                            </div>
+                            <div class="select-btn" data-genre="horror">
+                                <div class="select-content">
+                                    <div class="select-icon">👻</div>
+                                    <div class="select-text">Horror</div>
+                                </div>
+                            </div>
                         </div>
-                        <input type="hidden" id="projectGenre">
                     </div>
                 </div>
-                
+
                 <!-- Writer Selection Card -->
                 <div class="form-card">
                     <h3 class="card-title">✍️ Writer Selection</h3>
                     
-                    <div class="form-group">
-                        <label class="form-label">Choose Writer</label>
-                        <div class="dropdown-container">
-                            <button type="button" class="dropdown-trigger" id="writerDropdown">
-                                <span class="dropdown-text">Select a writer...</span>
-                                <span class="dropdown-arrow">▼</span>
-                            </button>
-                            <div class="dropdown-menu" id="writerDropdownMenu">
-                                <div class="dropdown-search">
-                                    <input type="text" placeholder="Search writers..." class="search-input">
-                                </div>
-                                <div class="dropdown-options" id="writerOptions">
-                                    <!-- Writer options will be populated here -->
-                                </div>
+                    <div class="dropdown-container">
+                        <div class="dropdown-trigger" id="writerDropdownTrigger">
+                            <span class="dropdown-text">Select a writer...</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </div>
+                        <div class="dropdown-menu" id="writerDropdown">
+                            <div class="dropdown-search">
+                                <input type="text" class="search-input" id="writerSearch" placeholder="Search writers...">
                             </div>
+                            <div class="dropdown-options" id="writerOptions"></div>
                         </div>
                     </div>
-                    
-                    <div id="selectedWriterCard" class="selected-card hidden">
-                        <div class="selected-header">
-                            <div class="avatar">✍️</div>
-                            <div class="selected-details">
-                                <div class="selected-name" id="selectedWriterName">Writer Name</div>
-                                <div class="selected-info">
-                                    <span class="info-tag">Fee: ₹<span id="selectedWriterFee">0</span> Cr</span>
-                                    <span class="info-tag">Skill: <span id="selectedWriterSkill">0</span>%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                    <div id="selectedWriter" class="selected-card hidden"></div>
                 </div>
-                
+
                 <!-- Cast Selection Card -->
                 <div class="form-card">
                     <h3 class="card-title">⭐ Cast Selection</h3>
                     
                     <div class="form-group">
-                        <label class="form-label">Lead Actors (Select 2-4)</label>
+                        <label class="form-label">Lead Actors (Select 1-2)</label>
                         <div class="dropdown-container">
-                            <button type="button" class="dropdown-trigger" id="leadActorsDropdown">
+                            <div class="dropdown-trigger" id="leadActorDropdownTrigger">
                                 <span class="dropdown-text">Select lead actors...</span>
                                 <span class="dropdown-arrow">▼</span>
-                            </button>
-                            <div class="dropdown-menu multi-select" id="leadActorsDropdownMenu">
+                            </div>
+                            <div class="dropdown-menu" id="leadActorDropdown">
                                 <div class="dropdown-search">
-                                    <input type="text" placeholder="Search actors..." class="search-input">
+                                    <input type="text" class="search-input" id="leadActorSearch" placeholder="Search actors...">
                                 </div>
-                                <div class="dropdown-options" id="leadActorsOptions">
-                                    <!-- Actor options will be populated here -->
-                                </div>
+                                <div class="dropdown-options" id="leadActorOptions"></div>
                             </div>
                         </div>
-                        <div id="selectedLeadActors" class="selected-tags">
-                            <!-- Selected actors will appear here -->
-                        </div>
+                        <div class="selected-tags" id="selectedLeadActors"></div>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label class="form-label">Supporting Cast (Select 2-6)</label>
+                        <label class="form-label">Supporting Cast (Select 2-4)</label>
                         <div class="dropdown-container">
-                            <button type="button" class="dropdown-trigger" id="supportingCastDropdown">
-                                <span class="dropdown-text">Select supporting cast...</span>
+                            <div class="dropdown-trigger" id="supportingActorDropdownTrigger">
+                                <span class="dropdown-text">Select supporting actors...</span>
                                 <span class="dropdown-arrow">▼</span>
-                            </button>
-                            <div class="dropdown-menu multi-select" id="supportingCastDropdownMenu">
+                            </div>
+                            <div class="dropdown-menu" id="supportingActorDropdown">
                                 <div class="dropdown-search">
-                                    <input type="text" placeholder="Search actors..." class="search-input">
+                                    <input type="text" class="search-input" id="supportingActorSearch" placeholder="Search actors...">
                                 </div>
-                                <div class="dropdown-options" id="supportingCastOptions">
-                                    <!-- Supporting actor options will be populated here -->
-                                </div>
+                                <div class="dropdown-options" id="supportingActorOptions"></div>
                             </div>
                         </div>
-                        <div id="selectedSupportingCast" class="selected-tags">
-                            <!-- Selected supporting actors will appear here -->
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Script Progress Card -->
-                <div id="scriptProgressCard" class="form-card hidden">
-                    <h3 class="card-title">📈 Script Development Progress</h3>
-                    <div class="progress-container">
-                        <div class="progress-info">
-                            <span class="progress-label">Writing Progress</span>
-                            <span class="progress-value" id="scriptProgressText">0%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="scriptProgressBar"></div>
-                        </div>
-                        <div class="progress-details">
-                            <span>Week <span id="scriptCurrentWeek">1</span> of <span id="scriptTotalWeeks">4</span></span>
-                            <span>Quality: <span id="scriptQuality">TBD</span></span>
-                        </div>
+                        <div class="selected-tags" id="selectedSupportingActors"></div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Action Buttons -->
+
             <div class="screen-actions">
-                <button id="startScriptBtn" class="btn-primary disabled">
-                    <span class="btn-icon">🚀</span>
+                <button class="btn-primary" id="startScriptBtn">
+                    <span class="btn-icon">▶️</span>
                     Start Script Development
                 </button>
             </div>
         </div>
 
-        <!-- Crew & Music Screen -->
+        <!-- Crew & Music Team Screen -->
         <div id="crew" class="screen">
             <div class="screen-header">
-                <button class="btn-back" data-screen="script">← Back</button>
                 <div>
-                    <h2 class="screen-title">Crew & Music Team</h2>
+                    <h1 class="screen-title">Crew & Music Team</h1>
                     <p class="screen-subtitle">Assemble your dream team</p>
                 </div>
+                <button class="btn-back" data-screen="script">
+                    <span class="btn-icon">←</span> Back
+                </button>
             </div>
-            
+
             <div class="form-container">
                 <!-- Director Selection -->
                 <div class="form-card">
                     <h3 class="card-title">🎯 Director</h3>
                     <div class="dropdown-container">
-                        <button type="button" class="dropdown-trigger" id="directorDropdown">
-                            <span class="dropdown-text">Select director...</span>
+                        <div class="dropdown-trigger" id="directorDropdownTrigger">
+                            <span class="dropdown-text">Select a director...</span>
                             <span class="dropdown-arrow">▼</span>
-                        </button>
-                        <div class="dropdown-menu" id="directorDropdownMenu">
+                        </div>
+                        <div class="dropdown-menu" id="directorDropdown">
                             <div class="dropdown-search">
-                                <input type="text" placeholder="Search directors..." class="search-input">
+                                <input type="text" class="search-input" id="directorSearch" placeholder="Search directors...">
                             </div>
-                            <div class="dropdown-options" id="directorOptions">
-                                <!-- Director options will be populated here -->
-                            </div>
+                            <div class="dropdown-options" id="directorOptions"></div>
                         </div>
                     </div>
-                    <div id="selectedDirectorCard" class="selected-card hidden">
-                        <!-- Selected director details will appear here -->
-                    </div>
+                    <div id="selectedDirector" class="selected-card hidden"></div>
                 </div>
-                
-                <!-- Music Team Selection -->
+
+                <!-- Music Team -->
                 <div class="form-card">
                     <h3 class="card-title">🎵 Music Team</h3>
                     
                     <div class="form-group">
                         <label class="form-label">Music Producer</label>
                         <div class="dropdown-container">
-                            <button type="button" class="dropdown-trigger" id="musicProducerDropdown">
+                            <div class="dropdown-trigger" id="musicProducerDropdownTrigger">
                                 <span class="dropdown-text">Select music producer...</span>
                                 <span class="dropdown-arrow">▼</span>
-                            </button>
-                            <div class="dropdown-menu" id="musicProducerDropdownMenu">
+                            </div>
+                            <div class="dropdown-menu" id="musicProducerDropdown">
                                 <div class="dropdown-search">
-                                    <input type="text" placeholder="Search producers..." class="search-input">
+                                    <input type="text" class="search-input" id="musicProducerSearch" placeholder="Search producers...">
                                 </div>
-                                <div class="dropdown-options" id="musicProducerOptions">
-                                    <!-- Music producer options will be populated here -->
-                                </div>
+                                <div class="dropdown-options" id="musicProducerOptions"></div>
                             </div>
                         </div>
-                        <div id="selectedMusicProducerCard" class="selected-card hidden">
-                            <!-- Selected music producer details will appear here -->
-                        </div>
+                        <div id="selectedMusicProducer" class="selected-card hidden"></div>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label class="form-label">Playback Singers (Select 1-4)</label>
+                        <label class="form-label">Playback Singers (Select 2-4)</label>
                         <div class="dropdown-container">
-                            <button type="button" class="dropdown-trigger" id="singersDropdown">
+                            <div class="dropdown-trigger" id="singerDropdownTrigger">
                                 <span class="dropdown-text">Select singers...</span>
                                 <span class="dropdown-arrow">▼</span>
-                            </button>
-                            <div class="dropdown-menu multi-select" id="singersDropdownMenu">
+                            </div>
+                            <div class="dropdown-menu" id="singerDropdown">
                                 <div class="dropdown-search">
-                                    <input type="text" placeholder="Search singers..." class="search-input">
+                                    <input type="text" class="search-input" id="singerSearch" placeholder="Search singers...">
                                 </div>
-                                <div class="dropdown-options" id="singersOptions">
-                                    <!-- Singer options will be populated here -->
-                                </div>
+                                <div class="dropdown-options" id="singerOptions"></div>
                             </div>
                         </div>
-                        <div id="selectedSingers" class="selected-tags">
-                            <!-- Selected singers will appear here -->
-                        </div>
+                        <div class="selected-tags" id="selectedSingers"></div>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label class="form-label">Lyricist</label>
+                        <label class="form-label">Lyricists (Select 1-2)</label>
                         <div class="dropdown-container">
-                            <button type="button" class="dropdown-trigger" id="lyricistDropdown">
-                                <span class="dropdown-text">Select lyricist...</span>
+                            <div class="dropdown-trigger" id="lyricistDropdownTrigger">
+                                <span class="dropdown-text">Select lyricists...</span>
                                 <span class="dropdown-arrow">▼</span>
-                            </button>
-                            <div class="dropdown-menu" id="lyricistDropdownMenu">
+                            </div>
+                            <div class="dropdown-menu" id="lyricistDropdown">
                                 <div class="dropdown-search">
-                                    <input type="text" placeholder="Search lyricists..." class="search-input">
+                                    <input type="text" class="search-input" id="lyricistSearch" placeholder="Search lyricists...">
                                 </div>
-                                <div class="dropdown-options" id="lyricistOptions">
-                                    <!-- Lyricist options will be populated here -->
-                                </div>
+                                <div class="dropdown-options" id="lyricistOptions"></div>
                             </div>
                         </div>
-                        <div id="selectedLyricistCard" class="selected-card hidden">
-                            <!-- Selected lyricist details will appear here -->
-                        </div>
+                        <div class="selected-tags" id="selectedLyricists"></div>
                     </div>
                 </div>
-                
+
                 <!-- Budget Summary -->
                 <div class="form-card">
                     <h3 class="card-title">💰 Budget Summary</h3>
-                    <div class="budget-breakdown" id="crewBudgetBreakdown">
+                    <div class="budget-breakdown">
                         <div class="budget-item">
                             <span class="budget-label">Script Development</span>
-                            <span class="budget-value">₹<span id="scriptCost">0</span> Cr</span>
+                            <span class="budget-value" id="scriptCost">₹0 Cr</span>
                         </div>
                         <div class="budget-item">
                             <span class="budget-label">Director</span>
-                            <span class="budget-value">₹<span id="directorCost">0</span> Cr</span>
+                            <span class="budget-value" id="directorCost">₹0 Cr</span>
                         </div>
                         <div class="budget-item">
                             <span class="budget-label">Lead Cast</span>
-                            <span class="budget-value">₹<span id="leadCastCost">0</span> Cr</span>
+                            <span class="budget-value" id="leadCastCost">₹0 Cr</span>
                         </div>
                         <div class="budget-item">
                             <span class="budget-label">Supporting Cast</span>
-                            <span class="budget-value">₹<span id="supportingCastCost">0</span> Cr</span>
+                            <span class="budget-value" id="supportingCastCost">₹0 Cr</span>
                         </div>
                         <div class="budget-item">
                             <span class="budget-label">Music Team</span>
-                            <span class="budget-value">₹<span id="musicTeamCost">0</span> Cr</span>
+                            <span class="budget-value" id="musicTeamCost">₹0 Cr</span>
                         </div>
                         <div class="budget-total">
-                            <span class="budget-label">Total Crew Cost</span>
-                            <span class="budget-value">₹<span id="totalCrewCost">0</span> Cr</span>
+                            <span>Total Crew Cost</span>
+                            <span id="totalCrewCost">₹0 Cr</span>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="screen-actions">
-                <button id="finalizeCrewBtn" class="btn-primary disabled">
-                    <span class="btn-icon">✅</span>
+                <button class="btn-primary" id="finalizeCrewBtn">
+                    <span class="btn-icon">✓</span>
                     Finalize Crew & Start Production
                 </button>
             </div>
@@ -470,47 +421,47 @@
         <div id="production" class="screen">
             <div class="screen-header">
                 <div>
-                    <h2 class="screen-title">Production</h2>
+                    <h1 class="screen-title">Production</h1>
                     <p class="screen-subtitle">Lights, camera, action!</p>
                 </div>
+                <button class="btn-back" data-screen="crew">
+                    <span class="btn-icon">←</span> Back
+                </button>
             </div>
-            
-            <div class="form-container">
-                <!-- Production Progress -->
-                <div class="form-card">
-                    <h3 class="card-title">🎬 Production Progress</h3>
-                    <div class="progress-container">
-                        <div class="progress-info">
-                            <span class="progress-label">Filming Progress</span>
-                            <span class="progress-value" id="productionProgressText">0%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill production" id="productionProgressBar"></div>
-                        </div>
-                        <div class="progress-details">
-                            <span>Week <span id="productionCurrentWeek">1</span> of <span id="productionTotalWeeks">14</span></span>
-                            <span>Quality: <span id="productionQuality">Building...</span></span>
-                        </div>
+
+            <div class="card-section">
+                <h3 class="card-title">🎬 Production Progress</h3>
+                
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span class="progress-label">Filming Progress</span>
+                        <span class="progress-value" id="productionProgress">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill production" id="productionProgressBar" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-details">
+                        <span id="productionWeekInfo">Week 1 of 14</span>
+                        <span id="productionQuality">Quality: Building...</span>
                     </div>
                 </div>
-                
-                <!-- Production Stats -->
+
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-card-icon">📊</div>
+                    <div class="stat-card info">
+                        <div class="stat-card-icon">🎬</div>
                         <div class="stat-card-content">
-                            <div class="stat-card-value" id="scenesCompleted">0/120</div>
+                            <div class="stat-card-value"><span id="scenesFilmed">0</span>/120</div>
                             <div class="stat-card-label">Scenes Filmed</div>
                         </div>
                     </div>
-                    <div class="stat-card info">
-                        <div class="stat-card-icon">💸</div>
+                    <div class="stat-card warning">
+                        <div class="stat-card-icon">💰</div>
                         <div class="stat-card-content">
-                            <div class="stat-card-value" id="productionBudgetUsed">₹0 Cr</div>
+                            <div class="stat-card-value" id="budgetUsed">₹0 Cr</div>
                             <div class="stat-card-label">Budget Used</div>
                         </div>
                     </div>
-                    <div class="stat-card success" id="crewMoraleCard">
+                    <div class="stat-card success">
                         <div class="stat-card-icon">😊</div>
                         <div class="stat-card-content">
                             <div class="stat-card-value" id="crewMorale">Excellent</div>
@@ -518,25 +469,24 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Production Events -->
-                <div class="form-card">
-                    <h3 class="card-title">📰 Production Updates</h3>
-                    <div class="events-list" id="productionEventsList">
-                        <div class="event-item">
-                            <div class="event-icon">🎬</div>
-                            <div class="event-content">
-                                <div class="event-title">Production Started!</div>
-                                <div class="event-description">Your team is ready to create magic. Good luck!</div>
-                                <div class="event-time">Week 1</div>
-                            </div>
+            </div>
+
+            <div class="card-section">
+                <h3 class="card-title">📰 Production Updates</h3>
+                <div class="events-list" id="productionEvents">
+                    <div class="event-item positive">
+                        <div class="event-icon">🎬</div>
+                        <div class="event-content">
+                            <div class="event-title">Production Started!</div>
+                            <div class="event-description">Your team is ready to create magic. Good luck!</div>
+                            <div class="event-time">Week 1</div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="screen-actions">
-                <button id="skipProductionBtn" class="btn-secondary">
+                <button class="btn-secondary" id="skipProductionBtn">
                     <span class="btn-icon">⏭️</span>
                     Skip to Marketing
                 </button>
@@ -546,97 +496,96 @@
         <!-- Marketing Screen -->
         <div id="marketing" class="screen">
             <div class="screen-header">
-                <button class="btn-back" data-screen="production">← Back</button>
                 <div>
-                    <h2 class="screen-title">Marketing Campaign</h2>
+                    <h1 class="screen-title">Marketing Campaign</h1>
                     <p class="screen-subtitle">Create the buzz</p>
                 </div>
+                <button class="btn-back" data-screen="production">
+                    <span class="btn-icon">←</span> Back
+                </button>
             </div>
-            
-            <div class="form-container">
-                <!-- Marketing Budget Sliders -->
-                <div class="form-card">
-                    <h3 class="card-title">📢 Marketing Channels</h3>
-                    
-                    <div class="slider-group">
-                        <div class="slider-item">
-                            <div class="slider-label">
-                                <span>🏢 Billboards & Print</span>
-                                <span class="slider-value">₹<span id="billboardsValue">0</span> Cr</span>
-                            </div>
-                            <input type="range" id="billboardsSlider" class="slider" min="0" max="20" value="0">
-                        </div>
-                        
-                        <div class="slider-item">
-                            <div class="slider-label">
-                                <span>📺 TV Advertisements</span>
-                                <span class="slider-value">₹<span id="tvAdsValue">0</span> Cr</span>
-                            </div>
-                            <input type="range" id="tvAdsSlider" class="slider" min="0" max="30" value="0">
-                        </div>
-                        
-                        <div class="slider-item">
-                            <div class="slider-label">
-                                <span>📱 Social Media</span>
-                                <span class="slider-value">₹<span id="socialMediaValue">0</span> Cr</span>
-                            </div>
-                            <input type="range" id="socialMediaSlider" class="slider" min="0" max="25" value="0">
-                        </div>
-                        
-                        <div class="slider-item">
-                            <div class="slider-label">
-                                <span>🌍 International Ads</span>
-                                <span class="slider-value">₹<span id="internationalAdsValue">0</span> Cr</span>
-                            </div>
-                            <input type="range" id="internationalAdsSlider" class="slider" min="0" max="40" value="0">
-                        </div>
-                    </div>
-                </div>
+
+            <div class="card-section">
+                <h3 class="card-title">📢 Marketing Channels</h3>
                 
-                <!-- Marketing Preview -->
-                <div class="form-card">
-                    <h3 class="card-title">📊 Campaign Preview</h3>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-card-icon">💰</div>
-                            <div class="stat-card-content">
-                                <div class="stat-card-value" id="totalMarketingBudget">₹0 Cr</div>
-                                <div class="stat-card-label">Total Budget</div>
-                            </div>
+                <div class="slider-group">
+                    <div class="slider-item">
+                        <div class="slider-label">
+                            <span>🏢 Billboards & Print</span>
+                            <span class="slider-value" id="billboardValue">₹0 Cr</span>
                         </div>
-                        <div class="stat-card info">
-                            <div class="stat-card-icon">📈</div>
-                            <div class="stat-card-content">
-                                <div class="stat-card-value" id="expectedHype">0%</div>
-                                <div class="stat-card-label">Expected Hype</div>
-                            </div>
-                        </div>
-                        <div class="stat-card success">
-                            <div class="stat-card-icon">🎯</div>
-                            <div class="stat-card-content">
-                                <div class="stat-card-value" id="audienceReach">Local</div>
-                                <div class="stat-card-label">Audience Reach</div>
-                            </div>
-                        </div>
+                        <input type="range" class="slider" id="billboardSlider" min="0" max="15" value="0">
                     </div>
                     
-                    <div class="hype-meter">
-                        <div class="hype-label">Hype Level</div>
-                        <div class="hype-bar">
-                            <div class="hype-fill" id="hypeBar"></div>
+                    <div class="slider-item">
+                        <div class="slider-label">
+                            <span>📺 TV Advertisements</span>
+                            <span class="slider-value" id="tvValue">₹0 Cr</span>
                         </div>
-                        <div class="hype-indicators">
-                            <span class="hype-mark" data-level="20">Low</span>
-                            <span class="hype-mark" data-level="50">Medium</span>
-                            <span class="hype-mark" data-level="80">High</span>
-                            <span class="hype-mark" data-level="100">Viral</span>
+                        <input type="range" class="slider" id="tvSlider" min="0" max="25" value="0">
+                    </div>
+                    
+                    <div class="slider-item">
+                        <div class="slider-label">
+                            <span>📱 Social Media</span>
+                            <span class="slider-value" id="socialValue">₹ Cr</span>
                         </div>
+                        <input type="range" class="slider" id="socialSlider" min="0" max="10" value="0">
+                    </div>
+                    
+                    <div class="slider-item">
+                        <div class="slider-label">
+                            <span>🌍 International Ads</span>
+                            <span class="slider-value" id="internationalValue">₹0 Cr</span>
+                        </div>
+                        <input type="range" class="slider" id="internationalSlider" min="0" max="20" value="0">
                     </div>
                 </div>
             </div>
-            
+
+            <div class="card-section">
+                <h3 class="card-title">📊 Campaign Preview</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card warning">
+                        <div class="stat-card-icon">💰</div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value" id="totalMarketingBudget">₹0 Cr</div>
+                            <div class="stat-card-label">Total Budget</div>
+                        </div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-card-icon">📈</div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value" id="expectedHype">0%</div>
+                            <div class="stat-card-label">Expected Hype</div>
+                        </div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-card-icon">🌍</div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value" id="audienceReach">Local</div>
+                            <div class="stat-card-label">Audience Reach</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hype-meter">
+                    <div class="hype-label">Hype Level</div>
+                    <div class="hype-bar">
+                        <div class="hype-fill" id="hypeFill" style="width: 0%"></div>
+                    </div>
+                    <div class="hype-indicators">
+                        <span class="hype-mark">Low</span>
+                        <span class="hype-mark">Medium</span>
+                        <span class="hype-mark">High</span>
+                        <span class="hype-mark">Viral</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="screen-actions">
-                <button id="launchMarketingBtn" class="btn-primary disabled">
+                <button class="btn-primary" id="launchMarketingBtn">
                     <span class="btn-icon">🚀</span>
                     Launch Marketing Campaign
                 </button>
@@ -646,130 +595,115 @@
         <!-- Distribution Screen -->
         <div id="distribution" class="screen">
             <div class="screen-header">
-                <button class="btn-back" data-screen="marketing">← Back</button>
                 <div>
-                    <h2 class="screen-title">Distribution</h2>
+                    <h1 class="screen-title">Distribution</h1>
                     <p class="screen-subtitle">Choose your release partner</p>
                 </div>
+                <button class="btn-back" data-screen="marketing">
+                    <span class="btn-icon">←</span> Back
+                </button>
             </div>
-            
-            <div class="form-container">
-                <div class="form-card">
-                    <h3 class="card-title">🤝 Distribution Partners</h3>
-                    <div class="distributors-grid" id="distributorsGrid">
-                        <!-- Distributor options will be populated here -->
+
+            <div class="card-section">
+                <h3 class="card-title">🤝 Distribution Partners</h3>
+                <div class="distributors-grid" id="distributorsGrid"></div>
+            </div>
+
+            <div class="card-section">
+                <h3 class="card-title">💰 Distribution Costs</h3>
+                <div class="budget-breakdown">
+                    <div class="budget-item">
+                        <span class="budget-label">Partner Fee</span>
+                        <span class="budget-value" id="distributorFee">₹0 Cr</span>
+                    </div>
+                    <div class="budget-item">
+                        <span class="budget-label">Print & Publicity</span>
+                        <span class="budget-value">₹8 Cr</span>
+                    </div>
+                    <div class="budget-total">
+                        <span>Total Distribution Cost</span>
+                        <span id="totalDistributionCost">₹8 Cr</span>
                     </div>
                 </div>
-                
-                <div class="form-card">
-                    <h3 class="card-title">💰 Distribution Costs</h3>
-                    <div class="budget-breakdown" id="distributionCosts">
-                        <div class="budget-item">
-                            <span class="budget-label">Partner Fee</span>
-                            <span class="budget-value">₹<span id="partnerFee">0</span> Cr</span>
-                        </div>
-                        <div class="budget-item">
-                            <span class="budget-label">Print & Publicity</span>
-                            <span class="budget-value">₹<span id="printCost">8</span> Cr</span>
-                        </div>
-                        <div class="budget-total">
-                            <span class="budget-label">Total Distribution Cost</span>
-                            <span class="budget-value">₹<span id="totalDistributionCost">8</span> Cr</span>
-                        </div>
-                    </div>
-                </div>
             </div>
-            
+
             <div class="screen-actions">
-                <button id="finalizeDistributionBtn" class="btn-primary disabled">
-                    <span class="btn-icon">✅</span>
-                    Finalize Distribution Deal
+                <button class="btn-primary" id="finalizeDistributionBtn">
+                    <span class="btn-icon">✓</span>
+                    Finalize Distribution
                 </button>
             </div>
         </div>
 
-        <!-- Release Screen -->
+        <!-- Release Planning Screen -->
         <div id="release" class="screen">
             <div class="screen-header">
-                <button class="btn-back" data-screen="distribution">← Back</button>
                 <div>
-                    <h2 class="screen-title">Release Planning</h2>
+                    <h1 class="screen-title">Release Planning</h1>
                     <p class="screen-subtitle">Choose the perfect moment</p>
                 </div>
+                <button class="btn-back" data-screen="distribution">
+                    <span class="btn-icon">←</span> Back
+                </button>
             </div>
-            
-            <div class="form-container">
-                <!-- Release Calendar -->
-                <div class="form-card">
-                    <h3 class="card-title">📅 Release Calendar</h3>
-                    <div class="calendar-container">
-                        <div class="calendar-header">
-                            <button class="calendar-nav" id="prevMonth">‹</button>
-                            <span class="calendar-title" id="calendarTitle">Upcoming Weeks</span>
-                            <button class="calendar-nav" id="nextMonth">›</button>
+
+            <div class="card-section">
+                <h3 class="card-title">📅 Release Calendar</h3>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prevMonth">‹</button>
+                        <h4 class="calendar-title" id="calendarTitle">Upcoming Weeks</h4>
+                        <button class="calendar-nav" id="nextMonth">›</button>
+                    </div>
+                    <div class="calendar-grid" id="releaseCalendar"></div>
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <div class="legend-color optimal"></div>
+                            <span>Optimal</span>
                         </div>
-                        <div class="calendar-grid" id="releaseCalendar">
-                            <!-- Calendar weeks will be populated here -->
+                        <div class="legend-item">
+                            <div class="legend-color festival"></div>
+                            <span>Festival</span>
                         </div>
-                        <div class="calendar-legend">
-                            <div class="legend-item">
-                                <div class="legend-color optimal"></div>
-                                <span>Optimal</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color festival"></div>
-                                <span>Festival</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color competition"></div>
-                                <span>Competition</span>
-                            </div>
+                        <div class="legend-item">
+                            <div class="legend-color competition"></div>
+                            <span>Competition</span>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Week Analysis -->
-                <div id="weekAnalysis" class="form-card hidden">
-                    <h3 class="card-title">📊 Week Analysis</h3>
-                    <div id="weekDetails">
-                        <!-- Week analysis details will appear here -->
-                    </div>
-                </div>
-                
-                <!-- OTT Deal Options -->
-                <div class="form-card">
-                    <h3 class="card-title">📺 OTT Rights Strategy</h3>
-                    <div class="select-buttons">
-                        <button type="button" class="select-btn" data-value="immediate">
-                            <span class="select-icon">⚡</span>
-                            <div class="select-content">
-                                <span class="select-text">Immediate Release</span>
-                                <span class="select-desc">Theater + OTT same day</span>
-                            </div>
-                        </button>
-                        <button type="button" class="select-btn" data-value="delayed">
-                            <span class="select-icon">⏰</span>
-                            <div class="select-content">
-                                <span class="select-text">8-Week Delay</span>
-                                <span class="select-desc">Traditional window</span>
-                            </div>
-                        </button>
-                        <button type="button" class="select-btn" data-value="exclusive">
-                            <span class="select-icon">💎</span>
-                            <div class="select-content">
-                                <span class="select-text">Exclusive Deal</span>
-                                <span class="select-desc">Premium pricing</span>
-                            </div>
-                        </button>
-                    </div>
-                    <input type="hidden" id="ottStrategy">
                 </div>
             </div>
-            
+
+            <div class="card-section">
+                <h3 class="card-title">📺 OTT Rights Strategy</h3>
+                <div class="select-buttons">
+                    <div class="select-btn active" data-ott="post-theatrical">
+                        <div class="select-content">
+                            <div class="select-icon">🎬</div>
+                            <div class="select-text">Post-Theatrical</div>
+                            <div class="select-desc">Release on OTT after 6 weeks</div>
+                        </div>
+                    </div>
+                    <div class="select-btn" data-ott="simultaneous">
+                        <div class="select-content">
+                            <div class="select-icon">📺</div>
+                            <div class="select-text">Simultaneous</div>
+                            <div class="select-desc">Theatre + OTT same day</div>
+                        </div>
+                    </div>
+                    <div class="select-btn" data-ott="ott-first">
+                        <div class="select-content">
+                            <div class="select-icon">💻</div>
+                            <div class="select-text">OTT First</div>
+                            <div class="select-desc">Direct to streaming</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="screen-actions">
-                <button id="confirmReleaseBtn" class="btn-primary disabled">
-                    <span class="btn-icon">🚀</span>
-                    Confirm Release
+                <button class="btn-primary" id="confirmReleaseBtn">
+                    <span class="btn-icon">🎉</span>
+                    Confirm Release Date
                 </button>
             </div>
         </div>
@@ -778,111 +712,102 @@
         <div id="results" class="screen">
             <div class="screen-header">
                 <div>
-                    <h2 class="screen-title">Box Office Results</h2>
+                    <h1 class="screen-title">Box Office Results</h1>
                     <p class="screen-subtitle">The moment of truth</p>
                 </div>
             </div>
-            
-            <div class="form-container">
-                <!-- Movie Title & Verdict -->
-                <div class="results-header">
-                    <h1 id="movieTitle" class="movie-title">"Movie Title"</h1>
-                    <div id="movieVerdict" class="verdict-badge blockbuster">BLOCKBUSTER HIT! 🏆</div>
+
+            <div class="results-header">
+                <h2 class="movie-title" id="resultsMovieTitle">"Movie Title"</h2>
+                <div class="verdict-badge blockbuster" id="resultsVerdict">BLOCKBUSTER HIT! 🏆</div>
+            </div>
+
+            <div class="card-section">
+                <h3 class="card-title">💰 Financial Performance</h3>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <span class="result-label">Total Investment</span>
+                        <span class="result-value" id="totalInvestment">₹75 Cr</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Opening Weekend</span>
+                        <span class="result-value positive" id="openingWeekend">₹45 Cr</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Domestic Total</span>
+                        <span class="result-value positive" id="domesticTotal">₹180 Cr</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">International</span>
+                        <span class="result-value positive" id="internationalTotal">₹65 Cr</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">OTT Rights</span>
+                        <span class="result-value positive" id="ottRights">₹35 Cr</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">Net Profit</span>
+                        <span class="result-value profit" id="netProfit">₹205 Cr</span>
+                    </div>
                 </div>
-                
-                <!-- Financial Results -->
-                <div class="form-card">
-                    <h3 class="card-title">💰 Financial Performance</h3>
-                    <div class="results-grid">
-                        <div class="result-item">
-                            <div class="result-label">Total Investment</div>
-                            <div class="result-value" id="totalInvestment">₹75 Cr</div>
+            </div>
+
+            <div class="card-section">
+                <h3 class="card-title">📊 Performance Metrics</h3>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">Audience Rating</div>
+                        <div class="metric-value" id="audienceRating">9.2/10</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 92%"></div>
                         </div>
-                        <div class="result-item">
-                            <div class="result-label">Opening Weekend</div>
-                            <div class="result-value positive" id="openingWeekend">₹45 Cr</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Critics Score</div>
+                        <div class="metric-value" id="criticsScore">88%</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 88%"></div>
                         </div>
-                        <div class="result-item">
-                            <div class="result-label">Domestic Total</div>
-                            <div class="result-value positive" id="domesticTotal">₹180 Cr</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Music Success</div>
+                        <div class="metric-value" id="musicSuccess">Superhit</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 95%"></div>
                         </div>
-                        <div class="result-item">
-                            <div class="result-label">International</div>
-                            <div class="result-value positive" id="internationalTotal">₹65 Cr</div>
-                        </div>
-                        <div class="result-item">
-                            <div class="result-label">OTT Rights</div>
-                            <div class="result-value positive" id="ottRights">₹35 Cr</div>
-                        </div>
-                        <div class="result-item highlight">
-                            <div class="result-label">Net Profit</div>
-                            <div class="result-value profit" id="netProfit">₹205 Cr</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Social Buzz</div>
+                        <div class="metric-value" id="socialBuzz">Viral</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 100%"></div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Performance Metrics -->
-                <div class="form-card">
-                    <h3 class="card-title">📊 Performance Metrics</h3>
-                    <div class="metrics-grid">
-                        <div class="metric-item">
-                            <div class="metric-label">Audience Rating</div>
-                            <div class="metric-value" id="audienceRating">9.2/10</div>
-                            <div class="metric-bar">
-                                <div class="metric-fill" id="audienceBar" style="width: 92%"></div>
-                            </div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-label">Critics Score</div>
-                            <div class="metric-value" id="criticsScore">88%</div>
-                            <div class="metric-bar">
-                                <div class="metric-fill" id="criticsBar" style="width: 88%"></div>
-                            </div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-label">Music Success</div>
-                            <div class="metric-value" id="musicSuccess">Superhit</div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-label">Social Buzz</div>
-                            <div class="metric-value" id="socialBuzz">Viral</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Awards & Recognition -->
-                <div class="form-card">
-                    <h3 class="card-title">🏆 Awards & Recognition</h3>
-                    <div class="awards-grid" id="awardsGrid">
-                        <!-- Awards will be populated here -->
-                    </div>
-                </div>
-                
-                <!-- Franchise Opportunity -->
-                <div id="franchiseOpportunity" class="form-card franchise-card">
-                    <h3 class="card-title">🎭 Franchise Opportunity!</h3>
+            </div>
+
+            <div id="awardsSection" class="card-section">
+                <h3 class="card-title">🏆 Awards & Recognition</h3>
+                <div class="awards-grid" id="resultsAwards"></div>
+            </div>
+
+            <div id="franchiseSection" class="card-section">
+                <h3 class="card-title">🎭 Franchise Opportunity!</h3>
+                <div class="franchise-card">
                     <p>Your movie was a huge success! Fans are demanding a sequel.</p>
                     <div class="franchise-actions">
-                        <button id="createSequelBtn" class="btn-primary">
+                        <button class="btn-primary" id="createSequelBtn">
                             <span class="btn-icon">🎬</span>
-                            Plan Sequel
-                        </button>
-                        <button id="createSpinoffBtn" class="btn-secondary">
-                            <span class="btn-icon">🌟</span>
-                            Create Spin-off
+                            Create Sequel
                         </button>
                     </div>
                 </div>
             </div>
-            
+
             <div class="screen-actions">
                 <button class="btn-primary" data-screen="dashboard">
                     <span class="btn-icon">🏠</span>
-                    Back to Dashboard
-                </button>
-                <button class="btn-secondary" data-screen="script">
-                    <span class="btn-icon">➕</span>
-                    Start New Project
+                    Return to Dashboard
                 </button>
             </div>
         </div>
@@ -891,56 +816,51 @@
         <div id="portfolio" class="screen">
             <div class="screen-header">
                 <div>
-                    <h2 class="screen-title">Portfolio</h2>
+                    <h1 class="screen-title">Portfolio</h1>
                     <p class="screen-subtitle">Your cinematic legacy</p>
                 </div>
             </div>
-            
-            <div class="form-container">
-                <!-- Portfolio Stats -->
-                <div class="stats-grid">
-                    <div class="stat-card success">
-                        <div class="stat-card-icon">🎬</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="portfolioMovies">0</div>
-                            <div class="stat-card-label">Total Movies</div>
-                        </div>
-                    </div>
-                    <div class="stat-card info">
-                        <div class="stat-card-icon">💰</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="portfolioRevenue">₹0</div>
-                            <div class="stat-card-label">Total Revenue</div>
-                        </div>
-                    </div>
-                    <div class="stat-card warning">
-                        <div class="stat-card-icon">🏆</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="portfolioHits">0</div>
-                            <div class="stat-card-label">Hit Movies</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-icon">🏅</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="portfolioAwards">0</div>
-                            <div class="stat-card-label">Awards</div>
-                        </div>
+
+            <div class="stats-grid">
+                <div class="stat-card info">
+                    <div class="stat-card-icon">🎬</div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" id="portfolioTotalMovies">0</div>
+                        <div class="stat-card-label">Total Movies</div>
                     </div>
                 </div>
-                
-                <!-- Portfolio Grid -->
-                <div class="portfolio-grid" id="portfolioGrid">
-                    <!-- Portfolio movies will be populated here -->
-                    <div class="empty-portfolio">
-                        <div class="empty-icon">🎬</div>
-                        <div class="empty-title">No Movies Yet</div>
-                        <div class="empty-subtitle">Start creating your first blockbuster!</div>
-                        <button class="btn-primary" data-screen="script">
-                            <span class="btn-icon">➕</span>
-                            Create First Movie
-                        </button>
+                <div class="stat-card success">
+                    <div class="stat-card-icon">💰</div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" id="portfolioTotalRevenue">₹0</div>
+                        <div class="stat-card-label">Total Revenue</div>
                     </div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-card-icon">🏆</div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" id="portfolioHitMovies">0</div>
+                        <div class="stat-card-label">Hit Movies</div>
+                    </div>
+                </div>
+                <div class="stat-card info">
+                    <div class="stat-card-icon">🎖️</div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" id="portfolioAwards">0</div>
+                        <div class="stat-card-label">Awards</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="portfolioContent" class="portfolio-grid">
+                <div class="empty-portfolio">
+                    <div class="empty-icon">🎬</div>
+                    <h3 class="empty-title">No Movies Yet</h3>
+                    <p class="empty-subtitle">Start creating your first blockbuster!</p>
+                    <button class="btn-primary" data-screen="script">
+                        <span class="btn-icon">✍️</span>
+                        Create New Project
+                    </button>
                 </div>
             </div>
         </div>
@@ -949,27 +869,19 @@
         <div id="competitors" class="screen">
             <div class="screen-header">
                 <div>
-                    <h2 class="screen-title">Competitors</h2>
+                    <h1 class="screen-title">Competitors</h1>
                     <p class="screen-subtitle">Keep your enemies closer</p>
                 </div>
             </div>
-            
-            <div class="form-container">
-                <!-- Upcoming Releases -->
-                <div class="form-card">
-                    <h3 class="card-title">🎬 Upcoming Rival Releases</h3>
-                    <div class="competitors-list" id="competitorsList">
-                        <!-- Competitor movies will be populated here -->
-                    </div>
-                </div>
-                
-                <!-- Industry Leaders -->
-                <div class="form-card">
-                    <h3 class="card-title">👑 Industry Leaders</h3>
-                    <div class="leaderboard" id="industryLeaderboard">
-                        <!-- Industry leaders will be populated here -->
-                    </div>
-                </div>
+
+            <div class="card-section">
+                <h3 class="card-title">🎬 Upcoming Rival Releases</h3>
+                <div class="competitors-list" id="competitorsList"></div>
+            </div>
+
+            <div class="card-section">
+                <h3 class="card-title">👑 Industry Leaders</h3>
+                <div class="leaderboard" id="industryLeaderboard"></div>
             </div>
         </div>
 
@@ -977,19 +889,16 @@
         <div id="franchises" class="screen">
             <div class="screen-header">
                 <div>
-                    <h2 class="screen-title">Franchises</h2>
+                    <h1 class="screen-title">Franchises</h1>
                     <p class="screen-subtitle">Your cinematic universes</p>
                 </div>
             </div>
-            
-            <div class="form-container">
-                <div class="franchises-grid" id="franchisesGrid">
-                    <!-- Franchises will be populated here -->
-                    <div class="empty-franchises">
-                        <div class="empty-icon">🎭</div>
-                        <div class="empty-title">No Franchises Yet</div>
-                        <div class="empty-subtitle">Create hit movies to unlock franchise opportunities!</div>
-                    </div>
+
+            <div id="franchisesContent" class="franchises-grid">
+                <div class="empty-franchises">
+                    <div class="empty-icon">🎭</div>
+                    <h3 class="empty-title">No Franchises Yet</h3>
+                    <p class="empty-subtitle">Create hit movies to unlock franchise opportunities!</p>
                 </div>
             </div>
         </div>
@@ -998,90 +907,78 @@
         <div id="awards" class="screen">
             <div class="screen-header">
                 <div>
-                    <h2 class="screen-title">Awards</h2>
+                    <h1 class="screen-title">Awards</h1>
                     <p class="screen-subtitle">Your hall of fame</p>
                 </div>
             </div>
-            
-            <div class="form-container">
-                <!-- Awards Summary -->
-                <div class="stats-grid">
-                    <div class="stat-card success">
-                        <div class="stat-card-icon">🏆</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="nationalAwards">0</div>
-                            <div class="stat-card-label">National Awards</div>
-                        </div>
-                    </div>
-                    <div class="stat-card info">
-                        <div class="stat-card-icon">⭐</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="filmfareAwards">0</div>
-                            <div class="stat-card-label">Filmfare Awards</div>
-                        </div>
-                    </div>
-                    <div class="stat-card warning">
-                        <div class="stat-card-icon">🎭</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="criticsAwards">0</div>
-                            <div class="stat-card-label">Critics Awards</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-icon">🌟</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="totalAwardsCount">0</div>
-                            <div class="stat-card-label">Total Awards</div>
-                        </div>
+
+            <div class="stats-grid">
+                <div class="stat-card warning">
+                    <div class="stat-card-icon">🏆</div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" id="nationalAwards">0</div>
+                        <div class="stat-card-label">National Awards</div>
                     </div>
                 </div>
-                
-                <!-- Awards Timeline -->
-                <div class="form-card">
-                    <h3 class="card-title">🏆 Awards Timeline</h3>
-                    <div class="awards-timeline" id="awardsTimeline">
-                        <!-- Awards timeline will be populated here -->
-                        <div class="empty-awards">
-                            <div class="empty-icon">🏆</div>
-                            <div class="empty-title">No Awards Yet</div>
-                            <div class="empty-subtitle">Create exceptional movies to win prestigious awards!</div>
-                        </div>
+                <div class="stat-card info">
+                    <div class="stat-card-icon">🎭</div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" id="filmfareAwards">0</div>
+                        <div class="stat-card-label">Filmfare Awards</div>
+                    </div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-card-icon">📝</div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" id="criticsAwards">0</div>
+                        <div class="stat-card-label">Critics Awards</div>
+                    </div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-card-icon">🌟</div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" id="totalAwardsCount">0</div>
+                        <div class="stat-card-label">Total Awards</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-section">
+                <h3 class="card-title">🏆 Awards Timeline</h3>
+                <div id="awardsTimeline" class="awards-timeline">
+                    <div class="empty-awards">
+                        <div class="empty-icon">🏆</div>
+                        <h3 class="empty-title">No Awards Yet</h3>
+                        <p class="empty-subtitle">Create exceptional movies to win prestigious awards!</p>
                     </div>
                 </div>
             </div>
         </div>
-
-    </main>
+    </div>
 
     <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <button class="nav-item active" data-screen="dashboard">
-            <div class="nav-icon">🏠</div>
-            <div class="nav-label">Dashboard</div>
-        </button>
-        <button class="nav-item" data-screen="portfolio">
-            <div class="nav-icon">📁</div>
-            <div class="nav-label">Portfolio</div>
-        </button>
-        <button class="nav-item" data-screen="script">
-            <div class="nav-icon">➕</div>
-            <div class="nav-label">New Project</div>
-        </button>
-        <button class="nav-item" data-screen="competitors">
-            <div class="nav-icon">🏆</div>
-            <div class="nav-label">Competitors</div>
-        </button>
-        <button class="nav-item" data-screen="awards">
-            <div class="nav-icon">🏅</div>
-            <div class="nav-label">Awards</div>
-        </button>
-    </nav>
-
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="loading-overlay hidden">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Processing...</div>
+    <div class="bottom-nav">
+        <div class="bottom-nav-content">
+            <a href="#" class="nav-item active" data-screen="dashboard">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Dashboard</div>
+            </a>
+            <a href="#" class="nav-item" data-screen="portfolio">
+                <div class="nav-icon">🎬</div>
+                <div class="nav-label">Portfolio</div>
+            </a>
+            <a href="#" class="nav-item" data-screen="script">
+                <div class="nav-icon">✍️</div>
+                <div class="nav-label">New Project</div>
+            </a>
+            <a href="#" class="nav-item" data-screen="competitors">
+                <div class="nav-icon">⚔️</div>
+                <div class="nav-label">Competitors</div>
+            </a>
+            <a href="#" class="nav-item" data-screen="awards">
+                <div class="nav-icon">🏆</div>
+                <div class="nav-label">Awards</div>
+            </a>
         </div>
     </div>
 
@@ -1089,40 +986,46 @@
     <div id="eventModal" class="modal-overlay hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-icon" id="eventIcon">🎬</div>
-                <h3 class="modal-title" id="eventTitle">Event Title</h3>
+                <div class="modal-icon" id="eventModalIcon">🎬</div>
+                <h3 class="modal-title" id="eventModalTitle">Event Title</h3>
             </div>
             <div class="modal-body">
-                <p id="eventDescription">Event description will appear here...</p>
+                <p id="eventModalDescription">Event description goes here...</p>
             </div>
             <div class="modal-actions">
-                <button id="eventCloseBtn" class="btn-primary">Got it!</button>
+                <button class="btn-primary" id="eventCloseBtn">Got it!</button>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="app-footer">
-        <div class="footer-content">
-            <div class="app-info">
-                <span class="app-name">Bollywood Cinema v3.0</span>
-                <span class="app-meta">by Anas Lila • Updated: August 25, 2025</span>
+    <!-- Studio Name Edit Modal -->
+    <div id="studioNameModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon">🎬</div>
+                <h3 class="modal-title">Edit Studio Name</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Studio Name</label>
+                    <input type="text" class="form-input" id="studioNameInput" placeholder="Enter your studio name">
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cancelStudioNameBtn">Cancel</button>
+                <button class="btn-primary" id="saveStudioNameBtn">Save</button>
             </div>
         </div>
-    </footer>
+    </div>
 
-    <!-- Scripts -->
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text" id="loadingText">Loading...</div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
-    
-    <!-- PWA Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => console.log('SW registered'))
-                    .catch(error => console.log('SW registration failed'));
-            });
-        }
-    </script>
 </body>
 </html>
