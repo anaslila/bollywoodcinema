@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.06 — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.07 — Studio Tycoon</title>
   
-  <!-- Favicon & App Icons -->
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Bollywood Tycoon">
   <meta name="theme-color" content="#0d0d0f">
 
-  <!-- Google Fonts & Font Awesome CDN -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,22 +21,17 @@
       --bg-base: #0d0d11;
       --bg-surface: #14141c;
       --bg-surface-elevated: #1a1a24;
-      --bg-card: rgba(23, 23, 33, 0.82);
-      --bg-glass: rgba(255, 255, 255, 0.04);
-      --border-color: rgba(212, 175, 55, 0.25);
+      --bg-card: rgba(23, 23, 33, 0.85);
+      --border-color: rgba(212, 175, 55, 0.28);
       --border-color-subtle: rgba(255, 255, 255, 0.08);
       --gold-primary: #d4af37;
       --gold-bright: #f5c518;
       --gold-gradient: linear-gradient(135deg, #f5c518 0%, #d4af37 60%, #aa8010 100%);
-      --crimson: #8b0000;
-      --crimson-bright: #e50914;
       --text-main: #f8f8fc;
       --text-muted: #a3a3bd;
       --text-subtle: #6c6c82;
       --success: #22c55e;
       --danger: #ef4444;
-      --info: #38bdf8;
-      --shadow-ambient: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
       --font-display: 'Cinzel', serif;
       --font-body: 'Outfit', sans-serif;
     }
@@ -49,26 +41,17 @@
       --bg-surface: #ffffff;
       --bg-surface-elevated: #ececf2;
       --bg-card: rgba(255, 255, 255, 0.94);
-      --bg-glass: rgba(0, 0, 0, 0.03);
-      --border-color: rgba(184, 134, 11, 0.38);
+      --border-color: rgba(184, 134, 11, 0.40);
       --border-color-subtle: rgba(0, 0, 0, 0.12);
       --gold-primary: #b8860b;
       --gold-bright: #996515;
       --gold-gradient: linear-gradient(135deg, #b8860b 0%, #d4af37 60%, #855c04 100%);
-      --crimson: #a01010;
-      --crimson-bright: #c40a15;
       --text-main: #14141c;
       --text-muted: #4b4b5e;
       --text-subtle: #79798e;
-      --shadow-ambient: 0 8px 30px 0 rgba(0, 0, 0, 0.09);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
     body {
       background-color: var(--bg-base);
@@ -78,181 +61,136 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
-      background-image: 
-        radial-gradient(circle at 10% 10%, rgba(212, 175, 55, 0.04) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.05) 0%, transparent 45%);
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 7px; height: 7px; }
-    ::-webkit-scrollbar-track { background: var(--bg-base); }
-    ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--gold-bright); }
-
-    /* =========================================================================
-       1.5 SECONDS SPLASH SCREEN (360px x 640px)
-       ========================================================================= */
+    /* Splash Screen (Auto-hides cleanly) */
     #splash-screen {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
-      background: #000000;
+      background: #000;
       z-index: 99999;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
+      transition: opacity 0.3s ease;
     }
     #splash-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      display: none !important;
     }
     .splash-content {
       width: 360px;
       height: 640px;
-      position: relative;
       background: #000;
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+      box-shadow: 0 0 50px rgba(212, 175, 55, 0.25);
     }
-    .splash-gif {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .splash-gif { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Sticky Universal Header */
+    /* Universal Squeezed Header */
     header.main-header {
       position: sticky;
       top: 0;
       z-index: 900;
       backdrop-filter: blur(16px);
-      background: rgba(13, 13, 17, 0.90);
+      background: rgba(13, 13, 17, 0.92);
       border-bottom: 1px solid var(--border-color);
-      padding: 10px 16px;
+      padding: 8px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
     }
-    [data-theme="light"] header.main-header {
-      background: rgba(255, 255, 255, 0.94);
-    }
+    [data-theme="light"] header.main-header { background: rgba(255, 255, 255, 0.94); }
 
-    .brand-section {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-      flex: 1;
-    }
-    .brand-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      object-fit: cover;
-      border: 1.5px solid var(--gold-primary);
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-      flex-shrink: 0;
-    }
+    .brand-section { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
+    .brand-icon { width: 34px; height: 34px; border-radius: 6px; object-fit: cover; border: 1.5px solid var(--gold-primary); flex-shrink: 0; }
     .studio-name-input {
       font-family: var(--font-display);
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 800;
       color: var(--gold-bright);
       background: transparent;
       border: 1px dashed transparent;
-      padding: 3px 6px;
+      padding: 2px 4px;
       border-radius: 4px;
       outline: none;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 220px;
-      cursor: pointer;
+      max-width: 140px;
     }
-    .studio-name-input:hover, .studio-name-input:focus {
-      border-color: var(--gold-primary);
-      background: var(--bg-surface);
-    }
+    .studio-name-input:focus { border-color: var(--gold-primary); background: var(--bg-surface); }
 
-    .header-stats {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+    .header-stats { display: flex; align-items: center; gap: 6px; }
     .stat-badge {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       background: var(--bg-surface);
       border: 1px solid var(--border-color-subtle);
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 0.82rem;
+      padding: 4px 8px;
+      border-radius: 14px;
+      font-size: 0.75rem;
       font-weight: 600;
-      box-shadow: var(--shadow-ambient);
+      white-space: nowrap;
     }
-    .stat-badge i { color: var(--gold-bright); font-size: 0.85rem; }
-    .stat-badge .badge-val { color: var(--text-main); font-weight: 700; }
-    .badge-cash .badge-val { color: var(--success); }
+    .stat-badge i { color: var(--gold-bright); font-size: 0.78rem; }
+    .badge-cash .badge-val { color: var(--success); font-weight: 800; }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .header-actions { display: flex; align-items: center; gap: 6px; }
     .btn-advance-week {
       background: var(--gold-gradient);
       color: #0b0b0e;
       border: none;
-      padding: 8px 15px;
+      padding: 6px 10px;
       border-radius: 8px;
       font-weight: 800;
-      font-size: 0.85rem;
-      font-family: var(--font-body);
+      font-size: 0.78rem;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      gap: 5px;
       white-space: nowrap;
+      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
     }
-    .btn-advance-week:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+    .btn-advance-week .btn-text-full { display: inline; }
+    @media (max-width: 600px) {
+      .btn-advance-week { padding: 6px 8px; }
+      .btn-advance-week .btn-text-full { display: none; }
+      .studio-name-input { max-width: 105px; font-size: 0.86rem; }
     }
+
     .btn-theme-toggle {
       background: var(--bg-surface);
       border: 1px solid var(--border-color-subtle);
       color: var(--gold-primary);
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      font-size: 0.8rem;
     }
 
-    /* Universal Tab Navigation */
+    /* Tab Navigation */
     nav.tab-nav {
       position: sticky;
-      top: 61px;
+      top: 51px;
       z-index: 850;
       background: var(--bg-surface);
       border-bottom: 1px solid var(--border-color-subtle);
-      padding: 0 12px;
+      padding: 0 8px;
       display: flex;
       overflow-x: auto;
       scrollbar-width: none;
-      gap: 4px;
+      gap: 2px;
     }
     nav.tab-nav::-webkit-scrollbar { display: none; }
     .tab-btn {
@@ -260,651 +198,369 @@
       border: none;
       color: var(--text-muted);
       font-family: var(--font-body);
-      font-size: 0.84rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      padding: 11px 14px;
+      padding: 9px 11px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 5px;
       white-space: nowrap;
       position: relative;
-      transition: color 0.2s;
     }
-    .tab-btn i { font-size: 0.9rem; }
-    .tab-btn.active {
-      color: var(--gold-bright);
-    }
+    .tab-btn.active { color: var(--gold-bright); }
     .tab-btn.active::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 10%;
-      right: 10%;
-      height: 3px;
+      bottom: 0; left: 10%; right: 10%; height: 2.5px;
       background: var(--gold-primary);
-      border-radius: 3px 3px 0 0;
+      border-radius: 2px 2px 0 0;
       box-shadow: 0 0 8px var(--gold-primary);
     }
 
-    /* Main Container & Tab Views */
     main.app-viewport {
       flex: 1;
-      padding: 16px;
+      padding: 12px;
       max-width: 1300px;
       width: 100%;
       margin: 0 auto 75px auto;
     }
-    .tab-view {
-      display: none;
-      animation: fadeIn 0.25s ease forwards;
-    }
-    .tab-view.active { display: block; }
+    .tab-view { display: none; }
+    .tab-view.active { display: block; animation: fadeIn 0.2s ease forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Cards & Containers */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border-color-subtle);
-      border-radius: 12px;
-      padding: 18px;
+      border-radius: 10px;
+      padding: 14px;
       backdrop-filter: blur(12px);
-      box-shadow: var(--shadow-ambient);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .card-title {
       font-family: var(--font-display);
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: var(--gold-bright);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 6px;
     }
-    .card-title i { color: var(--gold-primary); font-size: 1rem; }
 
-    /* Dashboard Metrics Grid */
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
-      margin-bottom: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
     }
     .metric-box {
       background: var(--bg-surface);
       border: 1px solid var(--border-color-subtle);
-      border-radius: 10px;
-      padding: 14px;
+      border-radius: 8px;
+      padding: 10px 12px;
       position: relative;
       overflow: hidden;
     }
-    .metric-box::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: var(--gold-primary);
-    }
-    .metric-lbl {
-      font-size: 0.76rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-    .metric-num {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--text-main);
-    }
+    .metric-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gold-primary); }
+    .metric-lbl { font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
+    .metric-num { font-size: 1.15rem; font-weight: 800; color: var(--text-main); }
 
-    /* =========================================================================
-       FIXED INTERACTIVE PILLS (GENRE, SONGS, CAPITAL CHOICES)
-       ========================================================================= */
+    /* Interactive Pills */
     .interactive-pill {
       background: var(--bg-surface);
       border: 1.5px solid var(--border-color-subtle);
       color: var(--text-muted);
-      padding: 8px 16px;
-      border-radius: 20px;
+      padding: 6px 12px;
+      border-radius: 16px;
       font-weight: 600;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      gap: 5px;
       user-select: none;
+      transition: all 0.15s ease;
     }
-    .interactive-pill:hover {
-      border-color: var(--gold-primary);
-      color: var(--text-main);
-      transform: translateY(-2px);
-    }
+    .interactive-pill:hover { border-color: var(--gold-primary); color: var(--text-main); }
     .interactive-pill.active {
       background: var(--gold-gradient) !important;
       color: #0b0b0e !important;
       border-color: var(--gold-bright) !important;
       font-weight: 800 !important;
-      box-shadow: 0 4px 16px rgba(245, 197, 24, 0.45) !important;
-      transform: scale(1.05);
+      box-shadow: 0 2px 12px rgba(245, 197, 24, 0.4) !important;
     }
 
-    /* Wizard Steps Indicator */
+    /* Wizard Steps */
     .wizard-steps-indicator {
       display: flex;
       align-items: center;
       justify-content: space-between;
       background: var(--bg-surface);
       border: 1px solid var(--border-color-subtle);
-      border-radius: 10px;
-      padding: 10px 14px;
-      margin-bottom: 18px;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-bottom: 14px;
       overflow-x: auto;
-      gap: 8px;
+      gap: 6px;
     }
     .wizard-step-node {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.76rem;
+      gap: 5px;
+      font-size: 0.74rem;
       font-weight: 700;
       color: var(--text-muted);
       white-space: nowrap;
       cursor: pointer;
-      opacity: 0.6;
-      transition: all 0.2s ease;
+      opacity: 0.65;
     }
-    .wizard-step-node.active {
-      color: var(--gold-bright);
-      opacity: 1;
-      transform: scale(1.04);
-    }
-    .wizard-step-node.completed {
-      color: var(--success);
-      opacity: 0.9;
-    }
+    .wizard-step-node.active { color: var(--gold-bright); opacity: 1; }
+    .wizard-step-node.completed { color: var(--success); opacity: 0.9; }
     .step-circle {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: var(--bg-base);
-      border: 1.5px solid var(--border-color);
+      border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
     }
-    .wizard-step-node.active .step-circle {
-      background: var(--gold-gradient);
-      color: #000;
-      border-color: var(--gold-bright);
-      font-weight: 900;
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
-    }
-    .wizard-step-node.completed .step-circle {
-      background: var(--success);
-      color: #000;
-      border-color: var(--success);
-    }
+    .wizard-step-node.active .step-circle { background: var(--gold-gradient); color: #000; border-color: var(--gold-bright); font-weight: 900; }
+    .wizard-step-node.completed .step-circle { background: var(--success); color: #000; border-color: var(--success); }
 
-    .pipeline-step-pane {
-      display: none;
-      animation: stepFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    .pipeline-step-pane.active {
-      display: block;
-    }
-    @keyframes stepFadeIn {
-      from { opacity: 0; transform: translateX(12px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    .step-header-box { margin-bottom: 16px; }
+    .pipeline-step-pane { display: none; }
+    .pipeline-step-pane.active { display: block; }
     .step-badge {
       display: inline-block;
       background: var(--gold-primary);
       color: #000;
       font-weight: 800;
-      font-size: 0.72rem;
-      padding: 3px 8px;
-      border-radius: 4px;
-      margin-bottom: 6px;
+      font-size: 0.68rem;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-bottom: 4px;
       text-transform: uppercase;
     }
-    .step-heading {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      color: var(--gold-bright);
-    }
-    .step-subtext {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .wizard-navigation-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 24px;
-      padding-top: 14px;
-      border-top: 1px dashed var(--border-color-subtle);
-    }
+    .step-heading { font-family: var(--font-display); font-size: 1.1rem; color: var(--gold-bright); }
+    .step-subtext { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; margin-bottom: 10px; }
+    .wizard-navigation-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--border-color-subtle); }
 
     /* Visual Tiles Grids */
     .tiles-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+      gap: 8px;
+      margin-top: 8px;
     }
     @media (max-width: 600px) {
-      .tiles-grid { grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 8px; }
+      .tiles-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 6px; }
     }
-
     .tile-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-color-subtle);
-      border-radius: 10px;
-      padding: 8px;
+      border-radius: 8px;
+      padding: 6px;
       cursor: pointer;
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      transition: all 0.2s ease;
       user-select: none;
+      transition: all 0.15s ease;
     }
-    .tile-card:hover {
-      border-color: var(--gold-primary);
-      transform: translateY(-2px);
-    }
-    .tile-card.selected {
-      border-color: var(--gold-bright);
-      background: rgba(212, 175, 55, 0.12);
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
-    }
-    .tile-img {
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 6px;
-      border: 2px solid var(--border-color);
-      background: #202028;
-    }
-    .tile-name {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--text-main);
-      line-height: 1.15;
-      margin-bottom: 3px;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .tile-meta {
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      line-height: 1.1;
-      margin-bottom: 4px;
-    }
-    .tile-fee {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--gold-bright);
-      margin-top: auto;
-    }
+    .tile-card:hover { border-color: var(--gold-primary); }
+    .tile-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.12); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+    .tile-img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; margin-bottom: 4px; border: 1.5px solid var(--border-color); background: #202028; }
+    .tile-name { font-size: 0.74rem; font-weight: 700; color: var(--text-main); line-height: 1.1; margin-bottom: 2px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tile-meta { font-size: 0.65rem; color: var(--text-muted); line-height: 1.1; margin-bottom: 2px; }
+    .tile-fee { font-size: 0.68rem; font-weight: 700; color: var(--gold-bright); margin-top: auto; }
 
-    /* Role Pill Switcher */
-    .role-toggle {
-      display: flex;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 4px;
-      margin-top: 6px;
-      overflow: hidden;
-      border: 1px solid var(--border-color-subtle);
-    }
-    .role-btn {
-      flex: 1;
-      padding: 3px 0;
-      font-size: 0.65rem;
-      font-weight: 700;
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-    .role-btn.active {
-      background: var(--gold-primary);
-      color: #000;
-    }
+    .role-toggle { display: flex; width: 100%; background: rgba(0, 0, 0, 0.4); border-radius: 4px; margin-top: 4px; overflow: hidden; border: 1px solid var(--border-color-subtle); }
+    .role-btn { flex: 1; padding: 2px 0; font-size: 0.62rem; font-weight: 700; background: transparent; border: none; color: var(--text-muted); cursor: pointer; }
+    .role-btn.active { background: var(--gold-primary); color: #000; }
 
-    /* Distribution & Rights Partner Tiles */
-    .brand-tiles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .brand-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color-subtle);
-      border-radius: 8px;
-      padding: 10px 8px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
-    }
-    .brand-card.selected {
-      border-color: var(--gold-bright);
-      background: rgba(212, 175, 55, 0.12);
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-    }
-    .brand-logo-img {
-      height: 38px;
-      max-width: 100%;
-      object-fit: contain;
-      margin-bottom: 6px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-    }
-    .brand-name {
-      font-size: 0.74rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 2px;
-    }
-    .brand-advance {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--success);
-    }
+    /* Rights & Brand Cards */
+    .brand-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 8px; margin-top: 8px; }
+    .brand-card { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 8px 6px; text-align: center; cursor: pointer; }
+    .brand-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.12); }
+    .brand-logo-img { height: 32px; max-width: 100%; object-fit: contain; margin-bottom: 4px; }
+    .brand-name { font-size: 0.72rem; font-weight: 700; color: var(--text-main); }
+    .brand-advance { font-size: 0.68rem; font-weight: 800; color: var(--success); }
 
-    /* Live Costing & Earnings HUD */
+    .marketing-filters-bar { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; }
+
+    /* Dual HUD */
     .cost-inflow-hud {
       position: sticky;
-      bottom: 12px;
+      bottom: 8px;
       z-index: 800;
-      background: rgba(18, 18, 24, 0.94);
+      background: rgba(18, 18, 24, 0.95);
       backdrop-filter: blur(14px);
       border: 1px solid var(--gold-primary);
-      border-radius: 12px;
-      padding: 12px 16px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      padding: 10px 12px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-top: 20px;
+      gap: 8px;
+      margin-top: 14px;
     }
-    .hud-stat-col {
-      display: flex;
-      flex-direction: column;
-    }
-    .hud-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-    .hud-val {
-      font-size: 1.05rem;
-      font-weight: 800;
-    }
+    .hud-stat-col { display: flex; flex-direction: column; }
+    .hud-label { font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); }
+    .hud-val { font-size: 0.95rem; font-weight: 800; }
     .hud-val.cost { color: var(--danger); }
     .hud-val.inflow { color: var(--success); }
     .hud-val.net { color: var(--gold-bright); }
 
-    /* Custom Poster Upload Display */
     .user-uploaded-poster-container {
-      margin-bottom: 16px;
-      padding: 12px;
+      margin-bottom: 12px;
+      padding: 10px;
       background: rgba(212, 175, 55, 0.08);
       border: 1px dashed var(--gold-primary);
-      border-radius: 10px;
-      display: none;
-    }
-    .user-uploaded-poster-container.visible {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .uploaded-preview-thumb {
-      width: 70px;
-      height: 98px;
-      border-radius: 6px;
-      object-fit: cover;
-      border: 2px solid var(--gold-bright);
-    }
-
-    /* Release Week Cards */
-    .week-tiles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 8px;
-      margin-top: 10px;
-      max-height: 280px;
-      overflow-y: auto;
-      padding: 4px;
-    }
-    .week-tile {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color-subtle);
       border-radius: 8px;
-      padding: 8px;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
+      display: none;
+      align-items: center;
+      gap: 12px;
     }
-    .week-tile.selected {
-      border-color: var(--gold-bright);
-      background: rgba(212, 175, 55, 0.14);
-    }
-    .week-tile-num {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: var(--gold-bright);
-    }
-    .week-tile-fest {
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .user-uploaded-poster-container.visible { display: flex; }
+    .uploaded-preview-thumb { width: 55px; height: 78px; border-radius: 4px; object-fit: cover; border: 1.5px solid var(--gold-bright); }
 
-    /* Theatrical Box Office Tracker Cards */
+    .week-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; margin-top: 8px; max-height: 240px; overflow-y: auto; padding: 2px; }
+    .week-tile { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 6px; padding: 6px; cursor: pointer; text-align: center; }
+    .week-tile.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.14); }
+    .week-tile-num { font-size: 0.78rem; font-weight: 800; color: var(--gold-bright); }
+    .week-tile-fest { font-size: 0.65rem; color: var(--text-muted); }
+
+    /* Theatrical Cards */
     .theatre-run-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-    .theatre-header {
-      display: flex;
-      gap: 12px;
-      align-items: center;
+      border-radius: 8px;
+      padding: 12px;
       margin-bottom: 10px;
+      cursor: pointer;
     }
-    .theatre-poster {
-      width: 50px;
-      height: 70px;
-      border-radius: 6px;
-      object-fit: cover;
-      border: 1px solid var(--gold-primary);
-    }
+    .theatre-run-card:hover { border-color: var(--gold-bright); }
+    .theatre-header { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+    .theatre-poster { width: 48px; height: 68px; border-radius: 5px; object-fit: cover; border: 1px solid var(--gold-primary); }
 
-    /* Studios Intelligence Grid */
-    .studios-intel-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 14px;
-    }
-    .studio-intel-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color-subtle);
-      border-radius: 10px;
-      padding: 16px;
-      position: relative;
-      overflow: hidden;
-    }
-    .studio-intel-card.my-studio {
-      border-color: var(--gold-bright);
-      background: rgba(212, 175, 55, 0.05);
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-    }
-    .studio-intel-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 3px;
-      background: var(--border-color);
-    }
-    .studio-intel-card.my-studio::before {
-      background: var(--gold-gradient);
-    }
-    .studio-intel-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      color: var(--gold-bright);
-      margin-bottom: 4px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .studios-intel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .studio-intel-card { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 12px; position: relative; }
+    .studio-intel-card.my-studio { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.05); }
+    .studio-intel-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--border-color); }
+    .studio-intel-card.my-studio::before { background: var(--gold-gradient); }
 
-    /* Toast Notification System */
+    /* Toast Queue System (Limit 3) */
     #toast-container {
       position: fixed;
-      top: 75px;
-      right: 16px;
+      top: 65px;
+      right: 12px;
       z-index: 1000;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       pointer-events: none;
+      max-width: 320px;
+      width: calc(100% - 24px);
     }
     .toast-msg {
       background: rgba(20, 20, 28, 0.96);
-      border-left: 4px solid var(--gold-bright);
+      border-left: 3.5px solid var(--gold-bright);
       color: var(--text-main);
-      padding: 10px 14px;
+      padding: 8px 12px;
       border-radius: 6px;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(8px);
       pointer-events: auto;
-      animation: slideIn 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .toast-msg.success { border-left-color: var(--success); }
     .toast-msg.error { border-left-color: var(--danger); }
-    @keyframes slideIn {
-      from { transform: translateX(30px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
 
-    /* Modal System */
+    /* Modals */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
       z-index: 950;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 12px;
     }
     .modal-overlay.active { display: flex; }
     .modal-window {
       background: var(--bg-surface);
       border: 1px solid var(--gold-primary);
-      border-radius: 14px;
-      padding: 22px;
-      max-width: 550px;
+      border-radius: 12px;
+      padding: 18px;
+      max-width: 520px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
     }
 
-    /* Buttons */
     .btn-gold {
       background: var(--gold-gradient);
       color: #0b0b0e;
       border: none;
-      padding: 9px 18px;
-      border-radius: 8px;
+      padding: 8px 16px;
+      border-radius: 6px;
       font-weight: 800;
-      font-size: 0.86rem;
+      font-size: 0.82rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
     .btn-outline {
       background: transparent;
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      padding: 8px 16px;
-      border-radius: 8px;
+      padding: 7px 14px;
+      border-radius: 6px;
       font-weight: 600;
-      font-size: 0.84rem;
+      font-size: 0.8rem;
       cursor: pointer;
     }
 
-    /* Inputs */
     .input-field {
       width: 100%;
       background: var(--bg-base);
       border: 1px solid var(--border-color-subtle);
-      border-radius: 8px;
-      padding: 10px 12px;
+      border-radius: 6px;
+      padding: 8px 10px;
       color: var(--text-main);
       font-family: var(--font-body);
-      font-size: 0.88rem;
-      margin-bottom: 12px;
+      font-size: 0.84rem;
+      margin-bottom: 10px;
       outline: none;
     }
     .input-field:focus { border-color: var(--gold-primary); }
 
-    /* Canvas for Confetti */
-    #confetti-canvas {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 999;
-    }
+    #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
   </style>
 </head>
 <body>
 
-  <!-- =========================================================================
-       1.5 SECONDS SPLASH SCREEN (360px X 640px)
-       ========================================================================= -->
+  <!-- Splash Screen (Auto-dismisses in 1.5s) -->
   <div id="splash-screen">
     <div class="splash-content">
       <img src="https://i.postimg.cc/MTzH0y82/LIGHTS-CAMERA-ACTION.gif" alt="Lights Camera Action" class="splash-gif">
     </div>
   </div>
 
-  <!-- Confetti Canvas -->
   <canvas id="confetti-canvas"></canvas>
 
   <!-- Sticky Universal Header -->
@@ -917,29 +573,29 @@
     <div class="header-stats">
       <div class="stat-badge badge-cash">
         <i class="fa-solid fa-coins"></i>
-        <span class="badge-val" id="stat-cash">₹20,00,00,000</span>
+        <span class="badge-val" id="stat-cash">₹50 Cr</span>
       </div>
       <div class="stat-badge">
         <i class="fa-solid fa-calendar-week"></i>
-        <span>Week <strong class="badge-val" id="stat-week">1</strong></span>
+        <span>W<strong class="badge-val" id="stat-week">1</strong></span>
       </div>
       <div class="stat-badge">
         <i class="fa-solid fa-trophy"></i>
-        <span class="badge-val" id="stat-rep">75</span> Rep
+        <span class="badge-val" id="stat-rep">75</span>
       </div>
     </div>
 
     <div class="header-actions">
-      <button class="btn-advance-week" id="btn-advance-week">
-        <i class="fa-solid fa-forward-step"></i> Advance Week
+      <button class="btn-advance-week" id="btn-advance-week" title="Advance Week">
+        <i class="fa-solid fa-forward-step"></i><span class="btn-text-full">Advance</span>
       </button>
-      <button class="btn-theme-toggle" id="btn-theme-toggle" title="Toggle Light/Dark Theme">
+      <button class="btn-theme-toggle" id="btn-theme-toggle" title="Toggle Theme">
         <i class="fa-solid fa-sun"></i>
       </button>
     </div>
   </header>
 
-  <!-- Universal Tab Navigation Bar (Including New "Studios" Tab) -->
+  <!-- Tab Bar -->
   <nav class="tab-nav">
     <button class="tab-btn active" data-tab="tab-dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</button>
     <button class="tab-btn" data-tab="tab-new-movie"><i class="fa-solid fa-clapperboard"></i> New Movie</button>
@@ -948,11 +604,10 @@
     <button class="tab-btn" data-tab="tab-franchises"><i class="fa-solid fa-sitemap"></i> Franchises</button>
     <button class="tab-btn" data-tab="tab-releases"><i class="fa-solid fa-compact-disc"></i> Filmography & 4K</button>
     <button class="tab-btn" data-tab="tab-stars"><i class="fa-solid fa-users-viewfinder"></i> Talent Pool</button>
-    <button class="tab-btn" data-tab="tab-calendar"><i class="fa-regular fa-calendar-days"></i> Box Office Slate</button>
-    <button class="tab-btn" data-tab="tab-finances"><i class="fa-solid fa-building-columns"></i> Finances & Loans</button>
+    <button class="tab-btn" data-tab="tab-calendar"><i class="fa-regular fa-calendar-days"></i> Slate</button>
+    <button class="tab-btn" data-tab="tab-finances"><i class="fa-solid fa-building-columns"></i> Finances</button>
   </nav>
 
-  <!-- Toast Notification System -->
   <div id="toast-container"></div>
 
   <!-- Primary Application Viewport -->
@@ -963,7 +618,7 @@
       <div class="metrics-grid">
         <div class="metric-box">
           <div class="metric-lbl">Studio Net Worth</div>
-          <div class="metric-num" id="dash-net-worth">₹20.00 Cr</div>
+          <div class="metric-num" id="dash-net-worth">₹50.00 Cr</div>
         </div>
         <div class="metric-box">
           <div class="metric-lbl">Total Theatrical Gross</div>
@@ -974,64 +629,49 @@
           <div class="metric-num" id="dash-released-count">0</div>
         </div>
         <div class="metric-box">
-          <div class="metric-lbl">Average Quality</div>
-          <div class="metric-num" id="dash-avg-quality">--</div>
+          <div class="metric-lbl">Awards Won</div>
+          <div class="metric-num" id="dash-awards-count" style="color:var(--gold-bright);">🏆 0</div>
         </div>
       </div>
 
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-fire"></i> Active Productions on Floor</span>
-          <button class="btn-gold" style="font-size:0.75rem; padding:4px 10px;" onclick="switchTab('tab-new-movie')">
-            <i class="fa-solid fa-plus"></i> Greenlight Film
+          <button class="btn-gold" style="font-size:0.72rem; padding:3px 8px;" onclick="switchTab('tab-new-movie')">
+            <i class="fa-solid fa-plus"></i> Greenlight
           </button>
         </div>
         <div id="dashboard-active-productions">
-          <p style="color:var(--text-muted); font-size:0.85rem;">No films currently on the floor. Go to "New Movie" to assemble your dream crew!</p>
+          <p style="color:var(--text-muted); font-size:0.8rem;">No films currently on the floor. Go to "New Movie" to assemble your dream project!</p>
         </div>
       </div>
 
       <div class="card">
         <div class="card-title"><i class="fa-solid fa-newspaper"></i> Bollywood Trade & Wire</div>
-        <div id="dashboard-news-feed" style="font-size:0.85rem; line-height:1.6; color:var(--text-muted);">
-          <div style="border-left:3px solid var(--gold-primary); padding-left:10px; margin-bottom:8px;">
-            <strong style="color:var(--text-main);">Trade Buzz:</strong> Multiplex chains report record weekend booking momentum for high-budget festival tentpoles.
+        <div id="dashboard-news-feed" style="font-size:0.8rem; line-height:1.5; color:var(--text-muted);">
+          <div style="border-left:3px solid var(--gold-primary); padding-left:8px; margin-bottom:6px;">
+            <strong style="color:var(--text-main);">Trade Rumor:</strong> Single-screen associations report high ticket demand for upcoming mass masala releases.
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. NEW MOVIE PIPELINE TAB (STEP-BY-STEP GUIDED WIZARD) -->
+    <!-- 2. NEW MOVIE PIPELINE TAB -->
     <section id="tab-new-movie" class="tab-view">
       <div class="card">
         <div class="card-title"><i class="fa-solid fa-clapperboard"></i> Filmmaking Pipeline Wizard</div>
 
-        <!-- Wizard Step Nodes Indicator -->
         <div class="wizard-steps-indicator" id="pipeline-steps-indicator">
-          <div class="wizard-step-node active" data-step="1">
-            <span class="step-circle">1</span> Script & Poster
-          </div>
-          <div class="wizard-step-node" data-step="2">
-            <span class="step-circle">2</span> Cast
-          </div>
-          <div class="wizard-step-node" data-step="3">
-            <span class="step-circle">3</span> Director
-          </div>
-          <div class="wizard-step-node" data-step="4">
-            <span class="step-circle">4</span> Music & Album
-          </div>
-          <div class="wizard-step-node" data-step="5">
-            <span class="step-circle">5</span> Rights Deals
-          </div>
-          <div class="wizard-step-node" data-step="6">
-            <span class="step-circle">6</span> Promotions
-          </div>
-          <div class="wizard-step-node" data-step="7">
-            <span class="step-circle">7</span> Release Slate
-          </div>
+          <div class="wizard-step-node active" data-step="1"><span class="step-circle">1</span> Script & Poster</div>
+          <div class="wizard-step-node" data-step="2"><span class="step-circle">2</span> Cast</div>
+          <div class="wizard-step-node" data-step="3"><span class="step-circle">3</span> Director</div>
+          <div class="wizard-step-node" data-step="4"><span class="step-circle">4</span> Music</div>
+          <div class="wizard-step-node" data-step="5"><span class="step-circle">5</span> Rights</div>
+          <div class="wizard-step-node" data-step="6"><span class="step-circle">6</span> Targeted Marketing</div>
+          <div class="wizard-step-node" data-step="7"><span class="step-circle">7</span> Slate</div>
         </div>
 
-        <!-- ==================== STEP 1: SCRIPT & POSTER ==================== -->
+        <!-- STEP 1: SCRIPT & POSTER -->
         <div class="pipeline-step-pane active" id="wizard-step-1">
           <div class="step-header-box">
             <span class="step-badge">Step 1 of 7</span>
@@ -1039,37 +679,35 @@
             <p class="step-subtext">Name your project, select the genre, and pick or upload poster artwork.</p>
           </div>
 
-          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
             <input type="text" id="movie-title" class="input-field" placeholder="Enter Project Title (e.g. Tiger Zinda Hai 2)" style="flex:1; margin-bottom:0;">
             <button class="btn-outline" id="btn-random-title"><i class="fa-solid fa-dice"></i> Random Title</button>
           </div>
 
-          <!-- Franchise Selector -->
-          <div style="display:flex; gap:14px; margin-bottom:14px; flex-wrap:wrap;">
-            <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+          <div style="display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
+            <label style="display:flex; align-items:center; gap:5px; font-size:0.8rem; cursor:pointer;">
               <input type="radio" name="movie-franchise-type" value="standalone" checked onchange="toggleFranchiseSelect(false)"> Standalone Film
             </label>
-            <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+            <label style="display:flex; align-items:center; gap:5px; font-size:0.8rem; cursor:pointer;">
               <input type="radio" name="movie-franchise-type" value="franchise" onchange="toggleFranchiseSelect(true)"> Part of Franchise
             </label>
           </div>
 
-          <div id="franchise-picker-container" style="display:none; margin-bottom:16px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <label style="font-size:0.8rem; font-weight:700;">Select Studio Universe:</label>
-              <button class="btn-outline" style="font-size:0.75rem; padding:3px 8px;" onclick="openCreateFranchiseModal()">
-                <i class="fa-solid fa-plus"></i> Create New Franchise
+          <div id="franchise-picker-container" style="display:none; margin-bottom:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <label style="font-size:0.75rem; font-weight:700;">Select Universe:</label>
+              <button class="btn-outline" style="font-size:0.7rem; padding:2px 6px;" onclick="openCreateFranchiseModal()">
+                <i class="fa-solid fa-plus"></i> Create Franchise
               </button>
             </div>
             <select id="movie-franchise-select" class="input-field"></select>
-            <div id="no-franchise-notice" style="display:none; font-size:0.75rem; color:var(--gold-bright); margin-top:-6px; margin-bottom:10px;">
-              No studio franchises created yet! Click "+ Create New Franchise" above to establish your universe.
+            <div id="no-franchise-notice" style="display:none; font-size:0.72rem; color:var(--gold-bright); margin-top:-4px;">
+              No studio franchises created yet! Click "+ Create Franchise" to begin.
             </div>
           </div>
 
-          <!-- Genre Selection (With Visual Click Highlighting) -->
-          <label style="font-size:0.8rem; font-weight:700;">Select Movie Genre:</label>
-          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; margin-bottom:16px;" id="genre-pills">
+          <label style="font-size:0.78rem; font-weight:700;">Select Genre:</label>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px; margin-bottom:14px;" id="genre-pills">
             <button class="interactive-pill active" data-genre="Action">Action</button>
             <button class="interactive-pill" data-genre="Romance">Romance</button>
             <button class="interactive-pill" data-genre="Drama">Drama</button>
@@ -1078,26 +716,23 @@
             <button class="interactive-pill" data-genre="Horror-Comedy">Horror-Comedy</button>
           </div>
 
-          <!-- Poster Upload / Selection -->
-          <label style="font-size:0.8rem; font-weight:700; margin-bottom:6px; display:block;">Select or Upload Movie Poster:</label>
-          <div style="margin-bottom:10px;">
+          <label style="font-size:0.78rem; font-weight:700; margin-bottom:4px; display:block;">Select or Upload Movie Poster:</label>
+          <div style="margin-bottom:8px;">
             <input type="file" id="poster-file-input" accept="image/*" style="display:none;" onchange="handlePosterUpload(event)">
-            <button class="btn-outline" style="font-size:0.8rem;" onclick="document.getElementById('poster-file-input').click()">
-              <i class="fa-solid fa-upload"></i> Upload Poster from Device
+            <button class="btn-outline" style="font-size:0.75rem;" onclick="document.getElementById('poster-file-input').click()">
+              <i class="fa-solid fa-upload"></i> Upload from Device
             </button>
           </div>
 
-          <!-- Custom Poster Container (Always Renders ABOVE Presets) -->
           <div id="user-uploaded-poster-box" class="user-uploaded-poster-container">
             <img id="user-uploaded-img" src="" alt="Custom Poster" class="uploaded-preview-thumb">
             <div>
-              <div style="font-weight:700; font-size:0.85rem; color:var(--gold-bright);">Custom Uploaded Poster Selected</div>
-              <div style="font-size:0.75rem; color:var(--text-muted);">This poster will represent your film across cinema halls, promotions, and box office lists.</div>
+              <div style="font-weight:700; font-size:0.8rem; color:var(--gold-bright);">Custom Uploaded Poster Selected</div>
+              <div style="font-size:0.7rem; color:var(--text-muted);">Will appear across all cinema runs, promotions, and dossiers.</div>
             </div>
           </div>
 
-          <!-- Presets Grid Below (Exact 5 Links) -->
-          <div class="tiles-grid" id="preset-posters-grid" style="grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));"></div>
+          <div class="tiles-grid" id="preset-posters-grid" style="grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));"></div>
 
           <div class="wizard-navigation-bar">
             <span></span>
@@ -1105,54 +740,49 @@
           </div>
         </div>
 
-        <!-- ==================== STEP 2: CAST SELECTION ==================== -->
+        <!-- STEP 2: CAST SELECTION -->
         <div class="pipeline-step-pane" id="wizard-step-2">
           <div class="step-header-box">
             <span class="step-badge">Step 2 of 7</span>
             <h3 class="step-heading">Star Cast & Ensemble</h3>
-            <p class="step-subtext">Tap an actor to select. 1st star defaults to <strong>Lead</strong>; others default to <strong>Supporting</strong>. Switch roles freely via the toggle pill!</p>
+            <p class="step-subtext">Tap an actor to select. 1st defaults to <strong>Lead</strong>; others to <strong>Supporting</strong>.</p>
           </div>
-
           <div class="tiles-grid" id="actors-selection-grid"></div>
-
           <div class="wizard-navigation-bar">
             <button class="btn-outline" onclick="goToStep(1)"><i class="fa-solid fa-arrow-left"></i> Back</button>
             <button class="btn-gold" onclick="goToStep(3)">Next: Choose Director <i class="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>
 
-        <!-- ==================== STEP 3: DIRECTOR SELECTION ==================== -->
+        <!-- STEP 3: DIRECTOR SELECTION -->
         <div class="pipeline-step-pane" id="wizard-step-3">
           <div class="step-header-box">
             <span class="step-badge">Step 3 of 7</span>
             <h3 class="step-heading">Director & Visionary</h3>
-            <p class="step-subtext">Select 1 director to helm the film. Director craft heavily influences final movie quality and word-of-mouth holds.</p>
+            <p class="step-subtext">Select 1 director. Affects critical reception, box office hold, and awards contention.</p>
           </div>
-
           <div class="tiles-grid" id="directors-selection-grid"></div>
-
           <div class="wizard-navigation-bar">
             <button class="btn-outline" onclick="goToStep(2)"><i class="fa-solid fa-arrow-left"></i> Back</button>
             <button class="btn-gold" onclick="goToStep(4)">Next: Music & Playback <i class="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>
 
-        <!-- ==================== STEP 4: MUSIC & ALBUM ==================== -->
+        <!-- STEP 4: MUSIC & ALBUM -->
         <div class="pipeline-step-pane" id="wizard-step-4">
           <div class="step-header-box">
             <span class="step-badge">Step 4 of 7</span>
             <h3 class="step-heading">Music Direction & Playback Album</h3>
-            <p class="step-subtext">Assemble your soundtrack. Big music albums drive massive pre-release music label advances.</p>
+            <p class="step-subtext">Select a music composer and playback singers.</p>
           </div>
 
-          <label style="font-size:0.8rem; font-weight:700;">Select Music Composer:</label>
+          <label style="font-size:0.78rem; font-weight:700;">Select Music Composer:</label>
           <div class="tiles-grid" id="composers-selection-grid"></div>
 
-          <!-- Song Count Pills (With Visual Click Highlighting) -->
-          <div style="margin-top:16px; margin-bottom:12px;">
-            <label style="font-size:0.8rem; font-weight:700;">Number of Original Songs in Album:</label>
-            <div style="display:flex; gap:8px; margin-top:6px; flex-wrap:wrap;" id="song-count-pills">
-              <button class="interactive-pill" data-count="0">0 (Songless Film)</button>
+          <div style="margin-top:12px; margin-bottom:10px;">
+            <label style="font-size:0.78rem; font-weight:700;">Number of Original Songs:</label>
+            <div style="display:flex; gap:6px; margin-top:4px; flex-wrap:wrap;" id="song-count-pills">
+              <button class="interactive-pill" data-count="0">0 (Songless)</button>
               <button class="interactive-pill" data-count="1">1 Track</button>
               <button class="interactive-pill active" data-count="2">2 Tracks</button>
               <button class="interactive-pill" data-count="3">3 Tracks</button>
@@ -1160,7 +790,7 @@
             </div>
           </div>
 
-          <label style="font-size:0.8rem; font-weight:700;">Select Playback Singers (Can select multiple):</label>
+          <label style="font-size:0.78rem; font-weight:700;">Select Playback Singers:</label>
           <div class="tiles-grid" id="singers-selection-grid"></div>
 
           <div class="wizard-navigation-bar">
@@ -1169,38 +799,47 @@
           </div>
         </div>
 
-        <!-- ==================== STEP 5: PRE-RELEASE RIGHTS DEALS ==================== -->
+        <!-- STEP 5: RIGHTS DEALS -->
         <div class="pipeline-step-pane" id="wizard-step-5">
           <div class="step-header-box">
             <span class="step-badge">Step 5 of 7</span>
-            <h3 class="step-heading">Pre-Release Rights Sales (Guaranteed Inflow)</h3>
-            <p class="step-subtext">Lock in upfront deals for Music, OTT streaming, and Satellite TV to offset your production budget.</p>
+            <h3 class="step-heading">Pre-Release Rights (Guaranteed Inflow)</h3>
+            <p class="step-subtext">Lock in upfront deals for Music, OTT streaming, and Satellite broadcast.</p>
           </div>
 
-          <label style="font-size:0.8rem; font-weight:700;">Music Rights Partner (Advance Cash):</label>
+          <label style="font-size:0.78rem; font-weight:700;">Music Rights Partner:</label>
           <div class="brand-tiles-grid" id="music-rights-grid"></div>
 
-          <label style="font-size:0.8rem; font-weight:700; margin-top:16px; display:block;">Worldwide Digital Streaming Rights (OTT Deal):</label>
+          <label style="font-size:0.78rem; font-weight:700; margin-top:12px; display:block;">Worldwide Digital Streaming Rights (OTT):</label>
           <div class="brand-tiles-grid" id="ott-rights-grid"></div>
 
-          <label style="font-size:0.8rem; font-weight:700; margin-top:16px; display:block;">Satellite TV Broadcast Rights:</label>
+          <label style="font-size:0.78rem; font-weight:700; margin-top:12px; display:block;">Satellite TV Broadcast Rights:</label>
           <div class="brand-tiles-grid" id="satellite-rights-grid"></div>
 
           <div class="wizard-navigation-bar">
             <button class="btn-outline" onclick="goToStep(4)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(6)">Next: Promotions <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn-gold" onclick="goToStep(6)">Next: Targeted Marketing <i class="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>
 
-        <!-- ==================== STEP 6: MARKETING & PROMOTIONS ==================== -->
+        <!-- STEP 6: TARGETED MARKETING -->
         <div class="pipeline-step-pane" id="wizard-step-6">
           <div class="step-header-box">
             <span class="step-badge">Step 6 of 7</span>
-            <h3 class="step-heading">Promotional Campaigns & Hype Assets</h3>
-            <p class="step-subtext">Pick teaser launches, trailer reveals, and ground tours to drive high day-one box office occupancy.</p>
+            <h3 class="step-heading">Targeted Marketing Campaigns</h3>
+            <p class="step-subtext">Select specific promotion channels across Print, Broadcast, Theatres, Press Meets, and Events.</p>
           </div>
 
-          <div class="tiles-grid" id="marketing-campaigns-grid" style="grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));"></div>
+          <div class="marketing-filters-bar" id="marketing-filters">
+            <button class="interactive-pill active" onclick="filterMarketing('all', this)">All (26)</button>
+            <button class="interactive-pill" onclick="filterMarketing('Traditional', this)">Print & Outdoor</button>
+            <button class="interactive-pill" onclick="filterMarketing('Digital', this)">Digital & TV</button>
+            <button class="interactive-pill" onclick="filterMarketing('Theatrical', this)">Cinema Trailers</button>
+            <button class="interactive-pill" onclick="filterMarketing('Press', this)">Press Meets</button>
+            <button class="interactive-pill" onclick="filterMarketing('Grand', this)">Grand Events</button>
+          </div>
+
+          <div class="tiles-grid" id="marketing-campaigns-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));"></div>
 
           <div class="wizard-navigation-bar">
             <button class="btn-outline" onclick="goToStep(5)"><i class="fa-solid fa-arrow-left"></i> Back</button>
@@ -1208,19 +847,19 @@
           </div>
         </div>
 
-        <!-- ==================== STEP 7: RELEASE WINDOW & GREENLIGHT ==================== -->
+        <!-- STEP 7: RELEASE WINDOW & GREENLIGHT -->
         <div class="pipeline-step-pane" id="wizard-step-7">
           <div class="step-header-box">
             <span class="step-badge">Step 7 of 7</span>
             <h3 class="step-heading">Theatrical Release Window (Weeks 2 to 30)</h3>
-            <p class="step-subtext">Select your target release week. Target festivals (Diwali, Eid, Republic Day) to leverage 40%+ holiday footfall surges!</p>
+            <p class="step-subtext">Choose your release week. Festivals (Diwali, Eid, Republic Day) yield massive holiday surges.</p>
           </div>
 
           <div class="week-tiles-grid" id="release-week-grid"></div>
 
           <div class="wizard-navigation-bar">
             <button class="btn-outline" onclick="goToStep(6)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" id="btn-confirm-production" style="padding:10px 24px; font-size:0.92rem;">
+            <button class="btn-gold" id="btn-confirm-production" style="padding:8px 20px; font-size:0.86rem;">
               <i class="fa-solid fa-rocket"></i> Launch Production
             </button>
           </div>
@@ -1229,15 +868,15 @@
         <!-- Dual Live Costing & Earnings HUD -->
         <div class="cost-inflow-hud">
           <div class="hud-stat-col">
-            <span class="hud-label">Total Production & Promo Cost</span>
+            <span class="hud-label">Budget & Promos</span>
             <span class="hud-val cost" id="hud-total-cost">₹0</span>
           </div>
           <div class="hud-stat-col">
-            <span class="hud-label">Guaranteed Pre-Release Rights</span>
+            <span class="hud-label">Rights Recoveries</span>
             <span class="hud-val inflow" id="hud-total-inflow">₹0</span>
           </div>
           <div class="hud-stat-col">
-            <span class="hud-label">Net Studio Outlay</span>
+            <span class="hud-label">Net Outlay</span>
             <span class="hud-val net" id="hud-net-outlay">₹0</span>
           </div>
         </div>
@@ -1249,25 +888,22 @@
     <section id="tab-theatre-runs" class="tab-view">
       <div class="card">
         <div class="card-title">
-          <span><i class="fa-solid fa-ticket"></i> Live Theatrical Runs & Multiplex Collections</span>
-          <span style="font-size:0.8rem; color:var(--text-muted);">Collections accrue each week you advance</span>
+          <span><i class="fa-solid fa-ticket"></i> Live Theatrical Runs</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">Tap film to view full trade dossier</span>
         </div>
         <div id="theatrical-runs-container">
-          <p style="color:var(--text-muted); font-size:0.85rem;">No films currently running in cinema halls. Launch a movie in "New Movie" to witness its box office trajectory!</p>
+          <p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in cinema halls. Launch a movie in "New Movie" to witness its box office trajectory!</p>
         </div>
       </div>
     </section>
 
-    <!-- 4. NEW: STUDIOS INTELLIGENCE TAB (RIVAL STUDIOS & COMPARISONS) -->
+    <!-- 4. STUDIOS INTELLIGENCE TAB -->
     <section id="tab-studios" class="tab-view">
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-building"></i> Bollywood Studios & Competitor Intelligence</span>
-          <span style="font-size:0.8rem; color:var(--text-muted);">Live Industry Capital & Fame Rankings</span>
         </div>
-        <div class="studios-intel-grid" id="studios-intel-grid">
-          <!-- Populated by JS -->
-        </div>
+        <div class="studios-intel-grid" id="studios-intel-grid"></div>
       </div>
     </section>
 
@@ -1275,23 +911,21 @@
     <section id="tab-franchises" class="tab-view">
       <div class="card">
         <div class="card-title">
-          <span><i class="fa-solid fa-sitemap"></i> Studio Franchises & Universes</span>
-          <button class="btn-gold" onclick="openCreateFranchiseModal()"><i class="fa-solid fa-plus"></i> New Franchise</button>
+          <span><i class="fa-solid fa-sitemap"></i> Studio Universes</span>
+          <button class="btn-gold" style="font-size:0.72rem; padding:3px 8px;" onclick="openCreateFranchiseModal()"><i class="fa-solid fa-plus"></i> New Franchise</button>
         </div>
-        <div id="studio-franchises-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:12px; margin-bottom:20px;">
-          <!-- Empty by default -->
-        </div>
+        <div id="studio-franchises-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:10px; margin-bottom:16px;"></div>
 
-        <div class="card-title" style="margin-top:20px;"><i class="fa-solid fa-ranking-star"></i> Pan-India Top 100 Franchise Leaderboard</div>
+        <div class="card-title" style="margin-top:14px;"><i class="fa-solid fa-ranking-star"></i> Pan-India Top 100 Franchise Leaderboard</div>
         <div style="overflow-x:auto;">
-          <table style="width:100%; border-collapse:collapse; font-size:0.82rem; text-align:left;">
+          <table style="width:100%; border-collapse:collapse; font-size:0.78rem; text-align:left;">
             <thead>
               <tr style="border-bottom:1px solid var(--border-color); color:var(--gold-bright);">
-                <th style="padding:8px;">Rank</th>
-                <th style="padding:8px;">Franchise Universe</th>
-                <th style="padding:8px;">Films</th>
-                <th style="padding:8px;">Cumulative Gross</th>
-                <th style="padding:8px;">Prestige</th>
+                <th style="padding:6px;">Rank</th>
+                <th style="padding:6px;">Franchise</th>
+                <th style="padding:6px;">Films</th>
+                <th style="padding:6px;">Gross</th>
+                <th style="padding:6px;">Prestige</th>
               </tr>
             </thead>
             <tbody id="pan-india-franchise-tbody"></tbody>
@@ -1303,9 +937,12 @@
     <!-- 6. FILMOGRAPHY & 4K RE-RELEASE TAB -->
     <section id="tab-releases" class="tab-view">
       <div class="card">
-        <div class="card-title"><i class="fa-solid fa-compact-disc"></i> Studio Filmography & 4K Remaster Re-Releases</div>
+        <div class="card-title">
+          <span><i class="fa-solid fa-compact-disc"></i> Studio Filmography & 4K Remasters</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">Tap film to view complete dossier</span>
+        </div>
         <div id="releases-filmography-container">
-          <p style="color:var(--text-muted); font-size:0.85rem;">No movies archived yet. Release films to unlock 4K remaster re-release privileges!</p>
+          <p style="color:var(--text-muted); font-size:0.8rem;">No movies archived yet. Release films to unlock 4K remaster re-release privileges!</p>
         </div>
       </div>
     </section>
@@ -1333,21 +970,21 @@
         <div class="metrics-grid">
           <div class="metric-box">
             <div class="metric-lbl">Available Cash</div>
-            <div class="metric-num" id="fin-cash">₹20,00,00,000</div>
+            <div class="metric-num" id="fin-cash">₹50 Cr</div>
           </div>
           <div class="metric-box">
             <div class="metric-lbl">Outstanding Debt</div>
             <div class="metric-num" id="fin-debt">₹0</div>
           </div>
           <div class="metric-box">
-            <div class="metric-lbl">Weekly Interest Burn</div>
+            <div class="metric-lbl">Weekly Interest</div>
             <div class="metric-num" id="fin-interest">₹0 /wk</div>
           </div>
         </div>
 
-        <div style="margin-top:16px;">
-          <label style="font-size:0.82rem; font-weight:700; color:var(--gold-bright);">Take Instant Studio Loan (Max ₹500 Crores at 1.5% weekly interest):</label>
-          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+        <div style="margin-top:12px;">
+          <label style="font-size:0.78rem; font-weight:700; color:var(--gold-bright);">Take Studio Loan (1.5% weekly interest):</label>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;">
             <button class="btn-gold" onclick="takeStudioLoan(100000000)"><i class="fa-solid fa-hand-holding-dollar"></i> Borrow ₹10 Cr</button>
             <button class="btn-gold" onclick="takeStudioLoan(500000000)"><i class="fa-solid fa-hand-holding-dollar"></i> Borrow ₹50 Cr</button>
             <button class="btn-gold" onclick="takeStudioLoan(1000000000)"><i class="fa-solid fa-hand-holding-dollar"></i> Borrow ₹100 Cr</button>
@@ -1356,7 +993,7 @@
           </div>
         </div>
 
-        <div style="margin-top:20px; padding-top:14px; border-top:1px dashed var(--border-color-subtle); display:flex; gap:10px; flex-wrap:wrap;">
+        <div style="margin-top:16px; padding-top:10px; border-top:1px dashed var(--border-color-subtle); display:flex; gap:8px; flex-wrap:wrap;">
           <button class="btn-outline" onclick="repayPartialLoan(500000000)"><i class="fa-solid fa-money-bill-transfer"></i> Repay ₹50 Cr</button>
           <button class="btn-outline" onclick="repayStudioLoan()"><i class="fa-solid fa-check-double"></i> Repay All Debt</button>
         </div>
@@ -1365,20 +1002,20 @@
 
   </main>
 
-  <!-- MODAL: FIRST TIME STUDIO ONBOARDING (NAME & STARTING CAPITAL) -->
+  <!-- MODAL: ONBOARDING -->
   <div class="modal-overlay" id="modal-onboarding">
     <div class="modal-window">
-      <div style="text-align:center; margin-bottom:16px;">
-        <i class="fa-solid fa-clapperboard" style="font-size:2.4rem; color:var(--gold-bright); margin-bottom:8px;"></i>
-        <h2 style="font-family:var(--font-display); color:var(--gold-bright);">Establish Your Movie Studio</h2>
-        <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Welcome to Bollywood Tycoon! Name your studio and choose your starting capital.</p>
+      <div style="text-align:center; margin-bottom:14px;">
+        <i class="fa-solid fa-clapperboard" style="font-size:2rem; color:var(--gold-bright); margin-bottom:6px;"></i>
+        <h2 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.2rem;">Establish Your Movie Studio</h2>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Name your studio and choose your starting treasury funds.</p>
       </div>
 
-      <label style="font-size:0.8rem; font-weight:700; color:var(--text-main); margin-bottom:6px; display:block;">Studio Name:</label>
-      <input type="text" id="onboard-studio-name" class="input-field" placeholder="e.g. Yash Raj Studios, Dharma Empire, Apex Films" value="">
+      <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">Studio Name:</label>
+      <input type="text" id="onboard-studio-name" class="input-field" placeholder="e.g. Lila Productions, Apex Films" value="">
 
-      <label style="font-size:0.8rem; font-weight:700; color:var(--text-main); margin-bottom:8px; display:block;">Select Starting Capital:</label>
-      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;" id="onboard-capital-options">
+      <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:6px; display:block;">Starting Capital:</label>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;" id="onboard-capital-options">
         <button class="interactive-pill" data-amount="100000000">₹10 Crores</button>
         <button class="interactive-pill active" data-amount="500000000">₹50 Crores</button>
         <button class="interactive-pill" data-amount="1000000000">₹100 Crores</button>
@@ -1386,44 +1023,54 @@
         <button class="interactive-pill" data-amount="10000000000">₹1,000 Crores</button>
       </div>
 
-      <button class="btn-gold" style="width:100%; justify-content:center; padding:12px;" onclick="confirmStudioOnboarding()">
-        <i class="fa-solid fa-film"></i> Begin Studio Empire
+      <button class="btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="confirmStudioOnboarding()">
+        <i class="fa-solid fa-film"></i> Launch Studio Empire
       </button>
     </div>
   </div>
 
-  <!-- MODAL: CREATE FRANCHISE -->
+  <!-- MODAL: FRANCHISE -->
   <div class="modal-overlay" id="modal-franchise">
     <div class="modal-window">
-      <h3 style="font-family:var(--font-display); color:var(--gold-bright); margin-bottom:12px;">Create New Studio Franchise</h3>
+      <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem; margin-bottom:10px;">Create New Studio Universe</h3>
       <input type="text" id="new-franchise-name" class="input-field" placeholder="Franchise Name (e.g. Spy Universe, Cop Universe)">
-      <textarea id="new-franchise-desc" class="input-field" rows="3" placeholder="Franchise Lore & Theme (e.g. High-tech espionage thriller franchise)"></textarea>
-      <div style="display:flex; justify-content:flex-end; gap:8px;">
+      <textarea id="new-franchise-desc" class="input-field" rows="3" placeholder="Franchise Lore & Theme"></textarea>
+      <div style="display:flex; justify-content:flex-end; gap:6px;">
         <button class="btn-outline" onclick="closeCreateFranchiseModal()">Cancel</button>
         <button class="btn-gold" onclick="confirmCreateFranchise()">Register Franchise</button>
       </div>
     </div>
   </div>
 
+  <!-- MODAL: MOVIE DOSSIER -->
+  <div class="modal-overlay" id="modal-dossier">
+    <div class="modal-window" id="modal-dossier-window" style="max-width:580px;"></div>
+  </div>
+
   <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.06 — CORE ENGINE
+       BOLLYWOOD CINEMA v1.07 — CORE LOGIC
        ========================================================================= */
 
-    // 1. Splash Screen Timing (Auto-dismiss in 1.5 seconds)
-    window.addEventListener("DOMContentLoaded", () => {
-      setTimeout(() => {
-        const splash = document.getElementById("splash-screen");
-        if (splash) splash.classList.add("hidden");
-
-        // Check if first-time user
-        if (!localStorage.getItem("bollywood_tycoon_v106_initialized")) {
-          document.getElementById("modal-onboarding").classList.add("active");
+    // Bulletproof splash screen dismisser
+    function dismissSplash() {
+      const splash = document.getElementById("splash-screen");
+      if (splash && !splash.classList.contains("hidden")) {
+        splash.classList.add("hidden");
+        if (!localStorage.getItem("bollywood_tycoon_v107_init")) {
+          const modal = document.getElementById("modal-onboarding");
+          if (modal) modal.classList.add("active");
         }
-      }, 1500);
-    });
+      }
+    }
 
-    // 2. Exact Updated Preset Posters
+    setTimeout(dismissSplash, 1500);
+    window.addEventListener("click", () => {
+      const splash = document.getElementById("splash-screen");
+      if (splash && !splash.classList.contains("hidden")) dismissSplash();
+    }, { once: true });
+
+    // 5 Preset Posters
     const POSTER_PRESETS = [
       "https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/23/10/06%20-%20Back%20to%20the%20Future.jpg",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIzPIdlkeF8KP43A8C42mpSM9HSxaiEvmSa8MoBdknGKCnqbNidzhnhgc&s=10",
@@ -1432,7 +1079,7 @@
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA_K8v8EwFKo8WgZYr7ZZItUSqdb6Az2lHzb6O8Jxw7w&s=10"
     ];
 
-    // 3. Creative Datasets
+    // Creative Data
     const REAL_DIRECTORS = [
       { id: "dir_hirani", name: "Rajkumar Hirani", photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtWXrrDG1kiC5p2dk66JCTl0PMyBNpYOYFV9ZbQi6PaS0N73jGOFKgZYw&s=10", skill: 98, fee: 300000000, style: "Feel-Good 100% Hit Ratio" },
       { id: "dir_rajamouli", name: "S.S. Rajamouli", photo: "https://i.pinimg.com/736x/f2/93/67/f2936791a5a8de161a27d4e20409dd15.jpg", skill: 99, fee: 500000000, style: "Pan-India Mythological Spectacles" },
@@ -1492,12 +1139,11 @@
       { id: "sng_badshah", name: "Badshah", photo: "https://m.media-amazon.com/images/M/MV5BNjdlM2Q1ZDgtYjUzOC00ZmIyLWE2YTEtYWJlZDQ5NTM4ODE1XkEyXkFqcGc@._V1_.jpg", skill: 88, fee: 2000000, buzz: 34 }
     ];
 
-    // Distribution Partners & Logos
     const MUSIC_LABELS = [
-      { id: "tseries", name: "T-Series", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-kB66e_3TTITEHRMQKX5qZqNCygVnO6xSOxlbn3a1GQ&s=10", baseAdvance: 150000000, multiplier: 1.25 },
-      { id: "sonymusic", name: "Sony Music", logo: "https://images.seeklogo.com/logo-png/26/1/sony-music-logo-png_seeklogo-261658.png", baseAdvance: 120000000, multiplier: 1.15 },
-      { id: "yrfmusic", name: "YRF Music", logo: "https://static.wikia.nocookie.net/logopedia/images/a/a0/Yash_Raj_Films_Logo_Symbol.svg/revision/latest/scale-to-width-down/250?cb=20250404015008", baseAdvance: 140000000, multiplier: 1.2 },
-      { id: "saregama", name: "Saregama", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCmcL_dl7IGqGbugQN-jIQF8W-ADuvbNaP41du-tG-_s-TQsE7Hj-j1DZk&s=10", baseAdvance: 100000000, multiplier: 1.1 }
+      { id: "tseries", name: "T-Series", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-kB66e_3TTITEHRMQKX5qZqNCygVnO6xSOxlbn3a1GQ&s=10", baseAdvance: 150000000 },
+      { id: "sonymusic", name: "Sony Music", logo: "https://images.seeklogo.com/logo-png/26/1/sony-music-logo-png_seeklogo-261658.png", baseAdvance: 120000000 },
+      { id: "yrfmusic", name: "YRF Music", logo: "https://static.wikia.nocookie.net/logopedia/images/a/a0/Yash_Raj_Films_Logo_Symbol.svg/revision/latest/scale-to-width-down/250?cb=20250404015008", baseAdvance: 140000000 },
+      { id: "saregama", name: "Saregama", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCmcL_dl7IGqGbugQN-jIQF8W-ADuvbNaP41du-tG-_s-TQsE7Hj-j1DZk&s=10", baseAdvance: 100000000 }
     ];
 
     const OTT_PLATFORMS = [
@@ -1515,16 +1161,36 @@
       { id: "colorstvb", name: "Colors Cineplex", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeqXrC15ArSmDq9-1zD2IyHgJHTULk5rsoYNOoi_LeK9grAEBq1Dtgmk0&s=10", baseAdvance: 100000000, mult: 1.05 }
     ];
 
-    const PROMO_CAMPAIGNS = [
-      { id: "p_teaser_dig", name: "Digital Teaser Drop", fee: 10000000, hype: 12, cat: "Teaser" },
-      { id: "p_teaser_hotel", name: "5-Star Hotel Press Teaser", fee: 25000000, hype: 24, cat: "Teaser" },
-      { id: "p_trailer_dig", name: "Digital Trailer Launch", fee: 30000000, hype: 30, cat: "Trailer" },
-      { id: "p_trailer_burj", name: "Burj Khalifa Trailer Projection", fee: 80000000, hype: 65, cat: "Trailer" },
-      { id: "p_music_video", name: "Grand Dance Music Video", fee: 35000000, hype: 32, cat: "Music" },
-      { id: "p_city_tour", name: "10-City Mall & College Tour", fee: 40000000, hype: 38, cat: "Ground" }
+    // All 26 Targeted Marketing Channels
+    const TARGETED_MARKETING = [
+      { id: "m_news", name: "Newspaper Full-Page Spread", fee: 8000000, hype: 10, cat: "Traditional" },
+      { id: "m_mag", name: "Magazine Cover & Story", fee: 4000000, hype: 6, cat: "Traditional" },
+      { id: "m_billboards", name: "Highway & Metro Billboards", fee: 18000000, hype: 20, cat: "Traditional" },
+      { id: "m_radio", name: "Radio Jingle Blitz (FM)", fee: 6000000, hype: 8, cat: "Traditional" },
+      { id: "m_net_tv", name: "Network TV Prime-Time Ads", fee: 25000000, hype: 28, cat: "Digital" },
+      { id: "m_cable_tv", name: "Cable TV Niche Coverage", fee: 10000000, hype: 12, cat: "Digital" },
+      { id: "m_stream_ads", name: "Streaming Platforms Pre-Roll", fee: 15000000, hype: 18, cat: "Digital" },
+      { id: "m_social", name: "Social Media Trend Storm", fee: 12000000, hype: 16, cat: "Digital" },
+      { id: "m_mobile", name: "Mobile App Ads Blitz", fee: 8000000, hype: 10, cat: "Digital" },
+      { id: "m_desktop", name: "Desktop Web Banners", fee: 5000000, hype: 7, cat: "Digital" },
+      { id: "m_general_promo", name: "Brand Tie-in Promotions", fee: 14000000, hype: 15, cat: "Digital" },
+      { id: "m_trl_tiny", name: "Trailers (Tiny Theatres)", fee: 3000000, hype: 4, cat: "Theatrical" },
+      { id: "m_trl_small", name: "Trailers (Small Theatres)", fee: 6000000, hype: 8, cat: "Theatrical" },
+      { id: "m_trl_med", name: "Trailer (Medium Theatres)", fee: 12000000, hype: 15, cat: "Theatrical" },
+      { id: "m_trl_large", name: "Trailers (Large Theatres)", fee: 24000000, hype: 28, cat: "Theatrical" },
+      { id: "m_press_small", name: "Press Conf (Small Hotel)", fee: 2000000, hype: 4, cat: "Press" },
+      { id: "m_press_med", name: "Press Conf (Medium Hotel)", fee: 5000000, hype: 8, cat: "Press" },
+      { id: "m_press_large", name: "Press Conf (Large Hotel)", fee: 10000000, hype: 14, cat: "Press" },
+      { id: "m_press_5star", name: "Press Conf (5-Star Hotel)", fee: 20000000, hype: 22, cat: "Press" },
+      { id: "m_press_resort", name: "Press Conf (Resort Hotel)", fee: 28000000, hype: 30, cat: "Press" },
+      { id: "m_dig_teaser", name: "Digital Teaser Drop", fee: 10000000, hype: 14, cat: "Grand" },
+      { id: "m_5star_teaser", name: "5-Star Hotel Press Teaser", fee: 22000000, hype: 26, cat: "Grand" },
+      { id: "m_dig_trailer", name: "Digital Trailer Launch", fee: 30000000, hype: 35, cat: "Grand" },
+      { id: "m_burj_khalifa", name: "Burj Khalifa Trailer Projection", fee: 80000000, hype: 75, cat: "Grand" },
+      { id: "m_grand_song", name: "Grand Dance Music Video", fee: 35000000, hype: 34, cat: "Grand" },
+      { id: "m_10city_tour", name: "10 Cities Mall & College Tour", fee: 40000000, hype: 40, cat: "Grand" }
     ];
 
-    // Rival Competitor Studios Roster
     const COMPETITOR_STUDIOS = [
       { id: "yrf", name: "Yash Raj Films (YRF)", boss: "Aditya Chopra", capital: 45000000000, films: 78, fame: 99, slate: "War 2, Alpha, Pathaan 2" },
       { id: "dharma", name: "Dharma Productions", boss: "Karan Johar", capital: 22000000000, films: 52, fame: 95, slate: "Brahmastra Part 2, Jigra 2" },
@@ -1545,13 +1211,14 @@
       { name: "Astraverse", studio: "Dharma Productions", films: 1, gross: 4300000000, rating: 84 }
     ];
 
-    // 4. Tycoon State
+    // State Variables
     let GAME_STATE = {
       studioName: "LILA PRODUCTIONS",
-      cash: 500000000, // ₹50 Cr default initial
+      cash: 500000000,
       week: 1,
       reputation: 75,
       debt: 0,
+      totalAwardsWon: 0,
       activeProductions: [],
       theatreRuns: [],
       releasedMovies: [],
@@ -1560,6 +1227,7 @@
 
     let SELECTED_ONBOARD_CAPITAL = 500000000;
     let CURRENT_WIZARD_STEP = 1;
+    let CURRENT_MARKETING_FILTER = "all";
 
     let CURRENT_DRAFT = {
       title: "",
@@ -1575,35 +1243,31 @@
       musicRightsId: "tseries",
       ottRightsId: "netflix",
       satelliteRightsId: "stargold",
-      promos: ["p_teaser_dig", "p_trailer_dig"],
+      promos: ["m_dig_teaser", "m_dig_trailer"],
       releaseWeekOffset: 3
     };
 
-    /* =========================================================================
-       INITIALIZATION & INTERACTIVE PILLS SETUP
-       ========================================================================= */
-
     window.addEventListener("DOMContentLoaded", () => {
-      loadSaveState();
-      initUI();
-      renderAll();
+      try {
+        loadSaveState();
+        initUI();
+        renderAll();
+      } catch (err) {
+        console.error("Initialization error:", err);
+      } finally {
+        setTimeout(dismissSplash, 1500);
+      }
     });
 
     function initUI() {
-      // Tab Navigation Delegation
       document.querySelectorAll(".tab-btn").forEach(btn => {
         btn.addEventListener("click", () => switchTab(btn.dataset.tab));
       });
 
-      // Wizard Step Nodes Navigation
       document.querySelectorAll(".wizard-step-node").forEach(node => {
-        node.addEventListener("click", () => {
-          const step = parseInt(node.dataset.step);
-          goToStep(step);
-        });
+        node.addEventListener("click", () => goToStep(parseInt(node.dataset.step)));
       });
 
-      // Studio Name Header Editor
       const nameInput = document.getElementById("studio-name-display");
       nameInput.value = GAME_STATE.studioName;
       nameInput.addEventListener("change", (e) => {
@@ -1613,19 +1277,14 @@
         showToast("Studio name updated!", "success");
       });
 
-      // Advance Week
       document.getElementById("btn-advance-week").addEventListener("click", advanceWeek);
-
-      // Light/Dark Theme Toggle
       document.getElementById("btn-theme-toggle").addEventListener("click", toggleTheme);
 
-      // Random Title Generator
       document.getElementById("btn-random-title").addEventListener("click", () => {
-        const adjectives = ["Brahmastra", "Pathaan", "Singham", "War", "Don", "Dhoom", "Kabir", "Jawan", "Animal", "Tiger"];
-        const suffixes = ["Returns", "Reloaded", "Chapter 2", "The Final Mission", "Ka Badla", "Reborn", "Unleashed"];
-        const title = adjectives[Math.floor(Math.random() * adjectives.length)] + " " + suffixes[Math.floor(Math.random() * suffixes.length)];
-        document.getElementById("movie-title").value = title;
-        CURRENT_DRAFT.title = title;
+        const titles = ["Tiger 4", "War 3", "Brahmastra 2", "Don 3", "Dhoom 4", "Singham Again 2", "Animal Reborn", "Jawan Chapter 2"];
+        const chosen = titles[Math.floor(Math.random() * titles.length)];
+        document.getElementById("movie-title").value = chosen;
+        CURRENT_DRAFT.title = chosen;
         updateCostHUD();
       });
 
@@ -1633,7 +1292,6 @@
         CURRENT_DRAFT.title = e.target.value;
       });
 
-      // FIX: GENRE PILLS CLICK FEEDBACK
       document.querySelectorAll("#genre-pills .interactive-pill").forEach(p => {
         p.addEventListener("click", () => {
           document.querySelectorAll("#genre-pills .interactive-pill").forEach(x => x.classList.remove("active"));
@@ -1643,7 +1301,6 @@
         });
       });
 
-      // FIX: SONG COUNT PILLS CLICK FEEDBACK
       document.querySelectorAll("#song-count-pills .interactive-pill").forEach(p => {
         p.addEventListener("click", () => {
           document.querySelectorAll("#song-count-pills .interactive-pill").forEach(x => x.classList.remove("active"));
@@ -1653,7 +1310,6 @@
         });
       });
 
-      // ONBOARDING CAPITAL CHOICES
       document.querySelectorAll("#onboard-capital-options .interactive-pill").forEach(p => {
         p.addEventListener("click", () => {
           document.querySelectorAll("#onboard-capital-options .interactive-pill").forEach(x => x.classList.remove("active"));
@@ -1662,10 +1318,7 @@
         });
       });
 
-      // Launch Production Button
       document.getElementById("btn-confirm-production").addEventListener("click", greenlightFilm);
-
-      // Web Audio Synthesizer
       document.addEventListener("click", playHaptic);
     }
 
@@ -1682,55 +1335,37 @@
       document.getElementById("btn-theme-toggle").innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
     }
 
-    // Studio Onboarding Confirmation
     function confirmStudioOnboarding() {
       const chosenName = document.getElementById("onboard-studio-name").value.trim() || "LILA PRODUCTIONS";
       GAME_STATE.studioName = chosenName;
       GAME_STATE.cash = SELECTED_ONBOARD_CAPITAL;
-      localStorage.setItem("bollywood_tycoon_v106_initialized", "true");
+      localStorage.setItem("bollywood_tycoon_v107_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
       updateHeaderStats();
       renderStudiosIntel();
-      showToast(`🎬 Welcome! ${chosenName} founded with ${formatINR(SELECTED_ONBOARD_CAPITAL)}!`, "success");
+      showToast(`🎬 Founded with ${formatINR(SELECTED_ONBOARD_CAPITAL)}!`, "success");
       triggerConfetti();
     }
 
-    /* =========================================================================
-       WIZARD STEP NAVIGATION ENGINE
-       ========================================================================= */
-
     function goToStep(stepNumber) {
       if (stepNumber < 1 || stepNumber > 7) return;
-
-      if (stepNumber > 1 && CURRENT_WIZARD_STEP === 1) {
-        if (!CURRENT_DRAFT.title.trim()) {
-          showToast("Please enter a project title before proceeding!", "error");
-          return;
-        }
+      if (stepNumber > 1 && CURRENT_WIZARD_STEP === 1 && !CURRENT_DRAFT.title.trim()) {
+        showToast("Please enter a project title!", "error");
+        return;
       }
-
       CURRENT_WIZARD_STEP = stepNumber;
-
       document.querySelectorAll(".wizard-step-node").forEach(node => {
         const step = parseInt(node.dataset.step);
         node.classList.toggle("active", step === CURRENT_WIZARD_STEP);
         node.classList.toggle("completed", step < CURRENT_WIZARD_STEP);
       });
-
-      document.querySelectorAll(".pipeline-step-pane").forEach(pane => {
-        pane.classList.remove("active");
-      });
+      document.querySelectorAll(".pipeline-step-pane").forEach(pane => pane.classList.remove("active"));
       const activePane = document.getElementById(`wizard-step-${CURRENT_WIZARD_STEP}`);
       if (activePane) activePane.classList.add("active");
-
-      window.scrollTo({ top: 120, behavior: 'smooth' });
+      window.scrollTo({ top: 110, behavior: 'smooth' });
     }
-
-    /* =========================================================================
-       DYNAMIC RENDERING ROUTINES
-       ========================================================================= */
 
     function renderAll() {
       updateHeaderStats();
@@ -1756,43 +1391,41 @@
       document.getElementById("stat-week").innerText = GAME_STATE.week;
       document.getElementById("stat-rep").innerText = GAME_STATE.reputation;
       document.getElementById("dash-net-worth").innerText = formatINR(GAME_STATE.cash + (GAME_STATE.reputation * 10000000));
+      document.getElementById("dash-awards-count").innerText = `🏆 ${GAME_STATE.totalAwardsWon}`;
       document.getElementById("fin-cash").innerText = formatINR(GAME_STATE.cash);
       document.getElementById("fin-debt").innerText = formatINR(GAME_STATE.debt);
       document.getElementById("fin-interest").innerText = formatINR(Math.round(GAME_STATE.debt * 0.015)) + " /wk";
     }
 
-    // Render Competitor Studios Intelligence
     function renderStudiosIntel() {
       const container = document.getElementById("studios-intel-grid");
       if (!container) return;
 
       const myStudioCard = `
         <div class="studio-intel-card my-studio">
-          <div class="studio-intel-title">
+          <div style="font-family:var(--font-display); font-size:1.05rem; color:var(--gold-bright); display:flex; justify-content:space-between; align-items:center;">
             <span>${GAME_STATE.studioName}</span>
             <span class="step-badge" style="background:var(--gold-bright);">YOU</span>
           </div>
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">Founder / Managing Director: Studio Boss</div>
-          <div style="font-size:0.82rem; margin-bottom:4px;">Treasury Capital: <strong style="color:var(--success);">${formatINR(GAME_STATE.cash)}</strong></div>
-          <div style="font-size:0.82rem; margin-bottom:4px;">Released Films: <strong>${GAME_STATE.releasedMovies.length}</strong></div>
-          <div style="font-size:0.82rem; margin-bottom:6px;">Studio Fame / Reputation: <strong style="color:var(--gold-bright);">${GAME_STATE.reputation}/100</strong></div>
-          <div style="font-size:0.75rem; color:var(--text-muted); border-top:1px dashed var(--border-color-subtle); padding-top:6px;">
-            Active Productions: <strong>${GAME_STATE.activeProductions.length} on floor</strong>
-          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Founder / Managing Director: Studio Boss</div>
+          <div style="font-size:0.8rem; margin-bottom:3px;">Treasury Capital: <strong style="color:var(--success);">${formatINR(GAME_STATE.cash)}</strong></div>
+          <div style="font-size:0.8rem; margin-bottom:3px;">Released Films: <strong>${GAME_STATE.releasedMovies.length}</strong></div>
+          <div style="font-size:0.8rem; margin-bottom:3px;">Trophies & Awards: <strong style="color:var(--gold-bright);">🏆 ${GAME_STATE.totalAwardsWon}</strong></div>
+          <div style="font-size:0.8rem; margin-bottom:6px;">Fame / Reputation: <strong style="color:var(--gold-bright);">${GAME_STATE.reputation}/100</strong></div>
         </div>
       `;
 
       const rivalCards = COMPETITOR_STUDIOS.map(c => `
         <div class="studio-intel-card">
-          <div class="studio-intel-title">
+          <div style="font-family:var(--font-display); font-size:1.05rem; color:var(--gold-bright); display:flex; justify-content:space-between; align-items:center;">
             <span>${c.name}</span>
-            <span style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-body);">${c.fame} Fame</span>
+            <span style="font-size:0.72rem; color:var(--text-muted);">${c.fame} Fame</span>
           </div>
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">Head: ${c.boss}</div>
-          <div style="font-size:0.82rem; margin-bottom:4px;">Estimated Capital: <strong style="color:var(--text-main);">${formatINR(c.capital)}</strong></div>
-          <div style="font-size:0.82rem; margin-bottom:4px;">Theatrical Catalog: <strong>${c.films} Films</strong></div>
-          <div style="font-size:0.75rem; color:var(--gold-bright); border-top:1px dashed var(--border-color-subtle); padding-top:6px;">
-            Current Pipeline: <span style="color:var(--text-muted);">${c.slate}</span>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Head: ${c.boss}</div>
+          <div style="font-size:0.8rem; margin-bottom:3px;">Capital: <strong>${formatINR(c.capital)}</strong></div>
+          <div style="font-size:0.8rem; margin-bottom:3px;">Film Catalog: <strong>${c.films} Films</strong></div>
+          <div style="font-size:0.72rem; color:var(--gold-bright); border-top:1px dashed var(--border-color-subtle); padding-top:4px; margin-top:6px;">
+            Current Slate: <span style="color:var(--text-muted);">${c.slate}</span>
           </div>
         </div>
       `).join('');
@@ -1800,7 +1433,6 @@
       container.innerHTML = myStudioCard + rivalCards;
     }
 
-    // Custom Poster Upload (Renders ABOVE Presets)
     function handlePosterUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1809,14 +1441,12 @@
         const base64Url = event.target.result;
         CURRENT_DRAFT.posterUrl = base64Url;
         CURRENT_DRAFT.customPosterUploaded = true;
-
         const box = document.getElementById("user-uploaded-poster-box");
         const img = document.getElementById("user-uploaded-img");
         img.src = base64Url;
         box.classList.add("visible");
-
         document.querySelectorAll(".preset-poster-card").forEach(c => c.classList.remove("selected"));
-        showToast("Custom poster uploaded and selected!", "success");
+        showToast("Custom poster selected!", "success");
       };
       reader.readAsDataURL(file);
     }
@@ -1825,8 +1455,8 @@
       const container = document.getElementById("preset-posters-grid");
       container.innerHTML = POSTER_PRESETS.map((url, idx) => `
         <div class="tile-card preset-poster-card ${(!CURRENT_DRAFT.customPosterUploaded && CURRENT_DRAFT.posterUrl === url) ? 'selected' : ''}" onclick="selectPresetPoster('${url}')">
-          <img src="${url}" style="width:100%; height:86px; object-fit:cover; border-radius:6px;">
-          <span style="font-size:0.65rem; color:var(--text-muted); margin-top:3px;">Preset ${idx+1}</span>
+          <img src="${url}" style="width:100%; height:80px; object-fit:cover; border-radius:4px;">
+          <span style="font-size:0.62rem; color:var(--text-muted); margin-top:2px;">Preset ${idx+1}</span>
         </div>
       `).join('');
     }
@@ -1835,12 +1465,9 @@
       CURRENT_DRAFT.posterUrl = url;
       CURRENT_DRAFT.customPosterUploaded = false;
       document.getElementById("user-uploaded-poster-box").classList.remove("visible");
-      document.querySelectorAll(".preset-poster-card").forEach(c => {
-        c.classList.toggle("selected", c.querySelector('img').src === url);
-      });
+      document.querySelectorAll(".preset-poster-card").forEach(c => c.classList.toggle("selected", c.querySelector('img').src === url));
     }
 
-    // Actors Roster with Lead/Supporting Switcher
     function renderActorTiles() {
       const container = document.getElementById("actors-selection-grid");
       const rosterContainer = document.getElementById("roster-actors-grid");
@@ -1899,20 +1526,16 @@
       }
     }
 
-    // Directors
     function renderDirectorTiles() {
       const container = document.getElementById("directors-selection-grid");
-      container.innerHTML = REAL_DIRECTORS.map(dir => {
-        const isSelected = CURRENT_DRAFT.directorId === dir.id;
-        return `
-          <div class="tile-card ${isSelected ? 'selected' : ''}" onclick="selectDirector('${dir.id}')">
-            <img src="${dir.photo}" alt="${dir.name}" class="tile-img">
-            <div class="tile-name">${dir.name}</div>
-            <div class="tile-meta">${dir.style}</div>
-            <div class="tile-fee">${formatINR(dir.fee)}</div>
-          </div>
-        `;
-      }).join('');
+      container.innerHTML = REAL_DIRECTORS.map(dir => `
+        <div class="tile-card ${CURRENT_DRAFT.directorId === dir.id ? 'selected' : ''}" onclick="selectDirector('${dir.id}')">
+          <img src="${dir.photo}" alt="${dir.name}" class="tile-img">
+          <div class="tile-name">${dir.name}</div>
+          <div class="tile-meta">${dir.style}</div>
+          <div class="tile-fee">${formatINR(dir.fee)}</div>
+        </div>
+      `).join('');
     }
 
     function selectDirector(id) {
@@ -1921,20 +1544,16 @@
       updateCostHUD();
     }
 
-    // Composers
     function renderComposerTiles() {
       const container = document.getElementById("composers-selection-grid");
-      container.innerHTML = REAL_COMPOSERS.map(c => {
-        const isSelected = CURRENT_DRAFT.composerId === c.id;
-        return `
-          <div class="tile-card ${isSelected ? 'selected' : ''}" onclick="selectComposer('${c.id}')">
-            <img src="${c.photo}" alt="${c.name}" class="tile-img">
-            <div class="tile-name">${c.name}</div>
-            <div class="tile-meta">Melody: ${c.skill}</div>
-            <div class="tile-fee">${formatINR(c.fee)}</div>
-          </div>
-        `;
-      }).join('');
+      container.innerHTML = REAL_COMPOSERS.map(c => `
+        <div class="tile-card ${CURRENT_DRAFT.composerId === c.id ? 'selected' : ''}" onclick="selectComposer('${c.id}')">
+          <img src="${c.photo}" alt="${c.name}" class="tile-img">
+          <div class="tile-name">${c.name}</div>
+          <div class="tile-meta">Melody: ${c.skill}</div>
+          <div class="tile-fee">${formatINR(c.fee)}</div>
+        </div>
+      `).join('');
     }
 
     function selectComposer(id) {
@@ -1943,20 +1562,16 @@
       updateCostHUD();
     }
 
-    // Playback Singers
     function renderSingerTiles() {
       const container = document.getElementById("singers-selection-grid");
-      container.innerHTML = REAL_SINGERS.map(s => {
-        const isSelected = CURRENT_DRAFT.singers.includes(s.id);
-        return `
-          <div class="tile-card ${isSelected ? 'selected' : ''}" onclick="toggleSinger('${s.id}')">
-            <img src="${s.photo}" alt="${s.name}" class="tile-img">
-            <div class="tile-name">${s.name}</div>
-            <div class="tile-meta">Vocals: ${s.skill}</div>
-            <div class="tile-fee">${formatINR(s.fee)} / song</div>
-          </div>
-        `;
-      }).join('');
+      container.innerHTML = REAL_SINGERS.map(s => `
+        <div class="tile-card ${CURRENT_DRAFT.singers.includes(s.id) ? 'selected' : ''}" onclick="toggleSinger('${s.id}')">
+          <img src="${s.photo}" alt="${s.name}" class="tile-img">
+          <div class="tile-name">${s.name}</div>
+          <div class="tile-meta">Vocals: ${s.skill}</div>
+          <div class="tile-fee">${formatINR(s.fee)} / track</div>
+        </div>
+      `).join('');
     }
 
     function toggleSinger(id) {
@@ -1969,7 +1584,6 @@
       updateCostHUD();
     }
 
-    // Rights Deals Tiles
     function renderBrandRights() {
       document.getElementById("music-rights-grid").innerHTML = MUSIC_LABELS.map(lbl => `
         <div class="brand-card ${CURRENT_DRAFT.musicRightsId === lbl.id ? 'selected' : ''}" onclick="selectMusicRights('${lbl.id}')">
@@ -2027,20 +1641,33 @@
       return Math.min(100, Math.round(totalPop / Math.max(1, CURRENT_DRAFT.cast.length * 0.75)));
     }
 
-    // Promotional Campaigns
+    function filterMarketing(category, el) {
+      CURRENT_MARKETING_FILTER = category;
+      document.querySelectorAll("#marketing-filters .interactive-pill").forEach(p => p.classList.remove("active"));
+      el.classList.add("active");
+      renderMarketingPromos();
+    }
+
     function renderMarketingPromos() {
       const container = document.getElementById("marketing-campaigns-grid");
-      container.innerHTML = PROMO_CAMPAIGNS.map(promo => {
-        const isSelected = CURRENT_DRAFT.promos.includes(promo.id);
-        return `
-          <div class="tile-card ${isSelected ? 'selected' : ''}" onclick="togglePromo('${promo.id}')">
-            <i class="fa-solid ${promo.cat === 'Teaser' ? 'fa-video' : promo.cat === 'Trailer' ? 'fa-bullhorn' : 'fa-music'}" style="font-size:1.4rem; color:var(--gold-bright); margin-bottom:6px;"></i>
-            <div class="tile-name">${promo.name}</div>
-            <div class="tile-meta">+${promo.hype} Buzz</div>
-            <div class="tile-fee">${formatINR(promo.fee)}</div>
-          </div>
-        `;
-      }).join('');
+      const list = CURRENT_MARKETING_FILTER === "all" ? TARGETED_MARKETING : TARGETED_MARKETING.filter(m => m.cat === CURRENT_MARKETING_FILTER);
+
+      container.innerHTML = list.map(promo => `
+        <div class="tile-card ${CURRENT_DRAFT.promos.includes(promo.id) ? 'selected' : ''}" onclick="togglePromo('${promo.id}')">
+          <i class="fa-solid ${getMarketingIcon(promo.cat)}" style="font-size:1.1rem; color:var(--gold-bright); margin-bottom:4px;"></i>
+          <div class="tile-name" title="${promo.name}">${promo.name}</div>
+          <div class="tile-meta">+${promo.hype} Hype</div>
+          <div class="tile-fee">${formatINR(promo.fee)}</div>
+        </div>
+      `).join('');
+    }
+
+    function getMarketingIcon(cat) {
+      if (cat === "Traditional") return "fa-newspaper";
+      if (cat === "Digital") return "fa-mobile-screen";
+      if (cat === "Theatrical") return "fa-film";
+      if (cat === "Press") return "fa-microphone";
+      return "fa-bullhorn";
     }
 
     function togglePromo(id) {
@@ -2053,16 +1680,14 @@
       updateCostHUD();
     }
 
-    // Release Week Schedule Tiles (Weeks 2 to 30)
     function renderReleaseWeekTiles() {
       const container = document.getElementById("release-week-grid");
       let html = "";
       for (let offset = 2; offset <= 30; offset++) {
         const targetWeek = GAME_STATE.week + offset;
         const season = getSeasonEvent(targetWeek);
-        const isSelected = CURRENT_DRAFT.releaseWeekOffset === offset;
         html += `
-          <div class="week-tile ${isSelected ? 'selected' : ''}" onclick="selectReleaseWeek(${offset})">
+          <div class="week-tile ${CURRENT_DRAFT.releaseWeekOffset === offset ? 'selected' : ''}" onclick="selectReleaseWeek(${offset})">
             <div class="week-tile-num">+${offset} Wks (W${targetWeek})</div>
             <div class="week-tile-fest">${season.name}</div>
           </div>
@@ -2084,46 +1709,34 @@
       if (cycleWeek === 4) return { name: "Republic Day", mult: 1.25 };
       if (cycleWeek === 33) return { name: "Independence Day", mult: 1.30 };
       if (cycleWeek === 51 || cycleWeek === 52) return { name: "Christmas Holiday", mult: 1.35 };
-      if (cycleWeek >= 18 && cycleWeek <= 22) return { name: "IPL Cricket Clash", mult: 0.85 };
+      if (cycleWeek >= 18 && cycleWeek <= 22) return { name: "IPL Crunch", mult: 0.85 };
       return { name: "Regular Frame", mult: 1.0 };
     }
 
-    /* =========================================================================
-       COSTING, DUAL HUD & FILM GREENLIGHT
-       ========================================================================= */
-
     function calculateProductionCosts() {
       let cost = 50000000;
-
       CURRENT_DRAFT.cast.forEach(c => {
         const a = ALL_ACTORS.find(x => x.id === c.id);
-        if (a) {
-          cost += c.role === 'Lead' ? a.fee : Math.round(a.fee * 0.45);
-        }
+        if (a) cost += c.role === 'Lead' ? a.fee : Math.round(a.fee * 0.45);
       });
-
       if (CURRENT_DRAFT.directorId) {
         const d = REAL_DIRECTORS.find(x => x.id === CURRENT_DRAFT.directorId);
         if (d) cost += d.fee;
       }
-
       if (CURRENT_DRAFT.composerId) {
         const comp = REAL_COMPOSERS.find(x => x.id === CURRENT_DRAFT.composerId);
         if (comp) cost += comp.fee;
       }
-
       if (CURRENT_DRAFT.songCount > 0 && CURRENT_DRAFT.singers.length > 0) {
         CURRENT_DRAFT.singers.forEach(sId => {
           const sng = REAL_SINGERS.find(x => x.id === sId);
           if (sng) cost += (sng.fee * CURRENT_DRAFT.songCount);
         });
       }
-
       CURRENT_DRAFT.promos.forEach(pId => {
-        const p = PROMO_CAMPAIGNS.find(x => x.id === pId);
+        const p = TARGETED_MARKETING.find(x => x.id === pId);
         if (p) cost += p.fee;
       });
-
       return cost;
     }
 
@@ -2131,13 +1744,10 @@
       let inflow = 0;
       const mLabel = MUSIC_LABELS.find(x => x.id === CURRENT_DRAFT.musicRightsId);
       if (mLabel) inflow += calculateMusicAdvance(mLabel);
-
       const ott = OTT_PLATFORMS.find(x => x.id === CURRENT_DRAFT.ottRightsId);
       if (ott) inflow += calculateOttAdvance(ott);
-
       const sat = SATELLITE_CHANNELS.find(x => x.id === CURRENT_DRAFT.satelliteRightsId);
       if (sat) inflow += calculateSatelliteAdvance(sat);
-
       return inflow;
     }
 
@@ -2145,35 +1755,22 @@
       const totalCost = calculateProductionCosts();
       const totalInflow = calculateGuaranteedInflow();
       const netOutlay = totalCost - totalInflow;
-
       document.getElementById("hud-total-cost").innerText = formatINR(totalCost);
       document.getElementById("hud-total-inflow").innerText = "+" + formatINR(totalInflow);
       document.getElementById("hud-net-outlay").innerText = (netOutlay > 0 ? "-" : "+") + formatINR(Math.abs(netOutlay));
     }
 
     function greenlightFilm() {
-      if (!CURRENT_DRAFT.title.trim()) {
-        showToast("Please enter a project title!", "error");
-        goToStep(1);
-        return;
-      }
-      if (CURRENT_DRAFT.cast.length === 0) {
-        showToast("Please cast at least one actor!", "error");
-        goToStep(2);
-        return;
-      }
-      if (!CURRENT_DRAFT.directorId) {
-        showToast("Please select a director to helm the film!", "error");
-        goToStep(3);
-        return;
-      }
+      if (!CURRENT_DRAFT.title.trim()) { showToast("Enter a project title!", "error"); goToStep(1); return; }
+      if (CURRENT_DRAFT.cast.length === 0) { showToast("Cast at least one actor!", "error"); goToStep(2); return; }
+      if (!CURRENT_DRAFT.directorId) { showToast("Select a director!", "error"); goToStep(3); return; }
 
       const totalCost = calculateProductionCosts();
       const totalInflow = calculateGuaranteedInflow();
       const netCashRequired = totalCost - totalInflow;
 
       if (netCashRequired > 0 && GAME_STATE.cash < netCashRequired) {
-        showToast("Insufficient treasury funds! Secure a loan from the Finances tab.", "error");
+        showToast("Insufficient funds! Borrow from Finances.", "error");
         return;
       }
 
@@ -2191,20 +1788,18 @@
         composerId: CURRENT_DRAFT.composerId,
         singers: [...CURRENT_DRAFT.singers],
         songCount: CURRENT_DRAFT.songCount,
-        musicRights: CURRENT_DRAFT.musicRightsId,
-        ottRights: CURRENT_DRAFT.ottRightsId,
-        satelliteRights: CURRENT_DRAFT.satelliteRightsId,
         cost: totalCost,
         inflow: totalInflow,
         releaseWeek: releaseWeek,
         weeksRemaining: CURRENT_DRAFT.releaseWeekOffset,
-        quality: computeQualityScore()
+        quality: computeQualityScore(),
+        awardsWon: []
       };
 
       GAME_STATE.activeProductions.push(newFilm);
       saveState();
 
-      showToast(`🎬 "${newFilm.title}" greenlit! Releasing in Week ${releaseWeek}.`, "success");
+      showToast(`🎬 "${newFilm.title}" greenlit for Week ${releaseWeek}!`, "success");
       triggerConfetti();
 
       document.getElementById("movie-title").value = "";
@@ -2220,21 +1815,13 @@
       const castPower = getCastStarPower();
       const comp = REAL_COMPOSERS.find(c => c.id === CURRENT_DRAFT.composerId);
       const musicScore = comp ? comp.skill : 75;
-
-      const baseQuality = Math.round((dirScore * 0.40) + (castPower * 0.40) + (musicScore * 0.20));
-      return Math.min(99, Math.max(50, baseQuality + Math.floor(Math.random() * 7) - 3));
+      return Math.min(99, Math.max(50, Math.round((dirScore * 0.4) + (castPower * 0.4) + (musicScore * 0.2)) + Math.floor(Math.random() * 5) - 2));
     }
-
-    /* =========================================================================
-       THEATRICAL RUN SIMULATION ENGINE (Multi-Week Box Office)
-       ========================================================================= */
 
     function advanceWeek() {
       GAME_STATE.week++;
-
       if (GAME_STATE.debt > 0) {
-        const interest = Math.round(GAME_STATE.debt * 0.015);
-        GAME_STATE.cash = Math.max(0, GAME_STATE.cash - interest);
+        GAME_STATE.cash = Math.max(0, GAME_STATE.cash - Math.round(GAME_STATE.debt * 0.015));
       }
 
       for (let i = GAME_STATE.activeProductions.length - 1; i >= 0; i--) {
@@ -2247,17 +1834,17 @@
       }
 
       processTheatreCollections();
+      checkAwardsSeason();
       processWeeklyNews();
 
       saveState();
       renderAll();
-      showToast(`Advanced to Week ${GAME_STATE.week}!`, "info");
+      showToast(`Week ${GAME_STATE.week}!`, "info");
     }
 
     function startTheatricalRun(film) {
       const season = getSeasonEvent(GAME_STATE.week);
       const starPower = film.cast.reduce((acc, c) => acc + (ALL_ACTORS.find(a => a.id === c.id)?.popularity || 70), 0) / Math.max(1, film.cast.length);
-
       const opening = Math.round((starPower * 4200000) * season.mult * (film.quality / 80));
 
       const theatreEntry = {
@@ -2272,46 +1859,60 @@
 
       GAME_STATE.cash += theatreEntry.producerEarnings;
       GAME_STATE.theatreRuns.unshift(theatreEntry);
-
-      showToast(`🎉 "${film.title}" hit 4,200 screens! W1 Gross: ${formatINR(opening)}`, "success");
+      showToast(`🎉 "${film.title}" hit theatres! W1: ${formatINR(opening)}`, "success");
       triggerConfetti();
     }
 
     function processTheatreCollections() {
       GAME_STATE.theatreRuns.forEach(run => {
         if (!run.active) return;
-
         run.currentWeekOfRun++;
-        const lastWeekColl = run.weeklyHistory[run.weeklyHistory.length - 1];
+        const lastColl = run.weeklyHistory[run.weeklyHistory.length - 1];
 
         let holdRatio = 0.65;
         if (run.quality >= 93) holdRatio = 0.90;
         else if (run.quality >= 85) holdRatio = 0.75;
         else if (run.quality < 65) holdRatio = 0.40;
 
-        const thisWeekGross = Math.round(lastWeekColl * holdRatio * (0.95 + Math.random() * 0.1));
-        run.weeklyHistory.push(thisWeekGross);
-        run.totalGross += thisWeekGross;
+        const thisGross = Math.round(lastColl * holdRatio * (0.95 + Math.random() * 0.1));
+        run.weeklyHistory.push(thisGross);
+        run.totalGross += thisGross;
 
-        const producerShare = Math.round(thisWeekGross * 0.50);
-        run.producerEarnings += producerShare;
-        GAME_STATE.cash += producerShare;
+        const share = Math.round(thisGross * 0.50);
+        run.producerEarnings += share;
+        GAME_STATE.cash += share;
 
         if (run.currentWeekOfRun === 25 && !run.jubilee) {
           run.jubilee = "Silver Jubilee (25 Weeks)";
           GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 8);
-          showToast(`🏆 SILVER JUBILEE! "${run.title}" completes 25 weeks in theatres!`, "success");
+          showToast(`🏆 SILVER JUBILEE! "${run.title}"`, "success");
         } else if (run.currentWeekOfRun === 50) {
-          run.jubilee = "Golden Jubilee (50 Weeks - DDLJ Milestone)";
+          run.jubilee = "Golden Jubilee";
           GAME_STATE.reputation = 100;
-          showToast(`🌟 HISTORIC GOLDEN JUBILEE! "${run.title}" matches DDLJ longevity!`, "success");
+          showToast(`🌟 GOLDEN JUBILEE! "${run.title}"`, "success");
         }
 
-        if ((thisWeekGross < 1500000 && run.currentWeekOfRun > 4) || run.currentWeekOfRun > 52) {
+        if ((thisGross < 1500000 && run.currentWeekOfRun > 4) || run.currentWeekOfRun > 52) {
           run.active = false;
           archiveReleasedMovie(run);
         }
       });
+    }
+
+    function checkAwardsSeason() {
+      if (GAME_STATE.week % 12 === 0 && GAME_STATE.releasedMovies.length > 0) {
+        const topContenders = GAME_STATE.releasedMovies.filter(m => m.quality >= 85);
+        if (topContenders.length > 0) {
+          const winner = topContenders[Math.floor(Math.random() * topContenders.length)];
+          const titles = ["Best Film", "Best Director", "Best Actor", "Best Music Album"];
+          const category = titles[Math.floor(Math.random() * titles.length)];
+          winner.awardsWon.push(category);
+          GAME_STATE.totalAwardsWon++;
+          GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 5);
+          showToast(`🏆 AWARD WON! "${winner.title}" takes "${category}"!`, "success");
+          triggerConfetti();
+        }
+      }
     }
 
     function archiveReleasedMovie(run) {
@@ -2324,41 +1925,35 @@
           fran.rating = Math.round((fran.rating + run.quality) / 2);
         }
       }
-      showToast(`🎬 "${run.title}" completed theatrical run. Lifetime Gross: ${formatINR(run.totalGross)}`, "info");
+      showToast(`🎬 "${run.title}" lifetime: ${formatINR(run.totalGross)}`, "info");
     }
 
     function renderTheatricalRuns() {
       const container = document.getElementById("theatrical-runs-container");
       if (!container) return;
-
       if (GAME_STATE.theatreRuns.length === 0) {
-        container.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem;">No films currently running in theatres.</p>`;
+        container.innerHTML = `<p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in theatres.</p>`;
         return;
       }
-
       container.innerHTML = GAME_STATE.theatreRuns.map(run => `
-        <div class="theatre-run-card">
+        <div class="theatre-run-card" onclick="openMovieDossier('${run.id}', true)">
           <div class="theatre-header">
             <img src="${run.posterUrl}" class="theatre-poster" alt="${run.title}">
-            <div style="flex:1;">
-              <div style="font-family:var(--font-display); font-size:1.05rem; color:var(--gold-bright);">${run.title}</div>
-              <div style="font-size:0.75rem; color:var(--text-muted);">${run.genre} • Week ${run.currentWeekOfRun} in Cinemas ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}</div>
-              <div style="font-size:0.82rem; font-weight:700; color:var(--success); margin-top:2px;">
-                Cumulative Gross: ${formatINR(run.totalGross)} (Producer Share: ${formatINR(run.producerEarnings)})
+            <div style="flex:1; min-width:0;">
+              <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${run.title}</div>
+              <div style="font-size:0.72rem; color:var(--text-muted);">${run.genre} • Wk ${run.currentWeekOfRun} in Halls ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}</div>
+              <div style="font-size:0.75rem; color:var(--text-main); margin-top:2px;">
+                Budget: <strong style="color:var(--danger);">${formatINR(run.cost)}</strong> | Gross: <strong style="color:var(--success);">${formatINR(run.totalGross)}</strong>
               </div>
+              <div style="font-size:0.72rem; color:var(--success); font-weight:700;">Producer Share: ${formatINR(run.producerEarnings)}</div>
             </div>
-            <div>
-              <span class="step-badge" style="background:${run.active ? 'var(--success)' : 'var(--text-subtle)'};">
-                ${run.active ? 'Now Showing' : 'Archived'}
-              </span>
-            </div>
+            <div><span class="step-badge" style="background:${run.active ? 'var(--success)' : 'var(--text-subtle)'}; font-size:0.65rem;">${run.active ? 'Running' : 'Archived'}</span></div>
           </div>
-          <div style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">Weekly Box Office Trajectory:</div>
-          <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px;">
+          <div style="display:flex; gap:4px; overflow-x:auto; padding-bottom:2px;">
             ${run.weeklyHistory.map((amt, idx) => `
-              <div style="background:var(--bg-card); border:1px solid var(--border-color-subtle); border-radius:4px; padding:4px 8px; text-align:center; min-width:85px;">
-                <div style="font-size:0.65rem; color:var(--text-subtle);">Week ${idx+1}</div>
-                <div style="font-size:0.72rem; font-weight:700; color:var(--gold-bright);">${formatINR(amt)}</div>
+              <div style="background:var(--bg-card); border:1px solid var(--border-color-subtle); border-radius:4px; padding:3px 6px; text-align:center; min-width:65px;">
+                <div style="font-size:0.6rem; color:var(--text-subtle);">W${idx+1}</div>
+                <div style="font-size:0.68rem; font-weight:700; color:var(--gold-bright);">${formatINR(amt)}</div>
               </div>
             `).join('')}
           </div>
@@ -2369,34 +1964,78 @@
     function renderFilmography() {
       const container = document.getElementById("releases-filmography-container");
       if (!container) return;
-
       if (GAME_STATE.releasedMovies.length === 0) {
-        container.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem;">No movies archived yet.</p>`;
+        container.innerHTML = `<p style="color:var(--text-muted); font-size:0.8rem;">No movies archived yet.</p>`;
         return;
       }
-
       container.innerHTML = GAME_STATE.releasedMovies.map(movie => `
-        <div class="card" style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
-          <img src="${movie.posterUrl}" style="width:65px; height:90px; border-radius:6px; object-fit:cover; border:1px solid var(--gold-primary);">
-          <div style="flex:1;">
-            <div style="font-family:var(--font-display); font-size:1.1rem; color:var(--gold-bright);">${movie.title}</div>
-            <div style="font-size:0.78rem; color:var(--text-muted);">${movie.genre} • Lifetime: ${formatINR(movie.totalGross)}</div>
-            <div style="font-size:0.76rem; color:var(--success); font-weight:700;">Net Producer Profit: ${formatINR(movie.producerEarnings + movie.inflow - movie.cost)}</div>
+        <div class="card" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; cursor:pointer;" onclick="openMovieDossier('${movie.id}', false)">
+          <img src="${movie.posterUrl}" style="width:52px; height:74px; border-radius:5px; object-fit:cover; border:1px solid var(--gold-primary);">
+          <div style="flex:1; min-width:0;">
+            <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright);">${movie.title}</div>
+            <div style="font-size:0.72rem; color:var(--text-muted);">
+              ${movie.genre} • Budget: <strong style="color:var(--danger);">${formatINR(movie.cost)}</strong> | Gross: <strong style="color:var(--gold-bright);">${formatINR(movie.totalGross)}</strong>
+            </div>
+            <div style="font-size:0.74rem; color:var(--success); font-weight:700;">Net Profit: ${formatINR(movie.producerEarnings + movie.inflow - movie.cost)}</div>
+            ${movie.awardsWon && movie.awardsWon.length > 0 ? `<div style="font-size:0.68rem; color:var(--gold-bright); margin-top:2px;">🏆 ${movie.awardsWon.join(', ')}</div>` : ''}
           </div>
-          <button class="btn-gold" style="font-size:0.78rem; padding:6px 14px;" onclick="reRelease4K('${movie.id}')">
+          <button class="btn-gold" style="font-size:0.72rem; padding:5px 10px;" onclick="event.stopPropagation(); reRelease4K('${movie.id}')">
             <i class="fa-solid fa-rotate-right"></i> 4K Re-Release
           </button>
         </div>
       `).join('');
     }
 
+    function openMovieDossier(movieId, isRunning) {
+      const film = (isRunning ? GAME_STATE.theatreRuns : GAME_STATE.releasedMovies).find(m => m.id === movieId);
+      if (!film) return;
+      const dir = REAL_DIRECTORS.find(d => d.id === film.directorId);
+      const castNames = film.cast.map(c => {
+        const actor = ALL_ACTORS.find(a => a.id === c.id);
+        return `${actor ? actor.name : 'Star'} (${c.role})`;
+      }).join(', ');
+
+      const netProfit = film.producerEarnings + film.inflow - film.cost;
+      const modalWin = document.getElementById("modal-dossier-window");
+
+      modalWin.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+          <div><span class="step-badge">${film.genre}</span><h2 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.15rem;">${film.title}</h2></div>
+          <button class="btn-outline" style="padding:3px 8px; font-size:0.75rem;" onclick="closeMovieDossier()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div style="display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
+          <img src="${film.posterUrl}" style="width:75px; height:105px; border-radius:6px; object-fit:cover; border:1.5px solid var(--gold-bright);">
+          <div style="flex:1; font-size:0.78rem;">
+            <div>Helmed By: <strong style="color:var(--text-main);">${dir ? dir.name : 'Director'}</strong></div>
+            <div style="margin-top:3px;">Cast: <span style="color:var(--text-muted);">${castNames}</span></div>
+            <div style="margin-top:3px;">Quality: <strong style="color:var(--gold-bright);">${film.quality}/100</strong></div>
+            ${film.awardsWon && film.awardsWon.length > 0 ? `<div style="color:var(--gold-bright); margin-top:3px;">🏆 ${film.awardsWon.join(', ')}</div>` : ''}
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:10px; padding:10px;">
+          <div style="font-weight:700; font-size:0.8rem; color:var(--gold-bright); margin-bottom:4px;">Financial Breakdown</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.75rem;">
+            <div>Budget: <strong style="color:var(--danger);">${formatINR(film.cost)}</strong></div>
+            <div>Rights Recovery: <strong style="color:var(--success);">+${formatINR(film.inflow)}</strong></div>
+            <div>Theatrical Gross: <strong>${formatINR(film.totalGross)}</strong></div>
+            <div>Producer Share: <strong style="color:var(--success);">+${formatINR(film.producerEarnings)}</strong></div>
+          </div>
+          <div style="margin-top:6px; padding-top:4px; border-top:1px dashed var(--border-color-subtle); font-size:0.8rem; font-weight:800;">
+            Net Profit: <span style="color:${netProfit >= 0 ? 'var(--success)' : 'var(--danger)'};">${formatINR(netProfit)}</span>
+          </div>
+        </div>
+      `;
+      document.getElementById("modal-dossier").classList.add("active");
+    }
+
+    function closeMovieDossier() {
+      document.getElementById("modal-dossier").classList.remove("active");
+    }
+
     function reRelease4K(movieId) {
       const film = GAME_STATE.releasedMovies.find(m => m.id === movieId);
       if (!film) return;
-      if (GAME_STATE.cash < 20000000) {
-        showToast("Need ₹2 Crores marketing spend for 4K Re-Release!", "error");
-        return;
-      }
+      if (GAME_STATE.cash < 20000000) { showToast("Need ₹2 Cr for 4K release!", "error"); return; }
       GAME_STATE.cash -= 20000000;
       const reReleaseRun = {
         ...film,
@@ -2411,20 +2050,15 @@
       };
       GAME_STATE.cash += 40000000;
       GAME_STATE.theatreRuns.unshift(reReleaseRun);
-      showToast(`🎬 "${reReleaseRun.title}" hits 1,500 IMAX screens worldwide!`, "success");
+      showToast(`🎬 "${reReleaseRun.title}" 4K Remaster launched!`, "success");
       triggerConfetti();
       switchTab("tab-theatre-runs");
       renderAll();
     }
 
-    /* =========================================================================
-       FRANCHISE LOGIC (0 DEFAULT FRANCHISES)
-       ========================================================================= */
-
     function toggleFranchiseSelect(isFranchise) {
       const container = document.getElementById("franchise-picker-container");
       container.style.display = isFranchise ? "block" : "none";
-
       if (isFranchise) {
         if (GAME_STATE.franchises.length === 0) {
           document.getElementById("no-franchise-notice").style.display = "block";
@@ -2441,39 +2075,28 @@
     function renderFranchiseSelect() {
       const select = document.getElementById("movie-franchise-select");
       if (!select) return;
-
       if (GAME_STATE.franchises.length === 0) {
         select.innerHTML = `<option value="">-- No Franchises Created Yet --</option>`;
         document.getElementById("no-franchise-notice").style.display = "block";
         return;
       }
-
       document.getElementById("no-franchise-notice").style.display = "none";
-      select.innerHTML = GAME_STATE.franchises.map(f => `
-        <option value="${f.id}" ${CURRENT_DRAFT.franchiseId === f.id ? 'selected' : ''}>${f.name} (${f.films} Films)</option>
-      `).join('');
-
-      select.addEventListener("change", (e) => {
-        CURRENT_DRAFT.franchiseId = e.target.value;
-      });
+      select.innerHTML = GAME_STATE.franchises.map(f => `<option value="${f.id}" ${CURRENT_DRAFT.franchiseId === f.id ? 'selected' : ''}>${f.name} (${f.films} Films)</option>`).join('');
+      select.addEventListener("change", (e) => { CURRENT_DRAFT.franchiseId = e.target.value; });
     }
 
     function renderFranchiseView() {
       const studioList = document.getElementById("studio-franchises-list");
       if (studioList) {
-        if (GAME_STATE.franchises.length === 0) {
-          studioList.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem; grid-column:1/-1;">No studio franchises created yet. Click "+ New Franchise" to begin building your cinematic universe!</p>`;
-        } else {
-          studioList.innerHTML = GAME_STATE.franchises.map(f => `
+        studioList.innerHTML = GAME_STATE.franchises.length === 0 
+          ? `<p style="color:var(--text-muted); font-size:0.78rem; grid-column:1/-1;">No studio franchises yet. Click "+ New Franchise" to begin!</p>`
+          : GAME_STATE.franchises.map(f => `
             <div class="card" style="margin-bottom:0; border-color:var(--gold-primary);">
-              <div style="font-family:var(--font-display); font-size:1.05rem; color:var(--gold-bright); margin-bottom:4px;">${f.name}</div>
-              <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">${f.desc}</p>
-              <div style="font-size:0.8rem; font-weight:700;">Films Released: <span style="color:var(--text-main);">${f.films}</span></div>
-              <div style="font-size:0.8rem; font-weight:700;">Universe Gross: <span style="color:var(--success);">${formatINR(f.gross)}</span></div>
-              <div style="font-size:0.8rem; font-weight:700;">Prestige Score: <span style="color:var(--gold-bright);">${f.rating}/100</span></div>
+              <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright); margin-bottom:2px;">${f.name}</div>
+              <p style="font-size:0.7rem; color:var(--text-muted); margin-bottom:4px;">${f.desc}</p>
+              <div style="font-size:0.75rem;">Films: <strong>${f.films}</strong> | Gross: <strong style="color:var(--success);">${formatINR(f.gross)}</strong></div>
             </div>
           `).join('');
-        }
       }
 
       const tbody = document.getElementById("pan-india-franchise-tbody");
@@ -2484,68 +2107,45 @@
         ].sort((a, b) => b.gross - a.gross);
 
         tbody.innerHTML = combined.map((item, idx) => `
-          <tr style="border-bottom:1px solid var(--border-color-subtle); ${item.studio === GAME_STATE.studioName ? 'background:rgba(212,175,55,0.1); font-weight:700;' : ''}">
-            <td style="padding:8px;">#${idx+1}</td>
-            <td style="padding:8px;"><strong style="color:var(--gold-bright);">${item.name}</strong> <span style="font-size:0.7rem; color:var(--text-muted);">(${item.studio})</span></td>
-            <td style="padding:8px;">${item.films}</td>
-            <td style="padding:8px; color:var(--success);">${formatINR(item.gross)}</td>
-            <td style="padding:8px;">${item.rating}</td>
+          <tr style="border-bottom:1px solid var(--border-color-subtle); ${item.studio === GAME_STATE.studioName ? 'background:rgba(212,175,55,0.1);' : ''}">
+            <td style="padding:6px;">#${idx+1}</td>
+            <td style="padding:6px;"><strong>${item.name}</strong> <span style="font-size:0.68rem; color:var(--text-muted);">(${item.studio})</span></td>
+            <td style="padding:6px;">${item.films}</td>
+            <td style="padding:6px; color:var(--success);">${formatINR(item.gross)}</td>
+            <td style="padding:6px;">${item.rating}</td>
           </tr>
         `).join('');
       }
     }
 
-    function openCreateFranchiseModal() {
-      document.getElementById("modal-franchise").classList.add("active");
-    }
-    function closeCreateFranchiseModal() {
-      document.getElementById("modal-franchise").classList.remove("active");
-    }
+    function openCreateFranchiseModal() { document.getElementById("modal-franchise").classList.add("active"); }
+    function closeCreateFranchiseModal() { document.getElementById("modal-franchise").classList.remove("active"); }
     function confirmCreateFranchise() {
       const name = document.getElementById("new-franchise-name").value.trim();
       const desc = document.getElementById("new-franchise-desc").value.trim() || "High-stakes cinematic universe";
-      if (!name) {
-        showToast("Enter a valid franchise name!", "error");
-        return;
-      }
-      const newFran = {
-        id: "fran_" + Date.now(),
-        name: name,
-        desc: desc,
-        films: 0,
-        gross: 0,
-        rating: 80
-      };
+      if (!name) { showToast("Enter a franchise name!", "error"); return; }
+      const newFran = { id: "fran_" + Date.now(), name, desc, films: 0, gross: 0, rating: 80 };
       GAME_STATE.franchises.push(newFran);
       CURRENT_DRAFT.franchiseId = newFran.id;
       saveState();
       closeCreateFranchiseModal();
       renderFranchiseSelect();
       renderFranchiseView();
-      showToast(`Franchise "${name}" registered successfully!`, "success");
+      showToast(`Franchise "${name}" registered!`, "success");
     }
-
-    /* =========================================================================
-       CALENDAR & FINANCES (UP TO ₹500 CRORES)
-       ========================================================================= */
 
     function renderCalendar() {
       const container = document.getElementById("calendar-slate-container");
       if (!container) return;
-
-      let html = '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:10px;">';
+      let html = '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:6px;">';
       for (let w = GAME_STATE.week; w <= GAME_STATE.week + 16; w++) {
         const season = getSeasonEvent(w);
         const myFilms = GAME_STATE.activeProductions.filter(p => p.releaseWeek === w);
         html += `
-          <div class="card" style="margin-bottom:0; padding:10px; ${myFilms.length > 0 ? 'border-color:var(--gold-bright);' : ''}">
-            <div style="font-size:0.75rem; font-weight:800; color:var(--gold-bright);">Week ${w}</div>
-            <div style="font-size:0.7rem; color:var(--text-muted);">${season.name}</div>
-            ${myFilms.map(f => `
-              <div style="margin-top:6px; font-size:0.75rem; font-weight:700; color:var(--success);">
-                <i class="fa-solid fa-clapperboard"></i> ${f.title}
-              </div>
-            `).join('')}
+          <div class="card" style="margin-bottom:0; padding:6px; ${myFilms.length > 0 ? 'border-color:var(--gold-bright);' : ''}">
+            <div style="font-size:0.72rem; font-weight:800; color:var(--gold-bright);">Week ${w}</div>
+            <div style="font-size:0.65rem; color:var(--text-muted);">${season.name}</div>
+            ${myFilms.map(f => `<div style="font-size:0.7rem; font-weight:700; color:var(--success); margin-top:2px;">🎬 ${f.title}</div>`).join('')}
           </div>
         `;
       }
@@ -2554,91 +2154,73 @@
     }
 
     function takeStudioLoan(amt) {
-      if (GAME_STATE.debt + amt > 5000000000) {
-        showToast("Maximum credit limit is ₹500 Crores!", "error");
-        return;
-      }
+      if (GAME_STATE.debt + amt > 5000000000) { showToast("Max limit is ₹500 Crores!", "error"); return; }
       GAME_STATE.debt += amt;
       GAME_STATE.cash += amt;
       saveState();
       updateHeaderStats();
       renderStudiosIntel();
-      showToast(`Secured ${formatINR(amt)} credit at 1.5% weekly interest!`, "success");
+      showToast(`Borrowed ${formatINR(amt)}!`, "success");
     }
 
     function repayPartialLoan(amt) {
-      if (GAME_STATE.debt <= 0) {
-        showToast("No outstanding loan balance!", "info");
-        return;
-      }
-      const payAmt = Math.min(amt, GAME_STATE.debt);
-      if (GAME_STATE.cash < payAmt) {
-        showToast("Insufficient treasury cash to repay this amount!", "error");
-        return;
-      }
-      GAME_STATE.cash -= payAmt;
-      GAME_STATE.debt -= payAmt;
+      if (GAME_STATE.debt <= 0) { showToast("No debt to repay!", "info"); return; }
+      const pay = Math.min(amt, GAME_STATE.debt);
+      if (GAME_STATE.cash < pay) { showToast("Insufficient funds!", "error"); return; }
+      GAME_STATE.cash -= pay;
+      GAME_STATE.debt -= pay;
       saveState();
       updateHeaderStats();
       renderStudiosIntel();
-      showToast(`Repaid ${formatINR(payAmt)} towards loan balance!`, "success");
+      showToast(`Repaid ${formatINR(pay)}!`, "success");
     }
 
     function repayStudioLoan() {
-      if (GAME_STATE.debt <= 0) {
-        showToast("No outstanding debt to repay!", "info");
-        return;
-      }
-      if (GAME_STATE.cash < GAME_STATE.debt) {
-        showToast("Insufficient treasury cash to repay full debt!", "error");
-        return;
-      }
+      if (GAME_STATE.debt <= 0) { showToast("No debt to repay!", "info"); return; }
+      if (GAME_STATE.cash < GAME_STATE.debt) { showToast("Insufficient cash!", "error"); return; }
       GAME_STATE.cash -= GAME_STATE.debt;
       GAME_STATE.debt = 0;
       saveState();
       updateHeaderStats();
       renderStudiosIntel();
-      showToast("All studio debts cleared in full!", "success");
+      showToast("All debt cleared in full!", "success");
     }
 
     function processWeeklyNews() {
       const events = [
-        "Trade reports indicate national multiplex footfalls surged 18% this weekend.",
-        "Rival studio Dharma Productions announced a new action franchise.",
-        "Single-screen exhibitors association praises big-scale masala entertainers.",
-        "Overseas UK & Gulf box office pre-sales register record numbers."
+        "National multiplex footfalls jumped 15% this weekend.",
+        "Dharma and YRF lock competitive festival release dates.",
+        "Single screens report packed weekend collections for action releases.",
+        "Overseas UK & Gulf pre-bookings reach new record numbers."
       ];
       const feed = document.getElementById("dashboard-news-feed");
       if (feed) {
         const chosen = events[Math.floor(Math.random() * events.length)];
         feed.innerHTML = `
-          <div style="border-left:3px solid var(--gold-primary); padding-left:10px; margin-bottom:8px;">
+          <div style="border-left:3px solid var(--gold-primary); padding-left:8px; margin-bottom:6px;">
             <strong style="color:var(--text-main);">Week ${GAME_STATE.week} Wire:</strong> ${chosen}
           </div>
         ` + feed.innerHTML;
       }
     }
 
-    /* =========================================================================
-       HELPERS & AUDIO SYNTHESIS
-       ========================================================================= */
-
-    function formatINR(val) {
-      if (val >= 10000000) {
-        return "₹" + (val / 10000000).toFixed(2) + " Cr";
-      } else if (val >= 100000) {
-        return "₹" + (val / 100000).toFixed(2) + " Lakh";
-      }
-      return "₹" + (val || 0).toLocaleString('en-IN');
-    }
-
+    // Toast Queue Enforcement (Maximum 3)
     function showToast(msg, type = "info") {
       const container = document.getElementById("toast-container");
+      while (container.children.length >= 3) {
+        container.removeChild(container.firstChild);
+      }
       const toast = document.createElement("div");
       toast.className = `toast-msg ${type}`;
       toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info'}"></i> <span>${msg}</span>`;
       container.appendChild(toast);
-      setTimeout(() => { toast.remove(); }, 3400);
+      setTimeout(() => { toast.remove(); }, 3200);
+    }
+
+    function formatINR(val) {
+      if (val >= 10000000) return "₹" + (val / 10000000).toFixed(2) + " Cr";
+      if (val >= 100000) return "₹" + (val / 100000).toFixed(2) + " Lakh";
+      return "₹" + (val || 0).toLocaleString('en-IN');
     }
 
     function playHaptic() {
@@ -2648,12 +2230,11 @@
         const gain = ctx.createGain();
         osc.connect(gain);
         gain.connect(ctx.destination);
-        osc.type = "sine";
         osc.frequency.setValueAtTime(320, ctx.currentTime);
-        gain.gain.setValueAtTime(0.04, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.05);
+        gain.gain.setValueAtTime(0.03, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.04);
         osc.start();
-        osc.stop(ctx.currentTime + 0.05);
+        osc.stop(ctx.currentTime + 0.04);
       } catch (e) {}
     }
 
@@ -2662,43 +2243,32 @@
       const ctx = canvas.getContext("2d");
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-
-      const pieces = Array.from({ length: 70 }, () => ({
+      const pieces = Array.from({ length: 60 }, () => ({
         x: Math.random() * canvas.width,
         y: -10,
-        size: Math.random() * 8 + 4,
+        size: Math.random() * 6 + 4,
         speed: Math.random() * 4 + 2,
         color: ['#d4af37', '#f5c518', '#8b0000', '#ffffff'][Math.floor(Math.random() * 4)]
       }));
-
       let frame = 0;
       function render() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        pieces.forEach(p => {
-          p.y += p.speed;
-          ctx.fillStyle = p.color;
-          ctx.fillRect(p.x, p.y, p.size, p.size);
-        });
+        pieces.forEach(p => { p.y += p.speed; ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, p.size, p.size); });
         frame++;
-        if (frame < 120) requestAnimationFrame(render);
+        if (frame < 100) requestAnimationFrame(render);
         else ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
       render();
     }
 
     function saveState() {
-      try {
-        localStorage.setItem("bollywood_tycoon_v106", JSON.stringify(GAME_STATE));
-      } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v107", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v106");
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          GAME_STATE = { ...GAME_STATE, ...parsed };
-        }
+        const raw = localStorage.getItem("bollywood_tycoon_v107");
+        if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
   </script>
