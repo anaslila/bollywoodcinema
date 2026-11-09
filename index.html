@@ -1,1031 +1,3158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bollywood Cinema v3.0 - Premium Simulation</title>
-    <link rel="stylesheet" href="styles.css">
-    <meta name="theme-color" content="#6366f1">
-    <meta name="description" content="Build your Bollywood empire from script to box office success">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bollywood Studio">
+  <meta name="theme-color" content="#0d0d0f">
+  <title>Bollywood Cinema v1.0 — Movie Studio Tycoon</title>
+
+  <!-- Favicon & Touch Icon -->
+  <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
+  <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* CSS Variables & Reset */
+    :root {
+      --bg-base: #0d0d0f;
+      --bg-surface: #141418;
+      --bg-surface-elevated: #1c1c24;
+      --bg-glass: rgba(22, 22, 30, 0.78);
+      --border-glass: rgba(212, 175, 55, 0.22);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-main: #f4f4f6;
+      --text-muted: #9c9ca8;
+      --gold-primary: #d4af37;
+      --gold-bright: #f5c518;
+      --gold-glow: rgba(245, 197, 24, 0.35);
+      --crimson-accent: #8b0000;
+      --crimson-bright: #e50914;
+      --emerald-green: #10b981;
+      --cyan-info: #06b6d4;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+      --shadow-gold: 0 0 20px rgba(212, 175, 55, 0.25);
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-base: #f1f2f6;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f8f9fc;
+      --bg-glass: rgba(255, 255, 255, 0.85);
+      --border-glass: rgba(180, 130, 20, 0.28);
+      --border-subtle: rgba(0, 0, 0, 0.1);
+      --text-main: #141418;
+      --text-muted: #626470;
+      --gold-primary: #b8860b;
+      --gold-bright: #d4af37;
+      --gold-glow: rgba(184, 134, 11, 0.2);
+      --shadow-card: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    input, select, textarea {
+      user-select: text;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      background-image: 
+        radial-gradient(circle at 15% 10%, rgba(139, 0, 0, 0.15), transparent 40%),
+        radial-gradient(circle at 85% 90%, rgba(212, 175, 55, 0.12), transparent 40%);
+      background-attachment: fixed;
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-base);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2a2a38;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-glass);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gold-primary);
+    }
+
+    /* Typography & Utilities */
+    .font-cinzel { font-family: var(--font-display); }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fff 0%, var(--gold-bright) 50%, var(--gold-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .badge-gold { background: rgba(212, 175, 55, 0.15); color: var(--gold-bright); border: 1px solid var(--gold-primary); }
+    .badge-green { background: rgba(16, 185, 129, 0.15); color: var(--emerald-green); border: 1px solid var(--emerald-green); }
+    .badge-red { background: rgba(229, 9, 20, 0.15); color: var(--crimson-bright); border: 1px solid var(--crimson-bright); }
+    .badge-blue { background: rgba(6, 182, 212, 0.15); color: var(--cyan-info); border: 1px solid var(--cyan-info); }
+
+    /* Sticky Cinematic Header */
+    header.studio-header {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 10px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .studio-logo-box {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #fff;
+      background: linear-gradient(135deg, var(--crimson-accent), var(--gold-primary));
+      border: 1px solid var(--gold-bright);
+      box-shadow: 0 0 12px var(--gold-glow);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .studio-identity {
+      display: flex;
+      flex-direction: column;
+    }
+    .studio-name-input {
+      background: transparent;
+      border: 1px dashed transparent;
+      color: var(--text-main);
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      width: 170px;
+      transition: all 0.2s;
+    }
+    .studio-name-input:focus, .studio-name-input:hover {
+      border-color: var(--gold-primary);
+      background: rgba(0,0,0,0.3);
+      outline: none;
+    }
+    .studio-tier-tag {
+      font-size: 0.72rem;
+      color: var(--gold-bright);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .header-stats {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .stat-pill {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 5px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+    .stat-pill i { color: var(--gold-bright); font-size: 0.9rem; }
+    .stat-pill .val { font-weight: 700; color: #fff; }
+    .stat-pill.cash .val { color: var(--emerald-green); font-size: 0.95rem; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-icon-sq {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-icon-sq:hover {
+      border-color: var(--gold-primary);
+      color: var(--gold-bright);
+      transform: translateY(-1px);
+    }
+
+    /* Advance Week Main Button */
+    .btn-advance-week {
+      background: linear-gradient(135deg, #d4af37, #9b7811);
+      color: #0b0b0f;
+      font-weight: 800;
+      border: none;
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn-advance-week:hover {
+      background: linear-gradient(135deg, #f5c518, #d4af37);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 20px var(--gold-glow);
+    }
+    .btn-advance-week:active {
+      transform: translateY(1px);
+    }
+
+    /* Tab Navigation (Responsive Top on Desktop, Bottom Dock on Mobile) */
+    nav.app-tabs {
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 0 16px;
+      z-index: 850;
+    }
+    nav.app-tabs::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 13px 18px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      position: relative;
+      transition: all 0.25s ease;
+      font-family: var(--font-body);
+    }
+    .tab-btn i { font-size: 1rem; }
+    .tab-btn:hover { color: var(--gold-bright); }
+    .tab-btn.active {
+      color: var(--gold-bright);
+      text-shadow: 0 0 12px var(--gold-glow);
+    }
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 14px;
+      right: 14px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--crimson-accent), var(--gold-bright));
+      border-radius: 3px 3px 0 0;
+      box-shadow: 0 -1px 8px var(--gold-bright);
+    }
+
+    /* Main Container Layout */
+    main.viewport {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 22px 18px 90px 18px;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .tab-panel.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Glass Cards & Grids */
+    .glass-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .glass-card:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+    }
+    .card-title i { color: var(--gold-primary); margin-right: 8px; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+    @media (max-width: 1024px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      header.studio-header {
+        position: relative;
+        padding: 10px 12px;
+      }
+      nav.app-tabs {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
+        border-top: 1px solid var(--border-glass);
+        border-bottom: none;
+        background: rgba(13, 13, 15, 0.94);
+        padding: 4px 6px;
+        justify-content: space-between;
+        box-shadow: 0 -6px 20px rgba(0,0,0,0.6);
+      }
+      .tab-btn {
+        flex-direction: column;
+        padding: 8px 10px;
+        font-size: 0.68rem;
+        gap: 4px;
+      }
+      .tab-btn i { font-size: 1.15rem; }
+      .tab-btn.active::after {
+        top: 0;
+        bottom: auto;
+      }
+      main.viewport {
+        padding: 14px 12px 100px 12px;
+      }
+      .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* Primary Buttons & Form Inputs */
+    .btn {
+      background: var(--bg-surface-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      font-family: var(--font-body);
+    }
+    .btn:hover {
+      border-color: var(--gold-primary);
+      color: var(--gold-bright);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold-primary));
+      color: #0d0d0f;
+      font-weight: 700;
+      border: none;
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #fff, var(--gold-bright));
+      box-shadow: 0 6px 18px var(--gold-glow);
+    }
+    .btn-danger {
+      background: rgba(229, 9, 20, 0.15);
+      border-color: var(--crimson-bright);
+      color: #ff6b6b;
+    }
+    .btn-danger:hover {
+      background: var(--crimson-bright);
+      color: #fff;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-control {
+      width: 100%;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      font-family: var(--font-body);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-control:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+    }
+    select.form-control option {
+      background: var(--bg-surface);
+      color: var(--text-main);
+    }
+
+    /* Range Sliders */
+    .range-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .range-wrap input[type=range] {
+      flex: 1;
+      accent-color: var(--gold-bright);
+      height: 6px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .range-val {
+      min-width: 110px;
+      text-align: right;
+      font-weight: 700;
+      color: var(--gold-bright);
+      font-size: 0.95rem;
+    }
+
+    /* Pipeline Multi-Step Progress Indicator */
+    .pipeline-stepper {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 26px;
+    }
+    .pipeline-stepper::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      right: 20px;
+      height: 2px;
+      background: var(--border-subtle);
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    .step-item {
+      position: relative;
+      z-index: 2;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-subtle);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .step-item.active {
+      border-color: var(--gold-bright);
+      background: var(--gold-bright);
+      color: #0b0b0f;
+      box-shadow: 0 0 14px var(--gold-glow);
+    }
+    .step-item.completed {
+      border-color: var(--emerald-green);
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--emerald-green);
+    }
+
+    /* Actor & Crew Grid Cards */
+    .actor-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      transition: all 0.2s;
+    }
+    .actor-card:hover {
+      border-color: var(--gold-primary);
+      transform: translateY(-2px);
+    }
+    .actor-card.selected {
+      border-color: var(--gold-bright);
+      background: rgba(212, 175, 55, 0.08);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    }
+    .actor-header {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .actor-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2c2d3a, #161720);
+      border: 2px solid var(--gold-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--gold-bright);
+      flex-shrink: 0;
+    }
+    .actor-info h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .actor-tier {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .stat-bar-bg {
+      height: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 2px;
+    }
+    .stat-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--crimson-accent), var(--gold-bright));
+      border-radius: 4px;
+    }
+
+    /* Production Progress Bar */
+    .prog-track {
+      width: 100%;
+      height: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .prog-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #d4af37, #f5c518);
+      border-radius: var(--radius-full);
+      transition: width 0.4s ease;
+      box-shadow: 0 0 8px var(--gold-glow);
+    }
+
+    /* Custom Toast Notifications */
+    #toast-shelf {
+      position: fixed;
+      top: 75px;
+      right: 20px;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      max-width: 360px;
+      width: 100%;
+    }
+    .toast-msg {
+      pointer-events: auto;
+      background: var(--bg-surface);
+      border-left: 4px solid var(--gold-bright);
+      border-top: 1px solid var(--border-subtle);
+      border-right: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      animation: slideIn 0.3s forwards;
+      color: #fff;
+      font-size: 0.88rem;
+    }
+    .toast-msg.success { border-left-color: var(--emerald-green); }
+    .toast-msg.error { border-left-color: var(--crimson-bright); }
+    .toast-msg.info { border-left-color: var(--cyan-info); }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Modal System */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      animation: fadeIn 0.2s ease;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      max-width: 620px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+    .modal-close:hover { color: var(--gold-bright); }
+
+    /* Confetti Canvas for Achievements */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10001;
+    }
+
+    /* Simple CSS Bar Chart for Finances */
+    .chart-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      height: 160px;
+      padding-top: 20px;
+      border-bottom: 2px solid var(--border-subtle);
+    }
+    .chart-bar-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    .chart-bar {
+      width: 100%;
+      max-width: 38px;
+      background: linear-gradient(180deg, var(--gold-bright), var(--gold-primary));
+      border-radius: 4px 4px 0 0;
+      transition: height 0.5s ease;
+      position: relative;
+    }
+    .chart-bar.expense {
+      background: linear-gradient(180deg, var(--crimson-bright), var(--crimson-accent));
+    }
+    .chart-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* Custom Animation for Box Office Clapper */
+    .pulse-glow {
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+      50% { box-shadow: 0 0 22px rgba(212, 175, 55, 0.5); }
+    }
+  </style>
 </head>
 <body>
-    <!-- Status Bar -->
-    <div class="status-bar">
-        <div class="status-content">
-            <div class="studio-info">
-                <div class="studio-avatar">🎬</div>
-                <div class="studio-details">
-                    <div class="studio-name" id="studioName" onclick="editStudioName()">Your Studio</div>
-                    <div class="game-time">
-                        <span id="currentWeek">Week 1</span> • <span id="currentYear">2025</span>
-                    </div>
-                </div>
-            </div>
-            <div class="player-stats">
-                <div class="stat-item">
-                    <div class="stat-icon">💰</div>
-                    <div class="stat-details">
-                        <div class="stat-label">Money</div>
-                        <div class="stat-value" id="playerMoney">₹100 Cr</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-details">
-                        <div class="stat-label">Reputation</div>
-                        <div class="stat-value" id="playerReputation">50%</div>
-                    </div>
-                </div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn-icon-only" id="themeToggle" title="Toggle Theme">🌙</button>
-                <button class="btn-primary-small" id="nextWeekBtn">Next Week</button>
-            </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Toast Notification Shelf -->
+  <div id="toast-shelf"></div>
+
+  <!-- Header -->
+  <header class="studio-header">
+    <div class="brand-group">
+      <div class="studio-logo-box" id="studio-logo-btn" title="Click to change logo color">
+        <i class="fa-solid fa-clapperboard"></i>
+      </div>
+      <div class="studio-identity">
+        <input type="text" id="studio-name-input" class="studio-name-input font-cinzel" value="Dharma Productions" maxlength="24" title="Click to rename studio">
+        <div class="studio-tier-tag">
+          <i class="fa-solid fa-crown"></i>
+          <span id="header-tier-label">Indie Studio</span>
         </div>
+      </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Dashboard Screen -->
-        <div id="dashboard" class="screen active">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Dashboard</h1>
-                    <p class="screen-subtitle">Welcome to your Bollywood empire</p>
-                </div>
-            </div>
-
-            <!-- Quick Stats -->
-            <div class="stats-grid">
-                <div class="stat-card success">
-                    <div class="stat-card-icon">🎬</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="totalProjects">0</div>
-                        <div class="stat-card-label">Total Projects</div>
-                    </div>
-                </div>
-                <div class="stat-card warning">
-                    <div class="stat-card-icon">🏆</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="hitMovies">0</div>
-                        <div class="stat-card-label">Hit Movies</div>
-                    </div>
-                </div>
-                <div class="stat-card info">
-                    <div class="stat-card-icon">📊</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="successRate">0%</div>
-                        <div class="stat-card-label">Success Rate</div>
-                    </div>
-                </div>
-                <div class="stat-card success">
-                    <div class="stat-card-icon">🎖️</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="totalAwards">0</div>
-                        <div class="stat-card-label">Awards Won</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Active Projects -->
-            <div id="activeProjectsContainer" class="card-section hidden">
-                <h3 class="card-title">🎬 Active Projects</h3>
-                <div id="activeProjectsList"></div>
-            </div>
-
-            <!-- Industry News -->
-            <div class="card-section">
-                <h3 class="card-title">📰 Industry News</h3>
-                <div class="news-ticker-container">
-                    <div class="news-ticker">
-                        <div class="ticker-content" id="newsTicker">
-                            Welcome to Bollywood Cinema v3.0! 🎬 Start your journey to cinematic success...
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="quick-actions">
-                <div class="action-card primary" data-screen="script">
-                    <div class="action-icon">✍️</div>
-                    <div class="action-content">
-                        <div class="action-title">Start New Project</div>
-                        <div class="action-subtitle">Create your next blockbuster</div>
-                    </div>
-                    <div class="action-arrow">→</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Script Development Screen -->
-        <div id="script" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Script Development</h1>
-                    <p class="screen-subtitle">Create your story</p>
-                </div>
-                <button class="btn-back" data-screen="dashboard">
-                    <span class="btn-icon">←</span> Back
-                </button>
-            </div>
-
-            <div class="form-container">
-                <!-- Project Details Card -->
-                <div class="form-card">
-                    <h3 class="card-title">📋 Project Details</h3>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Project Title</label>
-                        <input type="text" class="form-input" id="projectTitle" placeholder="Enter your movie title">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Project Type</label>
-                        <div class="select-buttons grid-3" id="projectTypeButtons">
-                            <div class="select-btn" data-type="movie">
-                                <div class="select-content">
-                                    <div class="select-icon">🎬</div>
-                                    <div class="select-text">Feature Film</div>
-                                    <div class="select-desc">₹30 Cr Base • 14 weeks</div>
-                                </div>
-                            </div>
-                            <div class="select-btn" data-type="webseries">
-                                <div class="select-content">
-                                    <div class="select-icon">📺</div>
-                                    <div class="select-text">Web Series</div>
-                                    <div class="select-desc">₹18 Cr Base • 10 weeks</div>
-                                </div>
-                            </div>
-                            <div class="select-btn" data-type="tvserial">
-                                <div class="select-content">
-                                    <div class="select-icon">📻</div>
-                                    <div class="select-text">TV Serial</div>
-                                    <div class="select-desc">₹8 Cr Base • 6 weeks</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Genre</label>
-                        <div class="select-buttons" id="genreButtons">
-                            <div class="select-btn" data-genre="romance">
-                                <div class="select-content">
-                                    <div class="select-icon">💕</div>
-                                    <div class="select-text">Romance</div>
-                                </div>
-                            </div>
-                            <div class="select-btn" data-genre="action">
-                                <div class="select-content">
-                                    <div class="select-icon">💥</div>
-                                    <div class="select-text">Action</div>
-                                </div>
-                            </div>
-                            <div class="select-btn" data-genre="comedy">
-                                <div class="select-content">
-                                    <div class="select-icon">😄</div>
-                                    <div class="select-text">Comedy</div>
-                                </div>
-                            </div>
-                            <div class="select-btn" data-genre="drama">
-                                <div class="select-content">
-                                    <div class="select-icon">🎭</div>
-                                    <div class="select-text">Drama</div>
-                                </div>
-                            </div>
-                            <div class="select-btn" data-genre="thriller">
-                                <div class="select-content">
-                                    <div class="select-icon">🔪</div>
-                                    <div class="select-text">Thriller</div>
-                                </div>
-                            </div>
-                            <div class="select-btn" data-genre="family">
-                                <div class="select-content">
-                                    <div class="select-icon">👨‍👩‍👧‍👦</div>
-                                    <div class="select-text">Family</div>
-                                </div>
-                            </div>
-                            <div class="select-btn" data-genre="historical">
-                                <div class="select-content">
-                                    <div class="select-icon">🏛️</div>
-                                    <div class="select-text">Historical</div>
-                                </div>
-                            </div>
-                            <div class="select-btn" data-genre="horror">
-                                <div class="select-content">
-                                    <div class="select-icon">👻</div>
-                                    <div class="select-text">Horror</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Writer Selection Card -->
-                <div class="form-card">
-                    <h3 class="card-title">✍️ Writer Selection</h3>
-                    
-                    <div class="dropdown-container">
-                        <div class="dropdown-trigger" id="writerDropdownTrigger">
-                            <span class="dropdown-text">Select a writer...</span>
-                            <span class="dropdown-arrow">▼</span>
-                        </div>
-                        <div class="dropdown-menu" id="writerDropdown">
-                            <div class="dropdown-search">
-                                <input type="text" class="search-input" id="writerSearch" placeholder="Search writers...">
-                            </div>
-                            <div class="dropdown-options" id="writerOptions"></div>
-                        </div>
-                    </div>
-
-                    <div id="selectedWriter" class="selected-card hidden"></div>
-                </div>
-
-                <!-- Cast Selection Card -->
-                <div class="form-card">
-                    <h3 class="card-title">⭐ Cast Selection</h3>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Lead Actors (Select 1-2)</label>
-                        <div class="dropdown-container">
-                            <div class="dropdown-trigger" id="leadActorDropdownTrigger">
-                                <span class="dropdown-text">Select lead actors...</span>
-                                <span class="dropdown-arrow">▼</span>
-                            </div>
-                            <div class="dropdown-menu" id="leadActorDropdown">
-                                <div class="dropdown-search">
-                                    <input type="text" class="search-input" id="leadActorSearch" placeholder="Search actors...">
-                                </div>
-                                <div class="dropdown-options" id="leadActorOptions"></div>
-                            </div>
-                        </div>
-                        <div class="selected-tags" id="selectedLeadActors"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Supporting Cast (Select 2-4)</label>
-                        <div class="dropdown-container">
-                            <div class="dropdown-trigger" id="supportingActorDropdownTrigger">
-                                <span class="dropdown-text">Select supporting actors...</span>
-                                <span class="dropdown-arrow">▼</span>
-                            </div>
-                            <div class="dropdown-menu" id="supportingActorDropdown">
-                                <div class="dropdown-search">
-                                    <input type="text" class="search-input" id="supportingActorSearch" placeholder="Search actors...">
-                                </div>
-                                <div class="dropdown-options" id="supportingActorOptions"></div>
-                            </div>
-                        </div>
-                        <div class="selected-tags" id="selectedSupportingActors"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="screen-actions">
-                <button class="btn-primary" id="startScriptBtn">
-                    <span class="btn-icon">▶️</span>
-                    Start Script Development
-                </button>
-            </div>
-        </div>
-
-        <!-- Crew & Music Team Screen -->
-        <div id="crew" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Crew & Music Team</h1>
-                    <p class="screen-subtitle">Assemble your dream team</p>
-                </div>
-                <button class="btn-back" data-screen="script">
-                    <span class="btn-icon">←</span> Back
-                </button>
-            </div>
-
-            <div class="form-container">
-                <!-- Director Selection -->
-                <div class="form-card">
-                    <h3 class="card-title">🎯 Director</h3>
-                    <div class="dropdown-container">
-                        <div class="dropdown-trigger" id="directorDropdownTrigger">
-                            <span class="dropdown-text">Select a director...</span>
-                            <span class="dropdown-arrow">▼</span>
-                        </div>
-                        <div class="dropdown-menu" id="directorDropdown">
-                            <div class="dropdown-search">
-                                <input type="text" class="search-input" id="directorSearch" placeholder="Search directors...">
-                            </div>
-                            <div class="dropdown-options" id="directorOptions"></div>
-                        </div>
-                    </div>
-                    <div id="selectedDirector" class="selected-card hidden"></div>
-                </div>
-
-                <!-- Music Team -->
-                <div class="form-card">
-                    <h3 class="card-title">🎵 Music Team</h3>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Music Producer</label>
-                        <div class="dropdown-container">
-                            <div class="dropdown-trigger" id="musicProducerDropdownTrigger">
-                                <span class="dropdown-text">Select music producer...</span>
-                                <span class="dropdown-arrow">▼</span>
-                            </div>
-                            <div class="dropdown-menu" id="musicProducerDropdown">
-                                <div class="dropdown-search">
-                                    <input type="text" class="search-input" id="musicProducerSearch" placeholder="Search producers...">
-                                </div>
-                                <div class="dropdown-options" id="musicProducerOptions"></div>
-                            </div>
-                        </div>
-                        <div id="selectedMusicProducer" class="selected-card hidden"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Playback Singers (Select 2-4)</label>
-                        <div class="dropdown-container">
-                            <div class="dropdown-trigger" id="singerDropdownTrigger">
-                                <span class="dropdown-text">Select singers...</span>
-                                <span class="dropdown-arrow">▼</span>
-                            </div>
-                            <div class="dropdown-menu" id="singerDropdown">
-                                <div class="dropdown-search">
-                                    <input type="text" class="search-input" id="singerSearch" placeholder="Search singers...">
-                                </div>
-                                <div class="dropdown-options" id="singerOptions"></div>
-                            </div>
-                        </div>
-                        <div class="selected-tags" id="selectedSingers"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Lyricists (Select 1-2)</label>
-                        <div class="dropdown-container">
-                            <div class="dropdown-trigger" id="lyricistDropdownTrigger">
-                                <span class="dropdown-text">Select lyricists...</span>
-                                <span class="dropdown-arrow">▼</span>
-                            </div>
-                            <div class="dropdown-menu" id="lyricistDropdown">
-                                <div class="dropdown-search">
-                                    <input type="text" class="search-input" id="lyricistSearch" placeholder="Search lyricists...">
-                                </div>
-                                <div class="dropdown-options" id="lyricistOptions"></div>
-                            </div>
-                        </div>
-                        <div class="selected-tags" id="selectedLyricists"></div>
-                    </div>
-                </div>
-
-                <!-- Budget Summary -->
-                <div class="form-card">
-                    <h3 class="card-title">💰 Budget Summary</h3>
-                    <div class="budget-breakdown">
-                        <div class="budget-item">
-                            <span class="budget-label">Script Development</span>
-                            <span class="budget-value" id="scriptCost">₹0 Cr</span>
-                        </div>
-                        <div class="budget-item">
-                            <span class="budget-label">Director</span>
-                            <span class="budget-value" id="directorCost">₹0 Cr</span>
-                        </div>
-                        <div class="budget-item">
-                            <span class="budget-label">Lead Cast</span>
-                            <span class="budget-value" id="leadCastCost">₹0 Cr</span>
-                        </div>
-                        <div class="budget-item">
-                            <span class="budget-label">Supporting Cast</span>
-                            <span class="budget-value" id="supportingCastCost">₹0 Cr</span>
-                        </div>
-                        <div class="budget-item">
-                            <span class="budget-label">Music Team</span>
-                            <span class="budget-value" id="musicTeamCost">₹0 Cr</span>
-                        </div>
-                        <div class="budget-total">
-                            <span>Total Crew Cost</span>
-                            <span id="totalCrewCost">₹0 Cr</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="screen-actions">
-                <button class="btn-primary" id="finalizeCrewBtn">
-                    <span class="btn-icon">✓</span>
-                    Finalize Crew & Start Production
-                </button>
-            </div>
-        </div>
-
-        <!-- Production Screen -->
-        <div id="production" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Production</h1>
-                    <p class="screen-subtitle">Lights, camera, action!</p>
-                </div>
-                <button class="btn-back" data-screen="crew">
-                    <span class="btn-icon">←</span> Back
-                </button>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">🎬 Production Progress</h3>
-                
-                <div class="progress-container">
-                    <div class="progress-info">
-                        <span class="progress-label">Filming Progress</span>
-                        <span class="progress-value" id="productionProgress">0%</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill production" id="productionProgressBar" style="width: 0%"></div>
-                    </div>
-                    <div class="progress-details">
-                        <span id="productionWeekInfo">Week 1 of 14</span>
-                        <span id="productionQuality">Quality: Building...</span>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card info">
-                        <div class="stat-card-icon">🎬</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value"><span id="scenesFilmed">0</span>/120</div>
-                            <div class="stat-card-label">Scenes Filmed</div>
-                        </div>
-                    </div>
-                    <div class="stat-card warning">
-                        <div class="stat-card-icon">💰</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="budgetUsed">₹0 Cr</div>
-                            <div class="stat-card-label">Budget Used</div>
-                        </div>
-                    </div>
-                    <div class="stat-card success">
-                        <div class="stat-card-icon">😊</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="crewMorale">Excellent</div>
-                            <div class="stat-card-label">Crew Morale</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">📰 Production Updates</h3>
-                <div class="events-list" id="productionEvents">
-                    <div class="event-item positive">
-                        <div class="event-icon">🎬</div>
-                        <div class="event-content">
-                            <div class="event-title">Production Started!</div>
-                            <div class="event-description">Your team is ready to create magic. Good luck!</div>
-                            <div class="event-time">Week 1</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="screen-actions">
-                <button class="btn-secondary" id="skipProductionBtn">
-                    <span class="btn-icon">⏭️</span>
-                    Skip to Marketing
-                </button>
-            </div>
-        </div>
-
-        <!-- Marketing Screen -->
-        <div id="marketing" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Marketing Campaign</h1>
-                    <p class="screen-subtitle">Create the buzz</p>
-                </div>
-                <button class="btn-back" data-screen="production">
-                    <span class="btn-icon">←</span> Back
-                </button>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">📢 Marketing Channels</h3>
-                
-                <div class="slider-group">
-                    <div class="slider-item">
-                        <div class="slider-label">
-                            <span>🏢 Billboards & Print</span>
-                            <span class="slider-value" id="billboardValue">₹0 Cr</span>
-                        </div>
-                        <input type="range" class="slider" id="billboardSlider" min="0" max="15" value="0">
-                    </div>
-                    
-                    <div class="slider-item">
-                        <div class="slider-label">
-                            <span>📺 TV Advertisements</span>
-                            <span class="slider-value" id="tvValue">₹0 Cr</span>
-                        </div>
-                        <input type="range" class="slider" id="tvSlider" min="0" max="25" value="0">
-                    </div>
-                    
-                    <div class="slider-item">
-                        <div class="slider-label">
-                            <span>📱 Social Media</span>
-                            <span class="slider-value" id="socialValue">₹ Cr</span>
-                        </div>
-                        <input type="range" class="slider" id="socialSlider" min="0" max="10" value="0">
-                    </div>
-                    
-                    <div class="slider-item">
-                        <div class="slider-label">
-                            <span>🌍 International Ads</span>
-                            <span class="slider-value" id="internationalValue">₹0 Cr</span>
-                        </div>
-                        <input type="range" class="slider" id="internationalSlider" min="0" max="20" value="0">
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">📊 Campaign Preview</h3>
-                
-                <div class="stats-grid">
-                    <div class="stat-card warning">
-                        <div class="stat-card-icon">💰</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="totalMarketingBudget">₹0 Cr</div>
-                            <div class="stat-card-label">Total Budget</div>
-                        </div>
-                    </div>
-                    <div class="stat-card info">
-                        <div class="stat-card-icon">📈</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="expectedHype">0%</div>
-                            <div class="stat-card-label">Expected Hype</div>
-                        </div>
-                    </div>
-                    <div class="stat-card success">
-                        <div class="stat-card-icon">🌍</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="audienceReach">Local</div>
-                            <div class="stat-card-label">Audience Reach</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hype-meter">
-                    <div class="hype-label">Hype Level</div>
-                    <div class="hype-bar">
-                        <div class="hype-fill" id="hypeFill" style="width: 0%"></div>
-                    </div>
-                    <div class="hype-indicators">
-                        <span class="hype-mark">Low</span>
-                        <span class="hype-mark">Medium</span>
-                        <span class="hype-mark">High</span>
-                        <span class="hype-mark">Viral</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="screen-actions">
-                <button class="btn-primary" id="launchMarketingBtn">
-                    <span class="btn-icon">🚀</span>
-                    Launch Marketing Campaign
-                </button>
-            </div>
-        </div>
-
-        <!-- Distribution Screen -->
-        <div id="distribution" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Distribution</h1>
-                    <p class="screen-subtitle">Choose your release partner</p>
-                </div>
-                <button class="btn-back" data-screen="marketing">
-                    <span class="btn-icon">←</span> Back
-                </button>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">🤝 Distribution Partners</h3>
-                <div class="distributors-grid" id="distributorsGrid"></div>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">💰 Distribution Costs</h3>
-                <div class="budget-breakdown">
-                    <div class="budget-item">
-                        <span class="budget-label">Partner Fee</span>
-                        <span class="budget-value" id="distributorFee">₹0 Cr</span>
-                    </div>
-                    <div class="budget-item">
-                        <span class="budget-label">Print & Publicity</span>
-                        <span class="budget-value">₹8 Cr</span>
-                    </div>
-                    <div class="budget-total">
-                        <span>Total Distribution Cost</span>
-                        <span id="totalDistributionCost">₹8 Cr</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="screen-actions">
-                <button class="btn-primary" id="finalizeDistributionBtn">
-                    <span class="btn-icon">✓</span>
-                    Finalize Distribution
-                </button>
-            </div>
-        </div>
-
-        <!-- Release Planning Screen -->
-        <div id="release" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Release Planning</h1>
-                    <p class="screen-subtitle">Choose the perfect moment</p>
-                </div>
-                <button class="btn-back" data-screen="distribution">
-                    <span class="btn-icon">←</span> Back
-                </button>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">📅 Release Calendar</h3>
-                <div class="calendar-container">
-                    <div class="calendar-header">
-                        <button class="calendar-nav" id="prevMonth">‹</button>
-                        <h4 class="calendar-title" id="calendarTitle">Upcoming Weeks</h4>
-                        <button class="calendar-nav" id="nextMonth">›</button>
-                    </div>
-                    <div class="calendar-grid" id="releaseCalendar"></div>
-                    <div class="calendar-legend">
-                        <div class="legend-item">
-                            <div class="legend-color optimal"></div>
-                            <span>Optimal</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color festival"></div>
-                            <span>Festival</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color competition"></div>
-                            <span>Competition</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">📺 OTT Rights Strategy</h3>
-                <div class="select-buttons">
-                    <div class="select-btn active" data-ott="post-theatrical">
-                        <div class="select-content">
-                            <div class="select-icon">🎬</div>
-                            <div class="select-text">Post-Theatrical</div>
-                            <div class="select-desc">Release on OTT after 6 weeks</div>
-                        </div>
-                    </div>
-                    <div class="select-btn" data-ott="simultaneous">
-                        <div class="select-content">
-                            <div class="select-icon">📺</div>
-                            <div class="select-text">Simultaneous</div>
-                            <div class="select-desc">Theatre + OTT same day</div>
-                        </div>
-                    </div>
-                    <div class="select-btn" data-ott="ott-first">
-                        <div class="select-content">
-                            <div class="select-icon">💻</div>
-                            <div class="select-text">OTT First</div>
-                            <div class="select-desc">Direct to streaming</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="screen-actions">
-                <button class="btn-primary" id="confirmReleaseBtn">
-                    <span class="btn-icon">🎉</span>
-                    Confirm Release Date
-                </button>
-            </div>
-        </div>
-
-        <!-- Results Screen -->
-        <div id="results" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Box Office Results</h1>
-                    <p class="screen-subtitle">The moment of truth</p>
-                </div>
-            </div>
-
-            <div class="results-header">
-                <h2 class="movie-title" id="resultsMovieTitle">"Movie Title"</h2>
-                <div class="verdict-badge blockbuster" id="resultsVerdict">BLOCKBUSTER HIT! 🏆</div>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">💰 Financial Performance</h3>
-                <div class="results-grid">
-                    <div class="result-item">
-                        <span class="result-label">Total Investment</span>
-                        <span class="result-value" id="totalInvestment">₹75 Cr</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Opening Weekend</span>
-                        <span class="result-value positive" id="openingWeekend">₹45 Cr</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Domestic Total</span>
-                        <span class="result-value positive" id="domesticTotal">₹180 Cr</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">International</span>
-                        <span class="result-value positive" id="internationalTotal">₹65 Cr</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">OTT Rights</span>
-                        <span class="result-value positive" id="ottRights">₹35 Cr</span>
-                    </div>
-                    <div class="result-item highlight">
-                        <span class="result-label">Net Profit</span>
-                        <span class="result-value profit" id="netProfit">₹205 Cr</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">📊 Performance Metrics</h3>
-                <div class="metrics-grid">
-                    <div class="metric-item">
-                        <div class="metric-label">Audience Rating</div>
-                        <div class="metric-value" id="audienceRating">9.2/10</div>
-                        <div class="metric-bar">
-                            <div class="metric-fill" style="width: 92%"></div>
-                        </div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">Critics Score</div>
-                        <div class="metric-value" id="criticsScore">88%</div>
-                        <div class="metric-bar">
-                            <div class="metric-fill" style="width: 88%"></div>
-                        </div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">Music Success</div>
-                        <div class="metric-value" id="musicSuccess">Superhit</div>
-                        <div class="metric-bar">
-                            <div class="metric-fill" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">Social Buzz</div>
-                        <div class="metric-value" id="socialBuzz">Viral</div>
-                        <div class="metric-bar">
-                            <div class="metric-fill" style="width: 100%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="awardsSection" class="card-section">
-                <h3 class="card-title">🏆 Awards & Recognition</h3>
-                <div class="awards-grid" id="resultsAwards"></div>
-            </div>
-
-            <div id="franchiseSection" class="card-section">
-                <h3 class="card-title">🎭 Franchise Opportunity!</h3>
-                <div class="franchise-card">
-                    <p>Your movie was a huge success! Fans are demanding a sequel.</p>
-                    <div class="franchise-actions">
-                        <button class="btn-primary" id="createSequelBtn">
-                            <span class="btn-icon">🎬</span>
-                            Create Sequel
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="screen-actions">
-                <button class="btn-primary" data-screen="dashboard">
-                    <span class="btn-icon">🏠</span>
-                    Return to Dashboard
-                </button>
-            </div>
-        </div>
-
-        <!-- Portfolio Screen -->
-        <div id="portfolio" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Portfolio</h1>
-                    <p class="screen-subtitle">Your cinematic legacy</p>
-                </div>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card info">
-                    <div class="stat-card-icon">🎬</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="portfolioTotalMovies">0</div>
-                        <div class="stat-card-label">Total Movies</div>
-                    </div>
-                </div>
-                <div class="stat-card success">
-                    <div class="stat-card-icon">💰</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="portfolioTotalRevenue">₹0</div>
-                        <div class="stat-card-label">Total Revenue</div>
-                    </div>
-                </div>
-                <div class="stat-card warning">
-                    <div class="stat-card-icon">🏆</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="portfolioHitMovies">0</div>
-                        <div class="stat-card-label">Hit Movies</div>
-                    </div>
-                </div>
-                <div class="stat-card info">
-                    <div class="stat-card-icon">🎖️</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="portfolioAwards">0</div>
-                        <div class="stat-card-label">Awards</div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="portfolioContent" class="portfolio-grid">
-                <div class="empty-portfolio">
-                    <div class="empty-icon">🎬</div>
-                    <h3 class="empty-title">No Movies Yet</h3>
-                    <p class="empty-subtitle">Start creating your first blockbuster!</p>
-                    <button class="btn-primary" data-screen="script">
-                        <span class="btn-icon">✍️</span>
-                        Create New Project
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Competitors Screen -->
-        <div id="competitors" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Competitors</h1>
-                    <p class="screen-subtitle">Keep your enemies closer</p>
-                </div>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">🎬 Upcoming Rival Releases</h3>
-                <div class="competitors-list" id="competitorsList"></div>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">👑 Industry Leaders</h3>
-                <div class="leaderboard" id="industryLeaderboard"></div>
-            </div>
-        </div>
-
-        <!-- Franchises Screen -->
-        <div id="franchises" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Franchises</h1>
-                    <p class="screen-subtitle">Your cinematic universes</p>
-                </div>
-            </div>
-
-            <div id="franchisesContent" class="franchises-grid">
-                <div class="empty-franchises">
-                    <div class="empty-icon">🎭</div>
-                    <h3 class="empty-title">No Franchises Yet</h3>
-                    <p class="empty-subtitle">Create hit movies to unlock franchise opportunities!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Awards Screen -->
-        <div id="awards" class="screen">
-            <div class="screen-header">
-                <div>
-                    <h1 class="screen-title">Awards</h1>
-                    <p class="screen-subtitle">Your hall of fame</p>
-                </div>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card warning">
-                    <div class="stat-card-icon">🏆</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="nationalAwards">0</div>
-                        <div class="stat-card-label">National Awards</div>
-                    </div>
-                </div>
-                <div class="stat-card info">
-                    <div class="stat-card-icon">🎭</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="filmfareAwards">0</div>
-                        <div class="stat-card-label">Filmfare Awards</div>
-                    </div>
-                </div>
-                <div class="stat-card success">
-                    <div class="stat-card-icon">📝</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="criticsAwards">0</div>
-                        <div class="stat-card-label">Critics Awards</div>
-                    </div>
-                </div>
-                <div class="stat-card warning">
-                    <div class="stat-card-icon">🌟</div>
-                    <div class="stat-card-content">
-                        <div class="stat-card-value" id="totalAwardsCount">0</div>
-                        <div class="stat-card-label">Total Awards</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-section">
-                <h3 class="card-title">🏆 Awards Timeline</h3>
-                <div id="awardsTimeline" class="awards-timeline">
-                    <div class="empty-awards">
-                        <div class="empty-icon">🏆</div>
-                        <h3 class="empty-title">No Awards Yet</h3>
-                        <p class="empty-subtitle">Create exceptional movies to win prestigious awards!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Live Stats Pill Bar -->
+    <div class="header-stats">
+      <div class="stat-pill">
+        <i class="fa-regular fa-calendar-days"></i>
+        <span>Week <strong id="header-week" class="val">1</strong> (Year <span id="header-year">1</span>)</span>
+      </div>
+      <div class="stat-pill cash">
+        <i class="fa-solid fa-indian-rupee-sign"></i>
+        <span id="header-cash" class="val">₹50.00 L</span>
+      </div>
+      <div class="stat-pill">
+        <i class="fa-solid fa-star"></i>
+        <span>Rep: <strong id="header-rep" class="val">25</strong>/100</span>
+      </div>
     </div>
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <div class="bottom-nav-content">
-            <a href="#" class="nav-item active" data-screen="dashboard">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">Dashboard</div>
-            </a>
-            <a href="#" class="nav-item" data-screen="portfolio">
-                <div class="nav-icon">🎬</div>
-                <div class="nav-label">Portfolio</div>
-            </a>
-            <a href="#" class="nav-item" data-screen="script">
-                <div class="nav-icon">✍️</div>
-                <div class="nav-label">New Project</div>
-            </a>
-            <a href="#" class="nav-item" data-screen="competitors">
-                <div class="nav-icon">⚔️</div>
-                <div class="nav-label">Competitors</div>
-            </a>
-            <a href="#" class="nav-item" data-screen="awards">
-                <div class="nav-icon">🏆</div>
-                <div class="nav-label">Awards</div>
-            </a>
-        </div>
+    <!-- Actions & Advance Week Button -->
+    <div class="header-actions">
+      <button class="btn-icon-sq" id="btn-sound-toggle" title="Toggle Sound (Web Audio)">
+        <i class="fa-solid fa-volume-high"></i>
+      </button>
+      <button class="btn-icon-sq" id="btn-theme-toggle" title="Toggle Dark/Light Mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+      <button class="btn-icon-sq" id="btn-manual-save" title="Save Game">
+        <i class="fa-solid fa-floppy-disk"></i>
+      </button>
+      <button class="btn-advance-week" id="btn-advance-week">
+        <i class="fa-solid fa-forward-step"></i>
+        <span>Advance Week</span>
+      </button>
     </div>
+  </header>
 
-    <!-- Event Modal -->
-    <div id="eventModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-icon" id="eventModalIcon">🎬</div>
-                <h3 class="modal-title" id="eventModalTitle">Event Title</h3>
-            </div>
-            <div class="modal-body">
-                <p id="eventModalDescription">Event description goes here...</p>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-primary" id="eventCloseBtn">Got it!</button>
-            </div>
+  <!-- Navigation Tabs -->
+  <nav class="app-tabs">
+    <button class="tab-btn active" data-tab="tab-dashboard"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></button>
+    <button class="tab-btn" data-tab="tab-new-movie"><i class="fa-solid fa-video"></i><span>New Movie</span></button>
+    <button class="tab-btn" data-tab="tab-productions"><i class="fa-solid fa-film"></i><span>Productions</span></button>
+    <button class="tab-btn" data-tab="tab-releases"><i class="fa-solid fa-ticket"></i><span>Releases</span></button>
+    <button class="tab-btn" data-tab="tab-actors"><i class="fa-solid fa-masks-theater"></i><span>Actors</span></button>
+    <button class="tab-btn" data-tab="tab-finances"><i class="fa-solid fa-vault"></i><span>Finances</span></button>
+    <button class="tab-btn" data-tab="tab-trends"><i class="fa-solid fa-arrow-trend-up"></i><span>Market Trends</span></button>
+    <button class="tab-btn" data-tab="tab-achievements"><i class="fa-solid fa-trophy"></i><span>Trophies</span></button>
+    <button class="tab-btn" data-tab="tab-help"><i class="fa-solid fa-circle-question"></i><span>Guide</span></button>
+  </nav>
+
+  <!-- Main Content Viewport -->
+  <main class="viewport">
+
+    <!-- 1. DASHBOARD TAB -->
+    <section id="tab-dashboard" class="tab-panel active">
+      <div class="grid-4" style="margin-bottom: 20px;">
+        <div class="glass-card">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Total Studio Value</div>
+          <div id="dash-net-worth" style="font-size: 1.5rem; font-weight: 800; color: var(--gold-bright); margin-top: 4px;">₹50.00 L</div>
+          <div style="font-size: 0.75rem; color: var(--emerald-green); margin-top: 6px;"><i class="fa-solid fa-arrow-up-right-dots"></i> 100% Equity Owned</div>
         </div>
-    </div>
+        <div class="glass-card">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Movies Released</div>
+          <div id="dash-released-count" style="font-size: 1.5rem; font-weight: 800; color: #fff; margin-top: 4px;">0</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;" id="dash-hit-ratio">Hits: 0 | Flops: 0</div>
+        </div>
+        <div class="glass-card">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Lifetime Collections</div>
+          <div id="dash-total-boxoffice" style="font-size: 1.5rem; font-weight: 800; color: var(--emerald-green); margin-top: 4px;">₹0</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Across all theatrical runs</div>
+        </div>
+        <div class="glass-card">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase;">Average Critic Rating</div>
+          <div id="dash-avg-rating" style="font-size: 1.5rem; font-weight: 800; color: var(--gold-bright); margin-top: 4px;">—</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Based on top film critics</div>
+        </div>
+      </div>
 
-    <!-- Studio Name Edit Modal -->
-    <div id="studioNameModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-icon">🎬</div>
-                <h3 class="modal-title">Edit Studio Name</h3>
+      <div class="grid-2">
+        <!-- In Production Quick Glance -->
+        <div class="glass-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-clapperboard"></i> In The Pipeline</span>
+            <button class="btn btn-gold" onclick="switchTab('tab-new-movie')" style="padding: 4px 10px; font-size: 0.75rem;">+ Launch Project</button>
+          </div>
+          <div id="dash-pipeline-list">
+            <div style="text-align: center; padding: 24px; color: var(--text-muted);">
+              <i class="fa-solid fa-film" style="font-size: 2rem; margin-bottom: 8px; opacity: 0.4;"></i>
+              <p>No active films shooting right now. Visit the <strong>New Movie</strong> tab to start scripting!</p>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Studio Name</label>
-                    <input type="text" class="form-input" id="studioNameInput" placeholder="Enter your studio name">
+          </div>
+        </div>
+
+        <!-- Weekly News & Gossip Feed -->
+        <div class="glass-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-newspaper"></i> Bollywood Wire & Gossip</span>
+            <span class="badge badge-gold">Live Feed</span>
+          </div>
+          <div id="dash-news-feed" style="max-height: 290px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Theatrical Box Office Runs -->
+      <div class="glass-card" style="margin-top: 20px;">
+        <div class="card-title">
+          <span><i class="fa-solid fa-fire"></i> Active Theatrical Screenings</span>
+          <span class="badge badge-blue">India Box Office</span>
+        </div>
+        <div id="dash-theatrical-runs">
+          <p style="color: var(--text-muted); font-size: 0.88rem;">No films currently running in theaters. Release a completed project to start racking up weekly collections!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. NEW MOVIE PIPELINE TAB -->
+    <section id="tab-new-movie" class="tab-panel">
+      <div class="glass-card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-wand-magic-sparkles"></i> Film Production Pipeline</span>
+          <span id="pipeline-step-badge" class="badge badge-gold">Step 1 of 5: Script</span>
+        </div>
+
+        <!-- Stepper Indicator -->
+        <div class="pipeline-stepper">
+          <div class="step-item active" id="pstep-1" onclick="jumpToPipelineStep(1)">1</div>
+          <div class="step-item" id="pstep-2" onclick="jumpToPipelineStep(2)">2</div>
+          <div class="step-item" id="pstep-3" onclick="jumpToPipelineStep(3)">3</div>
+          <div class="step-item" id="pstep-4" onclick="jumpToPipelineStep(4)">4</div>
+          <div class="step-item" id="pstep-5" onclick="jumpToPipelineStep(5)">5</div>
+        </div>
+
+        <!-- Step 1: Script & Concept -->
+        <div id="pipeline-content-1">
+          <h3 class="font-cinzel" style="margin-bottom: 14px; color: var(--gold-bright);">Script & Concept Development</h3>
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Movie Title</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="nm-title" class="form-control" placeholder="Enter Hindi/English Title...">
+                <button class="btn" id="nm-rand-title" title="Generate Random Bollywood Title"><i class="fa-solid fa-dice"></i></button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Genre</label>
+              <select id="nm-genre" class="form-control">
+                <option value="Action">Action & Masala</option>
+                <option value="Romance">Romantic Drama</option>
+                <option value="Comedy">Family Comedy</option>
+                <option value="Drama">Social Drama</option>
+                <option value="Thriller">Crime Thriller</option>
+                <option value="Horror">Supernatural Horror</option>
+                <option value="Sci-Fi">Sci-Fi Epic</option>
+                <option value="Biopic">Historical Biopic</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Writer Quality Tier</label>
+              <select id="nm-writer-tier" class="form-control">
+                <option value="freelance">Freelance Scriptwriters (Cost: ₹2.00 L — Script Qual: 40-65)</option>
+                <option value="experienced">Award-Winning Writers (Cost: ₹10.00 L — Script Qual: 60-80)</option>
+                <option value="maverick">Star Bollywood Screenwriter (Cost: ₹30.00 L — Script Qual: 75-95)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Target Production Scale</label>
+              <select id="nm-budget-tier" class="form-control">
+                <option value="indie">Indie / Low Budget (₹20 L – ₹1 Cr)</option>
+                <option value="mid">Mid-Budget Commercial (₹1 Cr – ₹15 Cr)</option>
+                <option value="big" id="opt-big-budget">Big Star Masala (₹15 Cr – ₹70 Cr) [Rep 40+]</option>
+                <option value="mega" id="opt-mega-budget">Pan-India Mega Spectacle (₹70 Cr – ₹200 Cr) [Rep 70+]</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-top: 15px; display: flex; justify-content: flex-end;">
+            <button class="btn btn-gold" onclick="pipelineNextStep(2)">Proceed to Casting <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 2: Casting Lead & Support -->
+        <div id="pipeline-content-2" style="display: none;">
+          <h3 class="font-cinzel" style="margin-bottom: 14px; color: var(--gold-bright);">Cast Selection</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+            Choose 1 Lead Actor and 1 Supporting Co-Star from your available talent pool. Actor fees will be debited upon entering production.
+          </p>
+
+          <div class="grid-2" style="margin-bottom: 16px;">
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 700; color: var(--gold-bright);">LEAD ROLE</label>
+              <select id="nm-lead-select" class="form-control" style="margin-top: 5px;">
+                <!-- Populated dynamically -->
+              </select>
+              <div id="lead-preview-stat" style="margin-top: 8px; font-size: 0.82rem; color: var(--text-muted);"></div>
+            </div>
+            <div>
+              <label style="font-size: 0.8rem; font-weight: 700; color: var(--gold-bright);">SUPPORTING CO-STAR</label>
+              <select id="nm-support-select" class="form-control" style="margin-top: 5px;">
+                <!-- Populated dynamically -->
+              </select>
+              <div id="support-preview-stat" style="margin-top: 8px; font-size: 0.82rem; color: var(--text-muted);"></div>
+            </div>
+          </div>
+
+          <div style="margin-top: 15px; display: flex; justify-content: space-between;">
+            <button class="btn" onclick="pipelineNextStep(1)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn btn-gold" onclick="pipelineNextStep(3)">Confirm Crew & Sets <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 3: Crew & Pre-Production -->
+        <div id="pipeline-content-3" style="display: none;">
+          <h3 class="font-cinzel" style="margin-bottom: 14px; color: var(--gold-bright);">Director & Creative Crew</h3>
+          <div class="grid-3">
+            <div class="form-group">
+              <label>Director</label>
+              <select id="nm-director" class="form-control">
+                <option value="debutant">Debutant Indie Director (Cost: ₹5.00 L | Skill: 50)</option>
+                <option value="seasoned">Seasoned Craftsman (Cost: ₹35.00 L | Skill: 72)</option>
+                <option value="visionary">National Award Visionary (Cost: ₹1.50 Cr | Skill: 88)</option>
+                <option value="blockbuster">Blockbuster Hit Machine (Cost: ₹5.00 Cr | Skill: 96)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Music Composer</label>
+              <select id="nm-music" class="form-control">
+                <option value="indie">Indie Indie Band (Cost: ₹2.00 L | Audio Buzz: +5)</option>
+                <option value="chartbuster">Chartbuster Hitmakers (Cost: ₹20.00 L | Audio Buzz: +15)</option>
+                <option value="maestro">Legendary Sitar & Symphony Maestro (Cost: ₹80.00 L | Audio Buzz: +28)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Cinematography & Sets</label>
+              <select id="nm-sets" class="form-control">
+                <option value="standard">Real Locations & Standard Gear (Cost: ₹5.00 L)</option>
+                <option value="lavish">Lavish Film City Sets & Arri Alexa 65 (Cost: ₹40.00 L)</option>
+                <option value="international">Exotic European Schedules & IMAX Rigs (Cost: ₹2.50 Cr)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-top: 15px; display: flex; justify-content: space-between;">
+            <button class="btn" onclick="pipelineNextStep(2)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn btn-gold" onclick="pipelineNextStep(4)">Post & Marketing Budget <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 4: Post-Production & Marketing -->
+        <div id="pipeline-content-4" style="display: none;">
+          <h3 class="font-cinzel" style="margin-bottom: 14px; color: var(--gold-bright);">Post-Production & Marketing Blitz</h3>
+          
+          <div class="form-group">
+            <label>VFX & Sound Design Polish</label>
+            <div class="range-wrap">
+              <input type="range" id="nm-vfx-spend" min="100000" max="25000000" step="100000" value="500000">
+              <span class="range-val" id="nm-vfx-spend-val">₹5.00 L</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Marketing & Promotional Campaign Spend</label>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px;">Higher P&A spend creates massive pre-release buzz and opens more single screens and multiplexes.</p>
+            <div class="range-wrap">
+              <input type="range" id="nm-mkt-spend" min="200000" max="50000000" step="200000" value="1000000">
+              <span class="range-val" id="nm-mkt-spend-val">₹10.00 L</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 15px; display: flex; justify-content: space-between;">
+            <button class="btn" onclick="pipelineNextStep(3)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn btn-gold" onclick="pipelineNextStep(5)">Review Film Budget & Greenlight <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Step 5: Summary & Final Greenlight -->
+        <div id="pipeline-content-5" style="display: none;">
+          <h3 class="font-cinzel" style="margin-bottom: 14px; color: var(--gold-bright);">Production Greenlight Brief</h3>
+          <div class="glass-card" style="background: rgba(0,0,0,0.3); border-color: var(--gold-primary); margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; margin-bottom: 12px;">
+              <div>
+                <h2 id="summary-title" class="font-cinzel" style="color: #fff;">Film Title</h2>
+                <div style="font-size: 0.85rem; color: var(--gold-bright);"><span id="summary-genre">Action</span> • Scale: <span id="summary-scale">Mid-Budget</span></div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Estimated Production Time</div>
+                <div id="summary-shooting-weeks" style="font-size: 1.15rem; font-weight: 700; color: #fff;">4 Weeks</div>
+              </div>
+            </div>
+
+            <div class="grid-2" style="font-size: 0.88rem;">
+              <div>
+                <p><strong>Lead Star:</strong> <span id="summary-lead-name">—</span></p>
+                <p><strong>Supporting:</strong> <span id="summary-support-name">—</span></p>
+                <p><strong>Director:</strong> <span id="summary-director-name">—</span></p>
+                <p><strong>Script Score:</strong> <span id="summary-script-score" style="color: var(--gold-bright); font-weight: 700;">80/100</span></p>
+              </div>
+              <div>
+                <p><strong>Actor & Crew Fees:</strong> <span id="summary-talent-cost" style="color: var(--crimson-bright);">₹0</span></p>
+                <p><strong>Post & VFX:</strong> <span id="summary-post-cost" style="color: var(--crimson-bright);">₹0</span></p>
+                <p><strong>Promotions & Ads:</strong> <span id="summary-promo-cost" style="color: var(--crimson-bright);">₹0</span></p>
+                <p style="font-size: 1.05rem; margin-top: 6px;"><strong>Total Upfront Investment:</strong> <span id="summary-total-cost" style="color: var(--emerald-green); font-weight: 800;">₹0</span></p>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between;">
+            <button class="btn" onclick="pipelineNextStep(4)"><i class="fa-solid fa-arrow-left"></i> Back to Marketing</button>
+            <button class="btn btn-gold pulse-glow" id="btn-greenlight-film" style="padding: 12px 28px; font-size: 1rem;">
+              <i class="fa-solid fa-clapperboard"></i> Greenlight Production!
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. ACTIVE PRODUCTIONS TAB -->
+    <section id="tab-productions" class="tab-panel">
+      <div class="glass-card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-film"></i> Movies On Floors (Shooting & Post)</span>
+          <span class="badge badge-gold" id="active-films-badge">0 Active</span>
+        </div>
+        <div id="active-productions-container">
+          <!-- Dynamic rendering -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. RELEASED MOVIES TAB -->
+    <section id="tab-releases" class="tab-panel">
+      <div class="glass-card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-award"></i> Theatrical Archive & Collections</span>
+          <span class="badge badge-gold" id="releases-count-badge">0 Titles</span>
+        </div>
+        <div id="released-movies-container">
+          <p style="color: var(--text-muted); font-size: 0.9rem;">No released movies yet. Once a movie finishes shooting and reaches theaters, its box office run, reviews, and OTT streaming negotiations appear here.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ACTORS TALENT ROSTER TAB -->
+    <section id="tab-actors" class="tab-panel">
+      <div class="glass-card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-users-viewfinder"></i> Bollywood Talent Database</span>
+          <button class="btn btn-gold" id="btn-scout-talent" style="font-size: 0.8rem; padding: 6px 14px;">
+            <i class="fa-solid fa-binoculars"></i> Scout New Talent (₹5.00 L)
+          </button>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="grid-3" style="margin-bottom: 20px;">
+          <div>
+            <input type="text" id="actor-search-input" class="form-control" placeholder="Search actor by name...">
+          </div>
+          <div>
+            <select id="actor-tier-filter" class="form-control">
+              <option value="all">All Tiers (Megastars to Newcomers)</option>
+              <option value="Megastar">Megastars (Popularity 90+)</option>
+              <option value="A-List">A-List (Popularity 75-89)</option>
+              <option value="B-List">B-List (Popularity 55-74)</option>
+              <option value="Rising Star">Rising Stars & Newcomers</option>
+            </select>
+          </div>
+          <div>
+            <select id="actor-sort-select" class="form-control">
+              <option value="pop-desc">Sort by Popularity (High → Low)</option>
+              <option value="skill-desc">Sort by Acting Skill (High → Low)</option>
+              <option value="fee-asc">Sort by Fee (Lowest First)</option>
+              <option value="fee-desc">Sort by Fee (Highest First)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Actor Cards Grid -->
+        <div id="actors-grid-container" class="grid-3">
+          <!-- Populated from 52 Actor Array -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. FINANCES & LEDGER TAB -->
+    <section id="tab-finances" class="tab-panel">
+      <div class="grid-2">
+        <!-- Balance Sheet & Studio Loan -->
+        <div class="glass-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-building-columns"></i> Film Syndicate Credit Line</span>
+            <span class="badge badge-gold">Max: ₹100 Cr</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+            Secure low-interest working capital for mega productions. Interest is accrued and charged at 1% every week.
+          </p>
+          <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+              <span>Active Outstanding Debt:</span>
+              <strong id="fin-loan-amount" style="color: var(--crimson-bright);">₹0</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">
+              <span>Weekly Interest Obligation:</span>
+              <span id="fin-interest-cost">₹0 / week</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Borrow Amount</label>
+            <div class="range-wrap">
+              <input type="range" id="loan-borrow-range" min="5000000" max="1000000000" step="5000000" value="20000000">
+              <span class="range-val" id="loan-borrow-val">₹2.00 Cr</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-gold" id="btn-take-loan" style="flex: 1;"><i class="fa-solid fa-hand-holding-dollar"></i> Take Loan</button>
+            <button class="btn" id="btn-repay-loan" style="flex: 1;"><i class="fa-solid fa-circle-check"></i> Repay Full</button>
+          </div>
+        </div>
+
+        <!-- Weekly Revenue Breakdown Visual -->
+        <div class="glass-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-chart-column"></i> Studio Cash Flow Trends</span>
+            <span class="badge badge-green">Last 6 Weeks</span>
+          </div>
+          <div class="chart-container" id="financial-chart">
+            <!-- Dynamically populated bars -->
+          </div>
+          <div style="display: flex; justify-content: space-around; margin-top: 14px; font-size: 0.8rem;">
+            <span><i class="fa-solid fa-square" style="color: var(--gold-bright);"></i> Box Office / OTT</span>
+            <span><i class="fa-solid fa-square" style="color: var(--crimson-bright);"></i> Production Costs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Financial Transaction Ledger -->
+      <div class="glass-card" style="margin-top: 20px;">
+        <div class="card-title">
+          <span><i class="fa-solid fa-receipt"></i> Transaction Statement</span>
+          <button class="btn" onclick="clearFinancialHistory()" style="padding: 4px 10px; font-size: 0.75rem;">Clear Ledger</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border-glass); color: var(--gold-bright);">
+                <th style="padding: 10px;">Week</th>
+                <th style="padding: 10px;">Category</th>
+                <th style="padding: 10px;">Description</th>
+                <th style="padding: 10px; text-align: right;">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="financial-ledger-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. MARKET TRENDS & RIVAL STUDIOS TAB -->
+    <section id="tab-trends" class="tab-panel">
+      <div class="grid-2">
+        <!-- Trending Genres & Seasons -->
+        <div class="glass-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-arrow-trend-up"></i> Indian Box Office Taste</span>
+            <span class="badge badge-gold" id="current-season-badge">Diwali Season</span>
+          </div>
+          <div style="margin-bottom: 14px;">
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              Audience trends rotate every month. Align your production schedule with the upcoming festival window for a 35% Box Office multiplier!
+            </p>
+          </div>
+          <div id="genres-trend-list" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Competitor Studios -->
+        <div class="glass-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-chess-rook"></i> Rival Studio Slate</span>
+            <span class="badge badge-blue">Bollywood Competitors</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px;" id="competitor-studios-list">
+            <!-- Dynamically populated rival studio status -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. ACHIEVEMENTS TAB -->
+    <section id="tab-achievements" class="tab-panel">
+      <div class="glass-card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-trophy"></i> Bollywood Hall of Fame</span>
+          <span class="badge badge-gold" id="achievements-progress-badge">0 / 16 Unlocked</span>
+        </div>
+        <div id="achievements-grid" class="grid-4" style="margin-top: 14px;">
+          <!-- Dynamically generated achievement badges -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. HELP & HOW TO PLAY TAB -->
+    <section id="tab-help" class="tab-panel">
+      <div class="glass-card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-book-open"></i> Studio Mogul's Handbook</span>
+          <button class="btn btn-gold" onclick="launchTutorial(true)"><i class="fa-solid fa-rotate-left"></i> Replay Tutorial</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 18px; font-size: 0.92rem; line-height: 1.6;">
+          <div>
+            <h3 class="font-cinzel" style="color: var(--gold-bright); margin-bottom: 6px;">1. The 6-Step Pipeline</h3>
+            <p style="color: var(--text-muted);">From <strong>Scripting</strong> to <strong>Casting</strong>, hiring your <strong>Director & Crew</strong>, managing <strong>Production weeks</strong>, and executing a high-buzz <strong>Marketing Campaign</strong> — every decision dictates your film's Quality Score.</p>
+          </div>
+          <div>
+            <h3 class="font-cinzel" style="color: var(--gold-bright); margin-bottom: 6px;">2. The Secret Formula for 100-Crore Blockbusters</h3>
+            <p style="color: var(--text-muted);">
+              <strong>Quality Score:</strong> Director Skill (30%) + Cast Popularity (25%) + Script Quality (20%) + Budget Efficiency (15%) + Marketing (10%).
+              <br>Release during fitting festival periods (e.g. Action during Diwali, Romance during Valentine's) to trigger explosive opening weekends!
+            </p>
+          </div>
+          <div>
+            <h3 class="font-cinzel" style="color: var(--gold-bright); margin-bottom: 6px;">3. Post-Theatrical Streaming (OTT) Goldmine</h3>
+            <p style="color: var(--text-muted);">Once your theatrical run finishes, major streaming platforms bid for your digital and satellite rights, giving you pure liquidity to fund your next big dream project!</p>
+          </div>
+          <div>
+            <h3 class="font-cinzel" style="color: var(--gold-bright); margin-bottom: 6px;">4. Save & Reset Data</h3>
+            <div style="display: flex; gap: 12px; margin-top: 8px;">
+              <button class="btn btn-danger" onclick="confirmResetGame()"><i class="fa-solid fa-trash"></i> Reset Entire Studio</button>
+              <button class="btn" onclick="exportSaveData()"><i class="fa-solid fa-download"></i> Export Save File</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Actor Detail Modal -->
+  <div class="modal-overlay" id="actor-detail-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('actor-detail-modal')"><i class="fa-solid fa-xmark"></i></button>
+      <div id="actor-modal-body">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- On-Set Production Event Modal -->
+  <div class="modal-overlay" id="event-choice-modal">
+    <div class="modal-box" style="border-color: var(--gold-bright);">
+      <h3 class="font-cinzel" id="event-title" style="color: var(--gold-bright); margin-bottom: 8px;">Breaking On-Set Event</h3>
+      <p id="event-desc" style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5;"></p>
+      <div id="event-choices-container" style="display: flex; flex-direction: column; gap: 10px;"></div>
+    </div>
+  </div>
+
+  <!-- Generic Confirmation Modal -->
+  <div class="modal-overlay" id="confirm-modal">
+    <div class="modal-box" style="max-width: 440px; text-align: center;">
+      <i class="fa-solid fa-triangle-exclamation" style="font-size: 2.8rem; color: var(--crimson-bright); margin-bottom: 12px;"></i>
+      <h3 class="font-cinzel" id="confirm-title" style="margin-bottom: 8px;">Are you sure?</h3>
+      <p id="confirm-msg" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;"></p>
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button class="btn" onclick="closeModal('confirm-modal')">Cancel</button>
+        <button class="btn btn-danger" id="confirm-ok-btn">Proceed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Tutorial Walkthrough Overlay -->
+  <div class="modal-overlay" id="tutorial-modal">
+    <div class="modal-box" style="max-width: 520px; border-color: var(--gold-bright);">
+      <div style="text-align: center; margin-bottom: 16px;">
+        <i class="fa-solid fa-clapperboard" style="font-size: 2.4rem; color: var(--gold-bright);"></i>
+        <h2 class="font-cinzel" style="color: #fff; margin-top: 6px;">Welcome to Bollywood Studio!</h2>
+        <span class="badge badge-gold" id="tut-step-counter">Step 1 of 4</span>
+      </div>
+      <div id="tut-step-content" style="font-size: 0.92rem; color: var(--text-main); min-height: 90px; line-height: 1.6;">
+        <!-- Filled via JS -->
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+        <button class="btn" onclick="skipTutorial()">Skip</button>
+        <button class="btn btn-gold" id="tut-next-btn" onclick="nextTutorialStep()">Next Tip <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT GAME ENGINE -->
+  <script>
+    /* =====================================================================
+       BOLLYWOOD CINEMA TYCOON SIMULATION ENGINE (v1.0)
+       Self-contained, production-grade, zero external UI framework.
+       ===================================================================== */
+
+    // 1. Dynamic Web App Manifest Injection for iOS & Android Standalone
+    (function injectAppManifest() {
+      const manifest = {
+        name: "Bollywood Cinema v1.0",
+        short_name: "Bollywood Studio",
+        start_url: window.location.href,
+        display: "standalone",
+        background_color: "#0d0d0f",
+        theme_color: "#0d0d0f",
+        icons: [
+          {
+            src: "https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80",
+            sizes: "512x512",
+            type: "image/jpeg",
+            purpose: "any maskable"
+          }
+        ]
+      };
+      const stringManifest = JSON.stringify(manifest);
+      const blob = new Blob([stringManifest], { type: 'application/json' });
+      const manifestURL = URL.createObjectURL(blob);
+      const link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = manifestURL;
+      document.head.appendChild(link);
+    })();
+
+    // 2. Web Audio API Sound Synthesizer (No external asset dependency)
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        const now = audioCtx.currentTime;
+        if (type === 'click') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.05);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.05);
+          osc.start(now);
+          osc.stop(now + 0.05);
+        } else if (type === 'success') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, now); // C5
+          osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+          osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.3);
+          osc.start(now);
+          osc.stop(now + 0.3);
+        } else if (type === 'fanfare') {
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.setValueAtTime(554.37, now + 0.1);
+          osc.frequency.setValueAtTime(659.25, now + 0.2);
+          osc.frequency.setValueAtTime(880, now + 0.3);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.6);
+          osc.start(now);
+          osc.stop(now + 0.6);
+        }
+      } catch (e) {
+        // Audio error suppression
+      }
+    }
+
+    // 3. Indian Currency and Number Formatter
+    function formatINR(val) {
+      if (val === undefined || isNaN(val)) return '₹0';
+      const absVal = Math.abs(val);
+      const sign = val < 0 ? '-' : '';
+      if (absVal >= 10000000) {
+        return `${sign}₹${(absVal / 10000000).toFixed(2)} Cr`;
+      } else if (absVal >= 100000) {
+        return `${sign}₹${(absVal / 100000).toFixed(2)} L`;
+      }
+      return `${sign}₹${absVal.toLocaleString('en-IN')}`;
+    }
+
+    // 4. Master Database of 52 Fictional Bollywood Actors
+    const MASTER_ACTORS = [
+      { id: 1, name: "Arjun Malhotra", popularity: 94, skill: 89, fee: 28000000, genres: ["Action", "Thriller"], tier: "Megastar", hits: 14, avatar: "AM", contractDeals: 0, busyUntil: 0 },
+      { id: 2, name: "Priya Sharma", popularity: 91, skill: 92, fee: 24000000, genres: ["Romance", "Drama"], tier: "Megastar", hits: 12, avatar: "PS", contractDeals: 0, busyUntil: 0 },
+      { id: 3, name: "Vikram Rathore", popularity: 95, skill: 90, fee: 35000000, genres: ["Action", "Biopic"], tier: "Megastar", hits: 18, avatar: "VR", contractDeals: 0, busyUntil: 0 },
+      { id: 4, name: "Ananya Deshmukh", popularity: 89, skill: 86, fee: 19000000, genres: ["Comedy", "Romance"], tier: "Megastar", hits: 9, avatar: "AD", contractDeals: 0, busyUntil: 0 },
+      { id: 5, name: "Ranveer Kapoor", popularity: 93, skill: 94, fee: 30000000, genres: ["Drama", "Action"], tier: "Megastar", hits: 15, avatar: "RK", contractDeals: 0, busyUntil: 0 },
+      { id: 6, name: "Deepika Verma", popularity: 92, skill: 91, fee: 26000000, genres: ["Drama", "Biopic"], tier: "Megastar", hits: 13, avatar: "DV", contractDeals: 0, busyUntil: 0 },
+      { id: 7, name: "Kabir Oberoi", popularity: 86, skill: 84, fee: 14000000, genres: ["Thriller", "Action"], tier: "A-List", hits: 8, avatar: "KO", contractDeals: 0, busyUntil: 0 },
+      { id: 8, name: "Kiara Singhania", popularity: 85, skill: 82, fee: 12000000, genres: ["Romance", "Comedy"], tier: "A-List", hits: 7, avatar: "KS", contractDeals: 0, busyUntil: 0 },
+      { id: 9, name: "Rohan Mehra", popularity: 82, skill: 80, fee: 9500000, genres: ["Action", "Comedy"], tier: "A-List", hits: 6, avatar: "RM", contractDeals: 0, busyUntil: 0 },
+      { id: 10, name: "Tara Bhattacharya", popularity: 84, skill: 88, fee: 11000000, genres: ["Drama", "Thriller"], tier: "A-List", hits: 6, avatar: "TB", contractDeals: 0, busyUntil: 0 },
+      { id: 11, name: "Siddharth Roy", popularity: 81, skill: 85, fee: 8500000, genres: ["Romance", "Thriller"], tier: "A-List", hits: 5, avatar: "SR", contractDeals: 0, busyUntil: 0 },
+      { id: 12, name: "Rhea Khurana", popularity: 80, skill: 79, fee: 8000000, genres: ["Comedy", "Horror"], tier: "A-List", hits: 4, avatar: "RK", contractDeals: 0, busyUntil: 0 },
+      { id: 13, name: "Aditya Sen", popularity: 78, skill: 86, fee: 7000000, genres: ["Biopic", "Drama"], tier: "A-List", hits: 5, avatar: "AS", contractDeals: 0, busyUntil: 0 },
+      { id: 14, name: "Nisha Patel", popularity: 76, skill: 78, fee: 6500000, genres: ["Horror", "Comedy"], tier: "A-List", hits: 4, avatar: "NP", contractDeals: 0, busyUntil: 0 },
+      { id: 15, name: "Kunal Kashyap", popularity: 74, skill: 82, fee: 5500000, genres: ["Thriller", "Action"], tier: "B-List", hits: 3, avatar: "KK", contractDeals: 0, busyUntil: 0 },
+      { id: 16, name: "Pooja Hegde-Verma", popularity: 73, skill: 75, fee: 5000000, genres: ["Romance", "Drama"], tier: "B-List", hits: 3, avatar: "PV", contractDeals: 0, busyUntil: 0 },
+      { id: 17, name: "Varun Bajaj", popularity: 72, skill: 74, fee: 4800000, genres: ["Comedy", "Sci-Fi"], tier: "B-List", hits: 3, avatar: "VB", contractDeals: 0, busyUntil: 0 },
+      { id: 18, name: "Ishaan Ghosh", popularity: 70, skill: 79, fee: 4200000, genres: ["Drama", "Romance"], tier: "B-List", hits: 2, avatar: "IG", contractDeals: 0, busyUntil: 0 },
+      { id: 19, name: "Radhika Kulkarni", popularity: 69, skill: 87, fee: 4000000, genres: ["Thriller", "Drama"], tier: "B-List", hits: 4, avatar: "RK", contractDeals: 0, busyUntil: 0 },
+      { id: 20, name: "Zayed Qureshi", popularity: 68, skill: 71, fee: 3600000, genres: ["Action", "Horror"], tier: "B-List", hits: 2, avatar: "ZQ", contractDeals: 0, busyUntil: 0 },
+      { id: 21, name: "Meera Nair", popularity: 67, skill: 81, fee: 3400000, genres: ["Biopic", "Drama"], tier: "B-List", hits: 2, avatar: "MN", contractDeals: 0, busyUntil: 0 },
+      { id: 22, name: "Devansh Saxena", popularity: 65, skill: 73, fee: 3000000, genres: ["Sci-Fi", "Comedy"], tier: "B-List", hits: 2, avatar: "DS", contractDeals: 0, busyUntil: 0 },
+      { id: 23, name: "Shruti Joshi", popularity: 64, skill: 76, fee: 2800000, genres: ["Romance", "Comedy"], tier: "B-List", hits: 1, avatar: "SJ", contractDeals: 0, busyUntil: 0 },
+      { id: 24, name: "Prateek Rawat", popularity: 62, skill: 70, fee: 2500000, genres: ["Horror", "Action"], tier: "B-List", hits: 1, avatar: "PR", contractDeals: 0, busyUntil: 0 },
+      { id: 25, name: "Alia Mirchandani", popularity: 60, skill: 72, fee: 2200000, genres: ["Drama", "Romance"], tier: "B-List", hits: 1, avatar: "AM", contractDeals: 0, busyUntil: 0 },
+      { id: 26, name: "Harshvardhan Rao", popularity: 58, skill: 68, fee: 1800000, genres: ["Action", "Sci-Fi"], tier: "B-List", hits: 1, avatar: "HR", contractDeals: 0, busyUntil: 0 },
+      { id: 27, name: "Sneha Ganguly", popularity: 56, skill: 75, fee: 1600000, genres: ["Biopic", "Thriller"], tier: "B-List", hits: 1, avatar: "SG", contractDeals: 0, busyUntil: 0 },
+      { id: 28, name: "Raghav Mittal", popularity: 54, skill: 66, fee: 1400000, genres: ["Comedy", "Romance"], tier: "B-List", hits: 0, avatar: "RM", contractDeals: 0, busyUntil: 0 },
+      { id: 29, name: "Tanvi Saini", popularity: 52, skill: 69, fee: 1200000, genres: ["Drama", "Horror"], tier: "Rising Star", hits: 0, avatar: "TS", contractDeals: 0, busyUntil: 0 },
+      { id: 30, name: "Aarav Pillai", popularity: 50, skill: 65, fee: 1000000, genres: ["Thriller", "Action"], tier: "Rising Star", hits: 0, avatar: "AP", contractDeals: 0, busyUntil: 0 },
+      { id: 31, name: "Kavya Menon", popularity: 48, skill: 74, fee: 800000, genres: ["Biopic", "Drama"], tier: "Rising Star", hits: 0, avatar: "KM", contractDeals: 0, busyUntil: 0 },
+      { id: 32, name: "Vivaan Bedi", popularity: 46, skill: 63, fee: 700000, genres: ["Sci-Fi", "Comedy"], tier: "Rising Star", hits: 0, avatar: "VB", contractDeals: 0, busyUntil: 0 },
+      { id: 33, name: "Anika Chawla", popularity: 45, skill: 67, fee: 650000, genres: ["Romance", "Drama"], tier: "Rising Star", hits: 0, avatar: "AC", contractDeals: 0, busyUntil: 0 },
+      { id: 34, name: "Mihir Nambiar", popularity: 44, skill: 70, fee: 600000, genres: ["Action", "Horror"], tier: "Rising Star", hits: 0, avatar: "MN", contractDeals: 0, busyUntil: 0 },
+      { id: 35, name: "Diya Kaushik", popularity: 42, skill: 64, fee: 500000, genres: ["Comedy", "Romance"], tier: "Rising Star", hits: 0, avatar: "DK", contractDeals: 0, busyUntil: 0 },
+      { id: 36, name: "Samar Dutta", popularity: 40, skill: 68, fee: 450000, genres: ["Thriller", "Biopic"], tier: "Rising Star", hits: 0, avatar: "SD", contractDeals: 0, busyUntil: 0 },
+      { id: 37, name: "Roshni Lal", popularity: 38, skill: 62, fee: 400000, genres: ["Drama", "Horror"], tier: "Rising Star", hits: 0, avatar: "RL", contractDeals: 0, busyUntil: 0 },
+      { id: 38, name: "Dhruv Thapar", popularity: 36, skill: 60, fee: 350000, genres: ["Action", "Sci-Fi"], tier: "Rising Star", hits: 0, avatar: "DT", contractDeals: 0, busyUntil: 0 },
+      { id: 39, name: "Bhavna Goel", popularity: 35, skill: 65, fee: 320000, genres: ["Romance", "Comedy"], tier: "Rising Star", hits: 0, avatar: "BG", contractDeals: 0, busyUntil: 0 },
+      { id: 40, name: "Tushar Sethi", popularity: 33, skill: 59, fee: 280000, genres: ["Comedy", "Action"], tier: "Rising Star", hits: 0, avatar: "TS", contractDeals: 0, busyUntil: 0 },
+      { id: 41, name: "Esha Somani", popularity: 32, skill: 63, fee: 250000, genres: ["Drama", "Biopic"], tier: "Rising Star", hits: 0, avatar: "ES", contractDeals: 0, busyUntil: 0 },
+      { id: 42, name: "Abhay Deewan", popularity: 30, skill: 58, fee: 220000, genres: ["Horror", "Thriller"], tier: "Rising Star", hits: 0, avatar: "AD", contractDeals: 0, busyUntil: 0 },
+      { id: 43, name: "Jhanvi Chopra", popularity: 28, skill: 55, fee: 180000, genres: ["Romance", "Sci-Fi"], tier: "Rising Star", hits: 0, avatar: "JC", contractDeals: 0, busyUntil: 0 },
+      { id: 44, name: "Armaan Vohra", popularity: 26, skill: 54, fee: 150000, genres: ["Action", "Drama"], tier: "Rising Star", hits: 0, avatar: "AV", contractDeals: 0, busyUntil: 0 },
+      { id: 45, name: "Nandini Rane", popularity: 25, skill: 57, fee: 140000, genres: ["Comedy", "Drama"], tier: "Rising Star", hits: 0, avatar: "NR", contractDeals: 0, busyUntil: 0 },
+      { id: 46, name: "Jayant Solanki", popularity: 24, skill: 52, fee: 120000, genres: ["Thriller", "Horror"], tier: "Rising Star", hits: 0, avatar: "JS", contractDeals: 0, busyUntil: 0 },
+      { id: 47, name: "Pallavi Swaminathan", popularity: 22, skill: 60, fee: 110000, genres: ["Biopic", "Romance"], tier: "Rising Star", hits: 0, avatar: "PS", contractDeals: 0, busyUntil: 0 },
+      { id: 48, name: "Manish Chhabra", popularity: 20, skill: 50, fee: 90000, genres: ["Action", "Comedy"], tier: "Rising Star", hits: 0, avatar: "MC", contractDeals: 0, busyUntil: 0 },
+      { id: 49, name: "Swati Bhasin", popularity: 19, skill: 56, fee: 85000, genres: ["Drama", "Sci-Fi"], tier: "Rising Star", hits: 0, avatar: "SB", contractDeals: 0, busyUntil: 0 },
+      { id: 50, name: "Gautam Suri", popularity: 18, skill: 48, fee: 75000, genres: ["Horror", "Action"], tier: "Rising Star", hits: 0, avatar: "GS", contractDeals: 0, busyUntil: 0 },
+      { id: 51, name: "Preeti Mahajan", popularity: 17, skill: 52, fee: 65000, genres: ["Romance", "Comedy"], tier: "Rising Star", hits: 0, avatar: "PM", contractDeals: 0, busyUntil: 0 },
+      { id: 52, name: "Karan Bindra", popularity: 15, skill: 51, fee: 50000, genres: ["Thriller", "Drama"], tier: "Rising Star", hits: 0, avatar: "KB", contractDeals: 0, busyUntil: 0 }
+    ];
+
+    // 5. Random Bollywood Title Generator Vocabulary
+    const TITLE_PREFIX = ["Dil", "Kabhi", "Sholay", "Dhoom", "Tiger", "Sultan", "Chennai", "Bajirao", "PK", "War", "Gully", "Padmaavat", "Brahmastra", "Pathaan", "Jawan", "Animal", "Dunki", "Krrish", "Don", "Raees"];
+    const TITLE_SUFFIX = ["Ki Dastan", "Ka Junoon", "Returns", "Reloaded", "Express", "Diwani", "Zindabad", "Revolution", "Ki Prem Kahani", "Unleashed", "Diwana", "Ka Badla", "The Avenger", "Chapter 2", "Rising", "Unlimited"];
+
+    // 6. Master Achievements Pool (16 Trophies)
+    const ACHIEVEMENTS = [
+      { id: "first_film", title: "Lights, Camera, Action!", desc: "Release your very first movie into Indian theaters.", icon: "fa-film", unlocked: false },
+      { id: "box_office_hit", title: "Box Office Hit", desc: "Release a film that earns more than 2x its total production budget.", icon: "fa-fire", unlocked: false },
+      { id: "100_cr_club", title: "100 Crore Club", desc: "Have a single movie cross ₹100 Crores at the Box Office.", icon: "fa-sack-dollar", unlocked: false },
+      { id: "300_cr_blockbuster", title: "Pan-India Sensation", desc: "Gross ₹300 Crores in Box Office collections from one movie.", icon: "fa-crown", unlocked: false },
+      { id: "star_maker", title: "Star Maker", desc: "Help a Rising Star reach A-List popularity through your films.", icon: "fa-star", unlocked: false },
+      { id: "festival_master", title: "Diwali Dhamaka", desc: "Release an Action film during Diwali and hit big collections.", icon: "fa-sparkles", unlocked: false },
+      { id: "clean_record", title: "Debt Free Mogul", desc: "Reach ₹10 Crores cash without any outstanding loans.", icon: "fa-shield-halved", unlocked: false },
+      { id: "critic_darling", title: "5-Star Masterpiece", desc: "Produce a film that receives a 90+ Quality score.", icon: "fa-award", unlocked: false },
+      { id: "ott_tycoon", title: "OTT Giant", desc: "Sell post-theatrical digital streaming rights for over ₹25 Crores.", icon: "fa-tv", unlocked: false },
+      { id: "studio_empire", title: "Dharma & Yash Raj League", desc: "Reach a Studio Reputation of 90 or higher.", icon: "fa-gem", unlocked: false },
+      { id: "scout_master", title: "Talent Scout", desc: "Scout 3 new hidden actors from small towns.", icon: "fa-binoculars", unlocked: false },
+      { id: "genre_specialist", title: "Romance King", desc: "Release 3 successful Romance movies.", icon: "fa-heart", unlocked: false },
+      { id: "action_spectacle", title: "Action Dynamo", desc: "Release 3 successful Action movies.", icon: "fa-explosion", unlocked: false },
+      { id: "blockbuster_hat_trick", title: "Hat-Trick Hits", desc: "Deliver 3 consecutive Box Office Hit films.", icon: "fa-trophy", unlocked: false },
+      { id: "khan_easter", title: "The Megastar Blessing", desc: "Trigger the secret KHAN easter egg chant.", icon: "fa-wand-magic-sparkles", unlocked: false },
+      { id: "billionaire_studio", title: "500 Crore Studio Empire", desc: "Accumulate total Studio Net Worth exceeding ₹500 Crores.", icon: "fa-coins", unlocked: false }
+    ];
+
+    // 7. Core Game State Model
+    let gameState = {
+      studioName: "Dharma Productions",
+      logoColorIndex: 0,
+      week: 1,
+      year: 1,
+      cash: 5000000, // Starts at ₹50 Lakhs
+      reputation: 25,
+      loanAmount: 0,
+      actors: JSON.parse(JSON.stringify(MASTER_ACTORS)),
+      productions: [],
+      releasedMovies: [],
+      ledger: [],
+      weeklyStats: [],
+      achievements: JSON.parse(JSON.stringify(ACHIEVEMENTS)),
+      currentSeasonIndex: 0,
+      scoutCount: 0,
+      consecutiveHits: 0,
+      trendingGenre: "Action",
+      competitorMovies: []
+    };
+
+    const SEASONS = [
+      { name: "Diwali Season", boostGenre: "Action", boostPct: 1.35, desc: "Festive family holidays boost Action & Masala movies!" },
+      { name: "Valentine's Month", boostGenre: "Romance", boostPct: 1.35, desc: "Youth couples flood multiplexes for Rom-Coms!" },
+      { name: "Summer Holidays", boostGenre: "Comedy", boostPct: 1.30, desc: "School vacation boosts family comedy & Sci-Fi films!" },
+      { name: "Eid Festive Window", boostGenre: "Action", boostPct: 1.40, desc: "Mass holiday crowds ensure blockbuster openings!" },
+      { name: "Monsoon Chills", boostGenre: "Horror", boostPct: 1.30, desc: "Moody weather increases horror & crime thriller audience!" }
+    ];
+
+    const LOGO_COLORS = ["#8b0000", "#1e3a8a", "#065f46", "#701a75", "#b45309", "#0f172a"];
+
+    // 8. New Movie Pipeline Temporary Form Data
+    let newFilmForm = {
+      step: 1,
+      title: "",
+      genre: "Action",
+      writerTier: "freelance",
+      budgetTier: "indie",
+      leadActorId: null,
+      supportActorId: null,
+      directorTier: "debutant",
+      musicTier: "indie",
+      setsTier: "standard",
+      vfxSpend: 500000,
+      mktSpend: 1000000
+    };
+
+    // 9. LocalStorage Persistence Logic
+    const SAVE_KEY = "BOLLYWOOD_CINEMA_V1_SAVE";
+
+    function saveGameToStorage() {
+      try {
+        localStorage.setItem(SAVE_KEY, JSON.stringify(gameState));
+      } catch (err) {
+        console.error("Storage save failed:", err);
+      }
+    }
+
+    function loadGameFromStorage() {
+      const data = localStorage.getItem(SAVE_KEY);
+      if (data) {
+        try {
+          const parsed = JSON.parse(data);
+          gameState = Object.assign(gameState, parsed);
+          // Re-sync achievements array if updated
+          ACHIEVEMENTS.forEach(a => {
+            const match = gameState.achievements.find(x => x.id === a.id);
+            if (!match) gameState.achievements.push(JSON.parse(JSON.stringify(a)));
+          });
+        } catch (e) {
+          console.warn("Save corrupted, loaded defaults.");
+        }
+      }
+    }
+
+    // 10. Toast Notification Engine
+    function showToast(msg, type = "info", icon = "fa-bell") {
+      const shelf = document.getElementById("toast-shelf");
+      const toast = document.createElement("div");
+      toast.className = `toast-msg ${type}`;
+      toast.innerHTML = `
+        <i class="fa-solid ${icon}" style="font-size: 1.1rem; margin-top: 2px;"></i>
+        <div style="flex: 1;">${msg}</div>
+      `;
+      shelf.appendChild(toast);
+      playSound(type === "success" ? "success" : "click");
+      setTimeout(() => {
+        toast.style.transition = "all 0.3s ease";
+        toast.style.opacity = "0";
+        toast.style.transform = "translateX(50px)";
+        setTimeout(() => toast.remove(), 300);
+      }, 4200);
+    }
+
+    // 11. Modal Utilities
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add("active");
+    }
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove("active");
+    }
+
+    // 12. Confetti Particle System
+    function triggerConfetti() {
+      const canvas = document.getElementById("confetti-canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ["#d4af37", "#f5c518", "#e50914", "#10b981", "#ffffff", "#3b82f6"];
+
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.7) * 16,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 8,
+          alpha: 1
+        });
+      }
+
+      let frame = 0;
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let alive = false;
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.25; // gravity
+          p.rotation += p.rotSpeed;
+          p.alpha -= 0.012;
+          if (p.alpha > 0) {
+            alive = true;
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+            ctx.restore();
+          }
+        });
+
+        frame++;
+        if (alive && frame < 150) {
+          requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      render();
+    }
+
+    // 13. Achievement Unlock Checker
+    function unlockAchievement(id) {
+      const ach = gameState.achievements.find(a => a.id === id);
+      if (ach && !ach.unlocked) {
+        ach.unlocked = true;
+        playSound("fanfare");
+        triggerConfetti();
+        showToast(`🏆 <strong>Achievement Unlocked:</strong> ${ach.title}!`, "success", "fa-trophy");
+        renderAchievements();
+        saveGameToStorage();
+      }
+    }
+
+    // 14. Ledger Helper
+    function addLedgerEntry(category, description, amount) {
+      gameState.ledger.unshift({
+        week: gameState.week,
+        year: gameState.year,
+        category,
+        description,
+        amount
+      });
+      if (gameState.ledger.length > 50) gameState.ledger.pop();
+    }
+
+    // 15. UI Tabs Switcher
+    function switchTab(tabId) {
+      playSound("click");
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-tab") === tabId);
+      });
+      document.querySelectorAll(".tab-panel").forEach(p => {
+        p.classList.toggle("active", p.id === tabId);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      if (tabId === "tab-actors") renderActorsGrid();
+      if (tabId === "tab-finances") renderFinances();
+      if (tabId === "tab-trends") renderTrends();
+      if (tabId === "tab-achievements") renderAchievements();
+      if (tabId === "tab-releases") renderReleasedMovies();
+    }
+
+    // 16. Header Updates & Dynamic Tier
+    function updateHeaderStats() {
+      document.getElementById("header-week").textContent = gameState.week;
+      document.getElementById("header-year").textContent = gameState.year;
+      document.getElementById("header-cash").textContent = formatINR(gameState.cash);
+      document.getElementById("header-rep").textContent = Math.round(gameState.reputation);
+      document.getElementById("studio-name-input").value = gameState.studioName;
+
+      // Studio Tier Label based on Reputation
+      let tierLabel = "Indie Studio";
+      if (gameState.reputation >= 85) tierLabel = "Bollywood Megacorp";
+      else if (gameState.reputation >= 65) tierLabel = "Major Film Studio";
+      else if (gameState.reputation >= 45) tierLabel = "Rising Production House";
+      document.getElementById("header-tier-label").textContent = tierLabel;
+
+      // Update logo color
+      const logoBox = document.getElementById("studio-logo-btn");
+      logoBox.style.background = `linear-gradient(135deg, ${LOGO_COLORS[gameState.logoColorIndex]}, #d4af37)`;
+
+      // Net worth = cash - loans + 40% of released movie asset library valuation
+      const catalogVal = gameState.releasedMovies.reduce((acc, m) => acc + (m.totalGross * 0.15), 0);
+      const netWorth = gameState.cash - gameState.loanAmount + catalogVal;
+      document.getElementById("dash-net-worth").textContent = formatINR(netWorth);
+      document.getElementById("dash-released-count").textContent = gameState.releasedMovies.length;
+
+      const hits = gameState.releasedMovies.filter(m => m.verdict === "Hit" || m.verdict === "Blockbuster").length;
+      const flops = gameState.releasedMovies.filter(m => m.verdict === "Flop").length;
+      document.getElementById("dash-hit-ratio").textContent = `Hits: ${hits} | Flops: ${flops}`;
+
+      const totalBO = gameState.releasedMovies.reduce((acc, m) => acc + m.totalGross, 0);
+      document.getElementById("dash-total-boxoffice").textContent = formatINR(totalBO);
+
+      if (gameState.releasedMovies.length > 0) {
+        const avgR = gameState.releasedMovies.reduce((acc, m) => acc + m.criticRating, 0) / gameState.releasedMovies.length;
+        document.getElementById("dash-avg-rating").textContent = `${avgR.toFixed(1)} / 5.0 ★`;
+      } else {
+        document.getElementById("dash-avg-rating").textContent = "—";
+      }
+
+      // Check net worth achievement
+      if (netWorth >= 5000000000) unlockAchievement("billionaire_studio");
+      if (gameState.reputation >= 90) unlockAchievement("studio_empire");
+    }
+
+    // 17. Render Active Productions Tab & Dashboard Glance
+    function renderProductions() {
+      const container = document.getElementById("active-productions-container");
+      const dashList = document.getElementById("dash-pipeline-list");
+      const badge = document.getElementById("active-films-badge");
+
+      badge.textContent = `${gameState.productions.length} Active`;
+
+      if (gameState.productions.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+            <i class="fa-solid fa-clapperboard" style="font-size: 2.8rem; margin-bottom: 12px; opacity: 0.5;"></i>
+            <h3>No Active Projects in Production</h3>
+            <p style="margin-top: 6px;">Visit the <strong>New Movie</strong> tab to write a script and kick off a blockbuster shoot!</p>
+            <button class="btn btn-gold" onclick="switchTab('tab-new-movie')" style="margin-top: 14px;">+ Greenlight New Movie</button>
+          </div>
+        `;
+        dashList.innerHTML = `
+          <div style="text-align: center; padding: 22px; color: var(--text-muted);">
+            <i class="fa-solid fa-clapperboard" style="font-size: 2rem; margin-bottom: 8px; opacity: 0.4;"></i>
+            <p>No active films currently shooting.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = "";
+      let dashHtml = "";
+
+      gameState.productions.forEach(p => {
+        const pct = Math.min(100, Math.round((p.currentWeek / p.totalWeeks) * 100));
+        const lead = gameState.actors.find(a => a.id === p.leadId);
+        const support = gameState.actors.find(a => a.id === p.supportId);
+
+        html += `
+          <div class="glass-card" style="background: var(--bg-surface-elevated); margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <h3 class="font-cinzel" style="color: #fff; font-size: 1.25rem;">${p.title}</h3>
+                <div style="font-size: 0.82rem; color: var(--gold-bright); margin-top: 2px;">
+                  <span class="badge badge-gold">${p.genre}</span>
+                  <span style="margin-left: 8px;">Scale: ${p.budgetTier.toUpperCase()}</span>
                 </div>
+              </div>
+              <div style="text-align: right;">
+                <span class="badge ${p.currentWeek >= p.totalWeeks ? 'badge-green' : 'badge-blue'}">
+                  ${p.currentWeek >= p.totalWeeks ? 'Ready for Release!' : `Shooting: Week ${p.currentWeek} of ${p.totalWeeks}`}
+                </span>
+              </div>
             </div>
-            <div class="modal-actions">
-                <button class="btn-secondary" id="cancelStudioNameBtn">Cancel</button>
-                <button class="btn-primary" id="saveStudioNameBtn">Save</button>
+
+            <!-- Progress bar -->
+            <div style="margin-top: 14px;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted);">
+                <span>Production Progress</span>
+                <strong>${pct}%</strong>
+              </div>
+              <div class="prog-track">
+                <div class="prog-fill" style="width: ${pct}%;"></div>
+              </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="loading-overlay hidden">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <div class="loading-text" id="loadingText">Loading...</div>
-        </div>
-    </div>
+            <div class="grid-3" style="font-size: 0.82rem; margin-top: 12px; color: var(--text-muted);">
+              <div><strong>Lead Star:</strong> ${lead ? lead.name : 'Unknown'}</div>
+              <div><strong>Co-Star:</strong> ${support ? support.name : 'Unknown'}</div>
+              <div><strong>Director:</strong> ${p.directorName}</div>
+            </div>
 
-    <script src="script.js"></script>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+              <div style="font-size: 0.85rem;">
+                <span style="color: var(--text-muted);">Total Budget Allocated:</span> <strong>${formatINR(p.totalBudget)}</strong>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                ${p.currentWeek >= p.totalWeeks ? `
+                  <button class="btn btn-gold pulse-glow" onclick="releaseMovieToTheaters(${p.id})">
+                    <i class="fa-solid fa-ticket"></i> Release to Theaters Now!
+                  </button>
+                ` : `
+                  <button class="btn btn-danger" onclick="cancelProduction(${p.id})" style="font-size: 0.78rem;">
+                    <i class="fa-solid fa-ban"></i> Scrap Project
+                  </button>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+
+        dashHtml += `
+          <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 10px; margin-bottom: 8px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+              <strong>${p.title}</strong>
+              <span style="color: var(--gold-bright);">${pct}%</span>
+            </div>
+            <div class="prog-track" style="margin: 6px 0 2px 0; height: 6px;">
+              <div class="prog-fill" style="width: ${pct}%;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted);">
+              <span>${p.genre} • Dir. ${p.directorName}</span>
+              <span>${p.currentWeek >= p.totalWeeks ? 'Post-Production Finished' : `Week ${p.currentWeek}/${p.totalWeeks}`}</span>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      dashList.innerHTML = dashHtml;
+    }
+
+    // 18. Theatrical Active Runs on Dashboard
+    function renderTheatricalRuns() {
+      const box = document.getElementById("dash-theatrical-runs");
+      const activeRuns = gameState.releasedMovies.filter(m => m.runWeeksRemaining > 0);
+
+      if (activeRuns.length === 0) {
+        box.innerHTML = `<p style="color: var(--text-muted); font-size: 0.88rem;">No films currently running in theaters. Complete a film in production to see real-time box office collections!</p>`;
+        return;
+      }
+
+      let html = `<div class="grid-2">`;
+      activeRuns.forEach(m => {
+        html += `
+          <div style="background: rgba(0,0,0,0.35); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 12px;">
+            <div style="display: flex; justify-content: space-between;">
+              <strong style="color: #fff; font-size: 0.95rem;">${m.title}</strong>
+              <span class="badge badge-green">Week ${m.currentWeekOnScreen}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-top: 8px; color: var(--text-muted);">
+              <span>Latest Weekend: <strong style="color: var(--gold-bright);">${formatINR(m.latestWeekly)}</strong></span>
+              <span>Total BO: <strong style="color: var(--emerald-green);">${formatINR(m.totalGross)}</strong></span>
+            </div>
+            <div style="margin-top: 6px; font-size: 0.75rem; color: var(--text-muted);">
+              Critic Rating: <strong>${m.criticRating} ★</strong> • Word of Mouth: <strong>${m.womVerdict}</strong>
+            </div>
+          </div>
+        `;
+      });
+      html += `</div>`;
+      box.innerHTML = html;
+    }
+
+    // 19. Released Movies Archive Rendering & OTT Rights Negotiation
+    function renderReleasedMovies() {
+      const container = document.getElementById("released-movies-container");
+      const badge = document.getElementById("releases-count-badge");
+      badge.textContent = `${gameState.releasedMovies.length} Titles`;
+
+      if (gameState.releasedMovies.length === 0) {
+        container.innerHTML = `<p style="color: var(--text-muted); font-size: 0.9rem;">No released movies yet. Once a movie finishes shooting and reaches theaters, its box office run, reviews, and OTT streaming negotiations appear here.</p>`;
+        return;
+      }
+
+      let html = "";
+      gameState.releasedMovies.forEach(m => {
+        const profit = m.totalGross - m.totalBudget + (m.ottSold ? m.ottPrice : 0);
+        const profitClass = profit >= 0 ? "badge-green" : "badge-red";
+
+        html += `
+          <div class="glass-card" style="background: var(--bg-surface-elevated); margin-bottom: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <h3 class="font-cinzel" style="color: #fff; font-size: 1.3rem;">${m.title}</h3>
+                <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">
+                  Released: Year ${m.releaseYear}, Week ${m.releaseWeek} • Genre: <strong>${m.genre}</strong> • Lead: <strong>${m.leadName}</strong>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <span class="badge ${m.verdict === 'Blockbuster' || m.verdict === 'Hit' ? 'badge-green' : 'badge-red'}">${m.verdict}</span>
+                <span class="badge ${profitClass}">${profit >= 0 ? '+' : ''}${formatINR(profit)}</span>
+              </div>
+            </div>
+
+            <!-- Stats Table -->
+            <div class="grid-4" style="margin-top: 14px; background: rgba(0,0,0,0.3); border-radius: var(--radius-sm); padding: 12px; font-size: 0.85rem;">
+              <div>
+                <span style="color: var(--text-muted); display: block; font-size: 0.72rem;">TOTAL BUDGET</span>
+                <strong>${formatINR(m.totalBudget)}</strong>
+              </div>
+              <div>
+                <span style="color: var(--text-muted); display: block; font-size: 0.72rem;">BOX OFFICE GROSS</span>
+                <strong style="color: var(--emerald-green);">${formatINR(m.totalGross)}</strong>
+              </div>
+              <div>
+                <span style="color: var(--text-muted); display: block; font-size: 0.72rem;">CRITIC SCORE</span>
+                <strong style="color: var(--gold-bright);">${m.criticRating} / 5.0 ★ (${m.qualityScore}/100 Qual)</strong>
+              </div>
+              <div>
+                <span style="color: var(--text-muted); display: block; font-size: 0.72rem;">WORD OF MOUTH</span>
+                <strong>${m.womVerdict}</strong>
+              </div>
+            </div>
+
+            <!-- Weekly Collections Breakdown Pill List -->
+            <div style="margin-top: 12px; font-size: 0.78rem; color: var(--text-muted);">
+              <strong>Weekly Box Office Trajectory:</strong>
+              <div style="display: flex; gap: 8px; overflow-x: auto; margin-top: 4px; padding-bottom: 4px;">
+                ${m.weeklyCollections.map((amt, idx) => `
+                  <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 4px 8px; border-radius: 4px; white-space: nowrap;">
+                    Wk ${idx + 1}: <strong style="color: #fff;">${formatINR(amt)}</strong>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- OTT Streaming Rights Sale Box -->
+            <div style="margin-top: 14px; border-top: 1px solid var(--border-subtle); padding-top: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div style="font-size: 0.82rem;">
+                <i class="fa-solid fa-tv" style="color: var(--cyan-info); margin-right: 6px;"></i>
+                ${m.ottSold ? `
+                  <span style="color: var(--emerald-green);">Streaming Rights Sold to Prime/Netflix for <strong>${formatINR(m.ottPrice)}</strong></span>
+                ` : `
+                  <span style="color: var(--text-muted);">Theatrical Run Concluded. OTT Streaming Bidding Open: <strong>${formatINR(m.potentialOttOffer)}</strong></span>
+                `}
+              </div>
+              <div>
+                ${!m.ottSold ? `
+                  <button class="btn btn-gold" onclick="sellOttRights(${m.id})" style="font-size: 0.78rem; padding: 6px 12px;">
+                    <i class="fa-solid fa-handshake"></i> Sell Digital Rights (${formatINR(m.potentialOttOffer)})
+                  </button>
+                ` : `
+                  <span class="badge badge-blue">OTT Monetized</span>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // 20. OTT Rights Sale Action
+    function sellOttRights(movieId) {
+      const movie = gameState.releasedMovies.find(m => m.id === movieId);
+      if (!movie || movie.ottSold) return;
+
+      const offer = movie.potentialOttOffer;
+      movie.ottSold = true;
+      movie.ottPrice = offer;
+      gameState.cash += offer;
+      addLedgerEntry("OTT Rights", `Sold digital streaming for "${movie.title}"`, offer);
+
+      showToast(`🎉 Sold streaming rights of "${movie.title}" for ${formatINR(offer)}!`, "success", "fa-tv");
+      if (offer >= 250000000) unlockAchievement("ott_tycoon");
+
+      updateHeaderStats();
+      renderReleasedMovies();
+      saveGameToStorage();
+    }
+
+    // 21. Actors Grid Rendering & Filters
+    function renderActorsGrid() {
+      const container = document.getElementById("actors-grid-container");
+      const search = (document.getElementById("actor-search-input").value || "").toLowerCase();
+      const tierFilter = document.getElementById("actor-tier-filter").value;
+      const sortBy = document.getElementById("actor-sort-select").value;
+
+      let list = gameState.actors.filter(a => {
+        const matchesName = a.name.toLowerCase().includes(search);
+        const matchesTier = tierFilter === "all" || a.tier === tierFilter;
+        return matchesName && matchesTier;
+      });
+
+      list.sort((a, b) => {
+        if (sortBy === "pop-desc") return b.popularity - a.popularity;
+        if (sortBy === "skill-desc") return b.skill - a.skill;
+        if (sortBy === "fee-asc") return a.fee - b.fee;
+        if (sortBy === "fee-desc") return b.fee - a.fee;
+        return 0;
+      });
+
+      container.innerHTML = list.map(a => {
+        const isBusy = a.busyUntil >= gameState.week;
+        return `
+          <div class="actor-card" onclick="viewActorProfile(${a.id})">
+            <div class="actor-header">
+              <div class="actor-avatar">${a.avatar}</div>
+              <div class="actor-info" style="flex: 1;">
+                <h4>${a.name}</h4>
+                <div class="actor-tier" style="color: ${a.tier === 'Megastar' ? 'var(--gold-bright)' : a.tier === 'A-List' ? 'var(--cyan-info)' : 'var(--text-muted)'};">
+                  ${a.tier}
+                </div>
+              </div>
+              <div>
+                ${isBusy ? `<span class="badge badge-red">Busy Wk ${a.busyUntil}</span>` : `<span class="badge badge-green">Available</span>`}
+              </div>
+            </div>
+
+            <div>
+              <div class="stat-row">
+                <span>Star Popularity</span>
+                <strong style="color: var(--gold-bright);">${a.popularity}/100</strong>
+              </div>
+              <div class="stat-bar-bg">
+                <div class="stat-bar-fill" style="width: ${a.popularity}%;"></div>
+              </div>
+
+              <div class="stat-row" style="margin-top: 6px;">
+                <span>Acting Skill</span>
+                <strong style="color: var(--cyan-info);">${a.skill}/100</strong>
+              </div>
+              <div class="stat-bar-bg">
+                <div class="stat-bar-fill" style="width: ${a.skill}%; background: linear-gradient(90deg, #06b6d4, #10b981);"></div>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; margin-top: 4px; border-top: 1px solid var(--border-subtle); padding-top: 8px;">
+              <div>
+                <span style="color: var(--text-muted);">Standard Fee:</span>
+                <strong style="color: #fff; margin-left: 4px;">${formatINR(a.fee)}</strong>
+              </div>
+              <button class="btn" style="padding: 3px 8px; font-size: 0.72rem;">Inspect</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 22. View Actor Profile Details Modal
+    function viewActorProfile(actorId) {
+      const actor = gameState.actors.find(a => a.id === actorId);
+      if (!actor) return;
+
+      const body = document.getElementById("actor-modal-body");
+      const isBusy = actor.busyUntil >= gameState.week;
+
+      body.innerHTML = `
+        <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
+          <div class="actor-avatar" style="width: 64px; height: 64px; font-size: 1.5rem;">${actor.avatar}</div>
+          <div>
+            <h2 class="font-cinzel" style="color: #fff;">${actor.name}</h2>
+            <div style="font-size: 0.85rem; color: var(--gold-bright);">
+              <span class="badge badge-gold">${actor.tier}</span>
+              <span style="margin-left: 8px;">Genres: ${actor.genres.join(", ")}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-3" style="background: rgba(0,0,0,0.35); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 16px; font-size: 0.85rem;">
+          <div>
+            <div style="color: var(--text-muted); font-size: 0.75rem;">POPULARITY</div>
+            <strong style="color: var(--gold-bright); font-size: 1.1rem;">${actor.popularity} / 100</strong>
+          </div>
+          <div>
+            <div style="color: var(--text-muted); font-size: 0.75rem;">ACTING CRAFT</div>
+            <strong style="color: var(--cyan-info); font-size: 1.1rem;">${actor.skill} / 100</strong>
+          </div>
+          <div>
+            <div style="color: var(--text-muted); font-size: 0.75rem;">LIFETIME HITS</div>
+            <strong style="color: var(--emerald-green); font-size: 1.1rem;">${actor.hits} Films</strong>
+          </div>
+        </div>
+
+        <div style="font-size: 0.88rem; line-height: 1.6; color: var(--text-main); margin-bottom: 20px;">
+          <p><strong>Standard Quoted Remuneration:</strong> ${formatINR(actor.fee)} per project.</p>
+          <p><strong>Contract Deals Remaining:</strong> ${actor.contractDeals} pre-signed discounted film deal(s).</p>
+          <p><strong>Current Status:</strong> ${isBusy ? `<span style="color: var(--crimson-bright);">Currently shooting on location until Week ${actor.busyUntil}</span>` : `<span style="color: var(--emerald-green);">Available for immediate cast signing</span>`}.</p>
+        </div>
+
+        <div style="border-top: 1px solid var(--border-glass); padding-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+          <button class="btn btn-gold" onclick="negotiateActorContract(${actor.id})">
+            <i class="fa-solid fa-file-contract"></i> Sign 3-Film Contract Deal (25% Off)
+          </button>
+          <button class="btn" onclick="closeModal('actor-detail-modal')">Close</button>
+        </div>
+      `;
+
+      openModal("actor-detail-modal");
+    }
+
+    // 23. Sign Actor Multi-Film Discount Deal
+    function negotiateActorContract(actorId) {
+      const actor = gameState.actors.find(a => a.id === actorId);
+      if (!actor) return;
+
+      const upfrontSigningBonus = Math.round(actor.fee * 0.75); // Upfront signing bonus
+      if (gameState.cash < upfrontSigningBonus) {
+        showToast(`Insufficient studio cash! Signing bonus requires ${formatINR(upfrontSigningBonus)}.`, "error", "fa-triangle-exclamation");
+        return;
+      }
+
+      gameState.cash -= upfrontSigningBonus;
+      actor.contractDeals += 3;
+      actor.fee = Math.round(actor.fee * 0.75); // 25% discount on subsequent films
+      addLedgerEntry("Contract Signing", `Signed 3-film exclusive deal with ${actor.name}`, -upfrontSigningBonus);
+
+      showToast(`✍️ Deal Locked! Signed 3-movie contract with ${actor.name} for ${formatINR(upfrontSigningBonus)}!`, "success", "fa-file-signature");
+      closeModal("actor-detail-modal");
+      updateHeaderStats();
+      renderActorsGrid();
+      saveGameToStorage();
+    }
+
+    // 24. Scout New Low-Cost High-Skill Talent
+    document.getElementById("btn-scout-talent").addEventListener("click", () => {
+      const cost = 500000;
+      if (gameState.cash < cost) {
+        showToast("Scouting new talent requires ₹5.00 Lakhs cash!", "error", "fa-circle-exclamation");
+        return;
+      }
+
+      gameState.cash -= cost;
+      gameState.scoutCount++;
+      addLedgerEntry("Talent Scouting", "Scouted regional talent auditions", -cost);
+
+      const firstNames = ["Aman", "Rishi", "Kartik", "Zoya", "Isha", "Rudra", "Reyansh", "Mira", "Shanaya", "Dev"];
+      const lastNames = ["Kapoor", "Chatterjee", "Bhardwaj", "Pandey", "Iyer", "Nambisan", "Choudhury", "Bose", "Trivedi"];
+      const randFirst = firstNames[Math.floor(Math.random() * firstNames.length)];
+      const randLast = lastNames[Math.floor(Math.random() * lastNames.length)];
+      const name = `${randFirst} ${randLast}`;
+
+      const newActor = {
+        id: Date.now(),
+        name: name,
+        popularity: Math.floor(Math.random() * 25) + 30, // 30-55
+        skill: Math.floor(Math.random() * 26) + 70, // 70-95 (Hidden gem!)
+        fee: Math.floor(Math.random() * 200000) + 150000, // Very affordable (1.5L - 3.5L)
+        genres: [["Action", "Romance", "Drama", "Comedy"][Math.floor(Math.random() * 4)]],
+        tier: "Rising Star",
+        hits: 0,
+        avatar: `${randFirst[0]}${randLast[0]}`,
+        contractDeals: 0,
+        busyUntil: 0
+      };
+
+      gameState.actors.unshift(newActor);
+      showToast(`🌟 Discovered a Hidden Gem: ${newActor.name} with ${newActor.skill}/100 Acting Craft!`, "success", "fa-binoculars");
+
+      if (gameState.scoutCount >= 3) unlockAchievement("scout_master");
+
+      updateHeaderStats();
+      renderActorsGrid();
+      saveGameToStorage();
+    });
+
+    // 25. Populate Pipeline Actor Select Dropdowns
+    function populatePipelineActors() {
+      const leadSelect = document.getElementById("nm-lead-select");
+      const supportSelect = document.getElementById("nm-support-select");
+
+      const available = gameState.actors.filter(a => a.busyUntil < gameState.week);
+
+      leadSelect.innerHTML = available.map(a => `
+        <option value="${a.id}">${a.name} (${a.tier} • Pop: ${a.popularity} • Fee: ${formatINR(a.fee)})</option>
+      `).join('');
+
+      supportSelect.innerHTML = available.map(a => `
+        <option value="${a.id}">${a.name} (${a.tier} • Pop: ${a.popularity} • Fee: ${formatINR(a.fee)})</option>
+      `).join('');
+
+      // Avoid same actor on default
+      if (available.length > 1) {
+        supportSelect.selectedIndex = 1;
+      }
+
+      updateCastingPreviews();
+    }
+
+    function updateCastingPreviews() {
+      const leadId = parseInt(document.getElementById("nm-lead-select").value);
+      const supportId = parseInt(document.getElementById("nm-support-select").value);
+
+      const lead = gameState.actors.find(a => a.id === leadId);
+      const support = gameState.actors.find(a => a.id === supportId);
+
+      const leadPrev = document.getElementById("lead-preview-stat");
+      const supportPrev = document.getElementById("support-preview-stat");
+
+      if (lead) {
+        leadPrev.innerHTML = `⭐ Popularity: <strong>${lead.popularity}</strong> | Craft: <strong>${lead.skill}</strong> | Preferred: <em>${lead.genres.join(", ")}</em>`;
+      }
+      if (support) {
+        supportPrev.innerHTML = `⭐ Popularity: <strong>${support.popularity}</strong> | Craft: <strong>${support.skill}</strong> | Preferred: <em>${support.genres.join(", ")}</em>`;
+      }
+    }
+
+    document.getElementById("nm-lead-select").addEventListener("change", updateCastingPreviews);
+    document.getElementById("nm-support-select").addEventListener("change", updateCastingPreviews);
+
+    // 26. Pipeline Step Transitions
+    function jumpToPipelineStep(step) {
+      if (step > newFilmForm.step) return; // prevent skipping ahead without verifying
+      pipelineNextStep(step);
+    }
+
+    function pipelineNextStep(step) {
+      playSound("click");
+      newFilmForm.step = step;
+
+      // Update badge and stepper icons
+      document.getElementById("pipeline-step-badge").textContent = `Step ${step} of 5`;
+      for (let i = 1; i <= 5; i++) {
+        const item = document.getElementById(`pstep-${i}`);
+        item.classList.remove("active", "completed");
+        if (i === step) item.classList.add("active");
+        else if (i < step) item.classList.add("completed");
+        document.getElementById(`pipeline-content-${i}`).style.display = i === step ? "block" : "none";
+      }
+
+      if (step === 2) {
+        populatePipelineActors();
+      }
+
+      if (step === 5) {
+        calculateFilmGreenlightSummary();
+      }
+    }
+
+    // 27. Random Title Generator
+    document.getElementById("nm-rand-title").addEventListener("click", () => {
+      playSound("click");
+      const p = TITLE_PREFIX[Math.floor(Math.random() * TITLE_PREFIX.length)];
+      const s = TITLE_SUFFIX[Math.floor(Math.random() * TITLE_SUFFIX.length)];
+      document.getElementById("nm-title").value = `${p} ${s}`;
+    });
+
+    // 28. Sliders Display Sync
+    document.getElementById("nm-vfx-spend").addEventListener("input", (e) => {
+      document.getElementById("nm-vfx-spend-val").textContent = formatINR(parseInt(e.target.value));
+    });
+    document.getElementById("nm-mkt-spend").addEventListener("input", (e) => {
+      document.getElementById("nm-mkt-spend-val").textContent = formatINR(parseInt(e.target.value));
+    });
+
+    // 29. Calculate Upfront Greenlight Costs
+    function calculateFilmGreenlightSummary() {
+      const title = document.getElementById("nm-title").value.trim() || "Untitled Blockbuster";
+      const genre = document.getElementById("nm-genre").value;
+      const budgetTier = document.getElementById("nm-budget-tier").value;
+
+      const leadId = parseInt(document.getElementById("nm-lead-select").value);
+      const supportId = parseInt(document.getElementById("nm-support-select").value);
+
+      const lead = gameState.actors.find(a => a.id === leadId);
+      const support = gameState.actors.find(a => a.id === supportId);
+
+      // Director Cost
+      const dirMap = {
+        debutant: { cost: 500000, name: "Indie Debutant", skill: 50 },
+        seasoned: { cost: 3500000, name: "Seasoned Craftsman", skill: 72 },
+        visionary: { cost: 15000000, name: "National Award Visionary", skill: 88 },
+        blockbuster: { cost: 50000000, name: "Hit Machine", skill: 96 }
+      };
+      const dirKey = document.getElementById("nm-director").value;
+      const dir = dirMap[dirKey];
+
+      // Sets & Cinematography
+      const setsMap = { standard: 500000, lavish: 4000000, international: 25000000 };
+      const setsCost = setsMap[document.getElementById("nm-sets").value];
+
+      // Screenwriter Cost & Script Quality
+      const writerMap = {
+        freelance: { cost: 200000, score: Math.floor(Math.random() * 25) + 40 },
+        experienced: { cost: 1000000, score: Math.floor(Math.random() * 20) + 60 },
+        maverick: { cost: 3000000, score: Math.floor(Math.random() * 20) + 75 }
+      };
+      const writer = writerMap[document.getElementById("nm-writer-tier").value];
+
+      // Music cost
+      const musicMap = { indie: 200000, chartbuster: 2000000, maestro: 8000000 };
+      const musicCost = musicMap[document.getElementById("nm-music").value];
+
+      const vfxCost = parseInt(document.getElementById("nm-vfx-spend").value);
+      const mktCost = parseInt(document.getElementById("nm-mkt-spend").value);
+
+      const talentCost = (lead ? lead.fee : 0) + (support ? support.fee : 0) + dir.cost + setsCost + musicCost + writer.cost;
+      const totalCost = talentCost + vfxCost + mktCost;
+
+      // Shooting duration based on scale
+      let shootingWeeks = 3;
+      if (budgetTier === "mid") shootingWeeks = 4;
+      else if (budgetTier === "big") shootingWeeks = 6;
+      else if (budgetTier === "mega") shootingWeeks = 8;
+
+      // Summary rendering
+      document.getElementById("summary-title").textContent = title;
+      document.getElementById("summary-genre").textContent = genre;
+      document.getElementById("summary-scale").textContent = budgetTier.toUpperCase();
+      document.getElementById("summary-shooting-weeks").textContent = `${shootingWeeks} Weeks`;
+      document.getElementById("summary-lead-name").textContent = lead ? lead.name : "None";
+      document.getElementById("summary-support-name").textContent = support ? support.name : "None";
+      document.getElementById("summary-director-name").textContent = dir.name;
+      document.getElementById("summary-script-score").textContent = `${writer.score} / 100`;
+
+      document.getElementById("summary-talent-cost").textContent = formatINR(talentCost);
+      document.getElementById("summary-post-cost").textContent = formatINR(vfxCost);
+      document.getElementById("summary-promo-cost").textContent = formatINR(mktCost);
+      document.getElementById("summary-total-cost").textContent = formatINR(totalCost);
+
+      return {
+        title, genre, budgetTier, lead, support, dir, setsCost, writer, musicCost, vfxCost, mktCost, talentCost, totalCost, shootingWeeks
+      };
+    }
+
+    // 30. Greenlight Film Action
+    document.getElementById("btn-greenlight-film").addEventListener("click", () => {
+      const summary = calculateFilmGreenlightSummary();
+
+      if (!summary.lead || !summary.support) {
+        showToast("Please select both a Lead and a Co-Star!", "error", "fa-user-xmark");
+        return;
+      }
+      if (summary.lead.id === summary.support.id) {
+        showToast("Lead star and Supporting co-star cannot be the same person!", "error", "fa-triangle-exclamation");
+        return;
+      }
+      if (gameState.cash < summary.totalCost) {
+        showToast(`Insufficient cash! You need ${formatINR(summary.totalCost)} to finance this project. Consider taking a loan.`, "error", "fa-coins");
+        return;
+      }
+
+      // Check tier locks
+      if (summary.budgetTier === "big" && gameState.reputation < 40) {
+        showToast("Big Star Masala projects require at least 40 Studio Reputation!", "error", "fa-lock");
+        return;
+      }
+      if (summary.budgetTier === "mega" && gameState.reputation < 70) {
+        showToast("Pan-India Mega Spectacles require at least 70 Studio Reputation!", "error", "fa-lock");
+        return;
+      }
+
+      // Deduct budget
+      gameState.cash -= summary.totalCost;
+      addLedgerEntry("Production Investment", `Greenlit production for "${summary.title}"`, -summary.totalCost);
+
+      // Lock actors for the duration
+      summary.lead.busyUntil = gameState.week + summary.shootingWeeks;
+      summary.support.busyUntil = gameState.week + summary.shootingWeeks;
+
+      // Handle contract deductions
+      if (summary.lead.contractDeals > 0) summary.lead.contractDeals--;
+      if (summary.support.contractDeals > 0) summary.support.contractDeals--;
+
+      // Create new production record
+      const newProj = {
+        id: Date.now(),
+        title: summary.title,
+        genre: summary.genre,
+        budgetTier: summary.budgetTier,
+        leadId: summary.lead.id,
+        supportId: summary.support.id,
+        directorName: summary.dir.name,
+        directorSkill: summary.dir.skill,
+        scriptScore: summary.writer.score,
+        totalWeeks: summary.shootingWeeks,
+        currentWeek: 0,
+        totalBudget: summary.totalCost,
+        mktSpend: summary.mktCost,
+        vfxSpend: summary.vfxCost,
+        hasHadEvent: false
+      };
+
+      gameState.productions.push(newProj);
+      playSound("fanfare");
+      showToast(`🎬 "${summary.title}" is officially on floors and shooting!`, "success", "fa-clapperboard");
+
+      // Reset form
+      document.getElementById("nm-title").value = "";
+      pipelineNextStep(1);
+
+      updateHeaderStats();
+      renderProductions();
+      saveGameToStorage();
+      switchTab("tab-productions");
+    });
+
+    // 31. Release Finished Movie to Theaters
+    function releaseMovieToTheaters(prodId) {
+      const idx = gameState.productions.findIndex(p => p.id === prodId);
+      if (idx === -1) return;
+      const p = gameState.productions[idx];
+
+      const lead = gameState.actors.find(a => a.id === p.leadId);
+      const support = gameState.actors.find(a => a.id === p.supportId);
+      const avgStarPower = ((lead ? lead.popularity : 50) + (support ? support.popularity : 50)) / 2;
+
+      // Exact Formula: Quality = (Dir × 0.3) + (StarPower × 0.25) + (Script × 0.2) + (BudgetEff × 0.15) + (Mkt × 0.1)
+      const budgetEfficiency = Math.min(100, Math.round((p.totalBudget / 50000000) * 80) + 20);
+      const mktFactor = Math.min(100, Math.round((p.mktSpend / 20000000) * 100));
+
+      const rawQuality = (p.directorSkill * 0.30) + (avgStarPower * 0.25) + (p.scriptScore * 0.20) + (budgetEfficiency * 0.15) + (mktFactor * 0.10);
+      const qualityScore = Math.min(99, Math.max(30, Math.round(rawQuality)));
+
+      // Critic Star Rating (1.0 to 5.0)
+      const criticRating = parseFloat((Math.min(5.0, Math.max(1.0, (qualityScore / 20) + (Math.random() * 0.4 - 0.2)))).toFixed(1));
+
+      // Word of Mouth (WOM)
+      let womVerdict = "Mixed";
+      let decayRate = 0.30;
+      if (qualityScore >= 75) {
+        womVerdict = "Sensational Buzz";
+        decayRate = 0.15; // Sustains long run
+      } else if (qualityScore >= 55) {
+        womVerdict = "Positive";
+        decayRate = 0.25;
+      } else if (qualityScore < 45) {
+        womVerdict = "Disastrous WOM";
+        decayRate = 0.45; // Crashes immediately
+      }
+
+      // Festival & Seasonal Multipliers
+      const season = SEASONS[gameState.currentSeasonIndex];
+      let seasonalMultiplier = 1.0;
+      if (season.boostGenre === p.genre) {
+        seasonalMultiplier = season.boostPct;
+        showToast(`💥 Released during ${season.name}! Gained a ${(season.boostPct - 1) * 100}% Box Office boost!`, "info", "fa-sparkles");
+      }
+
+      // Check Competitor Clash
+      const isClashing = gameState.competitorMovies.some(c => c.genre === p.genre);
+      let clashPenalty = 1.0;
+      if (isClashing) {
+        clashPenalty = 0.85;
+        showToast(`⚔️ Competitor clash! A rival studio also released a ${p.genre} movie, splitting footfalls!`, "info", "fa-shield-halved");
+      }
+
+      // Week 1 Opening Calculation
+      // Opening = Star Power * Quality * Marketing * Seasonal * Clash * Random Factor
+      const baseOpening = (avgStarPower * 140000) * (qualityScore / 50) * (1 + (p.mktSpend / 10000000)) * seasonalMultiplier * clashPenalty * (0.85 + Math.random() * 0.3);
+      const week1Collection = Math.round(baseOpening);
+
+      // Theatrical Release Object
+      const releasedMovie = {
+        id: p.id,
+        title: p.title,
+        genre: p.genre,
+        leadName: lead ? lead.name : "Unknown",
+        totalBudget: p.totalBudget,
+        qualityScore,
+        criticRating,
+        womVerdict,
+        decayRate,
+        releaseWeek: gameState.week,
+        releaseYear: gameState.year,
+        currentWeekOnScreen: 1,
+        runWeeksRemaining: 4, // 4-week theatrical run
+        weeklyCollections: [week1Collection],
+        totalGross: week1Collection,
+        latestWeekly: week1Collection,
+        verdict: "Running",
+        ottSold: false,
+        ottPrice: 0,
+        potentialOttOffer: Math.round(week1Collection * 0.45 + (qualityScore * 100000))
+      };
+
+      // Remove from active productions
+      gameState.productions.splice(idx, 1);
+      gameState.releasedMovies.unshift(releasedMovie);
+
+      // Collect Week 1 Share immediately (Studio gets 50% theatrical share, exhibitors keep 50%)
+      const studioShare = Math.round(week1Collection * 0.5);
+      gameState.cash += studioShare;
+      addLedgerEntry("Theatrical Collection", `Week 1 collections for "${p.title}" (Studio Share)`, studioShare);
+
+      // Reputation impact
+      if (qualityScore >= 70) gameState.reputation = Math.min(100, gameState.reputation + 4);
+      else if (qualityScore < 40) gameState.reputation = Math.max(0, gameState.reputation - 3);
+
+      // Achievements
+      unlockAchievement("first_film");
+      if (qualityScore >= 90) unlockAchievement("critic_darling");
+      if (season.boostGenre === "Action" && p.genre === "Action") unlockAchievement("festival_master");
+
+      showToast(`🎟️ "${p.title}" debuted to ${formatINR(week1Collection)} in its Opening Weekend!`, "success", "fa-ticket");
+
+      updateHeaderStats();
+      renderProductions();
+      renderTheatricalRuns();
+      saveGameToStorage();
+      switchTab("tab-releases");
+    }
+
+    // 32. Cancel or Scrap a Production
+    function cancelProduction(prodId) {
+      document.getElementById("confirm-title").textContent = "Scrap Production?";
+      document.getElementById("confirm-msg").textContent = "Cancelling this film will forfeit the invested capital, but will free up your actors immediately.";
+      document.getElementById("confirm-ok-btn").onclick = () => {
+        const idx = gameState.productions.findIndex(p => p.id === prodId);
+        if (idx !== -1) {
+          const p = gameState.productions[idx];
+          const lead = gameState.actors.find(a => a.id === p.leadId);
+          const support = gameState.actors.find(a => a.id === p.supportId);
+          if (lead) lead.busyUntil = 0;
+          if (support) support.busyUntil = 0;
+          gameState.productions.splice(idx, 1);
+          showToast(`Scrapped production for "${p.title}".`, "info");
+          closeModal("confirm-modal");
+          updateHeaderStats();
+          renderProductions();
+          saveGameToStorage();
+        }
+      };
+      openModal("confirm-modal");
+    }
+
+    // 33. On-Set Random Production Events
+    function checkRandomProductionEvents() {
+      if (gameState.productions.length === 0) return;
+      const unTriggered = gameState.productions.filter(p => !p.hasHadEvent && p.currentWeek >= 2);
+      if (unTriggered.length === 0) return;
+
+      if (Math.random() < 0.45) { // 45% chance per week
+        const prod = unTriggered[Math.floor(Math.random() * unTriggered.length)];
+        prod.hasHadEvent = true;
+
+        const events = [
+          {
+            title: "Viral Leaked Shooting Clip!",
+            desc: `A clip of the high-octane climax of "${prod.title}" was leaked on Instagram reels and has crossed 20 Million views!`,
+            choices: [
+              { label: "Capitalize: Spend ₹5 L on PR push (+15 Buzz)", cost: 500000, effect: () => { prod.mktSpend += 3000000; showToast("PR Blitz doubled social media buzz!", "success"); } },
+              { label: "Ignore leak (No cost)", cost: 0, effect: () => { showToast("Ignored the viral clip.", "info"); } }
+            ]
+          },
+          {
+            title: "Torrential Rains Destroy Set!",
+            desc: `Unprecedented monsoons damaged the outdoor shooting set for "${prod.title}". Schedule is delayed.`,
+            choices: [
+              { label: "Pay ₹10 L for rapid indoor studio reconstruction", cost: 1000000, effect: () => { showToast("Sets rebuilt within 48 hours!", "info"); } },
+              { label: "Wait out rain: Adds 1 extra shooting week", cost: 0, effect: () => { prod.totalWeeks += 1; showToast("Schedule extended by 1 week.", "info"); } }
+            ]
+          },
+          {
+            title: "Actor Creative Differences",
+            desc: `The director and lead star on "${prod.title}" are arguing over the dialogue punchlines in the second half.`,
+            choices: [
+              { label: "Hire dialogue doctor for ₹4 L (+Script Quality)", cost: 400000, effect: () => { prod.scriptScore = Math.min(100, prod.scriptScore + 10); showToast("Script polished with punchy dialogues!", "success"); } },
+              { label: "Let the director take full charge", cost: 0, effect: () => { showToast("Director maintains creative vision.", "info"); } }
+            ]
+          }
+        ];
+
+        const ev = events[Math.floor(Math.random() * events.length)];
+        showEventChoiceModal(ev);
+      }
+    }
+
+    function showEventChoiceModal(ev) {
+      document.getElementById("event-title").textContent = ev.title;
+      document.getElementById("event-desc").textContent = ev.desc;
+
+      const container = document.getElementById("event-choices-container");
+      container.innerHTML = ev.choices.map((c, i) => `
+        <button class="btn btn-gold" id="ev-choice-${i}" style="justify-content: flex-start; text-align: left; padding: 12px 16px;">
+          ${c.label}
+        </button>
+      `).join('');
+
+      ev.choices.forEach((c, i) => {
+        document.getElementById(`ev-choice-${i}`).onclick = () => {
+          if (c.cost > 0 && gameState.cash < c.cost) {
+            showToast("Insufficient funds to choose this option!", "error");
+            return;
+          }
+          if (c.cost > 0) {
+            gameState.cash -= c.cost;
+            addLedgerEntry("Production Event", ev.title, -c.cost);
+          }
+          c.effect();
+          closeModal("event-choice-modal");
+          updateHeaderStats();
+          renderProductions();
+          saveGameToStorage();
+        };
+      });
+
+      openModal("event-choice-modal");
+    }
+
+    // 34. Weekly Simulation Loop (Core Engine)
+    document.getElementById("btn-advance-week").addEventListener("click", advanceWeek);
+
+    function advanceWeek() {
+      playSound("click");
+      gameState.week++;
+      if (gameState.week > 52) {
+        gameState.week = 1;
+        gameState.year++;
+        showToast(`🎆 Happy New Year! Entered Production Year ${gameState.year}!`, "success", "fa-champagne-glasses");
+      }
+
+      // Rotate Season every 10 weeks
+      gameState.currentSeasonIndex = Math.floor(gameState.week / 11) % SEASONS.length;
+
+      // Accrue Loan Interest
+      if (gameState.loanAmount > 0) {
+        const interest = Math.round(gameState.loanAmount * 0.01); // 1% weekly
+        gameState.cash -= interest;
+        addLedgerEntry("Debt Interest", "Weekly loan interest repayment", -interest);
+      }
+
+      // Progress Active Productions
+      gameState.productions.forEach(p => {
+        if (p.currentWeek < p.totalWeeks) {
+          p.currentWeek++;
+        }
+      });
+
+      // Advance Theatrical Box Office Runs
+      let weeklyTotalBO = 0;
+      let weeklyTotalCost = gameState.loanAmount > 0 ? Math.round(gameState.loanAmount * 0.01) : 0;
+
+      gameState.releasedMovies.forEach(m => {
+        if (m.runWeeksRemaining > 0) {
+          m.runWeeksRemaining--;
+          m.currentWeekOnScreen++;
+
+          if (m.runWeeksRemaining > 0) {
+            // Subsequent week drop based on WOM decay
+            const previous = m.weeklyCollections[m.weeklyCollections.length - 1];
+            const nextWeekCollection = Math.round(previous * (1 - m.decayRate) * (0.9 + Math.random() * 0.2));
+            m.weeklyCollections.push(nextWeekCollection);
+            m.totalGross += nextWeekCollection;
+            m.latestWeekly = nextWeekCollection;
+
+            // Studio keeps 50%
+            const share = Math.round(nextWeekCollection * 0.5);
+            gameState.cash += share;
+            weeklyTotalBO += share;
+            addLedgerEntry("Theatrical Collection", `Week ${m.currentWeekOnScreen} collections for "${m.title}"`, share);
+          } else {
+            // Concluded run
+            m.latestWeekly = 0;
+            // Determine Verdict
+            const ratio = m.totalGross / m.totalBudget;
+            if (ratio >= 2.5) {
+              m.verdict = "Blockbuster";
+              gameState.consecutiveHits++;
+            } else if (ratio >= 1.5) {
+              m.verdict = "Hit";
+              gameState.consecutiveHits++;
+            } else if (ratio >= 0.9) {
+              m.verdict = "Average";
+              gameState.consecutiveHits = 0;
+            } else {
+              m.verdict = "Flop";
+              gameState.consecutiveHits = 0;
+            }
+
+            // Check Achievements
+            if (ratio >= 2.0) unlockAchievement("box_office_hit");
+            if (m.totalGross >= 1000000000) unlockAchievement("100_cr_club");
+            if (m.totalGross >= 3000000000) unlockAchievement("300_cr_blockbuster");
+            if (gameState.consecutiveHits >= 3) unlockAchievement("blockbuster_hat_trick");
+
+            // Dynamic Actor Popularity Shift
+            const lead = gameState.actors.find(a => a.name === m.leadName);
+            if (lead) {
+              lead.busyUntil = 0;
+              if (m.verdict === "Blockbuster") {
+                lead.popularity = Math.min(99, lead.popularity + 4);
+                lead.hits++;
+                if (lead.tier === "Rising Star" && lead.popularity >= 75) {
+                  lead.tier = "A-List";
+                  unlockAchievement("star_maker");
+                }
+              } else if (m.verdict === "Flop") {
+                lead.popularity = Math.max(15, lead.popularity - 3);
+              }
+            }
+
+            showToast(`🎬 "${m.title}" has concluded its theatrical run! Verdict: <strong>${m.verdict}</strong>!`, "info", "fa-film");
+          }
+        }
+      });
+
+      // Competitor Releases Simulation
+      simulateCompetitors();
+
+      // Check on-set random events
+      checkRandomProductionEvents();
+
+      // Track Weekly Cashflow History for Bar Charts
+      gameState.weeklyStats.push({
+        week: gameState.week,
+        revenue: weeklyTotalBO,
+        expense: weeklyTotalCost
+      });
+      if (gameState.weeklyStats.length > 6) gameState.weeklyStats.shift();
+
+      // Random Weekly News Generation
+      generateWeeklyNewsFeed();
+
+      // Check clean record achievement
+      if (gameState.cash >= 100000000 && gameState.loanAmount === 0) unlockAchievement("clean_record");
+
+      // Auto-save
+      updateHeaderStats();
+      renderProductions();
+      renderTheatricalRuns();
+      renderReleasedMovies();
+      saveGameToStorage();
+    }
+
+    // 35. Competitor Studios Simulation
+    function simulateCompetitors() {
+      const rivals = ["Red Chillies Entertainment", "Yash Raj Films", "Excel Entertainment", "Eros International"];
+      const competitor = rivals[Math.floor(Math.random() * rivals.length)];
+      const genres = ["Action", "Romance", "Comedy", "Thriller", "Horror", "Sci-Fi"];
+      const g = genres[Math.floor(Math.random() * genres.length)];
+
+      gameState.competitorMovies = [
+        {
+          studio: competitor,
+          title: `${TITLE_PREFIX[Math.floor(Math.random() * TITLE_PREFIX.length)]} Strikes`,
+          genre: g,
+          estimatedBO: Math.floor(Math.random() * 80000000) + 20000000
+        }
+      ];
+    }
+
+    // 36. Weekly News Feed Generator
+    function generateWeeklyNewsFeed() {
+      const feed = document.getElementById("dash-news-feed");
+      const newsPool = [
+        `🔥 Trade analyst Taran Adarsh calls current multiplex occupancy "rock solid" across Delhi and Mumbai!`,
+        `📰 Rival studio announced a ₹200 Crore mythological epic starring South Indian superstars!`,
+        `🎵 Music rights for upcoming holiday releases are breaking all-time streaming records on Spotify India!`,
+        `✈️ Film City Mumbai announces upgraded sound stages and tax incentives for domestic filming.`,
+        `📺 OTT platforms report 40% surge in demand for high-concept thrillers and family comedies!`,
+        `🌟 Paparazzi spotted top celebrities at Bastian Bandra discussing upcoming project collaborations!`
+      ];
+
+      const item = newsPool[Math.floor(Math.random() * newsPool.length)];
+      const node = document.createElement("div");
+      node.style.background = "rgba(0,0,0,0.3)";
+      node.style.borderLeft = "3px solid var(--gold-bright)";
+      node.style.padding = "8px 12px";
+      node.style.borderRadius = "4px";
+      node.style.fontSize = "0.8rem";
+      node.innerHTML = `<strong>Week ${gameState.week}:</strong> ${item}`;
+
+      feed.insertBefore(node, feed.firstChild);
+      while (feed.children.length > 7) feed.removeChild(feed.lastChild);
+    }
+
+    // 37. Finances Tab & Loan Management
+    document.getElementById("loan-borrow-range").addEventListener("input", (e) => {
+      document.getElementById("loan-borrow-val").textContent = formatINR(parseInt(e.target.value));
+    });
+
+    document.getElementById("btn-take-loan").addEventListener("click", () => {
+      const amount = parseInt(document.getElementById("loan-borrow-range").value);
+      if (gameState.loanAmount + amount > 1000000000) {
+        showToast("Maximum borrowing credit limit is ₹100 Crores!", "error");
+        return;
+      }
+      gameState.loanAmount += amount;
+      gameState.cash += amount;
+      addLedgerEntry("Credit Loan", `Borrowed capital from Film Finance Syndicate`, amount);
+
+      showToast(`💰 Loan sanctioned: ${formatINR(amount)} added to your studio bank balance.`, "success", "fa-building-columns");
+      updateHeaderStats();
+      renderFinances();
+      saveGameToStorage();
+    });
+
+    document.getElementById("btn-repay-loan").addEventListener("click", () => {
+      if (gameState.loanAmount <= 0) {
+        showToast("Your studio has no outstanding debts!", "info");
+        return;
+      }
+      if (gameState.cash < gameState.loanAmount) {
+        showToast(`You require ${formatINR(gameState.loanAmount)} in cash to fully settle this debt!`, "error");
+        return;
+      }
+
+      const debt = gameState.loanAmount;
+      gameState.cash -= debt;
+      gameState.loanAmount = 0;
+      addLedgerEntry("Loan Repayment", "Fully cleared outstanding loan debt", -debt);
+
+      showToast("🎉 Debt completely extinguished! 100% equity restored.", "success", "fa-circle-check");
+      updateHeaderStats();
+      renderFinances();
+      saveGameToStorage();
+    });
+
+    function renderFinances() {
+      document.getElementById("fin-loan-amount").textContent = formatINR(gameState.loanAmount);
+      document.getElementById("fin-interest-cost").textContent = `${formatINR(Math.round(gameState.loanAmount * 0.01))} / week`;
+
+      // Render Bar Chart
+      const chart = document.getElementById("financial-chart");
+      chart.innerHTML = "";
+      const stats = gameState.weeklyStats.length > 0 ? gameState.weeklyStats : [
+        { week: gameState.week, revenue: 500000, expense: 200000 }
+      ];
+
+      const maxVal = Math.max(...stats.map(s => Math.max(s.revenue, s.expense, 1000000)));
+
+      stats.forEach(s => {
+        const revHeight = Math.max(6, Math.round((s.revenue / maxVal) * 120));
+        const expHeight = Math.max(6, Math.round((s.expense / maxVal) * 120));
+
+        chart.innerHTML += `
+          <div class="chart-bar-wrap">
+            <div style="display: flex; gap: 4px; align-items: flex-end; height: 100%;">
+              <div class="chart-bar" style="height: ${revHeight}px;" title="Rev: ${formatINR(s.revenue)}"></div>
+              <div class="chart-bar expense" style="height: ${expHeight}px;" title="Exp: ${formatINR(s.expense)}"></div>
+            </div>
+            <span class="chart-label">W${s.week}</span>
+          </div>
+        `;
+      });
+
+      // Render Transaction Ledger Table
+      const tbody = document.getElementById("financial-ledger-body");
+      tbody.innerHTML = gameState.ledger.map(row => `
+        <tr style="border-bottom: 1px solid var(--border-subtle);">
+          <td style="padding: 8px;">W${row.week} (Y${row.year})</td>
+          <td style="padding: 8px;"><span class="badge ${row.amount >= 0 ? 'badge-green' : 'badge-gold'}">${row.category}</span></td>
+          <td style="padding: 8px; color: var(--text-main);">${row.description}</td>
+          <td style="padding: 8px; text-align: right; font-weight: 700; color: ${row.amount >= 0 ? 'var(--emerald-green)' : 'var(--crimson-bright)'};">
+            ${row.amount >= 0 ? '+' : ''}${formatINR(row.amount)}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function clearFinancialHistory() {
+      gameState.ledger = [];
+      renderFinances();
+      showToast("Ledger statement cleared.", "info");
+    }
+
+    // 38. Market Trends & Competitors Rendering
+    function renderTrends() {
+      const season = SEASONS[gameState.currentSeasonIndex];
+      document.getElementById("current-season-badge").textContent = season.name;
+
+      const genres = ["Action", "Romance", "Comedy", "Drama", "Thriller", "Horror", "Sci-Fi", "Biopic"];
+      const list = document.getElementById("genres-trend-list");
+
+      list.innerHTML = genres.map(g => {
+        const isBoosted = g === season.boostGenre;
+        return `
+          <div style="background: rgba(0,0,0,0.3); border: 1px solid ${isBoosted ? 'var(--gold-bright)' : 'var(--border-subtle)'}; border-radius: var(--radius-sm); padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <strong>${g}</strong>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">${isBoosted ? season.desc : 'Standard audience footfall.'}</div>
+            </div>
+            <div>
+              ${isBoosted ? `<span class="badge badge-gold">+${Math.round((season.boostPct - 1) * 100)}% Season Boost</span>` : `<span class="badge" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">Normal Demand</span>`}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Competitor List
+      const compBox = document.getElementById("competitor-studios-list");
+      if (gameState.competitorMovies.length === 0) simulateCompetitors();
+
+      compBox.innerHTML = gameState.competitorMovies.map(c => `
+        <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius-sm); padding: 12px; border: 1px solid var(--border-subtle);">
+          <div style="display: flex; justify-content: space-between;">
+            <strong style="color: #fff;">${c.studio}</strong>
+            <span class="badge badge-blue">In Theaters</span>
+          </div>
+          <div style="font-size: 0.85rem; margin-top: 6px; color: var(--gold-bright);">
+            Title: "${c.title}" • Genre: <strong>${c.genre}</strong>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+            Estimated Gross: ${formatINR(c.estimatedBO)} • High threat of splitting market footfalls.
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 39. Achievements Roster Rendering
+    function renderAchievements() {
+      const grid = document.getElementById("achievements-grid");
+      const unlockedCount = gameState.achievements.filter(a => a.unlocked).length;
+      document.getElementById("achievements-progress-badge").textContent = `${unlockedCount} / ${gameState.achievements.length} Unlocked`;
+
+      grid.innerHTML = gameState.achievements.map(a => `
+        <div class="glass-card" style="text-align: center; border-color: ${a.unlocked ? 'var(--gold-bright)' : 'var(--border-subtle)'}; opacity: ${a.unlocked ? '1' : '0.55'};">
+          <div style="width: 50px; height: 50px; border-radius: 50%; margin: 0 auto 10px auto; display: flex; align-items: center; justify-content: center; background: ${a.unlocked ? 'linear-gradient(135deg, var(--gold-bright), var(--crimson-accent))' : 'rgba(255,255,255,0.05)'}; color: ${a.unlocked ? '#0b0b0f' : 'var(--text-muted)'}; font-size: 1.3rem;">
+            <i class="fa-solid ${a.icon}"></i>
+          </div>
+          <h4 style="font-size: 0.95rem; color: #fff;">${a.title}</h4>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">${a.desc}</p>
+          <div style="margin-top: 8px;">
+            ${a.unlocked ? `<span class="badge badge-gold">UNLOCKED</span>` : `<span class="badge" style="background: rgba(255,255,255,0.06); color: var(--text-muted);">LOCKED</span>`}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 40. Interactive Tutorial Walkthrough
+    const TUTORIAL_STEPS = [
+      {
+        title: "Welcome to Bollywood Cinema v1.0!",
+        content: "You begin your journey as an indie Bollywood film producer with ₹50 Lakhs in initial capital. Your goal is to grow into India's premier studio empire."
+      },
+      {
+        title: "The 6-Step Production Pipeline",
+        content: "Head over to the <strong>New Movie</strong> tab to write a script, cast from 50+ fictional Bollywood actors, hire directors and crew, and set your marketing budget."
+      },
+      {
+        title: "Seasons & Timing the Box Office",
+        content: "Audience appetites rotate with festive seasons! Releasing an Action film during Diwali or a Romance during Valentine's gives you huge multipliers on opening weekends."
+      },
+      {
+        title: "Advance Weeks & Stream on OTT",
+        content: "Click the prominent <strong>Advance Week</strong> button on the header to progress film shoots and collect weekly ticket sales. After theatrical runs, sell digital rights to OTT giants!"
+      }
+    ];
+
+    let currentTutStep = 0;
+
+    function launchTutorial(force = false) {
+      if (!force && localStorage.getItem("BOLLYWOOD_TUT_SEEN")) return;
+      currentTutStep = 0;
+      updateTutorialUI();
+      openModal("tutorial-modal");
+    }
+
+    function updateTutorialUI() {
+      const step = TUTORIAL_STEPS[currentTutStep];
+      document.getElementById("tut-step-counter").textContent = `Step ${currentTutStep + 1} of ${TUTORIAL_STEPS.length}`;
+      document.getElementById("tut-step-content").innerHTML = `
+        <h3 class="font-cinzel" style="color: var(--gold-bright); margin-bottom: 6px;">${step.title}</h3>
+        <p>${step.content}</p>
+      `;
+      document.getElementById("tut-next-btn").innerHTML = currentTutStep === TUTORIAL_STEPS.length - 1 ? `Get Started! <i class="fa-solid fa-check"></i>` : `Next Tip <i class="fa-solid fa-arrow-right"></i>`;
+    }
+
+    function nextTutorialStep() {
+      playSound("click");
+      if (currentTutStep < TUTORIAL_STEPS.length - 1) {
+        currentTutStep++;
+        updateTutorialUI();
+      } else {
+        skipTutorial();
+      }
+    }
+
+    function skipTutorial() {
+      localStorage.setItem("BOLLYWOOD_TUT_SEEN", "true");
+      closeModal("tutorial-modal");
+    }
+
+    // 41. Secret Easter Egg: Typing 'KHAN' 3 times
+    let khanSequence = "";
+    window.addEventListener("keydown", (e) => {
+      // Don't trigger when typing in input
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+      khanSequence += e.key.toUpperCase();
+      if (khanSequence.includes("KHANKHANKHAN")) {
+        khanSequence = "";
+        triggerKhanEasterEgg();
+      }
+      if (khanSequence.length > 24) khanSequence = khanSequence.slice(-12);
+    });
+
+    function triggerKhanEasterEgg() {
+      playSound("fanfare");
+      triggerConfetti();
+      gameState.cash += 50000000; // ₹5 Cr grant
+      gameState.reputation = Math.min(100, gameState.reputation + 20);
+      unlockAchievement("khan_easter");
+      showToast("👑 THE BADSHAH BLESSING! You typed 'KHAN' 3 times! Received ₹5.00 Crores grant and +20 Studio Reputation!", "success", "fa-crown");
+      updateHeaderStats();
+      saveGameToStorage();
+    }
+
+    // 42. Studio Name & Logo Color Picker
+    document.getElementById("studio-name-input").addEventListener("change", (e) => {
+      gameState.studioName = e.target.value.trim() || "Dharma Productions";
+      saveGameToStorage();
+    });
+
+    document.getElementById("studio-logo-btn").addEventListener("click", () => {
+      gameState.logoColorIndex = (gameState.logoColorIndex + 1) % LOGO_COLORS.length;
+      updateHeaderStats();
+      saveGameToStorage();
+    });
+
+    // 43. Header Action Buttons (Sound, Theme, Save)
+    document.getElementById("btn-sound-toggle").addEventListener("click", function() {
+      soundEnabled = !soundEnabled;
+      this.innerHTML = soundEnabled ? `<i class="fa-solid fa-volume-high"></i>` : `<i class="fa-solid fa-volume-xmark"></i>`;
+      showToast(soundEnabled ? "Audio Synthesizer enabled" : "Audio muted", "info");
+    });
+
+    document.getElementById("btn-theme-toggle").addEventListener("click", function() {
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", nextTheme);
+      this.innerHTML = nextTheme === "light" ? `<i class="fa-solid fa-sun"></i>` : `<i class="fa-solid fa-moon"></i>`;
+      showToast(`Switched to ${nextTheme} visual theme`, "info");
+    });
+
+    document.getElementById("btn-manual-save").addEventListener("click", () => {
+      saveGameToStorage();
+      showToast("💾 Studio progress saved to local storage!", "success", "fa-floppy-disk");
+    });
+
+    // 44. Reset Game & Save File Export
+    function confirmResetGame() {
+      document.getElementById("confirm-title").textContent = "Reset Entire Studio?";
+      document.getElementById("confirm-msg").textContent = "This will permanently wipe your movies, cash balance, and talent database back to day one.";
+      document.getElementById("confirm-ok-btn").onclick = () => {
+        localStorage.removeItem(SAVE_KEY);
+        localStorage.removeItem("BOLLYWOOD_TUT_SEEN");
+        location.reload();
+      };
+      openModal("confirm-modal");
+    }
+
+    function exportSaveData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(gameState));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", `bollywood_studio_save_yr${gameState.year}_wk${gameState.week}.json`);
+      dlAnchor.click();
+      showToast("Save file exported to downloads folder.", "success");
+    }
+
+    // 45. Actor Filters Event Listeners
+    document.getElementById("actor-search-input").addEventListener("input", renderActorsGrid);
+    document.getElementById("actor-tier-filter").addEventListener("change", renderActorsGrid);
+    document.getElementById("actor-sort-select").addEventListener("change", renderActorsGrid);
+
+    // 46. Tab Navigation Click Handler
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        switchTab(btn.getAttribute("data-tab"));
+      });
+    });
+
+    // 47. Initialization on Window Load
+    window.onload = function() {
+      loadGameFromStorage();
+      updateHeaderStats();
+      renderProductions();
+      renderTheatricalRuns();
+      generateWeeklyNewsFeed();
+      launchTutorial();
+    };
+  </script>
 </body>
 </html>
