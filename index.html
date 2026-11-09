@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.05 — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.06 — Studio Tycoon</title>
   
   <!-- Favicon & App Icons -->
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -366,8 +366,38 @@
     }
 
     /* =========================================================================
-       STEP-BY-STEP GUIDED PIPELINE (ONE-BY-ONE WIZARD)
+       FIXED INTERACTIVE PILLS (GENRE, SONGS, CAPITAL CHOICES)
        ========================================================================= */
+    .interactive-pill {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color-subtle);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+    .interactive-pill:hover {
+      border-color: var(--gold-primary);
+      color: var(--text-main);
+      transform: translateY(-2px);
+    }
+    .interactive-pill.active {
+      background: var(--gold-gradient) !important;
+      color: #0b0b0e !important;
+      border-color: var(--gold-bright) !important;
+      font-weight: 800 !important;
+      box-shadow: 0 4px 16px rgba(245, 197, 24, 0.45) !important;
+      transform: scale(1.05);
+    }
+
+    /* Wizard Steps Indicator */
     .wizard-steps-indicator {
       display: flex;
       align-items: center;
@@ -437,9 +467,7 @@
       to { opacity: 1; transform: translateX(0); }
     }
 
-    .step-header-box {
-      margin-bottom: 16px;
-    }
+    .step-header-box { margin-bottom: 16px; }
     .step-badge {
       display: inline-block;
       background: var(--gold-primary);
@@ -471,7 +499,7 @@
       border-top: 1px dashed var(--border-color-subtle);
     }
 
-    /* Visual Tiles Grids (Actors, Directors, Composers, Brands) */
+    /* Visual Tiles Grids */
     .tiles-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -502,8 +530,8 @@
     }
     .tile-card.selected {
       border-color: var(--gold-bright);
-      background: rgba(212, 175, 55, 0.08);
-      box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+      background: rgba(212, 175, 55, 0.12);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
     }
     .tile-img {
       width: 62px;
@@ -538,7 +566,7 @@
       margin-top: auto;
     }
 
-    /* Role Pill Switcher (Lead / Supporting) */
+    /* Role Pill Switcher */
     .role-toggle {
       display: flex;
       width: 100%;
@@ -582,8 +610,8 @@
     }
     .brand-card.selected {
       border-color: var(--gold-bright);
-      background: rgba(212, 175, 55, 0.1);
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+      background: rgba(212, 175, 55, 0.12);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
     }
     .brand-logo-img {
       height: 38px;
@@ -639,7 +667,7 @@
     .hud-val.inflow { color: var(--success); }
     .hud-val.net { color: var(--gold-bright); }
 
-    /* Custom Poster Upload Display (Always Renders Above Presets) */
+    /* Custom Poster Upload Display */
     .user-uploaded-poster-container {
       margin-bottom: 16px;
       padding: 12px;
@@ -682,7 +710,7 @@
     }
     .week-tile.selected {
       border-color: var(--gold-bright);
-      background: rgba(212, 175, 55, 0.12);
+      background: rgba(212, 175, 55, 0.14);
     }
     .week-tile-num {
       font-size: 0.85rem;
@@ -717,6 +745,44 @@
       border-radius: 6px;
       object-fit: cover;
       border: 1px solid var(--gold-primary);
+    }
+
+    /* Studios Intelligence Grid */
+    .studios-intel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .studio-intel-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color-subtle);
+      border-radius: 10px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .studio-intel-card.my-studio {
+      border-color: var(--gold-bright);
+      background: rgba(212, 175, 55, 0.05);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    }
+    .studio-intel-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: var(--border-color);
+    }
+    .studio-intel-card.my-studio::before {
+      background: var(--gold-gradient);
+    }
+    .studio-intel-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--gold-bright);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     /* Toast Notification System */
@@ -757,8 +823,8 @@
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.82);
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
       z-index: 950;
       display: none;
       align-items: center;
@@ -770,12 +836,12 @@
       background: var(--bg-surface);
       border: 1px solid var(--gold-primary);
       border-radius: 14px;
-      padding: 20px;
+      padding: 22px;
       max-width: 550px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
     }
 
     /* Buttons */
@@ -873,11 +939,12 @@
     </div>
   </header>
 
-  <!-- Universal Tab Navigation Bar -->
+  <!-- Universal Tab Navigation Bar (Including New "Studios" Tab) -->
   <nav class="tab-nav">
     <button class="tab-btn active" data-tab="tab-dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</button>
     <button class="tab-btn" data-tab="tab-new-movie"><i class="fa-solid fa-clapperboard"></i> New Movie</button>
     <button class="tab-btn" data-tab="tab-theatre-runs"><i class="fa-solid fa-film"></i> In Theatres</button>
+    <button class="tab-btn" data-tab="tab-studios"><i class="fa-solid fa-building"></i> Studios</button>
     <button class="tab-btn" data-tab="tab-franchises"><i class="fa-solid fa-sitemap"></i> Franchises</button>
     <button class="tab-btn" data-tab="tab-releases"><i class="fa-solid fa-compact-disc"></i> Filmography & 4K</button>
     <button class="tab-btn" data-tab="tab-stars"><i class="fa-solid fa-users-viewfinder"></i> Talent Pool</button>
@@ -969,7 +1036,7 @@
           <div class="step-header-box">
             <span class="step-badge">Step 1 of 7</span>
             <h3 class="step-heading">Script Concept & Visual Art</h3>
-            <p class="step-subtext">Name your cinematic vision, choose the genre, and pick or upload poster artwork.</p>
+            <p class="step-subtext">Name your project, select the genre, and pick or upload poster artwork.</p>
           </div>
 
           <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
@@ -1000,15 +1067,15 @@
             </div>
           </div>
 
-          <!-- Genre Selection -->
+          <!-- Genre Selection (With Visual Click Highlighting) -->
           <label style="font-size:0.8rem; font-weight:700;">Select Movie Genre:</label>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; margin-bottom:16px;" id="genre-pills">
-            <button class="btn-outline genre-pill active" data-genre="Action">Action</button>
-            <button class="btn-outline genre-pill" data-genre="Romance">Romance</button>
-            <button class="btn-outline genre-pill" data-genre="Drama">Drama</button>
-            <button class="btn-outline genre-pill" data-genre="Comedy">Comedy</button>
-            <button class="btn-outline genre-pill" data-genre="Thriller">Thriller</button>
-            <button class="btn-outline genre-pill" data-genre="Horror-Comedy">Horror-Comedy</button>
+            <button class="interactive-pill active" data-genre="Action">Action</button>
+            <button class="interactive-pill" data-genre="Romance">Romance</button>
+            <button class="interactive-pill" data-genre="Drama">Drama</button>
+            <button class="interactive-pill" data-genre="Comedy">Comedy</button>
+            <button class="interactive-pill" data-genre="Thriller">Thriller</button>
+            <button class="interactive-pill" data-genre="Horror-Comedy">Horror-Comedy</button>
           </div>
 
           <!-- Poster Upload / Selection -->
@@ -1029,8 +1096,8 @@
             </div>
           </div>
 
-          <!-- Presets Grid Below -->
-          <div class="tiles-grid" id="preset-posters-grid" style="grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));"></div>
+          <!-- Presets Grid Below (Exact 5 Links) -->
+          <div class="tiles-grid" id="preset-posters-grid" style="grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));"></div>
 
           <div class="wizard-navigation-bar">
             <span></span>
@@ -1081,14 +1148,15 @@
           <label style="font-size:0.8rem; font-weight:700;">Select Music Composer:</label>
           <div class="tiles-grid" id="composers-selection-grid"></div>
 
+          <!-- Song Count Pills (With Visual Click Highlighting) -->
           <div style="margin-top:16px; margin-bottom:12px;">
             <label style="font-size:0.8rem; font-weight:700;">Number of Original Songs in Album:</label>
-            <div style="display:flex; gap:6px; margin-top:6px; flex-wrap:wrap;" id="song-count-pills">
-              <button class="btn-outline song-pill" data-count="0">0 (Songless Film)</button>
-              <button class="btn-outline song-pill" data-count="1">1 Track</button>
-              <button class="btn-outline song-pill active" data-count="2">2 Tracks</button>
-              <button class="btn-outline song-pill" data-count="3">3 Tracks</button>
-              <button class="btn-outline song-pill" data-count="4">4 Tracks</button>
+            <div style="display:flex; gap:8px; margin-top:6px; flex-wrap:wrap;" id="song-count-pills">
+              <button class="interactive-pill" data-count="0">0 (Songless Film)</button>
+              <button class="interactive-pill" data-count="1">1 Track</button>
+              <button class="interactive-pill active" data-count="2">2 Tracks</button>
+              <button class="interactive-pill" data-count="3">3 Tracks</button>
+              <button class="interactive-pill" data-count="4">4 Tracks</button>
             </div>
           </div>
 
@@ -1177,7 +1245,7 @@
       </div>
     </section>
 
-    <!-- 3. IN THEATRES TAB (Realistic multi-week collection engine) -->
+    <!-- 3. IN THEATRES TAB -->
     <section id="tab-theatre-runs" class="tab-view">
       <div class="card">
         <div class="card-title">
@@ -1190,7 +1258,20 @@
       </div>
     </section>
 
-    <!-- 4. FRANCHISES TAB -->
+    <!-- 4. NEW: STUDIOS INTELLIGENCE TAB (RIVAL STUDIOS & COMPARISONS) -->
+    <section id="tab-studios" class="tab-view">
+      <div class="card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-building"></i> Bollywood Studios & Competitor Intelligence</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Live Industry Capital & Fame Rankings</span>
+        </div>
+        <div class="studios-intel-grid" id="studios-intel-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. FRANCHISES TAB -->
     <section id="tab-franchises" class="tab-view">
       <div class="card">
         <div class="card-title">
@@ -1198,7 +1279,7 @@
           <button class="btn-gold" onclick="openCreateFranchiseModal()"><i class="fa-solid fa-plus"></i> New Franchise</button>
         </div>
         <div id="studio-franchises-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:12px; margin-bottom:20px;">
-          <!-- Empty by default as requested -->
+          <!-- Empty by default -->
         </div>
 
         <div class="card-title" style="margin-top:20px;"><i class="fa-solid fa-ranking-star"></i> Pan-India Top 100 Franchise Leaderboard</div>
@@ -1219,7 +1300,7 @@
       </div>
     </section>
 
-    <!-- 5. FILMOGRAPHY & 4K RE-RELEASE TAB -->
+    <!-- 6. FILMOGRAPHY & 4K RE-RELEASE TAB -->
     <section id="tab-releases" class="tab-view">
       <div class="card">
         <div class="card-title"><i class="fa-solid fa-compact-disc"></i> Studio Filmography & 4K Remaster Re-Releases</div>
@@ -1229,7 +1310,7 @@
       </div>
     </section>
 
-    <!-- 6. STARS & TALENT POOL TAB -->
+    <!-- 7. STARS & TALENT POOL TAB -->
     <section id="tab-stars" class="tab-view">
       <div class="card">
         <div class="card-title"><i class="fa-solid fa-star"></i> Bollywood Star Roster</div>
@@ -1237,7 +1318,7 @@
       </div>
     </section>
 
-    <!-- 7. THEATRICAL CALENDAR TAB -->
+    <!-- 8. THEATRICAL CALENDAR TAB -->
     <section id="tab-calendar" class="tab-view">
       <div class="card">
         <div class="card-title"><i class="fa-regular fa-calendar-days"></i> 52-Week Theatrical Box Office Slate</div>
@@ -1245,7 +1326,7 @@
       </div>
     </section>
 
-    <!-- 8. FINANCES & LOANS TAB (UP TO 500 CR) -->
+    <!-- 9. FINANCES & LOANS TAB -->
     <section id="tab-finances" class="tab-view">
       <div class="card">
         <div class="card-title"><i class="fa-solid fa-building-columns"></i> Studio Treasury & Credit Facility (Up to ₹500 Cr)</div>
@@ -1284,6 +1365,33 @@
 
   </main>
 
+  <!-- MODAL: FIRST TIME STUDIO ONBOARDING (NAME & STARTING CAPITAL) -->
+  <div class="modal-overlay" id="modal-onboarding">
+    <div class="modal-window">
+      <div style="text-align:center; margin-bottom:16px;">
+        <i class="fa-solid fa-clapperboard" style="font-size:2.4rem; color:var(--gold-bright); margin-bottom:8px;"></i>
+        <h2 style="font-family:var(--font-display); color:var(--gold-bright);">Establish Your Movie Studio</h2>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Welcome to Bollywood Tycoon! Name your studio and choose your starting capital.</p>
+      </div>
+
+      <label style="font-size:0.8rem; font-weight:700; color:var(--text-main); margin-bottom:6px; display:block;">Studio Name:</label>
+      <input type="text" id="onboard-studio-name" class="input-field" placeholder="e.g. Yash Raj Studios, Dharma Empire, Apex Films" value="">
+
+      <label style="font-size:0.8rem; font-weight:700; color:var(--text-main); margin-bottom:8px; display:block;">Select Starting Capital:</label>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;" id="onboard-capital-options">
+        <button class="interactive-pill" data-amount="100000000">₹10 Crores</button>
+        <button class="interactive-pill active" data-amount="500000000">₹50 Crores</button>
+        <button class="interactive-pill" data-amount="1000000000">₹100 Crores</button>
+        <button class="interactive-pill" data-amount="5000000000">₹500 Crores</button>
+        <button class="interactive-pill" data-amount="10000000000">₹1,000 Crores</button>
+      </div>
+
+      <button class="btn-gold" style="width:100%; justify-content:center; padding:12px;" onclick="confirmStudioOnboarding()">
+        <i class="fa-solid fa-film"></i> Begin Studio Empire
+      </button>
+    </div>
+  </div>
+
   <!-- MODAL: CREATE FRANCHISE -->
   <div class="modal-overlay" id="modal-franchise">
     <div class="modal-window">
@@ -1299,7 +1407,7 @@
 
   <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.05 — CORE TYCOON ENGINE
+       BOLLYWOOD CINEMA v1.06 — CORE ENGINE
        ========================================================================= */
 
     // 1. Splash Screen Timing (Auto-dismiss in 1.5 seconds)
@@ -1307,10 +1415,24 @@
       setTimeout(() => {
         const splash = document.getElementById("splash-screen");
         if (splash) splash.classList.add("hidden");
+
+        // Check if first-time user
+        if (!localStorage.getItem("bollywood_tycoon_v106_initialized")) {
+          document.getElementById("modal-onboarding").classList.add("active");
+        }
       }, 1500);
     });
 
-    // 2. Creative Datasets (Exact links verified and stored)
+    // 2. Exact Updated Preset Posters
+    const POSTER_PRESETS = [
+      "https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/23/10/06%20-%20Back%20to%20the%20Future.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIzPIdlkeF8KP43A8C42mpSM9HSxaiEvmSa8MoBdknGKCnqbNidzhnhgc&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFlotNkAEQqlZhz4Ayh8G_IfT0fnDt9J485qNbGKeAqLROcMlvkt8hY5U&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjjayp3R85nfWKB5ClSE2QRyBGFstVTb-McQUP4S7l12WsySUC3rSDfgIW&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA_K8v8EwFKo8WgZYr7ZZItUSqdb6Az2lHzb6O8Jxw7w&s=10"
+    ];
+
+    // 3. Creative Datasets
     const REAL_DIRECTORS = [
       { id: "dir_hirani", name: "Rajkumar Hirani", photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtWXrrDG1kiC5p2dk66JCTl0PMyBNpYOYFV9ZbQi6PaS0N73jGOFKgZYw&s=10", skill: 98, fee: 300000000, style: "Feel-Good 100% Hit Ratio" },
       { id: "dir_rajamouli", name: "S.S. Rajamouli", photo: "https://i.pinimg.com/736x/f2/93/67/f2936791a5a8de161a27d4e20409dd15.jpg", skill: 99, fee: 500000000, style: "Pan-India Mythological Spectacles" },
@@ -1370,7 +1492,7 @@
       { id: "sng_badshah", name: "Badshah", photo: "https://m.media-amazon.com/images/M/MV5BNjdlM2Q1ZDgtYjUzOC00ZmIyLWE2YTEtYWJlZDQ5NTM4ODE1XkEyXkFqcGc@._V1_.jpg", skill: 88, fee: 2000000, buzz: 34 }
     ];
 
-    // Distribution Partners & Verified Logos
+    // Distribution Partners & Logos
     const MUSIC_LABELS = [
       { id: "tseries", name: "T-Series", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-kB66e_3TTITEHRMQKX5qZqNCygVnO6xSOxlbn3a1GQ&s=10", baseAdvance: 150000000, multiplier: 1.25 },
       { id: "sonymusic", name: "Sony Music", logo: "https://images.seeklogo.com/logo-png/26/1/sony-music-logo-png_seeklogo-261658.png", baseAdvance: 120000000, multiplier: 1.15 },
@@ -1393,14 +1515,6 @@
       { id: "colorstvb", name: "Colors Cineplex", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeqXrC15ArSmDq9-1zD2IyHgJHTULk5rsoYNOoi_LeK9grAEBq1Dtgmk0&s=10", baseAdvance: 100000000, mult: 1.05 }
     ];
 
-    const POSTER_PRESETS = [
-      "https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/23/10/06%20-%20Back%20to%20the%20Future.jpg",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIzPIdlkeF8KP43A8C42mpSM9HSxaiEvmSa8MoBdknGKCnqbNidzhnhgc&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFlotNkAEQqlZhz4Ayh8G_IfT0fnDt9J485qNbGKeAqLROcMlvkt8hY5U&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjjayp3R85nfWKB5ClSE2QRyBGFstVTb-McQUP4S7l12WsySUC3rSDfgIW&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA_K8v8EwFKo8WgZYr7ZZItUSqdb6Az2lHzb6O8Jxw7w&s=10"
-    ];
-
     const PROMO_CAMPAIGNS = [
       { id: "p_teaser_dig", name: "Digital Teaser Drop", fee: 10000000, hype: 12, cat: "Teaser" },
       { id: "p_teaser_hotel", name: "5-Star Hotel Press Teaser", fee: 25000000, hype: 24, cat: "Teaser" },
@@ -1410,7 +1524,18 @@
       { id: "p_city_tour", name: "10-City Mall & College Tour", fee: 40000000, hype: 38, cat: "Ground" }
     ];
 
-    // Benchmark Pan-India Universes
+    // Rival Competitor Studios Roster
+    const COMPETITOR_STUDIOS = [
+      { id: "yrf", name: "Yash Raj Films (YRF)", boss: "Aditya Chopra", capital: 45000000000, films: 78, fame: 99, slate: "War 2, Alpha, Pathaan 2" },
+      { id: "dharma", name: "Dharma Productions", boss: "Karan Johar", capital: 22000000000, films: 52, fame: 95, slate: "Brahmastra Part 2, Jigra 2" },
+      { id: "redchillies", name: "Red Chillies Entertainment", boss: "Shah Rukh Khan", capital: 38000000000, films: 34, fame: 98, slate: "King, Jawan Sequel" },
+      { id: "maddock", name: "Maddock Films", boss: "Dinesh Vijan", capital: 18000000000, films: 28, fame: 94, slate: "Stree 3, Bhediya 2, Vampires" },
+      { id: "tseries_prod", name: "T-Series Films", boss: "Bhushan Kumar", capital: 52000000000, films: 110, fame: 96, slate: "Animal Park, Spirit, Bhool Bhulaiyaa 4" },
+      { id: "nadiadwala", name: "Nadiadwala Grandson", boss: "Sajid Nadiadwala", capital: 20000000000, films: 45, fame: 91, slate: "Housefull 5, Kick 2" },
+      { id: "jiostudios", name: "Jio Studios", boss: "Jyoti Deshpande", capital: 85000000000, films: 65, fame: 93, slate: "Pan-India Mega Universe Slate" },
+      { id: "excel", name: "Excel Entertainment", boss: "Farhan Akhtar & Ritesh", capital: 16000000000, films: 32, fame: 90, slate: "Don 3, Jee Le Zaraa" }
+    ];
+
     const BENCHMARK_FRANCHISES = [
       { name: "YRF Spy Universe", studio: "Yash Raj Films", films: 6, gross: 32500000000, rating: 92 },
       { name: "Rohit Shetty Cop Universe", studio: "Rohit Shetty Picturez", films: 5, gross: 14800000000, rating: 88 },
@@ -1420,23 +1545,22 @@
       { name: "Astraverse", studio: "Dharma Productions", films: 1, gross: 4300000000, rating: 84 }
     ];
 
-    // 3. Tycoon State
+    // 4. Tycoon State
     let GAME_STATE = {
       studioName: "LILA PRODUCTIONS",
-      cash: 200000000, // ₹20 Crores starting capital
+      cash: 500000000, // ₹50 Cr default initial
       week: 1,
       reputation: 75,
       debt: 0,
       activeProductions: [],
       theatreRuns: [],
       releasedMovies: [],
-      franchises: [] // Zero default franchises as requested
+      franchises: []
     };
 
-    // Current Step in the Wizard
+    let SELECTED_ONBOARD_CAPITAL = 500000000;
     let CURRENT_WIZARD_STEP = 1;
 
-    // Current Film Draft
     let CURRENT_DRAFT = {
       title: "",
       genre: "Action",
@@ -1456,7 +1580,7 @@
     };
 
     /* =========================================================================
-       INITIALIZATION & CORE CONTROLS
+       INITIALIZATION & INTERACTIVE PILLS SETUP
        ========================================================================= */
 
     window.addEventListener("DOMContentLoaded", () => {
@@ -1479,12 +1603,13 @@
         });
       });
 
-      // Studio Name Editor
+      // Studio Name Header Editor
       const nameInput = document.getElementById("studio-name-display");
       nameInput.value = GAME_STATE.studioName;
       nameInput.addEventListener("change", (e) => {
         GAME_STATE.studioName = e.target.value.trim() || "LILA PRODUCTIONS";
         saveState();
+        renderStudiosIntel();
         showToast("Studio name updated!", "success");
       });
 
@@ -1508,30 +1633,39 @@
         CURRENT_DRAFT.title = e.target.value;
       });
 
-      // Genre Pills
-      document.querySelectorAll(".genre-pill").forEach(p => {
+      // FIX: GENRE PILLS CLICK FEEDBACK
+      document.querySelectorAll("#genre-pills .interactive-pill").forEach(p => {
         p.addEventListener("click", () => {
-          document.querySelectorAll(".genre-pill").forEach(x => x.classList.remove("active"));
+          document.querySelectorAll("#genre-pills .interactive-pill").forEach(x => x.classList.remove("active"));
           p.classList.add("active");
           CURRENT_DRAFT.genre = p.dataset.genre;
           updateCostHUD();
         });
       });
 
-      // Song Count Pills
-      document.querySelectorAll(".song-pill").forEach(p => {
+      // FIX: SONG COUNT PILLS CLICK FEEDBACK
+      document.querySelectorAll("#song-count-pills .interactive-pill").forEach(p => {
         p.addEventListener("click", () => {
-          document.querySelectorAll(".song-pill").forEach(x => x.classList.remove("active"));
+          document.querySelectorAll("#song-count-pills .interactive-pill").forEach(x => x.classList.remove("active"));
           p.classList.add("active");
           CURRENT_DRAFT.songCount = parseInt(p.dataset.count);
           updateCostHUD();
         });
       });
 
+      // ONBOARDING CAPITAL CHOICES
+      document.querySelectorAll("#onboard-capital-options .interactive-pill").forEach(p => {
+        p.addEventListener("click", () => {
+          document.querySelectorAll("#onboard-capital-options .interactive-pill").forEach(x => x.classList.remove("active"));
+          p.classList.add("active");
+          SELECTED_ONBOARD_CAPITAL = parseInt(p.dataset.amount);
+        });
+      });
+
       // Launch Production Button
       document.getElementById("btn-confirm-production").addEventListener("click", greenlightFilm);
 
-      // Web Audio Click Synthesizer
+      // Web Audio Synthesizer
       document.addEventListener("click", playHaptic);
     }
 
@@ -1548,6 +1682,21 @@
       document.getElementById("btn-theme-toggle").innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
     }
 
+    // Studio Onboarding Confirmation
+    function confirmStudioOnboarding() {
+      const chosenName = document.getElementById("onboard-studio-name").value.trim() || "LILA PRODUCTIONS";
+      GAME_STATE.studioName = chosenName;
+      GAME_STATE.cash = SELECTED_ONBOARD_CAPITAL;
+      localStorage.setItem("bollywood_tycoon_v106_initialized", "true");
+      saveState();
+      document.getElementById("modal-onboarding").classList.remove("active");
+      document.getElementById("studio-name-display").value = chosenName;
+      updateHeaderStats();
+      renderStudiosIntel();
+      showToast(`🎬 Welcome! ${chosenName} founded with ${formatINR(SELECTED_ONBOARD_CAPITAL)}!`, "success");
+      triggerConfetti();
+    }
+
     /* =========================================================================
        WIZARD STEP NAVIGATION ENGINE
        ========================================================================= */
@@ -1555,7 +1704,6 @@
     function goToStep(stepNumber) {
       if (stepNumber < 1 || stepNumber > 7) return;
 
-      // Validate before advancing past Step 1
       if (stepNumber > 1 && CURRENT_WIZARD_STEP === 1) {
         if (!CURRENT_DRAFT.title.trim()) {
           showToast("Please enter a project title before proceeding!", "error");
@@ -1565,14 +1713,12 @@
 
       CURRENT_WIZARD_STEP = stepNumber;
 
-      // Update Wizard Node Indicators
       document.querySelectorAll(".wizard-step-node").forEach(node => {
         const step = parseInt(node.dataset.step);
         node.classList.toggle("active", step === CURRENT_WIZARD_STEP);
         node.classList.toggle("completed", step < CURRENT_WIZARD_STEP);
       });
 
-      // Switch Panes
       document.querySelectorAll(".pipeline-step-pane").forEach(pane => {
         pane.classList.remove("active");
       });
@@ -1601,6 +1747,7 @@
       renderTheatricalRuns();
       renderFilmography();
       renderCalendar();
+      renderStudiosIntel();
       updateCostHUD();
     }
 
@@ -1612,6 +1759,45 @@
       document.getElementById("fin-cash").innerText = formatINR(GAME_STATE.cash);
       document.getElementById("fin-debt").innerText = formatINR(GAME_STATE.debt);
       document.getElementById("fin-interest").innerText = formatINR(Math.round(GAME_STATE.debt * 0.015)) + " /wk";
+    }
+
+    // Render Competitor Studios Intelligence
+    function renderStudiosIntel() {
+      const container = document.getElementById("studios-intel-grid");
+      if (!container) return;
+
+      const myStudioCard = `
+        <div class="studio-intel-card my-studio">
+          <div class="studio-intel-title">
+            <span>${GAME_STATE.studioName}</span>
+            <span class="step-badge" style="background:var(--gold-bright);">YOU</span>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">Founder / Managing Director: Studio Boss</div>
+          <div style="font-size:0.82rem; margin-bottom:4px;">Treasury Capital: <strong style="color:var(--success);">${formatINR(GAME_STATE.cash)}</strong></div>
+          <div style="font-size:0.82rem; margin-bottom:4px;">Released Films: <strong>${GAME_STATE.releasedMovies.length}</strong></div>
+          <div style="font-size:0.82rem; margin-bottom:6px;">Studio Fame / Reputation: <strong style="color:var(--gold-bright);">${GAME_STATE.reputation}/100</strong></div>
+          <div style="font-size:0.75rem; color:var(--text-muted); border-top:1px dashed var(--border-color-subtle); padding-top:6px;">
+            Active Productions: <strong>${GAME_STATE.activeProductions.length} on floor</strong>
+          </div>
+        </div>
+      `;
+
+      const rivalCards = COMPETITOR_STUDIOS.map(c => `
+        <div class="studio-intel-card">
+          <div class="studio-intel-title">
+            <span>${c.name}</span>
+            <span style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-body);">${c.fame} Fame</span>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">Head: ${c.boss}</div>
+          <div style="font-size:0.82rem; margin-bottom:4px;">Estimated Capital: <strong style="color:var(--text-main);">${formatINR(c.capital)}</strong></div>
+          <div style="font-size:0.82rem; margin-bottom:4px;">Theatrical Catalog: <strong>${c.films} Films</strong></div>
+          <div style="font-size:0.75rem; color:var(--gold-bright); border-top:1px dashed var(--border-color-subtle); padding-top:6px;">
+            Current Pipeline: <span style="color:var(--text-muted);">${c.slate}</span>
+          </div>
+        </div>
+      `).join('');
+
+      container.innerHTML = myStudioCard + rivalCards;
     }
 
     // Custom Poster Upload (Renders ABOVE Presets)
@@ -1639,7 +1825,7 @@
       const container = document.getElementById("preset-posters-grid");
       container.innerHTML = POSTER_PRESETS.map((url, idx) => `
         <div class="tile-card preset-poster-card ${(!CURRENT_DRAFT.customPosterUploaded && CURRENT_DRAFT.posterUrl === url) ? 'selected' : ''}" onclick="selectPresetPoster('${url}')">
-          <img src="${url}" style="width:100%; height:80px; object-fit:cover; border-radius:6px;">
+          <img src="${url}" style="width:100%; height:86px; object-fit:cover; border-radius:6px;">
           <span style="font-size:0.65rem; color:var(--text-muted); margin-top:3px;">Preset ${idx+1}</span>
         </div>
       `).join('');
@@ -1654,7 +1840,7 @@
       });
     }
 
-    // Actor Selection Tiles with Lead/Supporting Switcher
+    // Actors Roster with Lead/Supporting Switcher
     function renderActorTiles() {
       const container = document.getElementById("actors-selection-grid");
       const rosterContainer = document.getElementById("roster-actors-grid");
@@ -1713,7 +1899,7 @@
       }
     }
 
-    // Directors (Single Select)
+    // Directors
     function renderDirectorTiles() {
       const container = document.getElementById("directors-selection-grid");
       container.innerHTML = REAL_DIRECTORS.map(dir => {
@@ -1735,7 +1921,7 @@
       updateCostHUD();
     }
 
-    // Composers (Single Select)
+    // Composers
     function renderComposerTiles() {
       const container = document.getElementById("composers-selection-grid");
       container.innerHTML = REAL_COMPOSERS.map(c => {
@@ -1757,7 +1943,7 @@
       updateCostHUD();
     }
 
-    // Playback Singers (Multi Select)
+    // Playback Singers
     function renderSingerTiles() {
       const container = document.getElementById("singers-selection-grid");
       container.innerHTML = REAL_SINGERS.map(s => {
@@ -1785,7 +1971,6 @@
 
     // Rights Deals Tiles
     function renderBrandRights() {
-      // Music
       document.getElementById("music-rights-grid").innerHTML = MUSIC_LABELS.map(lbl => `
         <div class="brand-card ${CURRENT_DRAFT.musicRightsId === lbl.id ? 'selected' : ''}" onclick="selectMusicRights('${lbl.id}')">
           <img src="${lbl.logo}" class="brand-logo-img" alt="${lbl.name}">
@@ -1794,7 +1979,6 @@
         </div>
       `).join('');
 
-      // OTT
       document.getElementById("ott-rights-grid").innerHTML = OTT_PLATFORMS.map(p => `
         <div class="brand-card ${CURRENT_DRAFT.ottRightsId === p.id ? 'selected' : ''}" onclick="selectOttRights('${p.id}')">
           <img src="${p.logo}" class="brand-logo-img" alt="${p.name}">
@@ -1803,7 +1987,6 @@
         </div>
       `).join('');
 
-      // Satellite
       document.getElementById("satellite-rights-grid").innerHTML = SATELLITE_CHANNELS.map(ch => `
         <div class="brand-card ${CURRENT_DRAFT.satelliteRightsId === ch.id ? 'selected' : ''}" onclick="selectSatelliteRights('${ch.id}')">
           <img src="${ch.logo}" class="brand-logo-img" alt="${ch.name}">
@@ -1910,7 +2093,7 @@
        ========================================================================= */
 
     function calculateProductionCosts() {
-      let cost = 50000000; // Base physical set, shooting & crew
+      let cost = 50000000;
 
       CURRENT_DRAFT.cast.forEach(c => {
         const a = ALL_ACTORS.find(x => x.id === c.id);
@@ -2024,7 +2207,6 @@
       showToast(`🎬 "${newFilm.title}" greenlit! Releasing in Week ${releaseWeek}.`, "success");
       triggerConfetti();
 
-      // Reset Draft & Wizard to Step 1
       document.getElementById("movie-title").value = "";
       CURRENT_DRAFT.title = "";
       goToStep(1);
@@ -2044,19 +2226,17 @@
     }
 
     /* =========================================================================
-       THEATRICAL RUN SIMULATION ENGINE (Realistic Multi-Week Legs)
+       THEATRICAL RUN SIMULATION ENGINE (Multi-Week Box Office)
        ========================================================================= */
 
     function advanceWeek() {
       GAME_STATE.week++;
 
-      // Interest deductions
       if (GAME_STATE.debt > 0) {
         const interest = Math.round(GAME_STATE.debt * 0.015);
         GAME_STATE.cash = Math.max(0, GAME_STATE.cash - interest);
       }
 
-      // Check Active Productions nearing release
       for (let i = GAME_STATE.activeProductions.length - 1; i >= 0; i--) {
         const prod = GAME_STATE.activeProductions[i];
         prod.weeksRemaining--;
@@ -2066,10 +2246,7 @@
         }
       }
 
-      // Process Weekly Collections for films in theatres
       processTheatreCollections();
-
-      // Random Weekly Gossip/Trade Wire
       processWeeklyNews();
 
       saveState();
@@ -2087,7 +2264,7 @@
         ...film,
         currentWeekOfRun: 1,
         totalGross: opening,
-        producerEarnings: Math.round(opening * 0.50), // 50% distributor split
+        producerEarnings: Math.round(opening * 0.50),
         weeklyHistory: [opening],
         active: true,
         jubilee: null
@@ -2107,7 +2284,6 @@
         run.currentWeekOfRun++;
         const lastWeekColl = run.weeklyHistory[run.weeklyHistory.length - 1];
 
-        // Word-of-mouth hold mechanics
         let holdRatio = 0.65;
         if (run.quality >= 93) holdRatio = 0.90;
         else if (run.quality >= 85) holdRatio = 0.75;
@@ -2121,7 +2297,6 @@
         run.producerEarnings += producerShare;
         GAME_STATE.cash += producerShare;
 
-        // Jubilee Milestone Recognition
         if (run.currentWeekOfRun === 25 && !run.jubilee) {
           run.jubilee = "Silver Jubilee (25 Weeks)";
           GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 8);
@@ -2301,7 +2476,6 @@
         }
       }
 
-      // Pan India Top 100 Leaderboard Table
       const tbody = document.getElementById("pan-india-franchise-tbody");
       if (tbody) {
         const combined = [
@@ -2380,7 +2554,7 @@
     }
 
     function takeStudioLoan(amt) {
-      if (GAME_STATE.debt + amt > 5000000000) { // ₹500 Crores Cap
+      if (GAME_STATE.debt + amt > 5000000000) {
         showToast("Maximum credit limit is ₹500 Crores!", "error");
         return;
       }
@@ -2388,6 +2562,7 @@
       GAME_STATE.cash += amt;
       saveState();
       updateHeaderStats();
+      renderStudiosIntel();
       showToast(`Secured ${formatINR(amt)} credit at 1.5% weekly interest!`, "success");
     }
 
@@ -2405,6 +2580,7 @@
       GAME_STATE.debt -= payAmt;
       saveState();
       updateHeaderStats();
+      renderStudiosIntel();
       showToast(`Repaid ${formatINR(payAmt)} towards loan balance!`, "success");
     }
 
@@ -2421,6 +2597,7 @@
       GAME_STATE.debt = 0;
       saveState();
       updateHeaderStats();
+      renderStudiosIntel();
       showToast("All studio debts cleared in full!", "success");
     }
 
@@ -2511,13 +2688,13 @@
 
     function saveState() {
       try {
-        localStorage.setItem("bollywood_tycoon_v105", JSON.stringify(GAME_STATE));
+        localStorage.setItem("bollywood_tycoon_v106", JSON.stringify(GAME_STATE));
       } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v105");
+        const raw = localStorage.getItem("bollywood_tycoon_v106");
         if (raw) {
           const parsed = JSON.parse(raw);
           GAME_STATE = { ...GAME_STATE, ...parsed };
