@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.11 — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.12 — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -388,7 +388,7 @@
     .theatre-header { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
     .theatre-poster { width: 48px; height: 68px; border-radius: 5px; object-fit: cover; border: 1px solid var(--gold-primary); }
 
-    .studios-intel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .studios-intel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
     .studio-intel-card { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 12px; position: relative; }
     .studio-intel-card.my-studio { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.05); }
     .studio-intel-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--border-color); }
@@ -585,32 +585,15 @@
           <div class="wizard-step-node" data-step="7"><span class="step-circle">7</span> Slate</div>
         </div>
 
-        <!-- STEP 1: SCRIPT, RELEASE FORMAT & POSTER -->
+        <!-- STEP 1: SCRIPT, UNIVERSE, SCRIPT QUALITY & POSTER -->
         <div class="pipeline-step-pane active" id="wizard-step-1">
           <div class="step-header-box">
             <span class="step-badge">Step 1 of 7</span>
-            <h3 class="step-heading">Script Concept & Release Strategy</h3>
-            <p class="step-subtext">Name your project, choose release model, genre, and poster.</p>
+            <h3 class="step-heading">Script Concept & Universe Model</h3>
+            <p class="step-subtext">Choose your production universe, title, script quality, and release model.</p>
           </div>
 
-          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
-            <input type="text" id="movie-title" class="input-field" placeholder="Enter Project Title (e.g. Tiger Zinda Hai 2)" style="flex:1; margin-bottom:0;">
-            <button class="btn-outline" id="btn-random-title"><i class="fa-solid fa-dice"></i> Random Title</button>
-          </div>
-
-          <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Release Format (How to Release):</label>
-          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;" id="release-format-pills">
-            <button class="curved-choice-btn active" data-format="only_theatres" onclick="setReleaseFormat('only_theatres', this)">
-              <i class="fa-solid fa-film"></i> Only Theatres (Exclusive)
-            </button>
-            <button class="curved-choice-btn" data-format="theatres_series" onclick="setReleaseFormat('theatres_series', this)">
-              <i class="fa-solid fa-tv"></i> Theatres & Series
-            </button>
-            <button class="curved-choice-btn" data-format="series_ott" onclick="setReleaseFormat('series_ott', this)">
-              <i class="fa-solid fa-tower-broadcast"></i> Series / Direct OTT
-            </button>
-          </div>
-
+          <!-- 1. FIRST OPTION: Production Universe Model -->
           <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Production Universe Model:</label>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;" id="franchise-model-pills">
             <button class="curved-choice-btn active" data-model="standalone" onclick="setFranchiseModel('standalone', this)">
@@ -635,6 +618,41 @@
               <label style="font-size:0.72rem; color:var(--text-muted); display:block; margin-bottom:2px;">Editable Franchise Title (Auto-loaded):</label>
               <input type="text" id="pipeline-active-franchise-name" class="input-field" style="margin-bottom:0; font-size:0.78rem; padding:4px 8px;">
             </div>
+          </div>
+
+          <!-- 2. Project Title Input -->
+          <label style="font-size:0.78rem; font-weight:700; margin-bottom:4px; display:block;">Project Title:</label>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+            <input type="text" id="movie-title" class="input-field" placeholder="Enter Project Title (e.g. Tiger Zinda Hai 2)" style="flex:1; margin-bottom:0;">
+            <button class="btn-outline" id="btn-random-title"><i class="fa-solid fa-dice"></i> Random Title</button>
+          </div>
+
+          <!-- 3. SCRIPT QUALITY (BELOW NAME OF PROJECT) -->
+          <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Script Quality Tier (Affects Base Quality & Critical Response):</label>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;" id="script-quality-pills">
+            <button class="curved-choice-btn" data-sq="masala" onclick="setScriptQuality('masala', this)">
+              Standard Masala Draft (Score 55)
+            </button>
+            <button class="curved-choice-btn active" data-sq="tight" onclick="setScriptQuality('tight', this)">
+              Polished Screenplay (Score 75)
+            </button>
+            <button class="curved-choice-btn" data-sq="masterpiece" onclick="setScriptQuality('masterpiece', this)">
+              Award-Winning Masterpiece (Score 95)
+            </button>
+          </div>
+
+          <!-- 4. RELEASE FORMAT (1st Theatres & OTT, 2nd Only Theatres, 3rd OTT & Satellite) -->
+          <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Release Format (How to Release):</label>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;" id="release-format-pills">
+            <button class="curved-choice-btn active" data-format="theatres_ott" onclick="setReleaseFormat('theatres_ott', this)">
+              <i class="fa-solid fa-film"></i> Theatres & OTT (Default)
+            </button>
+            <button class="curved-choice-btn" data-format="only_theatres" onclick="setReleaseFormat('only_theatres', this)">
+              <i class="fa-solid fa-ticket"></i> Only Theatres (Exclusive)
+            </button>
+            <button class="curved-choice-btn" data-format="ott_satellite" onclick="setReleaseFormat('ott_satellite', this)">
+              <i class="fa-solid fa-tv"></i> OTT & Satellite Direct
+            </button>
           </div>
 
           <label style="font-size:0.78rem; font-weight:700;">Select Genre:</label>
@@ -710,7 +728,6 @@
           <label style="font-size:0.78rem; font-weight:700;">Select Music Composer:</label>
           <div class="tiles-grid" id="composers-selection-grid"></div>
 
-          <!-- Lyrics Quality Curved Buttons -->
           <div style="margin-top:14px; margin-bottom:10px;">
             <label style="font-size:0.78rem; font-weight:700; display:block; margin-bottom:6px;">Poetry & Lyrics Quality Tier:</label>
             <div style="display:flex; gap:6px; flex-wrap:wrap;" id="lyrics-quality-pills">
@@ -847,34 +864,48 @@
       </div>
     </section>
 
-    <!-- 3. IN THEATRES TAB -->
+    <!-- 3. IN THEATRES TAB (ORDERED: 1. UPCOMING, 2. RUNNING, 3. ARCHIVED) -->
     <section id="tab-theatre-runs" class="tab-view">
+      <!-- 1. UPCOMING MOVIES ON TOP -->
+      <div class="card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-hourglass-half"></i> Upcoming Releases on Horizon</span>
+          <span style="font-size:0.75rem; color:var(--gold-bright);">Pre-Release Audience Hype & Target Screens</span>
+        </div>
+        <div id="theatrical-upcoming-container">
+          <p style="color:var(--text-muted); font-size:0.8rem;">No upcoming productions scheduled yet.</p>
+        </div>
+      </div>
+
+      <!-- 2. RUNNING MOVIES BELOW UPCOMING -->
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-ticket"></i> Live Theatrical Runs</span>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Real-time Screens & Hype Decay Engine</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">Real-time Screens & Collections (Tap for Dossier)</span>
         </div>
         <div id="theatrical-runs-container">
           <p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in cinema halls. Launch a movie in "New Movie" to witness its box office trajectory!</p>
         </div>
       </div>
 
+      <!-- 3. ARCHIVED MOVIES AT LAST -->
       <div class="card">
         <div class="card-title">
-          <span><i class="fa-solid fa-hourglass-half"></i> Upcoming Releases</span>
-          <span style="font-size:0.75rem; color:var(--gold-bright);">Pre-Release Audience Hype & Screens Allocated</span>
+          <span><i class="fa-solid fa-box-archive"></i> Archived Completed Theatrical Runs</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">Final Lifetime Records</span>
         </div>
-        <div id="theatrical-upcoming-container">
-          <p style="color:var(--text-muted); font-size:0.8rem;">No upcoming productions scheduled yet.</p>
+        <div id="theatrical-archived-container">
+          <p style="color:var(--text-muted); font-size:0.8rem;">No archived theatrical runs yet.</p>
         </div>
       </div>
     </section>
 
-    <!-- 4. STUDIOS INTELLIGENCE TAB -->
+    <!-- 4. STUDIOS INTELLIGENCE TAB (SORTED STRICTLY BY RANKING) -->
     <section id="tab-studios" class="tab-view">
       <div class="card">
         <div class="card-title">
-          <span><i class="fa-solid fa-building"></i> Bollywood Studios & Competitor Intelligence</span>
+          <span><i class="fa-solid fa-building"></i> Bollywood Studio Rankings</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">Ranked dynamically by Total Net Worth & Fame</span>
         </div>
         <div class="studios-intel-grid" id="studios-intel-grid"></div>
       </div>
@@ -1000,7 +1031,7 @@
       <input type="text" id="new-franchise-name" class="input-field" placeholder="Franchise Name (e.g. Spy Universe, Cop Universe)">
       <textarea id="new-franchise-desc" class="input-field" rows="3" placeholder="Franchise Lore & Theme"></textarea>
       <div style="display:flex; justify-content:flex-end; gap:6px;">
-        <button class="btn-outline" onclick="closeCreateFranchiseModal()">Cancel</button>
+        <button class="btn-outline" onclick="closeCreateFranchiseModal(true)">Cancel</button>
         <button class="btn-gold" onclick="confirmCreateFranchise()">Register Franchise</button>
       </div>
     </div>
@@ -1026,14 +1057,14 @@
 
   <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.11 — CORE LOGIC
+       BOLLYWOOD CINEMA v1.12 — CORE TYCOON ENGINE
        ========================================================================= */
 
     function dismissSplash() {
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v111_init")) {
+        if (!localStorage.getItem("bollywood_tycoon_v112_init")) {
           const modal = document.getElementById("modal-onboarding");
           if (modal) modal.classList.add("active");
         }
@@ -1219,9 +1250,10 @@
     let CURRENT_DRAFT = {
       title: "",
       genre: "Action",
-      releaseFormat: "only_theatres", // 'only_theatres' | 'theatres_series' | 'series_ott'
+      releaseFormat: "theatres_ott", // 'theatres_ott' (default) | 'only_theatres' | 'ott_satellite'
       franchiseId: null,
-      lyricsTier: "standard", // 'standard' | 'poetic' | 'legend'
+      scriptQuality: "tight", // 'masala' (55) | 'tight' (75) | 'masterpiece' (95)
+      lyricsTier: "standard",
       posterUrl: POSTER_PRESETS[0],
       customPosterUploaded: false,
       cast: [],
@@ -1343,7 +1375,7 @@
       const chosenName = document.getElementById("onboard-studio-name").value.trim() || "LILA PRODUCTIONS";
       GAME_STATE.studioName = chosenName;
       GAME_STATE.cash = SELECTED_ONBOARD_CAPITAL;
-      localStorage.setItem("bollywood_tycoon_v111_init", "true");
+      localStorage.setItem("bollywood_tycoon_v112_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
@@ -1351,6 +1383,13 @@
       renderStudiosIntel();
       showToast(`🎬 Founded with ${formatINR(SELECTED_ONBOARD_CAPITAL)}!`, "success");
       triggerConfetti();
+    }
+
+    function setScriptQuality(tier, el) {
+      CURRENT_DRAFT.scriptQuality = tier;
+      document.querySelectorAll("#script-quality-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      updateCostHUD();
     }
 
     function setReleaseFormat(format, el) {
@@ -1370,7 +1409,16 @@
     function setFranchiseModel(model, el) {
       document.querySelectorAll("#franchise-model-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
       el.classList.add("active");
-      toggleFranchiseSelect(model === "franchise");
+
+      if (model === "franchise") {
+        if (GAME_STATE.franchises.length === 0) {
+          openCreateFranchiseModal();
+        } else {
+          toggleFranchiseSelect(true);
+        }
+      } else {
+        toggleFranchiseSelect(false);
+      }
     }
 
     function setLyricsQuality(tier, el) {
@@ -1436,40 +1484,41 @@
       document.getElementById("fin-interest").innerText = formatINR(Math.round(GAME_STATE.debt * 0.015)) + " /wk";
     }
 
+    /* STUDIOS SECTION: SORTED PURELY BY RANKING (YOUR STUDIO SITS AT ITS TRUE RANK) */
     function renderStudiosIntel() {
       const container = document.getElementById("studios-intel-grid");
       if (!container) return;
 
-      const myStudioCard = `
-        <div class="studio-intel-card my-studio">
-          <div style="font-family:var(--font-display); font-size:1.05rem; color:var(--gold-bright); display:flex; justify-content:space-between; align-items:center;">
-            <span>${GAME_STATE.studioName}</span>
-            <span class="step-badge" style="background:var(--gold-bright);">YOU</span>
-          </div>
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Founder / Managing Director: Studio Boss</div>
-          <div style="font-size:0.8rem; margin-bottom:3px;">Treasury Capital: <strong style="color:var(--success);">${formatINR(GAME_STATE.cash)}</strong></div>
-          <div style="font-size:0.8rem; margin-bottom:3px;">Released Films: <strong>${GAME_STATE.releasedMovies.length}</strong></div>
-          <div style="font-size:0.8rem; margin-bottom:3px;">Trophies & Awards: <strong style="color:var(--gold-bright);">🏆 ${GAME_STATE.totalAwardsWon}</strong></div>
-          <div style="font-size:0.8rem; margin-bottom:6px;">Fame / Reputation: <strong style="color:var(--gold-bright);">${GAME_STATE.reputation}/100</strong></div>
-        </div>
-      `;
+      const myStudioData = {
+        id: "my_studio",
+        name: GAME_STATE.studioName,
+        boss: "Studio Boss (You)",
+        capital: GAME_STATE.cash,
+        films: GAME_STATE.releasedMovies.length,
+        fame: GAME_STATE.reputation,
+        isPlayer: true
+      };
 
-      const rivalCards = COMPETITOR_STUDIOS.map(c => `
-        <div class="studio-intel-card">
+      const allStudios = [...COMPETITOR_STUDIOS, myStudioData].sort((a, b) => {
+        // Primary sort: Treasury Capital, Secondary: Fame
+        return (b.capital + (b.fame * 10000000)) - (a.capital + (a.fame * 10000000));
+      });
+
+      container.innerHTML = allStudios.map((s, idx) => `
+        <div class="studio-intel-card ${s.isPlayer ? 'my-studio' : ''}">
           <div style="font-family:var(--font-display); font-size:1.05rem; color:var(--gold-bright); display:flex; justify-content:space-between; align-items:center;">
-            <span>${c.name}</span>
-            <span style="font-size:0.72rem; color:var(--text-muted);">${c.fame} Fame</span>
+            <span>#${idx+1} ${s.name}</span>
+            <span class="step-badge" style="background:${s.isPlayer ? 'var(--gold-bright)' : 'rgba(255,255,255,0.1)'}; color:${s.isPlayer ? '#000' : 'var(--text-muted)'};">
+              ${s.isPlayer ? 'YOU' : `Rank ${idx+1}`}
+            </span>
           </div>
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Head: ${c.boss}</div>
-          <div style="font-size:0.8rem; margin-bottom:3px;">Capital: <strong>${formatINR(c.capital)}</strong></div>
-          <div style="font-size:0.8rem; margin-bottom:3px;">Film Catalog: <strong>${c.films} Films</strong></div>
-          <div style="font-size:0.72rem; color:var(--gold-bright); border-top:1px dashed var(--border-color-subtle); padding-top:4px; margin-top:6px;">
-            Current Slate: <span style="color:var(--text-muted);">${c.slate}</span>
-          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Head: ${s.boss}</div>
+          <div style="font-size:0.8rem; margin-bottom:3px;">Treasury / Net Worth: <strong style="color:var(--success);">${formatINR(s.capital)}</strong></div>
+          <div style="font-size:0.8rem; margin-bottom:3px;">Films Catalog: <strong>${s.films} Films</strong></div>
+          <div style="font-size:0.8rem; margin-bottom:6px;">Fame / Prestige: <strong style="color:var(--gold-bright);">${s.fame}/100</strong></div>
+          ${s.slate ? `<div style="font-size:0.72rem; color:var(--gold-bright); border-top:1px dashed var(--border-color-subtle); padding-top:4px; margin-top:6px;">Slate: <span style="color:var(--text-muted);">${s.slate}</span></div>` : ''}
         </div>
       `).join('');
-
-      container.innerHTML = myStudioCard + rivalCards;
     }
 
     function handlePosterUpload(e) {
@@ -1511,7 +1560,6 @@
       if (!CURRENT_DRAFT.franchiseId) return actor.fee;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (!f) return actor.fee;
-      // Stars demand higher compensation for working in prestigious high-gross franchises
       const demandMult = 1.0 + ((f.rating / 100) * 0.45);
       return Math.round(actor.fee * demandMult);
     }
@@ -1588,6 +1636,7 @@
         CURRENT_DRAFT.cast.push({ id: actorId, role });
       }
       renderActorTiles();
+      rememberFranchisePreferences();
       renderBrandRights();
       updateCostHUD();
     }
@@ -1598,6 +1647,7 @@
       if (item) {
         item.role = newRole;
         renderActorTiles();
+        rememberFranchisePreferences();
         renderBrandRights();
         updateCostHUD();
       }
@@ -1621,6 +1671,7 @@
     function selectDirector(id) {
       CURRENT_DRAFT.directorId = CURRENT_DRAFT.directorId === id ? null : id;
       renderDirectorTiles();
+      rememberFranchisePreferences();
       updateCostHUD();
     }
 
@@ -1642,6 +1693,7 @@
     function selectComposer(id) {
       CURRENT_DRAFT.composerId = CURRENT_DRAFT.composerId === id ? null : id;
       renderComposerTiles();
+      rememberFranchisePreferences();
       renderBrandRights();
       updateCostHUD();
     }
@@ -1668,6 +1720,7 @@
         CURRENT_DRAFT.singers.push(id);
       }
       renderSingerTiles();
+      rememberFranchisePreferences();
       updateCostHUD();
     }
 
@@ -1699,15 +1752,14 @@
       `).join('');
     }
 
-    function selectMusicRights(id) { CURRENT_DRAFT.musicRightsId = id; renderBrandRights(); updateCostHUD(); }
-    function selectOttRights(id) { CURRENT_DRAFT.ottRightsId = id; renderBrandRights(); updateCostHUD(); }
-    function selectSatelliteRights(id) { CURRENT_DRAFT.satelliteRightsId = id; renderBrandRights(); updateCostHUD(); }
+    function selectMusicRights(id) { CURRENT_DRAFT.musicRightsId = id; rememberFranchisePreferences(); renderBrandRights(); updateCostHUD(); }
+    function selectOttRights(id) { CURRENT_DRAFT.ottRightsId = id; rememberFranchisePreferences(); renderBrandRights(); updateCostHUD(); }
+    function selectSatelliteRights(id) { CURRENT_DRAFT.satelliteRightsId = id; rememberFranchisePreferences(); renderBrandRights(); updateCostHUD(); }
 
     function getFranchiseFameMultiplier() {
       if (!CURRENT_DRAFT.franchiseId) return 1.0;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (!f) return 1.0;
-      // High-fame franchises command huge bidding wars (up to 2.1x) from rival streaming/rights platforms!
       return 1.0 + ((f.rating / 100) * 1.1);
     }
 
@@ -1724,8 +1776,7 @@
       if (CURRENT_DRAFT.releaseFormat === "only_theatres") return 0;
       const starPower = getCastStarPower();
       const franMult = getFranchiseFameMultiplier();
-      // If direct to OTT / Series is selected, OTT platforms bid much higher! (1.75x)
-      const directOttMult = CURRENT_DRAFT.releaseFormat === "series_ott" ? 1.75 : 1.0;
+      const directOttMult = CURRENT_DRAFT.releaseFormat === "ott_satellite" ? 1.75 : 1.0;
       return Math.round(p.baseAdvance * (starPower / 70) * p.mult * franMult * directOttMult);
     }
 
@@ -1746,7 +1797,6 @@
         starPower = Math.round(totalPop / Math.max(1, CURRENT_DRAFT.cast.length * 0.75));
       }
 
-      // If franchise is great, star cast dependency diminishes!
       if (CURRENT_DRAFT.franchiseId) {
         const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
         if (f && f.rating > 70) {
@@ -1899,7 +1949,6 @@
         if (comp) cost += getDynamicComposerFee(comp);
       }
 
-      // Lyrics quality budget tier
       if (CURRENT_DRAFT.songCount > 0) {
         if (CURRENT_DRAFT.lyricsTier === 'legend') cost += 6000000;
         else if (CURRENT_DRAFT.lyricsTier === 'poetic') cost += 2000000;
@@ -1975,9 +2024,8 @@
       }
       campaignHype = Math.min(100, campaignHype);
 
-      // Screens are allocated ONLY when format includes theatres!
       let startingScreens = 0;
-      if (CURRENT_DRAFT.releaseFormat !== "series_ott") {
+      if (CURRENT_DRAFT.releaseFormat !== "ott_satellite") {
         const baseScreens = Math.round(2500 + (campaignHype * 35) + (getCastStarPower() * 15));
         startingScreens = Math.min(7500, baseScreens);
       }
@@ -1988,6 +2036,7 @@
         genre: CURRENT_DRAFT.genre,
         releaseFormat: CURRENT_DRAFT.releaseFormat,
         franchiseId: CURRENT_DRAFT.franchiseId,
+        scriptQuality: CURRENT_DRAFT.scriptQuality,
         lyricsTier: CURRENT_DRAFT.lyricsTier,
         posterUrl: CURRENT_DRAFT.posterUrl,
         cast: JSON.parse(JSON.stringify(CURRENT_DRAFT.cast)),
@@ -2006,9 +2055,10 @@
       };
 
       GAME_STATE.activeProductions.push(newFilm);
+      rememberFranchisePreferences(); // Save package for subsequent franchise parts
       saveState();
 
-      const screenMsg = startingScreens > 0 ? `Screens: ${startingScreens.toLocaleString()}` : `Direct OTT Series Stream Premiere`;
+      const screenMsg = startingScreens > 0 ? `Screens: ${startingScreens.toLocaleString()}` : `Direct OTT & Satellite Premiere`;
       showToast(`🎬 "${newFilm.title}" greenlit! ${screenMsg}`, "success");
       triggerConfetti();
 
@@ -2027,7 +2077,12 @@
       const musicScore = comp ? comp.skill : 75;
       const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 6 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 3 : 0);
 
-      return Math.min(99, Math.max(50, Math.round((dirScore * 0.4) + (castPower * 0.4) + (musicScore * 0.2)) + lyricsBonus + Math.floor(Math.random() * 4) - 2));
+      // SCRIPT QUALITY TIER INFLUENCE
+      let scriptScore = 75;
+      if (CURRENT_DRAFT.scriptQuality === 'masterpiece') scriptScore = 95;
+      else if (CURRENT_DRAFT.scriptQuality === 'masala') scriptScore = 55;
+
+      return Math.min(99, Math.max(50, Math.round((dirScore * 0.35) + (castPower * 0.30) + (scriptScore * 0.20) + (musicScore * 0.15)) + lyricsBonus + Math.floor(Math.random() * 4) - 2));
     }
 
     function advanceWeek() {
@@ -2067,7 +2122,7 @@
 
     function applySpilloverToVeterans() {
       GAME_STATE.theatreRuns.forEach(run => {
-        if (run.active && run.currentWeekOfRun >= 10 && run.releaseFormat !== "series_ott") {
+        if (run.active && run.currentWeekOfRun >= 10 && run.releaseFormat !== "ott_satellite") {
           const bump = Math.round(run.weeklyHistory[run.weeklyHistory.length - 1] * 0.20);
           run.weeklyHistory[run.weeklyHistory.length - 1] += bump;
           run.totalGross += bump;
@@ -2094,8 +2149,7 @@
     }
 
     function startTheatricalRun(film) {
-      if (film.releaseFormat === "series_ott") {
-        // Direct OTT Stream premiere - generates digital viewership royalties week-by-week
+      if (film.releaseFormat === "ott_satellite") {
         const digitalRoyalties = Math.round(film.inflow * 0.20);
         const streamEntry = {
           ...film,
@@ -2110,7 +2164,7 @@
         };
         GAME_STATE.cash += digitalRoyalties;
         GAME_STATE.theatreRuns.unshift(streamEntry);
-        showToast(`📺 "${film.title}" premiered worldwide on streaming!`, "success");
+        showToast(`📺 "${film.title}" premiered worldwide on digital stream!`, "success");
         triggerConfetti();
         return;
       }
@@ -2150,8 +2204,7 @@
         run.currentWeekOfRun++;
         const lastColl = run.weeklyHistory[run.weeklyHistory.length - 1];
 
-        if (run.releaseFormat === "series_ott") {
-          // OTT series decay logic (royalties & streaming buzz)
+        if (run.releaseFormat === "ott_satellite") {
           run.activeHype = Math.max(5, run.activeHype - 12);
           const thisRoyalties = Math.round(lastColl * 0.65);
           run.weeklyHistory.push(thisRoyalties);
@@ -2241,32 +2294,53 @@
         }
       }
       showToast(`🎬 "${run.title}" concluded run. Lifetime: ${formatINR(run.totalGross)}`, "info");
+      renderTheatricalRuns();
     }
 
+    /* IN THEATRES RENDERING: 1. UPCOMING, 2. RUNNING, 3. ARCHIVED */
     function renderTheatricalRuns() {
       const container = document.getElementById("theatrical-runs-container");
       const upContainer = document.getElementById("theatrical-upcoming-container");
+      const archContainer = document.getElementById("theatrical-archived-container");
 
+      // 1. Upcoming Section
+      if (upContainer) {
+        upContainer.innerHTML = GAME_STATE.activeProductions.length === 0
+          ? `<p style="color:var(--text-muted); font-size:0.8rem;">No upcoming productions scheduled yet.</p>`
+          : GAME_STATE.activeProductions.map(prod => `
+            <div style="display:flex; align-items:center; gap:10px; background:var(--bg-surface); border:1px solid var(--border-color-subtle); border-radius:8px; padding:8px; margin-bottom:8px;">
+              <img src="${prod.posterUrl}" style="width:40px; height:56px; border-radius:4px; object-fit:cover;">
+              <div style="flex:1;">
+                <div style="font-family:var(--font-display); font-size:0.86rem; color:var(--gold-bright);">${prod.title}</div>
+                <div style="font-size:0.72rem; color:var(--text-muted);">${prod.genre} • Releasing in ${prod.weeksRemaining} Weeks (Week ${prod.releaseWeek})</div>
+                <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">Audience Buzz: 🔥 ${prod.hype || 50}/100 | ${prod.releaseFormat === 'ott_satellite' ? 'Direct Digital Stream' : `Target Screens: ${(prod.screens || 0).toLocaleString()}`}</div>
+              </div>
+            </div>
+          `).join('');
+      }
+
+      // 2. Running Section
       if (container) {
-        container.innerHTML = GAME_STATE.theatreRuns.length === 0 
-          ? `<p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in theatres.</p>`
-          : GAME_STATE.theatreRuns.map(run => `
+        const runningFilms = GAME_STATE.theatreRuns.filter(r => r.active);
+        container.innerHTML = runningFilms.length === 0 
+          ? `<p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in cinema halls. Launch a movie in "New Movie" to witness its box office trajectory!</p>`
+          : runningFilms.map(run => `
             <div class="theatre-run-card" onclick="openMovieDossier('${run.id}', true)">
               <div class="theatre-header">
                 <img src="${run.posterUrl}" class="theatre-poster" alt="${run.title}">
                 <div style="flex:1; min-width:0;">
                   <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${run.title}</div>
                   <div style="font-size:0.72rem; color:var(--text-muted); margin-top:1px;">
-                    ${run.genre} • ${run.releaseFormat === 'series_ott' ? 'Streaming Series' : `Wk ${run.currentWeekOfRun} in Cinemas`} ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}
+                    ${run.genre} • ${run.releaseFormat === 'ott_satellite' ? 'Streaming Series' : `Wk ${run.currentWeekOfRun} in Cinemas`} ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}
                   </div>
                   <div style="font-size:0.72rem; color:var(--warning); font-weight:700; margin-top:2px;">
-                    ${run.releaseFormat === 'series_ott' ? 'Direct Digital Streaming' : `Active Screens: ${(run.activeScreens || 0).toLocaleString()} | Hype: 🔥 ${run.activeHype || 30}/100`}
+                    ${run.releaseFormat === 'ott_satellite' ? 'Direct Digital Streaming' : `Active Screens: ${(run.activeScreens || 0).toLocaleString()} | Hype: 🔥 ${run.activeHype || 30}/100`}
                   </div>
                   <div style="font-size:0.75rem; color:var(--text-main); margin-top:2px;">
                     Budget: <strong style="color:var(--danger);">${formatINR(run.cost)}</strong> | Gross: <strong style="color:var(--success);">${formatINR(run.totalGross)}</strong>
                   </div>
                 </div>
-                <div><span class="step-badge" style="background:${run.active ? 'var(--success)' : 'var(--text-subtle)'}; font-size:0.65rem;">${run.active ? 'Running' : 'Archived'}</span></div>
+                <div><span class="step-badge" style="background:var(--success); font-size:0.65rem;">Running</span></div>
               </div>
               <div style="display:flex; gap:4px; overflow-x:auto; padding-bottom:2px;">
                 ${run.weeklyHistory.map((amt, idx) => `
@@ -2280,16 +2354,18 @@
           `).join('');
       }
 
-      if (upContainer) {
-        upContainer.innerHTML = GAME_STATE.activeProductions.length === 0
-          ? `<p style="color:var(--text-muted); font-size:0.8rem;">No upcoming productions scheduled yet.</p>`
-          : GAME_STATE.activeProductions.map(prod => `
-            <div style="display:flex; align-items:center; gap:10px; background:var(--bg-surface); border:1px solid var(--border-color-subtle); border-radius:8px; padding:8px; margin-bottom:8px;">
-              <img src="${prod.posterUrl}" style="width:40px; height:56px; border-radius:4px; object-fit:cover;">
-              <div style="flex:1;">
-                <div style="font-family:var(--font-display); font-size:0.86rem; color:var(--gold-bright);">${prod.title}</div>
-                <div style="font-size:0.72rem; color:var(--text-muted);">${prod.genre} • Releasing in ${prod.weeksRemaining} Weeks (Week ${prod.releaseWeek})</div>
-                <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">Audience Buzz: 🔥 ${prod.hype || 50}/100 | ${prod.releaseFormat === 'series_ott' ? 'Direct Digital Stream' : `Target Screens: ${(prod.screens || 0).toLocaleString()}`}</div>
+      // 3. Archived Section At Last
+      if (archContainer) {
+        archContainer.innerHTML = GAME_STATE.releasedMovies.length === 0
+          ? `<p style="color:var(--text-muted); font-size:0.8rem;">No completed runs archived yet.</p>`
+          : GAME_STATE.releasedMovies.slice(0, 5).map(m => `
+            <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); border:1px solid var(--border-color-subtle); border-radius:6px; padding:6px 10px; margin-bottom:6px; cursor:pointer;" onclick="openMovieDossier('${m.id}', false)">
+              <div>
+                <strong style="color:var(--gold-bright); font-size:0.82rem;">${m.title}</strong>
+                <span style="font-size:0.7rem; color:var(--text-muted); margin-left:6px;">${m.genre}</span>
+              </div>
+              <div style="font-size:0.75rem;">
+                Gross: <strong style="color:var(--success);">${formatINR(m.totalGross)}</strong>
               </div>
             </div>
           `).join('');
@@ -2341,7 +2417,7 @@
         <div style="display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
           <img src="${film.posterUrl}" style="width:75px; height:105px; border-radius:6px; object-fit:cover; border:1.5px solid var(--gold-bright);">
           <div style="flex:1; font-size:0.78rem;">
-            <div>Format: <strong style="color:var(--gold-bright);">${film.releaseFormat === 'only_theatres' ? 'Only Theatres (Exclusive)' : (film.releaseFormat === 'series_ott' ? 'Direct OTT Stream' : 'Theatres & OTT')}</strong></div>
+            <div>Format: <strong style="color:var(--gold-bright);">${film.releaseFormat === 'only_theatres' ? 'Only Theatres (Exclusive)' : (film.releaseFormat === 'ott_satellite' ? 'Direct OTT & Satellite' : 'Theatres & OTT')}</strong></div>
             <div style="margin-top:2px;">Helmed By: <strong style="color:var(--text-main);">${dir ? dir.name : 'Director'}</strong></div>
             <div style="margin-top:2px;">Cast: <span style="color:var(--text-muted);">${castNames}</span></div>
             <div style="margin-top:2px;">Quality Score: <strong style="color:var(--gold-bright);">${film.quality}/100</strong></div>
@@ -2422,6 +2498,45 @@
       renderAll();
     }
 
+    /* AUTO-LOAD FRANCHISE PACKAGE (CAST, DIRECTORS, SINGERS, RIGHTS) */
+    function autoLoadFranchisePackage(franId) {
+      const f = GAME_STATE.franchises.find(x => x.id === franId);
+      if (!f || !f.savedPackage) return;
+      
+      const pkg = f.savedPackage;
+      if (pkg.cast && pkg.cast.length > 0) CURRENT_DRAFT.cast = JSON.parse(JSON.stringify(pkg.cast));
+      if (pkg.directorId) CURRENT_DRAFT.directorId = pkg.directorId;
+      if (pkg.composerId) CURRENT_DRAFT.composerId = pkg.composerId;
+      if (pkg.singers && pkg.singers.length > 0) CURRENT_DRAFT.singers = [...pkg.singers];
+      if (pkg.musicRightsId) CURRENT_DRAFT.musicRightsId = pkg.musicRightsId;
+      if (pkg.ottRightsId) CURRENT_DRAFT.ottRightsId = pkg.ottRightsId;
+      if (pkg.satelliteRightsId) CURRENT_DRAFT.satelliteRightsId = pkg.satelliteRightsId;
+
+      renderActorTiles();
+      renderDirectorTiles();
+      renderComposerTiles();
+      renderSingerTiles();
+      renderBrandRights();
+      updateCostHUD();
+      showToast(`⚡ Auto-loaded cast & crew from ${f.name}!`, "info");
+    }
+
+    function rememberFranchisePreferences() {
+      if (!CURRENT_DRAFT.franchiseId) return;
+      const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
+      if (f) {
+        f.savedPackage = {
+          cast: JSON.parse(JSON.stringify(CURRENT_DRAFT.cast)),
+          directorId: CURRENT_DRAFT.directorId,
+          composerId: CURRENT_DRAFT.composerId,
+          singers: [...CURRENT_DRAFT.singers],
+          musicRightsId: CURRENT_DRAFT.musicRightsId,
+          ottRightsId: CURRENT_DRAFT.ottRightsId,
+          satelliteRightsId: CURRENT_DRAFT.satelliteRightsId
+        };
+      }
+    }
+
     function toggleFranchiseSelect(isFranchise) {
       const container = document.getElementById("franchise-picker-container");
       container.style.display = isFranchise ? "block" : "none";
@@ -2432,6 +2547,7 @@
         } else {
           CURRENT_DRAFT.franchiseId = GAME_STATE.franchises[0].id;
           renderPipelineFranchiseTiles();
+          autoLoadFranchisePackage(CURRENT_DRAFT.franchiseId);
         }
       } else {
         CURRENT_DRAFT.franchiseId = null;
@@ -2484,13 +2600,7 @@
     function selectPipelineFranchise(franId) {
       CURRENT_DRAFT.franchiseId = franId;
       renderPipelineFranchiseTiles();
-      renderActorTiles();
-      renderDirectorTiles();
-      renderComposerTiles();
-      renderSingerTiles();
-      renderBrandRights();
-      updateCostHUD();
-      updateMarketingMeters();
+      autoLoadFranchisePackage(franId);
     }
 
     function renderFranchiseView() {
@@ -2531,17 +2641,25 @@
       document.getElementById("new-franchise-name").value = titleVal ? `${titleVal} Universe` : "My Cinematic Universe";
       document.getElementById("modal-franchise").classList.add("active");
     }
-    function closeCreateFranchiseModal() { document.getElementById("modal-franchise").classList.remove("active"); }
+    
+    function closeCreateFranchiseModal(cancelledByUser) {
+      document.getElementById("modal-franchise").classList.remove("active");
+      if (cancelledByUser && GAME_STATE.franchises.length === 0) {
+        // Auto direct to standalone movie if user cancelled and no franchise exists
+        setFranchiseModel('standalone', document.querySelector("#franchise-model-pills .curved-choice-btn[data-model='standalone']"));
+        showToast("Switched to Standalone Film model.", "info");
+      }
+    }
     
     function confirmCreateFranchise() {
       const name = document.getElementById("new-franchise-name").value.trim();
       const desc = document.getElementById("new-franchise-desc").value.trim() || "High-stakes cinematic universe";
       if (!name) { showToast("Enter a franchise name!", "error"); return; }
-      const newFran = { id: "fran_" + Date.now(), name, desc, films: 0, gross: 0, rating: 80 };
+      const newFran = { id: "fran_" + Date.now(), name, desc, films: 0, gross: 0, rating: 80, savedPackage: null };
       GAME_STATE.franchises.push(newFran);
       CURRENT_DRAFT.franchiseId = newFran.id;
       saveState();
-      closeCreateFranchiseModal();
+      closeCreateFranchiseModal(false);
       renderPipelineFranchiseTiles();
       renderFranchiseView();
       renderActorTiles();
@@ -2616,7 +2734,7 @@
         "Dharma and YRF lock competitive festival release dates for their marquee projects.",
         "Single screens report packed weekend collections for mass masala releases.",
         "Overseas UK & Gulf pre-bookings reach new record numbers.",
-        "Film exhibitors note that exclusive theatrical windows are generating 35% higher footfalls.",
+        "Exhibitors report that franchise films with previous hits carry 40% higher advance bookings.",
         "Top multiplex chains expand screen allocation for running hits experiencing positive WOM.",
         "Rival studios announce huge scale-ups in VFX budgets for their fantasy slates.",
         "Bollywood trade analysts predict a golden festival quarter ahead."
@@ -2726,12 +2844,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v111", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v112", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v111");
+        const raw = localStorage.getItem("bollywood_tycoon_v112");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
