@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.10 — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.11 — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -220,7 +220,6 @@
     .metric-lbl { font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
     .metric-num { font-size: 1.15rem; font-weight: 800; color: var(--text-main); }
 
-    /* Animated Curved Radio Pill Buttons */
     .curved-choice-btn {
       background: var(--bg-surface);
       border: 1.5px solid var(--border-color-subtle);
@@ -395,7 +394,6 @@
     .studio-intel-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--border-color); }
     .studio-intel-card.my-studio::before { background: var(--gold-gradient); }
 
-    /* Wire Pagination Controls */
     .news-pagination-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-color-subtle); }
 
     #toast-container {
@@ -561,7 +559,6 @@
         </div>
       </div>
 
-      <!-- Paginated Wire (Max 10 News per page) -->
       <div class="card">
         <div class="card-title"><i class="fa-solid fa-newspaper"></i> Bollywood Trade & Wire</div>
         <div id="dashboard-news-feed" style="font-size:0.8rem; line-height:1.5; color:var(--text-muted); min-height:120px;"></div>
@@ -582,7 +579,7 @@
           <div class="wizard-step-node active" data-step="1"><span class="step-circle">1</span> Script & Format</div>
           <div class="wizard-step-node" data-step="2"><span class="step-circle">2</span> Cast</div>
           <div class="wizard-step-node" data-step="3"><span class="step-circle">3</span> Director</div>
-          <div class="wizard-step-node" data-step="4"><span class="step-circle">4</span> Music</div>
+          <div class="wizard-step-node" data-step="4"><span class="step-circle">4</span> Music & Lyrics</div>
           <div class="wizard-step-node" data-step="5"><span class="step-circle">5</span> Rights</div>
           <div class="wizard-step-node" data-step="6"><span class="step-circle">6</span> Targeted Marketing</div>
           <div class="wizard-step-node" data-step="7"><span class="step-circle">7</span> Slate</div>
@@ -601,7 +598,6 @@
             <button class="btn-outline" id="btn-random-title"><i class="fa-solid fa-dice"></i> Random Title</button>
           </div>
 
-          <!-- Animated Curved Buttons for Release Format -->
           <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Release Format (How to Release):</label>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;" id="release-format-pills">
             <button class="curved-choice-btn active" data-format="only_theatres" onclick="setReleaseFormat('only_theatres', this)">
@@ -615,7 +611,6 @@
             </button>
           </div>
 
-          <!-- Animated Curved Buttons for Franchise Model -->
           <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Production Universe Model:</label>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;" id="franchise-model-pills">
             <button class="curved-choice-btn active" data-model="standalone" onclick="setFranchiseModel('standalone', this)">
@@ -681,7 +676,7 @@
           <div class="step-header-box">
             <span class="step-badge">Step 2 of 7</span>
             <h3 class="step-heading">Star Cast & Ensemble</h3>
-            <p class="step-subtext">Click card to select/deselect instantly. Switch roles via the pill toggle!</p>
+            <p class="step-subtext">Cast fees dynamically reflect franchise demand. Tap card to toggle!</p>
           </div>
           <div class="tiles-grid" id="actors-selection-grid"></div>
           <div class="wizard-navigation-bar">
@@ -704,16 +699,32 @@
           </div>
         </div>
 
-        <!-- STEP 4: MUSIC & ALBUM -->
+        <!-- STEP 4: MUSIC, ALBUM & LYRICS QUALITY -->
         <div class="pipeline-step-pane" id="wizard-step-4">
           <div class="step-header-box">
             <span class="step-badge">Step 4 of 7</span>
-            <h3 class="step-heading">Music Direction & Playback Album</h3>
-            <p class="step-subtext">Select a music composer and playback singers.</p>
+            <h3 class="step-heading">Music Direction, Lyrics & Playback</h3>
+            <p class="step-subtext">Select music composer, lyrics pedigree, tracks, and playback voices.</p>
           </div>
 
           <label style="font-size:0.78rem; font-weight:700;">Select Music Composer:</label>
           <div class="tiles-grid" id="composers-selection-grid"></div>
+
+          <!-- Lyrics Quality Curved Buttons -->
+          <div style="margin-top:14px; margin-bottom:10px;">
+            <label style="font-size:0.78rem; font-weight:700; display:block; margin-bottom:6px;">Poetry & Lyrics Quality Tier:</label>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;" id="lyrics-quality-pills">
+              <button class="curved-choice-btn active" data-tier="standard" onclick="setLyricsQuality('standard', this)">
+                <i class="fa-solid fa-pen"></i> Standard Commercial (₹5 Lakhs)
+              </button>
+              <button class="curved-choice-btn" data-tier="poetic" onclick="setLyricsQuality('poetic', this)">
+                <i class="fa-solid fa-feather-pointed"></i> Poetic Urdu / Sufi (₹20 Lakhs, +Hype)
+              </button>
+              <button class="curved-choice-btn" data-tier="legend" onclick="setLyricsQuality('legend', this)">
+                <i class="fa-solid fa-award"></i> Legendary Maestro Lyricist (₹60 Lakhs, +Awards & Holds)
+              </button>
+            </div>
+          </div>
 
           <div style="margin-top:12px; margin-bottom:10px;">
             <label style="font-size:0.78rem; font-weight:700;">Number of Original Songs:</label>
@@ -740,13 +751,12 @@
           <div class="step-header-box">
             <span class="step-badge">Step 5 of 7</span>
             <h3 class="step-heading">Pre-Release Rights (Guaranteed Inflow)</h3>
-            <p class="step-subtext">Upfront deals dynamically refreshed based on your stars, songs, and franchise fame.</p>
+            <p class="step-subtext">Direct OTT releases and prestigious franchises trigger bidding wars with higher recoveries.</p>
           </div>
 
           <label style="font-size:0.78rem; font-weight:700;">Music Rights Partner:</label>
           <div class="brand-tiles-grid" id="music-rights-grid"></div>
 
-          <!-- OTT Platform section (Hidden if "Only Theatres" is selected) -->
           <div id="ott-rights-section">
             <label style="font-size:0.78rem; font-weight:700; margin-top:12px; display:block;">Worldwide Digital Streaming Rights (OTT):</label>
             <div class="brand-tiles-grid" id="ott-rights-grid"></div>
@@ -805,7 +815,7 @@
         <div class="pipeline-step-pane" id="wizard-step-7">
           <div class="step-header-box">
             <span class="step-badge">Step 7 of 7</span>
-            <h3 class="step-heading">Theatrical Release Window (Weeks 2 to 30)</h3>
+            <h3 class="step-heading">Release Window & Greenlight (Weeks 2 to 30)</h3>
             <p class="step-subtext">Check holiday surge percentages, rival clashes & your own scheduled films before locking!</p>
           </div>
 
@@ -851,7 +861,7 @@
 
       <div class="card">
         <div class="card-title">
-          <span><i class="fa-solid fa-hourglass-half"></i> Upcoming Theatrical Releases</span>
+          <span><i class="fa-solid fa-hourglass-half"></i> Upcoming Releases</span>
           <span style="font-size:0.75rem; color:var(--gold-bright);">Pre-Release Audience Hype & Screens Allocated</span>
         </div>
         <div id="theatrical-upcoming-container">
@@ -1016,14 +1026,14 @@
 
   <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.10 — ADVANCED TYCOON ENGINE
+       BOLLYWOOD CINEMA v1.11 — CORE LOGIC
        ========================================================================= */
 
     function dismissSplash() {
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v110_init")) {
+        if (!localStorage.getItem("bollywood_tycoon_v111_init")) {
           const modal = document.getElementById("modal-onboarding");
           if (modal) modal.classList.add("active");
         }
@@ -1211,6 +1221,7 @@
       genre: "Action",
       releaseFormat: "only_theatres", // 'only_theatres' | 'theatres_series' | 'series_ott'
       franchiseId: null,
+      lyricsTier: "standard", // 'standard' | 'poetic' | 'legend'
       posterUrl: POSTER_PRESETS[0],
       customPosterUploaded: false,
       cast: [],
@@ -1332,7 +1343,7 @@
       const chosenName = document.getElementById("onboard-studio-name").value.trim() || "LILA PRODUCTIONS";
       GAME_STATE.studioName = chosenName;
       GAME_STATE.cash = SELECTED_ONBOARD_CAPITAL;
-      localStorage.setItem("bollywood_tycoon_v110_init", "true");
+      localStorage.setItem("bollywood_tycoon_v111_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
@@ -1342,13 +1353,11 @@
       triggerConfetti();
     }
 
-    /* CURVED BUTTON HANDLERS FOR RELEASE FORMAT & FRANCHISE */
     function setReleaseFormat(format, el) {
       CURRENT_DRAFT.releaseFormat = format;
       document.querySelectorAll("#release-format-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
       el.classList.add("active");
 
-      // If 'only_theatres' is chosen, remove OTT Rights choice entirely
       const ottSec = document.getElementById("ott-rights-section");
       if (ottSec) {
         ottSec.style.display = format === "only_theatres" ? "none" : "block";
@@ -1362,6 +1371,14 @@
       document.querySelectorAll("#franchise-model-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
       el.classList.add("active");
       toggleFranchiseSelect(model === "franchise");
+    }
+
+    function setLyricsQuality(tier, el) {
+      CURRENT_DRAFT.lyricsTier = tier;
+      document.querySelectorAll("#lyrics-quality-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      renderBrandRights();
+      updateCostHUD();
     }
 
     function goToStep(stepNumber) {
@@ -1490,6 +1507,39 @@
       document.querySelectorAll(".preset-poster-card").forEach(c => c.classList.toggle("selected", c.querySelector('img').src === url));
     }
 
+    function getDynamicActorFee(actor) {
+      if (!CURRENT_DRAFT.franchiseId) return actor.fee;
+      const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
+      if (!f) return actor.fee;
+      // Stars demand higher compensation for working in prestigious high-gross franchises
+      const demandMult = 1.0 + ((f.rating / 100) * 0.45);
+      return Math.round(actor.fee * demandMult);
+    }
+
+    function getDynamicDirectorFee(dir) {
+      if (!CURRENT_DRAFT.franchiseId) return dir.fee;
+      const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
+      if (!f) return dir.fee;
+      const demandMult = 1.0 + ((f.rating / 100) * 0.40);
+      return Math.round(dir.fee * demandMult);
+    }
+
+    function getDynamicComposerFee(comp) {
+      if (!CURRENT_DRAFT.franchiseId) return comp.fee;
+      const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
+      if (!f) return comp.fee;
+      const demandMult = 1.0 + ((f.rating / 100) * 0.35);
+      return Math.round(comp.fee * demandMult);
+    }
+
+    function getDynamicSingerFee(sng) {
+      if (!CURRENT_DRAFT.franchiseId) return sng.fee;
+      const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
+      if (!f) return sng.fee;
+      const demandMult = 1.0 + ((f.rating / 100) * 0.30);
+      return Math.round(sng.fee * demandMult);
+    }
+
     function renderActorTiles() {
       const container = document.getElementById("actors-selection-grid");
       const rosterContainer = document.getElementById("roster-actors-grid");
@@ -1498,13 +1548,14 @@
         const selectedObj = CURRENT_DRAFT.cast.find(c => c.id === actor.id);
         const isSelected = !!selectedObj;
         const role = selectedObj ? selectedObj.role : 'Lead';
+        const dynamicFee = getDynamicActorFee(actor);
 
         return `
           <div class="tile-card ${isSelected ? 'selected' : ''}" id="actor-card-${actor.id}" onclick="toggleActorCard('${actor.id}', event)">
             <img src="${actor.photo}" alt="${actor.name}" class="tile-img">
             <div class="tile-name">${actor.name}</div>
             <div class="tile-meta">Pop: ${actor.popularity} | Craft: ${actor.skill}</div>
-            <div class="tile-fee">${formatINR(actor.fee)}</div>
+            <div class="tile-fee">${formatINR(dynamicFee)}</div>
             ${isSelected ? `
               <div class="role-toggle" onclick="event.stopPropagation()">
                 <button class="role-btn ${role === 'Lead' ? 'active' : ''}" onclick="setActorRole('${actor.id}', 'Lead', event)">Lead</button>
@@ -1554,14 +1605,17 @@
 
     function renderDirectorTiles() {
       const container = document.getElementById("directors-selection-grid");
-      container.innerHTML = REAL_DIRECTORS.map(dir => `
-        <div class="tile-card ${CURRENT_DRAFT.directorId === dir.id ? 'selected' : ''}" onclick="selectDirector('${dir.id}')">
-          <img src="${dir.photo}" alt="${dir.name}" class="tile-img">
-          <div class="tile-name">${dir.name}</div>
-          <div class="tile-meta">${dir.style}</div>
-          <div class="tile-fee">${formatINR(dir.fee)}</div>
-        </div>
-      `).join('');
+      container.innerHTML = REAL_DIRECTORS.map(dir => {
+        const dynamicFee = getDynamicDirectorFee(dir);
+        return `
+          <div class="tile-card ${CURRENT_DRAFT.directorId === dir.id ? 'selected' : ''}" onclick="selectDirector('${dir.id}')">
+            <img src="${dir.photo}" alt="${dir.name}" class="tile-img">
+            <div class="tile-name">${dir.name}</div>
+            <div class="tile-meta">${dir.style}</div>
+            <div class="tile-fee">${formatINR(dynamicFee)}</div>
+          </div>
+        `;
+      }).join('');
     }
 
     function selectDirector(id) {
@@ -1572,14 +1626,17 @@
 
     function renderComposerTiles() {
       const container = document.getElementById("composers-selection-grid");
-      container.innerHTML = REAL_COMPOSERS.map(c => `
-        <div class="tile-card ${CURRENT_DRAFT.composerId === c.id ? 'selected' : ''}" onclick="selectComposer('${c.id}')">
-          <img src="${c.photo}" alt="${c.name}" class="tile-img">
-          <div class="tile-name">${c.name}</div>
-          <div class="tile-meta">Melody: ${c.skill}</div>
-          <div class="tile-fee">${formatINR(c.fee)}</div>
-        </div>
-      `).join('');
+      container.innerHTML = REAL_COMPOSERS.map(c => {
+        const dynamicFee = getDynamicComposerFee(c);
+        return `
+          <div class="tile-card ${CURRENT_DRAFT.composerId === c.id ? 'selected' : ''}" onclick="selectComposer('${c.id}')">
+            <img src="${c.photo}" alt="${c.name}" class="tile-img">
+            <div class="tile-name">${c.name}</div>
+            <div class="tile-meta">Melody: ${c.skill}</div>
+            <div class="tile-fee">${formatINR(dynamicFee)}</div>
+          </div>
+        `;
+      }).join('');
     }
 
     function selectComposer(id) {
@@ -1591,14 +1648,17 @@
 
     function renderSingerTiles() {
       const container = document.getElementById("singers-selection-grid");
-      container.innerHTML = REAL_SINGERS.map(s => `
-        <div class="tile-card ${CURRENT_DRAFT.singers.includes(s.id) ? 'selected' : ''}" onclick="toggleSinger('${s.id}')">
-          <img src="${s.photo}" alt="${s.name}" class="tile-img">
-          <div class="tile-name">${s.name}</div>
-          <div class="tile-meta">Vocals: ${s.skill}</div>
-          <div class="tile-fee">${formatINR(s.fee)} / track</div>
-        </div>
-      `).join('');
+      container.innerHTML = REAL_SINGERS.map(s => {
+        const dynamicFee = getDynamicSingerFee(s);
+        return `
+          <div class="tile-card ${CURRENT_DRAFT.singers.includes(s.id) ? 'selected' : ''}" onclick="toggleSinger('${s.id}')">
+            <img src="${s.photo}" alt="${s.name}" class="tile-img">
+            <div class="tile-name">${s.name}</div>
+            <div class="tile-meta">Vocals: ${s.skill}</div>
+            <div class="tile-fee">${formatINR(dynamicFee)} / track</div>
+          </div>
+        `;
+      }).join('');
     }
 
     function toggleSinger(id) {
@@ -1647,22 +1707,26 @@
       if (!CURRENT_DRAFT.franchiseId) return 1.0;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (!f) return 1.0;
-      return 1.0 + ((f.rating / 100) * 0.7); // Substantial boost if franchise has high prestige
+      // High-fame franchises command huge bidding wars (up to 2.1x) from rival streaming/rights platforms!
+      return 1.0 + ((f.rating / 100) * 1.1);
     }
 
     function calculateMusicAdvance(lbl) {
       const albumSize = CURRENT_DRAFT.songCount;
       if (albumSize === 0) return 10000000;
       const composerBonus = CURRENT_DRAFT.composerId ? 1.4 : 1.0;
+      const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 1.4 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 1.2 : 1.0);
       const franMult = getFranchiseFameMultiplier();
-      return Math.round(lbl.baseAdvance * (albumSize / 2) * composerBonus * franMult);
+      return Math.round(lbl.baseAdvance * (albumSize / 2) * composerBonus * lyricsBonus * franMult);
     }
 
     function calculateOttAdvance(p) {
       if (CURRENT_DRAFT.releaseFormat === "only_theatres") return 0;
       const starPower = getCastStarPower();
       const franMult = getFranchiseFameMultiplier();
-      return Math.round(p.baseAdvance * (starPower / 70) * p.mult * franMult);
+      // If direct to OTT / Series is selected, OTT platforms bid much higher! (1.75x)
+      const directOttMult = CURRENT_DRAFT.releaseFormat === "series_ott" ? 1.75 : 1.0;
+      return Math.round(p.baseAdvance * (starPower / 70) * p.mult * franMult * directOttMult);
     }
 
     function calculateSatelliteAdvance(ch) {
@@ -1721,8 +1785,9 @@
       let totalSpend = 0;
       let reachCount = 1000000;
 
-      // Exclusive Theatre release yields higher organic hype
       if (CURRENT_DRAFT.releaseFormat === "only_theatres") totalHype += 15;
+      if (CURRENT_DRAFT.lyricsTier === "legend") totalHype += 12;
+      else if (CURRENT_DRAFT.lyricsTier === "poetic") totalHype += 6;
 
       CURRENT_DRAFT.promos.forEach(pId => {
         const p = TARGETED_MARKETING.find(x => x.id === pId);
@@ -1733,7 +1798,6 @@
         }
       });
 
-      // Franchise pedigree boosts organic reach
       if (CURRENT_DRAFT.franchiseId) {
         const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
         if (f) totalHype += Math.round(f.rating * 0.15);
@@ -1821,20 +1885,31 @@
       let cost = 50000000;
       CURRENT_DRAFT.cast.forEach(c => {
         const a = ALL_ACTORS.find(x => x.id === c.id);
-        if (a) cost += c.role === 'Lead' ? a.fee : Math.round(a.fee * 0.45);
+        if (a) {
+          const dynamicFee = getDynamicActorFee(a);
+          cost += c.role === 'Lead' ? dynamicFee : Math.round(dynamicFee * 0.45);
+        }
       });
       if (CURRENT_DRAFT.directorId) {
         const d = REAL_DIRECTORS.find(x => x.id === CURRENT_DRAFT.directorId);
-        if (d) cost += d.fee;
+        if (d) cost += getDynamicDirectorFee(d);
       }
       if (CURRENT_DRAFT.composerId) {
         const comp = REAL_COMPOSERS.find(x => x.id === CURRENT_DRAFT.composerId);
-        if (comp) cost += comp.fee;
+        if (comp) cost += getDynamicComposerFee(comp);
       }
+
+      // Lyrics quality budget tier
+      if (CURRENT_DRAFT.songCount > 0) {
+        if (CURRENT_DRAFT.lyricsTier === 'legend') cost += 6000000;
+        else if (CURRENT_DRAFT.lyricsTier === 'poetic') cost += 2000000;
+        else cost += 500000;
+      }
+
       if (CURRENT_DRAFT.songCount > 0 && CURRENT_DRAFT.singers.length > 0) {
         CURRENT_DRAFT.singers.forEach(sId => {
           const sng = REAL_SINGERS.find(x => x.id === sId);
-          if (sng) cost += (sng.fee * CURRENT_DRAFT.songCount);
+          if (sng) cost += (getDynamicSingerFee(sng) * CURRENT_DRAFT.songCount);
         });
       }
       CURRENT_DRAFT.promos.forEach(pId => {
@@ -1887,6 +1962,9 @@
 
       let campaignHype = 25;
       if (CURRENT_DRAFT.releaseFormat === "only_theatres") campaignHype += 15;
+      if (CURRENT_DRAFT.lyricsTier === "legend") campaignHype += 12;
+      else if (CURRENT_DRAFT.lyricsTier === "poetic") campaignHype += 6;
+
       CURRENT_DRAFT.promos.forEach(pId => {
         const p = TARGETED_MARKETING.find(x => x.id === pId);
         if (p) campaignHype += p.hype;
@@ -1897,9 +1975,12 @@
       }
       campaignHype = Math.min(100, campaignHype);
 
-      // Pan-India screen allocation based strictly on hype, star power, and franchise
-      const baseScreens = Math.round(2500 + (campaignHype * 35) + (getCastStarPower() * 15));
-      const startingScreens = Math.min(7500, baseScreens);
+      // Screens are allocated ONLY when format includes theatres!
+      let startingScreens = 0;
+      if (CURRENT_DRAFT.releaseFormat !== "series_ott") {
+        const baseScreens = Math.round(2500 + (campaignHype * 35) + (getCastStarPower() * 15));
+        startingScreens = Math.min(7500, baseScreens);
+      }
 
       const newFilm = {
         id: "film_" + Date.now(),
@@ -1907,6 +1988,7 @@
         genre: CURRENT_DRAFT.genre,
         releaseFormat: CURRENT_DRAFT.releaseFormat,
         franchiseId: CURRENT_DRAFT.franchiseId,
+        lyricsTier: CURRENT_DRAFT.lyricsTier,
         posterUrl: CURRENT_DRAFT.posterUrl,
         cast: JSON.parse(JSON.stringify(CURRENT_DRAFT.cast)),
         directorId: CURRENT_DRAFT.directorId,
@@ -1926,7 +2008,8 @@
       GAME_STATE.activeProductions.push(newFilm);
       saveState();
 
-      showToast(`🎬 "${newFilm.title}" locked for Week ${releaseWeek}! Screens: ${startingScreens.toLocaleString()}`, "success");
+      const screenMsg = startingScreens > 0 ? `Screens: ${startingScreens.toLocaleString()}` : `Direct OTT Series Stream Premiere`;
+      showToast(`🎬 "${newFilm.title}" greenlit! ${screenMsg}`, "success");
       triggerConfetti();
 
       document.getElementById("movie-title").value = "";
@@ -1942,20 +2025,19 @@
       const castPower = getCastStarPower();
       const comp = REAL_COMPOSERS.find(c => c.id === CURRENT_DRAFT.composerId);
       const musicScore = comp ? comp.skill : 75;
-      return Math.min(99, Math.max(50, Math.round((dirScore * 0.4) + (castPower * 0.4) + (musicScore * 0.2)) + Math.floor(Math.random() * 5) - 2));
+      const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 6 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 3 : 0);
+
+      return Math.min(99, Math.max(50, Math.round((dirScore * 0.4) + (castPower * 0.4) + (musicScore * 0.2)) + lyricsBonus + Math.floor(Math.random() * 4) - 2));
     }
 
-    /* ADVANCE WEEK ENGINE */
     function advanceWeek() {
       GAME_STATE.week++;
       if (GAME_STATE.debt > 0) {
         GAME_STATE.cash = Math.max(0, GAME_STATE.cash - Math.round(GAME_STATE.debt * 0.015));
       }
 
-      // 1. Process active theatre runs
       processTheatreCollections();
 
-      // 2. Check for releases maturing this exact turn
       let newlyReleasedAny = false;
       for (let i = GAME_STATE.activeProductions.length - 1; i >= 0; i--) {
         const prod = GAME_STATE.activeProductions[i];
@@ -1967,11 +2049,9 @@
         }
       }
 
-      // Check if rival released film this week
       const cycleWeek = ((GAME_STATE.week - 1) % 52) + 1;
       if (RIVAL_SCHEDULED_RELEASES[cycleWeek]) newlyReleasedAny = true;
 
-      // 3. Footfall Spillover: Long running films (Week >= 10) gain collections boost if another film releases!
       if (newlyReleasedAny) {
         applySpilloverToVeterans();
       }
@@ -1987,8 +2067,7 @@
 
     function applySpilloverToVeterans() {
       GAME_STATE.theatreRuns.forEach(run => {
-        if (run.active && run.currentWeekOfRun >= 10) {
-          // 15% - 25% bump in collections due to audience spillover in multiplexes
+        if (run.active && run.currentWeekOfRun >= 10 && run.releaseFormat !== "series_ott") {
           const bump = Math.round(run.weeklyHistory[run.weeklyHistory.length - 1] * 0.20);
           run.weeklyHistory[run.weeklyHistory.length - 1] += bump;
           run.totalGross += bump;
@@ -2015,6 +2094,27 @@
     }
 
     function startTheatricalRun(film) {
+      if (film.releaseFormat === "series_ott") {
+        // Direct OTT Stream premiere - generates digital viewership royalties week-by-week
+        const digitalRoyalties = Math.round(film.inflow * 0.20);
+        const streamEntry = {
+          ...film,
+          currentWeekOfRun: 1,
+          totalGross: film.inflow,
+          producerEarnings: digitalRoyalties,
+          weeklyHistory: [digitalRoyalties],
+          activeHype: film.hype || 50,
+          activeScreens: 0,
+          active: true,
+          jubilee: null
+        };
+        GAME_STATE.cash += digitalRoyalties;
+        GAME_STATE.theatreRuns.unshift(streamEntry);
+        showToast(`📺 "${film.title}" premiered worldwide on streaming!`, "success");
+        triggerConfetti();
+        return;
+      }
+
       const season = getSeasonEvent(GAME_STATE.week);
       const cycleWeek = ((GAME_STATE.week - 1) % 52) + 1;
       const rival = RIVAL_SCHEDULED_RELEASES[cycleWeek];
@@ -2022,7 +2122,7 @@
       if (rival) clashMult = (100 + rival.clash) / 100;
 
       const starPower = film.cast.reduce((acc, c) => acc + (ALL_ACTORS.find(a => a.id === c.id)?.popularity || 70), 0) / Math.max(1, film.cast.length);
-      const hypeFactor = ((film.hype || 50) / 45); // Active hype strongly booms Day 1 & Week 1
+      const hypeFactor = ((film.hype || 50) / 45);
       
       const opening = Math.round((starPower * 4200000) * season.mult * clashMult * (film.quality / 80) * hypeFactor);
 
@@ -2044,26 +2144,38 @@
       triggerConfetti();
     }
 
-    /* POST-RELEASE: HYPE & SCREEN DECAY ENGINE */
     function processTheatreCollections() {
       GAME_STATE.theatreRuns.forEach(run => {
         if (!run.active) return;
         run.currentWeekOfRun++;
         const lastColl = run.weeklyHistory[run.weeklyHistory.length - 1];
 
-        // Hype drops gradually every week after release
+        if (run.releaseFormat === "series_ott") {
+          // OTT series decay logic (royalties & streaming buzz)
+          run.activeHype = Math.max(5, run.activeHype - 12);
+          const thisRoyalties = Math.round(lastColl * 0.65);
+          run.weeklyHistory.push(thisRoyalties);
+          run.totalGross += thisRoyalties;
+          run.producerEarnings += thisRoyalties;
+          GAME_STATE.cash += thisRoyalties;
+
+          if (thisRoyalties < 500000 || run.currentWeekOfRun > 6) {
+            run.active = false;
+            archiveReleasedMovie(run);
+          }
+          return;
+        }
+
         let hypeDecay = 10;
-        if (run.quality >= 92) hypeDecay = 3; // Word of mouth sustains hype
+        if (run.quality >= 92) hypeDecay = 3;
         else if (run.quality >= 85) hypeDecay = 6;
         else if (run.quality < 65) hypeDecay = 18;
 
         run.activeHype = Math.max(5, run.activeHype - hypeDecay);
 
-        // Screens dynamically adjust according to remaining hype and quality
         const screenDecayRatio = (run.activeHype / 100) * (run.quality / 80);
         run.activeScreens = Math.max(150, Math.round(run.activeScreens * Math.min(1.05, Math.max(0.40, screenDecayRatio))));
 
-        // Box office collection hold ratio
         let holdRatio = 0.55; 
         if (run.quality >= 95) holdRatio = 0.94;
         else if (run.quality >= 90) holdRatio = 0.85;
@@ -2079,7 +2191,6 @@
         run.producerEarnings += share;
         GAME_STATE.cash += share;
 
-        // Milestones
         if (run.currentWeekOfRun === 25 && run.quality >= 88 && !run.jubilee) {
           run.jubilee = "Silver Jubilee (25 Weeks)";
           GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 8);
@@ -2090,7 +2201,6 @@
           showToast(`🌟 HISTORIC GOLDEN JUBILEE! "${run.title}" completes 53 weeks!`, "success");
         }
 
-        // Logical retirement
         let maxWeeks = 6;
         if (run.quality >= 95 && run.activeHype > 15) maxWeeks = 53;
         else if (run.quality >= 90 && run.activeHype > 12) maxWeeks = 25;
@@ -2109,7 +2219,7 @@
         const topContenders = GAME_STATE.releasedMovies.filter(m => m.quality >= 85);
         if (topContenders.length > 0) {
           const winner = topContenders[Math.floor(Math.random() * topContenders.length)];
-          const titles = ["Best Film", "Best Director", "Best Actor", "Best Music Album"];
+          const titles = ["Best Film", "Best Director", "Best Actor", "Best Music Album", "Best Lyrics"];
           const category = titles[Math.floor(Math.random() * titles.length)];
           winner.awardsWon.push(category);
           GAME_STATE.totalAwardsWon++;
@@ -2147,10 +2257,10 @@
                 <div style="flex:1; min-width:0;">
                   <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${run.title}</div>
                   <div style="font-size:0.72rem; color:var(--text-muted); margin-top:1px;">
-                    ${run.genre} • Wk ${run.currentWeekOfRun} in Cinemas ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}
+                    ${run.genre} • ${run.releaseFormat === 'series_ott' ? 'Streaming Series' : `Wk ${run.currentWeekOfRun} in Cinemas`} ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}
                   </div>
                   <div style="font-size:0.72rem; color:var(--warning); font-weight:700; margin-top:2px;">
-                    Active Screens: ${run.activeScreens?.toLocaleString() || '3,500'} | Hype: 🔥 ${run.activeHype || 30}/100
+                    ${run.releaseFormat === 'series_ott' ? 'Direct Digital Streaming' : `Active Screens: ${(run.activeScreens || 0).toLocaleString()} | Hype: 🔥 ${run.activeHype || 30}/100`}
                   </div>
                   <div style="font-size:0.75rem; color:var(--text-main); margin-top:2px;">
                     Budget: <strong style="color:var(--danger);">${formatINR(run.cost)}</strong> | Gross: <strong style="color:var(--success);">${formatINR(run.totalGross)}</strong>
@@ -2179,7 +2289,7 @@
               <div style="flex:1;">
                 <div style="font-family:var(--font-display); font-size:0.86rem; color:var(--gold-bright);">${prod.title}</div>
                 <div style="font-size:0.72rem; color:var(--text-muted);">${prod.genre} • Releasing in ${prod.weeksRemaining} Weeks (Week ${prod.releaseWeek})</div>
-                <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">Audience Buzz: 🔥 ${prod.hype || 50}/100 | Target Screens: ${(prod.screens || 4000).toLocaleString()}</div>
+                <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">Audience Buzz: 🔥 ${prod.hype || 50}/100 | ${prod.releaseFormat === 'series_ott' ? 'Direct Digital Stream' : `Target Screens: ${(prod.screens || 0).toLocaleString()}`}</div>
               </div>
             </div>
           `).join('');
@@ -2231,7 +2341,7 @@
         <div style="display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
           <img src="${film.posterUrl}" style="width:75px; height:105px; border-radius:6px; object-fit:cover; border:1.5px solid var(--gold-bright);">
           <div style="flex:1; font-size:0.78rem;">
-            <div>Format: <strong style="color:var(--gold-bright);">${film.releaseFormat === 'only_theatres' ? 'Only Theatres (Exclusive)' : 'Theatres & OTT'}</strong></div>
+            <div>Format: <strong style="color:var(--gold-bright);">${film.releaseFormat === 'only_theatres' ? 'Only Theatres (Exclusive)' : (film.releaseFormat === 'series_ott' ? 'Direct OTT Stream' : 'Theatres & OTT')}</strong></div>
             <div style="margin-top:2px;">Helmed By: <strong style="color:var(--text-main);">${dir ? dir.name : 'Director'}</strong></div>
             <div style="margin-top:2px;">Cast: <span style="color:var(--text-muted);">${castNames}</span></div>
             <div style="margin-top:2px;">Quality Score: <strong style="color:var(--gold-bright);">${film.quality}/100</strong></div>
@@ -2243,7 +2353,7 @@
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:0.75rem;">
             <div>Budget: <strong style="color:var(--danger);">${formatINR(film.cost)}</strong></div>
             <div>Rights Recovery: <strong style="color:var(--success);">+${formatINR(film.inflow)}</strong></div>
-            <div>Theatrical Gross: <strong>${formatINR(film.totalGross)}</strong></div>
+            <div>Total Gross: <strong>${formatINR(film.totalGross)}</strong></div>
             <div>Producer Share: <strong style="color:var(--success);">+${formatINR(film.producerEarnings)}</strong></div>
           </div>
           <div style="margin-top:6px; padding-top:4px; border-top:1px dashed var(--border-color-subtle); font-size:0.8rem; font-weight:800;">
@@ -2327,6 +2437,10 @@
         CURRENT_DRAFT.franchiseId = null;
         document.getElementById("pipeline-franchise-edit-wrap").style.display = "none";
       }
+      renderActorTiles();
+      renderDirectorTiles();
+      renderComposerTiles();
+      renderSingerTiles();
       renderBrandRights();
       updateCostHUD();
       updateMarketingMeters();
@@ -2370,6 +2484,10 @@
     function selectPipelineFranchise(franId) {
       CURRENT_DRAFT.franchiseId = franId;
       renderPipelineFranchiseTiles();
+      renderActorTiles();
+      renderDirectorTiles();
+      renderComposerTiles();
+      renderSingerTiles();
       renderBrandRights();
       updateCostHUD();
       updateMarketingMeters();
@@ -2426,6 +2544,10 @@
       closeCreateFranchiseModal();
       renderPipelineFranchiseTiles();
       renderFranchiseView();
+      renderActorTiles();
+      renderDirectorTiles();
+      renderComposerTiles();
+      renderSingerTiles();
       renderBrandRights();
       updateCostHUD();
       updateMarketingMeters();
@@ -2488,7 +2610,6 @@
       showToast("All debt cleared in full!", "success");
     }
 
-    /* PAGINATED TRADE NEWS FEED */
     function processWeeklyNews() {
       const sampleEvents = [
         "National multiplex footfalls jumped 16% this weekend with massive occupancies.",
@@ -2605,12 +2726,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v110", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v111", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v110");
+        const raw = localStorage.getItem("bollywood_tycoon_v111");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
