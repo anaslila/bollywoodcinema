@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.08 — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.09 — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -21,7 +21,7 @@
       --bg-base: #0d0d11;
       --bg-surface: #14141c;
       --bg-surface-elevated: #1a1a24;
-      --bg-card: rgba(23, 23, 33, 0.85);
+      --bg-card: rgba(23, 23, 33, 0.88);
       --border-color: rgba(212, 175, 55, 0.28);
       --border-color-subtle: rgba(255, 255, 255, 0.08);
       --gold-primary: #d4af37;
@@ -33,6 +33,8 @@
       --success: #22c55e;
       --danger: #ef4444;
       --warning: #f59e0b;
+      --toast-bg: rgba(20, 20, 28, 0.98);
+      --toast-text: #ffffff;
       --font-display: 'Cinzel', serif;
       --font-body: 'Outfit', sans-serif;
     }
@@ -41,7 +43,7 @@
       --bg-base: #f5f5fa;
       --bg-surface: #ffffff;
       --bg-surface-elevated: #ececf2;
-      --bg-card: rgba(255, 255, 255, 0.94);
+      --bg-card: rgba(255, 255, 255, 0.96);
       --border-color: rgba(184, 134, 11, 0.40);
       --border-color-subtle: rgba(0, 0, 0, 0.12);
       --gold-primary: #b8860b;
@@ -50,6 +52,8 @@
       --text-main: #14141c;
       --text-muted: #4b4b5e;
       --text-subtle: #79798e;
+      --toast-bg: #1c1c24;
+      --toast-text: #ffffff;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -256,7 +260,6 @@
     .step-subtext { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; margin-bottom: 10px; }
     .wizard-navigation-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--border-color-subtle); }
 
-    /* Visual Tiles Grids */
     .tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 8px; margin-top: 8px; }
     @media (max-width: 600px) { .tiles-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 6px; } }
     
@@ -285,7 +288,6 @@
     .role-btn { flex: 1; padding: 2px 0; font-size: 0.62rem; font-weight: 700; background: transparent; border: none; color: var(--text-muted); cursor: pointer; }
     .role-btn.active { background: var(--gold-primary); color: #000; }
 
-    /* Compact Franchise Tiles in Pipeline */
     .franchise-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-top: 6px; margin-bottom: 12px; }
     .franchise-tile-card {
       background: var(--bg-surface);
@@ -301,7 +303,6 @@
     .fran-tile-title { font-size: 0.75rem; font-weight: 800; color: var(--gold-bright); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
     .fran-tile-meta { font-size: 0.66rem; color: var(--text-muted); }
 
-    /* Rights & Brand Cards */
     .brand-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 8px; margin-top: 8px; }
     .brand-card { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 8px 6px; text-align: center; cursor: pointer; }
     .brand-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.12); }
@@ -310,6 +311,22 @@
     .brand-advance { font-size: 0.68rem; font-weight: 800; color: var(--success); }
 
     .marketing-filters-bar { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; }
+
+    /* Marketing Meter Box */
+    .marketing-stats-banner {
+      background: var(--bg-surface);
+      border: 1px solid var(--gold-primary);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 10px;
+      text-align: center;
+    }
+    .m-stat-title { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); }
+    .m-stat-val { font-size: 1.05rem; font-weight: 800; color: var(--gold-bright); }
 
     .cost-inflow-hud {
       position: sticky;
@@ -347,7 +364,6 @@
     .user-uploaded-poster-container.visible { display: flex; }
     .uploaded-preview-thumb { width: 55px; height: 78px; border-radius: 4px; object-fit: cover; border: 1.5px solid var(--gold-bright); }
 
-    /* Slate Tiles with Percentage Impact & Rival Releases */
     .week-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-top: 8px; max-height: 280px; overflow-y: auto; padding: 2px; }
     .week-tile {
       background: var(--bg-surface);
@@ -379,6 +395,7 @@
     .studio-intel-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--border-color); }
     .studio-intel-card.my-studio::before { background: var(--gold-gradient); }
 
+    /* Toast Queue System - Fixed for Light Mode with Solid Contrast */
     #toast-container {
       position: fixed;
       top: 65px;
@@ -392,20 +409,21 @@
       width: calc(100% - 24px);
     }
     .toast-msg {
-      background: rgba(20, 20, 28, 0.96);
+      background: var(--toast-bg) !important;
       border-left: 3.5px solid var(--gold-bright);
-      color: var(--text-main);
+      color: var(--toast-text) !important;
       padding: 8px 12px;
       border-radius: 6px;
       font-size: 0.78rem;
       font-weight: 600;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(8px);
       pointer-events: auto;
       display: flex;
       align-items: center;
       gap: 6px;
     }
+    .toast-msg span, .toast-msg i { color: #ffffff !important; }
     .toast-msg.success { border-left-color: var(--success); }
     .toast-msg.error { border-left-color: var(--danger); }
 
@@ -597,10 +615,8 @@
               </button>
             </div>
             
-            <!-- Compact Franchise Tiles -->
             <div class="franchise-tiles-grid" id="pipeline-franchise-tiles"></div>
             
-            <!-- In-place Franchise Title Auto-sync Notice -->
             <div id="pipeline-franchise-edit-wrap" style="display:none; background:rgba(212,175,55,0.06); border:1px dashed var(--gold-primary); border-radius:6px; padding:6px 10px; margin-top:6px;">
               <label style="font-size:0.72rem; color:var(--text-muted); display:block; margin-bottom:2px;">Editable Franchise Title (Auto-loaded):</label>
               <input type="text" id="pipeline-active-franchise-name" class="input-field" style="margin-bottom:0; font-size:0.78rem; padding:4px 8px;">
@@ -705,7 +721,7 @@
           <div class="step-header-box">
             <span class="step-badge">Step 5 of 7</span>
             <h3 class="step-heading">Pre-Release Rights (Guaranteed Inflow)</h3>
-            <p class="step-subtext">Upfront deals dynamically refreshed based on your stars, songs, and hype.</p>
+            <p class="step-subtext">Upfront deals dynamically refreshed based on your stars, songs, and franchise fame.</p>
           </div>
 
           <label style="font-size:0.78rem; font-weight:700;">Music Rights Partner:</label>
@@ -728,7 +744,23 @@
           <div class="step-header-box">
             <span class="step-badge">Step 6 of 7</span>
             <h3 class="step-heading">Targeted Marketing Campaigns</h3>
-            <p class="step-subtext">Select specific promotion channels across Print, Broadcast, Theatres, Press Meets, and Events.</p>
+            <p class="step-subtext">Select specific promotion channels. Watch Audience Reach & Hype meters update live!</p>
+          </div>
+
+          <!-- Dynamic Marketing Stats Banner -->
+          <div class="marketing-stats-banner">
+            <div>
+              <div class="m-stat-title">Audience Reach</div>
+              <div class="m-stat-val" id="m-stat-reach">1.2M Viewers</div>
+            </div>
+            <div>
+              <div class="m-stat-title">Campaign Hype Meter</div>
+              <div class="m-stat-val" id="m-stat-hype">🔥 49 / 100</div>
+            </div>
+            <div>
+              <div class="m-stat-title">Total Promo Spend</div>
+              <div class="m-stat-val" id="m-stat-cost">₹4.00 Cr</div>
+            </div>
           </div>
 
           <div class="marketing-filters-bar" id="marketing-filters">
@@ -753,7 +785,7 @@
           <div class="step-header-box">
             <span class="step-badge">Step 7 of 7</span>
             <h3 class="step-heading">Theatrical Release Window (Weeks 2 to 30)</h3>
-            <p class="step-subtext">Check holiday surge percentages & rival studio releases before locking your date!</p>
+            <p class="step-subtext">Check holiday surge percentages, rival clashes & your own scheduled films before locking!</p>
           </div>
 
           <div class="week-tiles-grid" id="release-week-grid"></div>
@@ -794,6 +826,17 @@
         </div>
         <div id="theatrical-runs-container">
           <p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in cinema halls. Launch a movie in "New Movie" to witness its box office trajectory!</p>
+        </div>
+      </div>
+
+      <!-- In Theatres Upcoming Releases Section -->
+      <div class="card">
+        <div class="card-title">
+          <span><i class="fa-solid fa-hourglass-half"></i> Upcoming Releases on Horizon</span>
+          <span style="font-size:0.75rem; color:var(--gold-bright);">Pre-Release Audience Hype & Buzz</span>
+        </div>
+        <div id="theatrical-upcoming-container">
+          <p style="color:var(--text-muted); font-size:0.8rem;">No upcoming productions scheduled yet.</p>
         </div>
       </div>
     </section>
@@ -954,14 +997,14 @@
 
   <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.08 — SCRIPT LOGIC
+       BOLLYWOOD CINEMA v1.09 — ENGINE
        ========================================================================= */
 
     function dismissSplash() {
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v108_init")) {
+        if (!localStorage.getItem("bollywood_tycoon_v109_init")) {
           const modal = document.getElementById("modal-onboarding");
           if (modal) modal.classList.add("active");
         }
@@ -1064,32 +1107,32 @@
     ];
 
     const TARGETED_MARKETING = [
-      { id: "m_news", name: "Newspaper Full-Page Spread", fee: 8000000, hype: 10, cat: "Traditional" },
-      { id: "m_mag", name: "Magazine Cover & Story", fee: 4000000, hype: 6, cat: "Traditional" },
-      { id: "m_billboards", name: "Highway & Metro Billboards", fee: 18000000, hype: 20, cat: "Traditional" },
-      { id: "m_radio", name: "Radio Jingle Blitz (FM)", fee: 6000000, hype: 8, cat: "Traditional" },
-      { id: "m_net_tv", name: "Network TV Prime-Time Ads", fee: 25000000, hype: 28, cat: "Digital" },
-      { id: "m_cable_tv", name: "Cable TV Niche Coverage", fee: 10000000, hype: 12, cat: "Digital" },
-      { id: "m_stream_ads", name: "Streaming Platforms Pre-Roll", fee: 15000000, hype: 18, cat: "Digital" },
-      { id: "m_social", name: "Social Media Trend Storm", fee: 12000000, hype: 16, cat: "Digital" },
-      { id: "m_mobile", name: "Mobile App Ads Blitz", fee: 8000000, hype: 10, cat: "Digital" },
-      { id: "m_desktop", name: "Desktop Web Banners", fee: 5000000, hype: 7, cat: "Digital" },
-      { id: "m_general_promo", name: "Brand Tie-in Promotions", fee: 14000000, hype: 15, cat: "Digital" },
-      { id: "m_trl_tiny", name: "Trailers (Tiny Theatres)", fee: 3000000, hype: 4, cat: "Theatrical" },
-      { id: "m_trl_small", name: "Trailers (Small Theatres)", fee: 6000000, hype: 8, cat: "Theatrical" },
-      { id: "m_trl_med", name: "Trailer (Medium Theatres)", fee: 12000000, hype: 15, cat: "Theatrical" },
-      { id: "m_trl_large", name: "Trailers (Large Theatres)", fee: 24000000, hype: 28, cat: "Theatrical" },
-      { id: "m_press_small", name: "Press Conf (Small Hotel)", fee: 2000000, hype: 4, cat: "Press" },
-      { id: "m_press_med", name: "Press Conf (Medium Hotel)", fee: 5000000, hype: 8, cat: "Press" },
-      { id: "m_press_large", name: "Press Conf (Large Hotel)", fee: 10000000, hype: 14, cat: "Press" },
-      { id: "m_press_5star", name: "Press Conf (5-Star Hotel)", fee: 20000000, hype: 22, cat: "Press" },
-      { id: "m_press_resort", name: "Press Conf (Resort Hotel)", fee: 28000000, hype: 30, cat: "Press" },
-      { id: "m_dig_teaser", name: "Digital Teaser Drop", fee: 10000000, hype: 14, cat: "Grand" },
-      { id: "m_5star_teaser", name: "5-Star Hotel Press Teaser", fee: 22000000, hype: 26, cat: "Grand" },
-      { id: "m_dig_trailer", name: "Digital Trailer Launch", fee: 30000000, hype: 35, cat: "Grand" },
-      { id: "m_burj_khalifa", name: "Burj Khalifa Trailer Projection", fee: 80000000, hype: 75, cat: "Grand" },
-      { id: "m_grand_song", name: "Grand Dance Music Video", fee: 35000000, hype: 34, cat: "Grand" },
-      { id: "m_10city_tour", name: "10 Cities Mall & College Tour", fee: 40000000, hype: 40, cat: "Grand" }
+      { id: "m_news", name: "Newspaper Spread", fee: 8000000, hype: 10, reach: "12M Readers", cat: "Traditional" },
+      { id: "m_mag", name: "Magazine Cover", fee: 4000000, hype: 6, reach: "4M Readers", cat: "Traditional" },
+      { id: "m_billboards", name: "Metro Billboards", fee: 18000000, hype: 20, reach: "25M Commuters", cat: "Traditional" },
+      { id: "m_radio", name: "Radio Jingle Blitz", fee: 6000000, hype: 8, reach: "18M Listeners", cat: "Traditional" },
+      { id: "m_net_tv", name: "Network TV Prime", fee: 25000000, hype: 28, reach: "60M Viewers", cat: "Digital" },
+      { id: "m_cable_tv", name: "Cable TV Niche", fee: 10000000, hype: 12, reach: "15M Viewers", cat: "Digital" },
+      { id: "m_stream_ads", name: "Streaming Pre-Roll", fee: 15000000, hype: 18, reach: "30M Streams", cat: "Digital" },
+      { id: "m_social", name: "Social Media Storm", fee: 12000000, hype: 16, reach: "45M Impressions", cat: "Digital" },
+      { id: "m_mobile", name: "Mobile App Blitz", fee: 8000000, hype: 10, reach: "20M Users", cat: "Digital" },
+      { id: "m_desktop", name: "Desktop Web Banners", fee: 5000000, hype: 7, reach: "10M Visits", cat: "Digital" },
+      { id: "m_general_promo", name: "Brand Tie-in", fee: 14000000, hype: 15, reach: "22M Consumers", cat: "Digital" },
+      { id: "m_trl_tiny", name: "Trailers (Tiny Theatres)", fee: 3000000, hype: 4, reach: "1M Audiences", cat: "Theatrical" },
+      { id: "m_trl_small", name: "Trailers (Small Theatres)", fee: 6000000, hype: 8, reach: "3M Audiences", cat: "Theatrical" },
+      { id: "m_trl_med", name: "Trailer (Medium Theatres)", fee: 12000000, hype: 15, reach: "8M Audiences", cat: "Theatrical" },
+      { id: "m_trl_large", name: "Trailers (Large Theatres)", fee: 24000000, hype: 28, reach: "20M Audiences", cat: "Theatrical" },
+      { id: "m_press_small", name: "Press (Small Hotel)", fee: 2000000, hype: 4, reach: "Media Wire", cat: "Press" },
+      { id: "m_press_med", name: "Press (Medium Hotel)", fee: 5000000, hype: 8, reach: "Regional Press", cat: "Press" },
+      { id: "m_press_large", name: "Press (Large Hotel)", fee: 10000000, hype: 14, reach: "National Media", cat: "Press" },
+      { id: "m_press_5star", name: "Press (5-Star Hotel)", fee: 20000000, hype: 22, reach: "Global Press", cat: "Press" },
+      { id: "m_press_resort", name: "Press (Resort Hotel)", fee: 28000000, hype: 30, reach: "VIP Conclave", cat: "Press" },
+      { id: "m_dig_teaser", name: "Digital Teaser Drop", fee: 10000000, hype: 14, reach: "35M Views", cat: "Grand" },
+      { id: "m_5star_teaser", name: "5-Star Press Teaser", fee: 22000000, hype: 26, reach: "Hype Explosion", cat: "Grand" },
+      { id: "m_dig_trailer", name: "Digital Trailer Launch", fee: 30000000, hype: 35, reach: "80M Views", cat: "Grand" },
+      { id: "m_burj_khalifa", name: "Burj Khalifa Projection", fee: 80000000, hype: 75, reach: "Worldwide Viral", cat: "Grand" },
+      { id: "m_grand_song", name: "Grand Dance Video", fee: 35000000, hype: 34, reach: "Chartbuster", cat: "Grand" },
+      { id: "m_10city_tour", name: "10 Cities Campus Tour", fee: 40000000, hype: 40, reach: "Youth Craze", cat: "Grand" }
     ];
 
     let COMPETITOR_STUDIOS = [
@@ -1112,7 +1155,6 @@
       { name: "Astraverse", studio: "Dharma Productions", films: 1, gross: 4300000000, rating: 84 }
     ];
 
-    // Fictional Rival Scheduled Slates
     const RIVAL_SCHEDULED_RELEASES = {
       2: { title: "Dharma's Romantic Saga", studio: "Dharma", clash: -15 },
       4: { title: "Republic Day War Epic", studio: "T-Series", clash: -20 },
@@ -1268,7 +1310,7 @@
       const chosenName = document.getElementById("onboard-studio-name").value.trim() || "LILA PRODUCTIONS";
       GAME_STATE.studioName = chosenName;
       GAME_STATE.cash = SELECTED_ONBOARD_CAPITAL;
-      localStorage.setItem("bollywood_tycoon_v108_init", "true");
+      localStorage.setItem("bollywood_tycoon_v109_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
@@ -1286,7 +1328,6 @@
       }
       CURRENT_WIZARD_STEP = stepNumber;
       
-      // Auto-refresh rights rates upon reaching Step 5
       if (CURRENT_WIZARD_STEP === 5) {
         renderBrandRights();
         updateCostHUD();
@@ -1404,7 +1445,6 @@
       document.querySelectorAll(".preset-poster-card").forEach(c => c.classList.toggle("selected", c.querySelector('img').src === url));
     }
 
-    /* FIX: GLITCH-FREE SINGLE-TAP ACTOR SELECTION */
     function renderActorTiles() {
       const container = document.getElementById("actors-selection-grid");
       const rosterContainer = document.getElementById("roster-actors-grid");
@@ -1452,7 +1492,7 @@
         CURRENT_DRAFT.cast.push({ id: actorId, role });
       }
       renderActorTiles();
-      renderBrandRights(); // Refreshes rights pricing
+      renderBrandRights();
       updateCostHUD();
     }
 
@@ -1526,6 +1566,7 @@
       updateCostHUD();
     }
 
+    /* RIGHTS PRICING BOOSTED BY FRANCHISE FAME */
     function renderBrandRights() {
       document.getElementById("music-rights-grid").innerHTML = MUSIC_LABELS.map(lbl => `
         <div class="brand-card ${CURRENT_DRAFT.musicRightsId === lbl.id ? 'selected' : ''}" onclick="selectMusicRights('${lbl.id}')">
@@ -1556,21 +1597,32 @@
     function selectOttRights(id) { CURRENT_DRAFT.ottRightsId = id; renderBrandRights(); updateCostHUD(); }
     function selectSatelliteRights(id) { CURRENT_DRAFT.satelliteRightsId = id; renderBrandRights(); updateCostHUD(); }
 
+    function getFranchiseFameMultiplier() {
+      if (!CURRENT_DRAFT.franchiseId) return 1.0;
+      const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
+      if (!f) return 1.0;
+      // High-fame franchise parts command up to 1.6x higher rights recoveries!
+      return 1.0 + ((f.rating / 100) * 0.6);
+    }
+
     function calculateMusicAdvance(lbl) {
       const albumSize = CURRENT_DRAFT.songCount;
       if (albumSize === 0) return 10000000;
       const composerBonus = CURRENT_DRAFT.composerId ? 1.4 : 1.0;
-      return Math.round(lbl.baseAdvance * (albumSize / 2) * composerBonus);
+      const franMult = getFranchiseFameMultiplier();
+      return Math.round(lbl.baseAdvance * (albumSize / 2) * composerBonus * franMult);
     }
 
     function calculateOttAdvance(p) {
       const starPower = getCastStarPower();
-      return Math.round(p.baseAdvance * (starPower / 70) * p.mult);
+      const franMult = getFranchiseFameMultiplier();
+      return Math.round(p.baseAdvance * (starPower / 70) * p.mult * franMult);
     }
 
     function calculateSatelliteAdvance(ch) {
       const starPower = getCastStarPower();
-      return Math.round(ch.baseAdvance * (starPower / 75) * ch.mult);
+      const franMult = getFranchiseFameMultiplier();
+      return Math.round(ch.baseAdvance * (starPower / 75) * ch.mult * franMult);
     }
 
     function getCastStarPower() {
@@ -1602,6 +1654,33 @@
           <div class="tile-fee">${formatINR(promo.fee)}</div>
         </div>
       `).join('');
+
+      updateMarketingMeters();
+    }
+
+    function updateMarketingMeters() {
+      let totalHype = 25; // Base trailer organic hype
+      let totalSpend = 0;
+      let reachCount = 1000000;
+
+      CURRENT_DRAFT.promos.forEach(pId => {
+        const p = TARGETED_MARKETING.find(x => x.id === pId);
+        if (p) {
+          totalHype += p.hype;
+          totalSpend += p.fee;
+          reachCount += (p.fee / 50);
+        }
+      });
+
+      totalHype = Math.min(100, totalHype);
+      const reachText = reachCount >= 10000000 ? (reachCount / 10000000).toFixed(1) + " Cr Audiences" : (reachCount / 100000).toFixed(1) + "L Audiences";
+
+      const rEl = document.getElementById("m-stat-reach");
+      const hEl = document.getElementById("m-stat-hype");
+      const cEl = document.getElementById("m-stat-cost");
+      if (rEl) rEl.innerText = reachText;
+      if (hEl) hEl.innerText = `🔥 ${totalHype} / 100`;
+      if (cEl) cEl.innerText = formatINR(totalSpend);
     }
 
     function getMarketingIcon(cat) {
@@ -1622,7 +1701,7 @@
       updateCostHUD();
     }
 
-    /* RIVAL RELEASES & PERCENTAGE IMPACT ON SLATE */
+    /* RIVAL RELEASES, OUR OWN SCHEDULED RELEASES & PERCENTAGE IMPACT ON SLATE */
     function renderReleaseWeekTiles() {
       const container = document.getElementById("release-week-grid");
       let html = "";
@@ -1631,9 +1710,11 @@
         const cycleWeek = ((targetWeek - 1) % 52) + 1;
         const season = getSeasonEvent(targetWeek);
         const rival = RIVAL_SCHEDULED_RELEASES[cycleWeek];
+        const myScheduled = GAME_STATE.activeProductions.find(p => p.releaseWeek === targetWeek);
 
         let netImpact = Math.round((season.mult - 1) * 100);
         if (rival) netImpact += rival.clash;
+        if (myScheduled) netImpact -= 20; // Self-clash penalty
 
         const impactClass = netImpact > 0 ? "pos" : netImpact < 0 ? "neg" : "neu";
         const impactText = (netImpact > 0 ? "+" : "") + netImpact + "%";
@@ -1645,7 +1726,8 @@
               <span class="week-tile-impact ${impactClass}">${impactText}</span>
             </div>
             <div class="week-tile-fest">${season.name}</div>
-            ${rival ? `<div class="week-tile-rival" title="${rival.title} (${rival.studio})">⚠️ ${rival.title}</div>` : `<div style="font-size:0.62rem; color:var(--text-subtle);">Clear Window</div>`}
+            ${myScheduled ? `<div style="font-size:0.64rem; color:var(--success); font-weight:700;">🎬 Our: ${myScheduled.title}</div>` : ''}
+            ${rival ? `<div class="week-tile-rival" title="${rival.title} (${rival.studio})">⚠️ ${rival.title}</div>` : (!myScheduled ? `<div style="font-size:0.62rem; color:var(--text-subtle);">Clear Window</div>` : '')}
           </div>
         `;
       }
@@ -1733,6 +1815,13 @@
       GAME_STATE.cash -= netCashRequired;
       const releaseWeek = GAME_STATE.week + CURRENT_DRAFT.releaseWeekOffset;
 
+      let campaignHype = 25;
+      CURRENT_DRAFT.promos.forEach(pId => {
+        const p = TARGETED_MARKETING.find(x => x.id === pId);
+        if (p) campaignHype += p.hype;
+      });
+      campaignHype = Math.min(100, campaignHype);
+
       const newFilm = {
         id: "film_" + Date.now(),
         title: CURRENT_DRAFT.title,
@@ -1749,6 +1838,7 @@
         releaseWeek: releaseWeek,
         weeksRemaining: CURRENT_DRAFT.releaseWeekOffset,
         quality: computeQualityScore(),
+        hype: campaignHype,
         awardsWon: []
       };
 
@@ -1774,13 +1864,17 @@
       return Math.min(99, Math.max(50, Math.round((dirScore * 0.4) + (castPower * 0.4) + (musicScore * 0.2)) + Math.floor(Math.random() * 5) - 2));
     }
 
-    /* WEEKLY SIMULATION & RIVAL DRIFT */
+    /* ADVANCE WEEK: FIXED MULTI-WEEK BOX OFFICE MERGE BUG */
     function advanceWeek() {
       GAME_STATE.week++;
       if (GAME_STATE.debt > 0) {
         GAME_STATE.cash = Math.max(0, GAME_STATE.cash - Math.round(GAME_STATE.debt * 0.015));
       }
 
+      // Step 1: Mature active existing theatrical runs
+      processTheatreCollections();
+
+      // Step 2: Release newly arriving films ONLY once their counter hits 0
       for (let i = GAME_STATE.activeProductions.length - 1; i >= 0; i--) {
         const prod = GAME_STATE.activeProductions[i];
         prod.weeksRemaining--;
@@ -1790,10 +1884,9 @@
         }
       }
 
-      processTheatreCollections();
       checkAwardsSeason();
       processWeeklyNews();
-      driftRivalsAndFranchises(); // Weekly dynamic simulation
+      driftRivalsAndFranchises();
 
       saveState();
       renderAll();
@@ -1801,7 +1894,6 @@
     }
 
     function driftRivalsAndFranchises() {
-      // Dynamic subtle shifts in competitor studios & benchmark universes
       COMPETITOR_STUDIOS.forEach(s => {
         const delta = Math.floor(Math.random() * 150000000) - 30000000;
         s.capital = Math.max(1000000000, s.capital + delta);
@@ -1815,6 +1907,7 @@
       });
     }
 
+    /* THEATRICAL OPENING: DRIVEN BY HYPE & RATINGS */
     function startTheatricalRun(film) {
       const season = getSeasonEvent(GAME_STATE.week);
       const cycleWeek = ((GAME_STATE.week - 1) % 52) + 1;
@@ -1823,7 +1916,9 @@
       if (rival) clashMult = (100 + rival.clash) / 100;
 
       const starPower = film.cast.reduce((acc, c) => acc + (ALL_ACTORS.find(a => a.id === c.id)?.popularity || 70), 0) / Math.max(1, film.cast.length);
-      const opening = Math.round((starPower * 4200000) * season.mult * clashMult * (film.quality / 80));
+      const hypeFactor = ((film.hype || 50) / 50); // Higher hype booms Week 1!
+      
+      const opening = Math.round((starPower * 4200000) * season.mult * clashMult * (film.quality / 80) * hypeFactor);
 
       const theatreEntry = {
         ...film,
@@ -1841,18 +1936,22 @@
       triggerConfetti();
     }
 
+    /* LONGEVITY IN THEATRES: DETERMINED STRICTLY BY RATINGS, HYPE & WOM (NOT RANDOM) */
     function processTheatreCollections() {
       GAME_STATE.theatreRuns.forEach(run => {
         if (!run.active) return;
         run.currentWeekOfRun++;
         const lastColl = run.weeklyHistory[run.weeklyHistory.length - 1];
 
-        let holdRatio = 0.65;
-        if (run.quality >= 93) holdRatio = 0.90;
-        else if (run.quality >= 85) holdRatio = 0.75;
-        else if (run.quality < 65) holdRatio = 0.40;
+        // Decay hold percentage dictated purely by quality rating and audience buzz
+        let holdRatio = 0.55; 
+        if (run.quality >= 95) holdRatio = 0.94; // All-time blockbuster
+        else if (run.quality >= 90) holdRatio = 0.85; // Solid blockbuster
+        else if (run.quality >= 80) holdRatio = 0.72; // Average hit
+        else if (run.quality >= 70) holdRatio = 0.60;
+        else holdRatio = 0.38; // Flop crash
 
-        const thisGross = Math.round(lastColl * holdRatio * (0.95 + Math.random() * 0.1));
+        const thisGross = Math.max(250000, Math.round(lastColl * holdRatio * 0.98));
         run.weeklyHistory.push(thisGross);
         run.totalGross += thisGross;
 
@@ -1860,17 +1959,25 @@
         run.producerEarnings += share;
         GAME_STATE.cash += share;
 
-        if (run.currentWeekOfRun === 25 && !run.jubilee) {
+        // Realistic milestones based on quality and sustained theatrical collections
+        if (run.currentWeekOfRun === 25 && run.quality >= 88 && !run.jubilee) {
           run.jubilee = "Silver Jubilee (25 Weeks)";
           GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 8);
-          showToast(`🏆 SILVER JUBILEE! "${run.title}"`, "success");
-        } else if (run.currentWeekOfRun === 50) {
-          run.jubilee = "Golden Jubilee (50 Weeks - DDLJ Status)";
+          showToast(`🏆 SILVER JUBILEE! "${run.title}" completes 25 weeks!`, "success");
+        } else if (run.currentWeekOfRun >= 53 && run.quality >= 95 && !run.jubilee?.includes("Golden")) {
+          run.jubilee = "Golden Jubilee (53 Weeks - Historic All-Time Legend)";
           GAME_STATE.reputation = 100;
-          showToast(`🌟 GOLDEN JUBILEE! "${run.title}"`, "success");
+          showToast(`🌟 HISTORIC GOLDEN JUBILEE! "${run.title}" runs 53 weeks!`, "success");
         }
 
-        if ((thisGross < 1500000 && run.currentWeekOfRun > 4) || run.currentWeekOfRun > 52) {
+        // Logical theatrical retirement based on collection drops & quality caps
+        let maxWeeks = 6;
+        if (run.quality >= 95) maxWeeks = 53; // Golden Jubilee run
+        else if (run.quality >= 90) maxWeeks = 25; // Silver Jubilee run
+        else if (run.quality >= 80) maxWeeks = 12;
+        else if (run.quality >= 70) maxWeeks = 8;
+
+        if (thisGross < 2000000 || run.currentWeekOfRun >= maxWeeks) {
           run.active = false;
           archiveReleasedMovie(run);
         }
@@ -1908,35 +2015,52 @@
 
     function renderTheatricalRuns() {
       const container = document.getElementById("theatrical-runs-container");
-      if (!container) return;
-      if (GAME_STATE.theatreRuns.length === 0) {
-        container.innerHTML = `<p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in theatres.</p>`;
-        return;
-      }
-      container.innerHTML = GAME_STATE.theatreRuns.map(run => `
-        <div class="theatre-run-card" onclick="openMovieDossier('${run.id}', true)">
-          <div class="theatre-header">
-            <img src="${run.posterUrl}" class="theatre-poster" alt="${run.title}">
-            <div style="flex:1; min-width:0;">
-              <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${run.title}</div>
-              <div style="font-size:0.72rem; color:var(--text-muted);">${run.genre} • Wk ${run.currentWeekOfRun} in Halls ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}</div>
-              <div style="font-size:0.75rem; color:var(--text-main); margin-top:2px;">
-                Budget: <strong style="color:var(--danger);">${formatINR(run.cost)}</strong> | Gross: <strong style="color:var(--success);">${formatINR(run.totalGross)}</strong>
+      const upContainer = document.getElementById("theatrical-upcoming-container");
+
+      if (container) {
+        container.innerHTML = GAME_STATE.theatreRuns.length === 0 
+          ? `<p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in theatres.</p>`
+          : GAME_STATE.theatreRuns.map(run => `
+            <div class="theatre-run-card" onclick="openMovieDossier('${run.id}', true)">
+              <div class="theatre-header">
+                <img src="${run.posterUrl}" class="theatre-poster" alt="${run.title}">
+                <div style="flex:1; min-width:0;">
+                  <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${run.title}</div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">${run.genre} • Wk ${run.currentWeekOfRun} in Halls ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}</div>
+                  <div style="font-size:0.75rem; color:var(--text-main); margin-top:2px;">
+                    Budget: <strong style="color:var(--danger);">${formatINR(run.cost)}</strong> | Gross: <strong style="color:var(--success);">${formatINR(run.totalGross)}</strong>
+                  </div>
+                  <div style="font-size:0.72rem; color:var(--success); font-weight:700;">Producer Share: ${formatINR(run.producerEarnings)}</div>
+                </div>
+                <div><span class="step-badge" style="background:${run.active ? 'var(--success)' : 'var(--text-subtle)'}; font-size:0.65rem;">${run.active ? 'Running' : 'Archived'}</span></div>
               </div>
-              <div style="font-size:0.72rem; color:var(--success); font-weight:700;">Producer Share: ${formatINR(run.producerEarnings)}</div>
+              <div style="display:flex; gap:4px; overflow-x:auto; padding-bottom:2px;">
+                ${run.weeklyHistory.map((amt, idx) => `
+                  <div style="background:var(--bg-card); border:1px solid var(--border-color-subtle); border-radius:4px; padding:3px 6px; text-align:center; min-width:65px;">
+                    <div style="font-size:0.6rem; color:var(--text-subtle);">W${idx+1}</div>
+                    <div style="font-size:0.68rem; font-weight:700; color:var(--gold-bright);">${formatINR(amt)}</div>
+                  </div>
+                `).join('')}
+              </div>
             </div>
-            <div><span class="step-badge" style="background:${run.active ? 'var(--success)' : 'var(--text-subtle)'}; font-size:0.65rem;">${run.active ? 'Running' : 'Archived'}</span></div>
-          </div>
-          <div style="display:flex; gap:4px; overflow-x:auto; padding-bottom:2px;">
-            ${run.weeklyHistory.map((amt, idx) => `
-              <div style="background:var(--bg-card); border:1px solid var(--border-color-subtle); border-radius:4px; padding:3px 6px; text-align:center; min-width:65px;">
-                <div style="font-size:0.6rem; color:var(--text-subtle);">W${idx+1}</div>
-                <div style="font-size:0.68rem; font-weight:700; color:var(--gold-bright);">${formatINR(amt)}</div>
+          `).join('');
+      }
+
+      // Render upcoming films in In Theatres Tab
+      if (upContainer) {
+        upContainer.innerHTML = GAME_STATE.activeProductions.length === 0
+          ? `<p style="color:var(--text-muted); font-size:0.8rem;">No upcoming productions scheduled yet.</p>`
+          : GAME_STATE.activeProductions.map(prod => `
+            <div style="display:flex; align-items:center; gap:10px; background:var(--bg-surface); border:1px solid var(--border-color-subtle); border-radius:8px; padding:8px; margin-bottom:8px;">
+              <img src="${prod.posterUrl}" style="width:40px; height:56px; border-radius:4px; object-fit:cover;">
+              <div style="flex:1;">
+                <div style="font-family:var(--font-display); font-size:0.86rem; color:var(--gold-bright);">${prod.title}</div>
+                <div style="font-size:0.72rem; color:var(--text-muted);">${prod.genre} • Releasing in ${prod.weeksRemaining} Weeks (Week ${prod.releaseWeek})</div>
+                <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">Audience Anticipation Hype: 🔥 ${prod.hype || 50}/100</div>
               </div>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
+            </div>
+          `).join('');
+      }
     }
 
     function renderFilmography() {
@@ -2008,7 +2132,6 @@
 
     function closeMovieDossier() { document.getElementById("modal-dossier").classList.remove("active"); }
 
-    /* 4K RE-RELEASE SCHEDULER */
     function openReReleaseScheduler(movieId) {
       ACTIVE_RERELEASE_FILM_ID = movieId;
       const container = document.getElementById("rerelease-week-grid");
@@ -2051,6 +2174,7 @@
         releaseWeek: releaseWeek,
         weeksRemaining: SELECTED_RERELEASE_OFFSET,
         quality: Math.min(99, film.quality + 2),
+        hype: 60,
         awardsWon: []
       };
 
@@ -2063,7 +2187,6 @@
       renderAll();
     }
 
-    /* COMPACT FRANCHISE TILES & AUTO-POPULATION */
     function toggleFranchiseSelect(isFranchise) {
       const container = document.getElementById("franchise-picker-container");
       container.style.display = isFranchise ? "block" : "none";
@@ -2079,6 +2202,8 @@
         CURRENT_DRAFT.franchiseId = null;
         document.getElementById("pipeline-franchise-edit-wrap").style.display = "none";
       }
+      renderBrandRights(); // Update franchise rights bonus
+      updateCostHUD();
     }
 
     function syncFranchiseNameFromTitle() {
@@ -2119,6 +2244,8 @@
     function selectPipelineFranchise(franId) {
       CURRENT_DRAFT.franchiseId = franId;
       renderPipelineFranchiseTiles();
+      renderBrandRights(); // Recompute rights with franchise prestige
+      updateCostHUD();
     }
 
     function renderFranchiseView() {
@@ -2172,6 +2299,8 @@
       closeCreateFranchiseModal();
       renderPipelineFranchiseTiles();
       renderFranchiseView();
+      renderBrandRights();
+      updateCostHUD();
       showToast(`Franchise "${name}" registered!`, "success");
     }
 
@@ -2249,6 +2378,7 @@
       }
     }
 
+    /* TOAST QUEUE SYSTEM (MAX 3) - LIGHT/DARK RESISTANT TEXT */
     function showToast(msg, type = "info") {
       const container = document.getElementById("toast-container");
       while (container.children.length >= 3) {
@@ -2274,7 +2404,6 @@
         const gain = ctx.createGain();
         osc.connect(gain);
         gain.connect(ctx.destination);
-        osc.type = "sine";
         osc.frequency.setValueAtTime(320, ctx.currentTime);
         gain.gain.setValueAtTime(0.03, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.04);
@@ -2307,12 +2436,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v108", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v109", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v108");
+        const raw = localStorage.getItem("bollywood_tycoon_v109");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
