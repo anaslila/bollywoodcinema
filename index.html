@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.12(b) — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.12(c) — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -86,7 +86,6 @@
     .splash-content { width: 360px; height: 640px; background: #000; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(212, 175, 55, 0.25); }
     .splash-gif { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Sticky Header */
     header.main-header {
       position: sticky;
       top: 0;
@@ -153,7 +152,6 @@
       box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
     }
 
-    /* Mobile Bottom Center Advance Week Dock */
     .mobile-bottom-advance-bar {
       display: none;
       position: fixed;
@@ -282,7 +280,6 @@
       transform: scale(1.03);
     }
 
-    /* Box Office Verdict Badges */
     .verdict-pill { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; }
     .verdict-disaster, .verdict-flop { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
     .verdict-below-average, .verdict-average { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
@@ -484,6 +481,23 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
     }
 
+    .event-choice-btn {
+      width: 100%;
+      text-align: left;
+      background: var(--bg-base);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--text-main);
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: all 0.2s ease;
+    }
+    .event-choice-btn:hover {
+      border-color: var(--gold-bright);
+      background: rgba(212, 175, 55, 0.1);
+    }
+
     .btn-gold {
       background: var(--gold-gradient);
       color: #0b0b0e;
@@ -539,7 +553,7 @@
   <header class="main-header">
     <div class="brand-section">
       <img src="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80" alt="App Icon" class="brand-icon">
-      <input type="text" id="studio-name-display" class="studio-name-input" value="LILA PRODUCTIONS" title="Click to rename studio">
+      <input type="text" id="studio-name-display" class="studio-name-input" value="APEX STUDIOS" title="Click to rename studio">
     </div>
 
     <div class="header-stats">
@@ -558,7 +572,7 @@
     </div>
   </header>
 
-  <!-- Dedicated Bottom Center Advance Week Button for Mobile Screens -->
+  <!-- Mobile Bottom Center Advance Week Bar -->
   <div class="mobile-bottom-advance-bar">
     <button class="btn-advance-mobile" id="btn-advance-week-mobile">
       <i class="fa-solid fa-forward-step"></i> ADVANCE WEEK
@@ -660,7 +674,7 @@
 
           <label style="font-size:0.78rem; font-weight:700; margin-bottom:4px; display:block;">Project Title:</label>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
-            <input type="text" id="movie-title" class="input-field" placeholder="Enter Project Title (e.g. Tiger Zinda Hai 2)" style="flex:1; margin-bottom:0;">
+            <input type="text" id="movie-title" class="input-field" placeholder="Enter Project Title" style="flex:1; margin-bottom:0;">
             <button class="btn-outline" id="btn-random-title"><i class="fa-solid fa-dice"></i> Random Title</button>
           </div>
 
@@ -671,7 +685,7 @@
             <button class="curved-choice-btn" data-sq="masterpiece" onclick="setScriptQuality('masterpiece', this)">Award-Winning Masterpiece (₹5Cr, Score 95)</button>
           </div>
 
-          <!-- 5 Set Construction Scales -->
+          <!-- 5 Set Construction Scales (Fixed Grand City Sets Icon) -->
           <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Set Construction Scale:</label>
           <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;" id="set-scale-pills">
             <button class="curved-choice-btn active" data-set="minimal" onclick="setSetScale('minimal', this)">
@@ -684,7 +698,7 @@
               <i class="fa-solid fa-video"></i> Film City (₹6Cr)
             </button>
             <button class="curved-choice-btn" data-set="grandcity" onclick="setSetScale('grandcity', this)">
-              <i class="fa-solid fa-fort-awesome"></i> Grand City Sets (₹18Cr)
+              <i class="fa-solid fa-city"></i> Grand City Sets (₹18Cr)
             </button>
             <button class="curved-choice-btn" data-set="vfxgrand" onclick="setSetScale('vfxgrand', this)">
               <i class="fa-solid fa-crown"></i> VFX + Grand Set (₹35Cr)
@@ -724,11 +738,11 @@
             </button>
           </div>
 
-          <!-- 10 Genres including Patriotic (Boosted on Republic & Independence Days) -->
+          <!-- 10 Genres -->
           <label style="font-size:0.78rem; font-weight:700;">Select Genre (10 Categories):</label>
           <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px; margin-bottom:14px;" id="genre-pills">
             <button class="curved-choice-btn active" data-genre="Action">Action</button>
-            <button class="curved-choice-btn" data-genre="Patriotic">Patriotic (Holiday Boost)</button>
+            <button class="curved-choice-btn" data-genre="Patriotic">Patriotic</button>
             <button class="curved-choice-btn" data-genre="Romance">Romance</button>
             <button class="curved-choice-btn" data-genre="Drama">Drama</button>
             <button class="curved-choice-btn" data-genre="Comedy">Comedy</button>
@@ -791,7 +805,7 @@
           </div>
         </div>
 
-        <!-- STEP 4: SHOOTING LOCATIONS (25+ GLOBAL DESTINATIONS) -->
+        <!-- STEP 4: SHOOTING LOCATIONS -->
         <div class="pipeline-step-pane" id="wizard-step-4">
           <div class="step-header-box">
             <span class="step-badge">Step 4 of 8</span>
@@ -845,7 +859,6 @@
             </div>
           </div>
 
-          <!-- Hidden automatically if 0 songs selected -->
           <div id="singers-selection-section">
             <label style="font-size:0.78rem; font-weight:700;">Select Playback Singers:</label>
             <div class="tiles-grid" id="singers-selection-grid"></div>
@@ -940,7 +953,6 @@
           </div>
         </div>
 
-        <!-- Dual Live Costing & Earnings HUD -->
         <div class="cost-inflow-hud">
           <div class="hud-stat-col">
             <span class="hud-label">Budget & Promos</span>
@@ -959,7 +971,7 @@
       </div>
     </section>
 
-    <!-- 3. IN THEATRES TAB (ORDERED: 1. UPCOMING, 2. RUNNING, 3. ARCHIVED) -->
+    <!-- 3. IN THEATRES TAB -->
     <section id="tab-theatre-runs" class="tab-view">
       <div class="card">
         <div class="card-title">
@@ -1089,17 +1101,20 @@
 
   </main>
 
-  <!-- MODAL: ONBOARDING -->
+  <!-- MODAL: ONBOARDING (Studio Name, Studio Head Name & Starting Capital) -->
   <div class="modal-overlay" id="modal-onboarding">
     <div class="modal-window">
       <div style="text-align:center; margin-bottom:14px;">
         <i class="fa-solid fa-clapperboard" style="font-size:2rem; color:var(--gold-bright); margin-bottom:6px;"></i>
         <h2 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.2rem;">Establish Your Movie Studio</h2>
-        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Name your studio and choose your starting treasury funds.</p>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Name your studio, enter the founder's name, and choose your starting funds.</p>
       </div>
 
       <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">Studio Name:</label>
-      <input type="text" id="onboard-studio-name" class="input-field" placeholder="e.g. Lila Productions, Apex Films" value="LILA PRODUCTIONS">
+      <input type="text" id="onboard-studio-name" class="input-field" placeholder="e.g. Apex Studios, Royal Cinema" value="APEX STUDIOS">
+
+      <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">Studio Head / Producer Name:</label>
+      <input type="text" id="onboard-head-name" class="input-field" placeholder="Enter Studio Head Name" value="Studio Founder">
 
       <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:6px; display:block;">Starting Capital:</label>
       <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;" id="onboard-capital-options">
@@ -1116,11 +1131,23 @@
     </div>
   </div>
 
+  <!-- MODAL: RANDOM PRODUCTION / INDUSTRY EVENT -->
+  <div class="modal-overlay" id="modal-random-event">
+    <div class="modal-window">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        <i class="fa-solid fa-bolt" style="font-size:1.4rem; color:var(--warning);"></i>
+        <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem;" id="event-modal-title">Breaking Studio News</h3>
+      </div>
+      <p style="font-size:0.82rem; color:var(--text-main); line-height:1.45; margin-bottom:14px;" id="event-modal-desc"></p>
+      <div id="event-modal-choices"></div>
+    </div>
+  </div>
+
   <!-- MODAL: FRANCHISE -->
   <div class="modal-overlay" id="modal-franchise">
     <div class="modal-window">
       <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem; margin-bottom:10px;">Create New Studio Universe</h3>
-      <input type="text" id="new-franchise-name" class="input-field" placeholder="Franchise Name (e.g. Spy Universe, Cop Universe)">
+      <input type="text" id="new-franchise-name" class="input-field" placeholder="Enter Franchise Name">
       <textarea id="new-franchise-desc" class="input-field" rows="3" placeholder="Franchise Lore & Theme"></textarea>
       <div style="display:flex; justify-content:flex-end; gap:6px;">
         <button class="btn-outline" onclick="closeCreateFranchiseModal(true)">Cancel</button>
@@ -1164,14 +1191,14 @@
   <!-- END OF PART 1 — APPEND PART 2 IMMEDIATELY BELOW THIS LINE -->
 <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.12(b) — COMPLETE TYCOON ENGINE (PART 2)
+       BOLLYWOOD CINEMA v1.12(c) — COMPLETE TYCOON ENGINE (PART 2)
        ========================================================================= */
 
     function dismissSplash() {
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v112b_init")) {
+        if (!localStorage.getItem("bollywood_tycoon_v112c_init")) {
           const modal = document.getElementById("modal-onboarding");
           if (modal) modal.classList.add("active");
         }
@@ -1251,7 +1278,6 @@
       { id: "sng_badshah", name: "Badshah", photo: "https://m.media-amazon.com/images/M/MV5BNjdlM2Q1ZDgtYjUzOC00ZmIyLWE2YTEtYWJlZDQ5NTM4ODE1XkEyXkFqcGc@._V1_.jpg", skill: 88, fee: 2000000 }
     ];
 
-    /* 25 SHOOTING LOCATIONS (Updated Indoor Set Shoot, Rajasthan Royal Forts & Bangkok/Phuket icons) */
     const SHOOTING_LOCATIONS = [
       { id: "loc_indoor_set", name: "Indoor Set Shoot", baseCost: 1500000, icon: "fa-clapperboard", appeal: 2 },
       { id: "loc_mumbai", name: "Mumbai & Goa", baseCost: 3000000, icon: "fa-city", appeal: 4 },
@@ -1338,6 +1364,57 @@
       { id: "pr_global_promo", name: "Global TV & International Multiplex Push", fee: 65000000, hypeAdd: 48, screenBoost: 1600, desc: "Massive overseas & Pan-India exhibitor expansion." }
     ];
 
+    /* RANDOM PRODUCTION & INDUSTRY EVENTS POOL */
+    const RANDOM_EVENTS_POOL = [
+      {
+        title: "Lead Actor Injured During Stunt!",
+        desc: "During a high-octane action sequence, the lead actor suffered a sprained ankle. Shoot schedule is impacted.",
+        choices: [
+          { label: "Pay ₹1.5 Cr for top sports doctors & CGI body double (Keep schedule, +2 Quality)", cashDelta: -15000000, hypeDelta: 4, qualityDelta: 2, delayWeeks: 0 },
+          { label: "Pause shoot for 2 weeks for natural recovery (No cost, +2 weeks delay)", cashDelta: 0, hypeDelta: -3, qualityDelta: 0, delayWeeks: 2 }
+        ]
+      },
+      {
+        title: "Actress Met With Minor Road Accident",
+        desc: "While returning from late-night studio dubbing, the lead actress had a minor car collision. Fortunately, she is safe but shaken.",
+        choices: [
+          { label: "Cover ₹80 Lakhs medical & PR wellness support (+5 Studio Reputation)", cashDelta: -8000000, repDelta: 5, hypeDelta: 3, delayWeeks: 0 },
+          { label: "Reschedule climax shoot by 1 week", cashDelta: 0, hypeDelta: -2, delayWeeks: 1 }
+        ]
+      },
+      {
+        title: "Climax Footage Leaked Online!",
+        desc: "An unedited rough cut of your climax action scene leaked on social media platforms and is going viral!",
+        choices: [
+          { label: "Spend ₹3 Cr to re-shoot a brand new surprise twist ending (+15 Hype, +4 Quality)", cashDelta: -30000000, hypeDelta: 15, qualityDelta: 4, delayWeeks: 1 },
+          { label: "Issue copyright takedowns and turn leak into official teaser (+8 Hype)", cashDelta: -5000000, hypeDelta: 8, qualityDelta: -1, delayWeeks: 0 }
+        ]
+      },
+      {
+        title: "Viral Fan-Made Trailer Edit Explodes!",
+        desc: "A fan-edited teaser set to your film's background score crossed 20 million views overnight!",
+        choices: [
+          { label: "Hire the fan editor officially & boost social media campaign (₹50 Lakhs, +18 Hype)", cashDelta: -5000000, hypeDelta: 18, qualityDelta: 0, delayWeeks: 0 },
+          { label: "Enjoy the free organic buzz (+10 Hype)", cashDelta: 0, hypeDelta: 10, qualityDelta: 0, delayWeeks: 0 }
+        ]
+      },
+      {
+        title: "Censor Board Demands Trims",
+        desc: "The Censor Board raised objections over two intense dialogue sequences right before release.",
+        choices: [
+          { label: "Pay ₹1 Cr for re-dubbing & clean U/A certificate (Wider family audience, +8 Hype)", cashDelta: -10000000, hypeDelta: 8, qualityDelta: 1, delayWeeks: 0 },
+          { label: "Accept 'A' Adult certificate without cuts (Edgy mass appeal, +4 Hype)", cashDelta: 0, hypeDelta: 4, qualityDelta: 0, delayWeeks: 0 }
+        ]
+      },
+      {
+        title: "State Government Tourism & Film Subsidy!",
+        desc: "The tourism board praised your picturesque location shoot and approved a direct production subsidy grant!",
+        choices: [
+          { label: "Claim ₹2.5 Cr State Subsidy Grant (+₹2.5 Cr Treasury Cash)", cashDelta: 25000000, hypeDelta: 5, qualityDelta: 0, delayWeeks: 0 }
+        ]
+      }
+    ];
+
     let COMPETITOR_STUDIOS = [
       { id: "yrf", name: "Yash Raj Films (YRF)", boss: "Aditya Chopra", capital: 45000000000, films: 78, fame: 99, slate: "War 2, Alpha, Pathaan 2" },
       { id: "dharma", name: "Dharma Productions", boss: "Karan Johar", capital: 22000000000, films: 52, fame: 95, slate: "Brahmastra Part 2, Jigra 2" },
@@ -1370,7 +1447,8 @@
     };
 
     let GAME_STATE = {
-      studioName: "LILA PRODUCTIONS",
+      studioName: "APEX STUDIOS",
+      studioHead: "Studio Founder",
       cash: 500000000,
       week: 1,
       reputation: 75,
@@ -1395,7 +1473,7 @@
       title: "",
       genre: "Action",
       releaseFormat: "theatres_ott",
-      franchiseId: null,
+      franchiseId: null, // Strictly standalone by default
       scriptQuality: "tight",
       setScale: "minimal",
       vfxQuality: "none",
@@ -1439,7 +1517,7 @@
       const nameInput = document.getElementById("studio-name-display");
       nameInput.value = GAME_STATE.studioName;
       nameInput.addEventListener("change", (e) => {
-        GAME_STATE.studioName = e.target.value.trim() || "LILA PRODUCTIONS";
+        GAME_STATE.studioName = e.target.value.trim() || "APEX STUDIOS";
         saveState();
         renderStudiosIntel();
         showToast("Studio name updated!", "success");
@@ -1450,7 +1528,7 @@
       document.getElementById("btn-theme-toggle").addEventListener("click", toggleTheme);
 
       document.getElementById("btn-random-title").addEventListener("click", () => {
-        const titles = ["Tiger 4", "War 3", "Brahmastra 2", "Don 3", "Dhoom 4", "Singham Again 2", "Animal Reborn", "Jawan Chapter 2", "Border 2", "Kesari Chapter 2"];
+        const titles = ["Aakhri Baazi", "Raaz Mahal", "Sultan Returns", "Mumbai Mafia", "The Last Emperor", "Jung Ka Junoon", "Ishqnama", "Badla 3", "MahaYudh", "Khiladi 786 Returns", "Raktbeej", "Mission Kashmir 2", "Sikandar Returns", "Shaitaan Returns", "Dilwale 3", "Kaal Chakra", "Operation Trishul", "Maharaja", "Aag Ka Dariya", "Zakhmi Sher", "Raja Hindustani 2", "Dhadkan 2", "Black Tiger", "Chakravyuh", "Junglee 2", "Mumbai Express", "Aakhri Jung", "The Revenge", "Sher-e-Hindustan", "Khooni Khel", "Baazigar Returns", "Ishq Ka Junoon", "Toofan 2", "Vijaypath Returns", "Samrat", "Kaala Saaya", "Operation Dastaan", "Badshah 2", "Rang De Ishq", "Maut Ka Khel", "Agni Pariksha", "Rudra", "Dushman 2", "Singham Returns 3", "Ek Tha Sultan", "The Untold Story", "Jazbaat", "Aakhri Faisla", "Vardi", "Mahakaal"];
         const chosen = titles[Math.floor(Math.random() * titles.length)];
         document.getElementById("movie-title").value = chosen;
         CURRENT_DRAFT.title = chosen;
@@ -1529,16 +1607,18 @@
     }
 
     function confirmStudioOnboarding() {
-      const chosenName = document.getElementById("onboard-studio-name").value.trim() || "LILA PRODUCTIONS";
+      const chosenName = document.getElementById("onboard-studio-name").value.trim() || "APEX STUDIOS";
+      const chosenHead = document.getElementById("onboard-head-name").value.trim() || "Studio Founder";
       GAME_STATE.studioName = chosenName;
+      GAME_STATE.studioHead = chosenHead;
       GAME_STATE.cash = SELECTED_ONBOARD_CAPITAL;
-      localStorage.setItem("bollywood_tycoon_v112b_init", "true");
+      localStorage.setItem("bollywood_tycoon_v112c_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
       updateHeaderStats();
       renderStudiosIntel();
-      showToast(`Founded with ${formatINR(SELECTED_ONBOARD_CAPITAL)}!`, "success");
+      showToast(`Founded ${chosenName} led by ${chosenHead}!`, "success");
       triggerConfetti();
     }
 
@@ -1649,7 +1729,6 @@
       updateCostHUD();
     }
 
-    /* LIVE TOTAL THEATRICAL GROSS (COMBINING RUNNING + ARCHIVED MOVIES) */
     function updateHeaderStats() {
       document.getElementById("stat-cash").innerText = formatINR(GAME_STATE.cash);
       document.getElementById("stat-week").innerText = GAME_STATE.week;
@@ -1658,7 +1737,6 @@
       document.getElementById("dash-released-count").innerText = GAME_STATE.releasedMovies.length + GAME_STATE.theatreRuns.filter(r => r.active).length;
       document.getElementById("dash-awards-count").innerHTML = `<i class="fa-solid fa-award"></i> ${GAME_STATE.totalAwardsWon}`;
 
-      // Calculate total cumulative box office gross across both active running and completed films
       const runningGross = GAME_STATE.theatreRuns.filter(r => r.active).reduce((sum, r) => sum + (r.totalGross || 0), 0);
       const archivedGross = GAME_STATE.releasedMovies.reduce((sum, m) => sum + (m.totalGross || 0), 0);
       document.getElementById("dash-box-office").innerText = formatINR(runningGross + archivedGross);
@@ -1675,7 +1753,7 @@
       const myStudioData = {
         id: "my_studio",
         name: GAME_STATE.studioName,
-        boss: "Studio Boss (You)",
+        boss: GAME_STATE.studioHead || "Studio Founder",
         capital: GAME_STATE.cash,
         films: GAME_STATE.releasedMovies.length,
         fame: GAME_STATE.reputation,
@@ -1984,7 +2062,6 @@
       updateCostHUD();
     }
 
-    /* COMPETING OFFERS: BOTH RIVAL PARTNERS AND PREVIOUS PARTNERS BID HIGHER FOR SUCCESSFUL FRANCHISES */
     function renderBrandRights() {
       const fran = CURRENT_DRAFT.franchiseId ? GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId) : null;
       const hasPrevSuccess = fran && fran.films > 0;
@@ -2136,11 +2213,10 @@
       updateMarketingMeters();
     }
 
-    /* UNCAPPED INDIA POPULATION AUDIENCE REACH (Up to 105 Crore Adult Cinema Audience) */
     function updateMarketingMeters() {
       let totalHype = 25;
       let totalSpend = 0;
-      let reachPopulation = 5000000; // 50 Lakhs baseline reach
+      let reachPopulation = 5000000;
 
       if (CURRENT_DRAFT.releaseFormat === "only_theatres") {
         totalHype += 15;
@@ -2166,7 +2242,6 @@
         }
       }
 
-      // Max India adult theatre-going population ceiling ~105 Crores out of 1,48,12,35,356 total population
       reachPopulation = Math.min(1050000000, reachPopulation);
       totalHype = Math.min(100, totalHype);
 
@@ -2203,7 +2278,6 @@
       updateCostHUD();
     }
 
-    /* PATRIOTIC HOLIDAY SURGES ON REPUBLIC DAY & INDEPENDENCE DAY */
     function renderReleaseWeekTiles() {
       const container = document.getElementById("release-week-grid");
       let html = "";
@@ -2216,7 +2290,6 @@
 
         let netImpact = Math.round((season.mult - 1) * 100);
         
-        // Patriotic genre boost on Republic Day (W4) or Independence Day (W33)
         let patrioticNote = "";
         if (CURRENT_DRAFT.genre === "Patriotic" && (cycleWeek === 4 || cycleWeek === 33)) {
           netImpact += 35;
@@ -2268,14 +2341,12 @@
       else if (CURRENT_DRAFT.scriptQuality === "tight") cost += 15000000;
       else cost += 2500000;
 
-      // 5 Set Construction Scales
       if (CURRENT_DRAFT.setScale === "vfxgrand") cost += 350000000;
       else if (CURRENT_DRAFT.setScale === "grandcity") cost += 180000000;
       else if (CURRENT_DRAFT.setScale === "filmcity") cost += 60000000;
       else if (CURRENT_DRAFT.setScale === "real") cost += 20000000;
       else cost += 5000000;
 
-      // Real-World VFX Studios Pricing
       if (CURRENT_DRAFT.vfxQuality === "dneg") cost += 650000000;
       else if (CURRENT_DRAFT.vfxQuality === "redchillies") cost += 350000000;
       else if (CURRENT_DRAFT.vfxQuality === "nyvfx") cost += 150000000;
@@ -2468,7 +2539,6 @@
       return Math.min(99, Math.max(50, Math.round((dirScore * 0.30) + (castPower * 0.30) + (scriptScore * 0.20) + (musicScore * 0.10)) + lyricsBonus + vfxBonus + setBonus + locBonus));
     }
 
-    /* BOX OFFICE VERDICT ENGINE (11 TIERS) */
     function computeBoxOfficeVerdict(film) {
       const totalRecovery = film.producerEarnings + film.inflow;
       const budget = Math.max(1, film.cost);
@@ -2487,6 +2557,7 @@
       return { label: "All-Time Blockbuster", css: "verdict-all-time-blockbuster", desc: "Exceptional success by historical standards" };
     }
 
+    /* ADVANCE WEEK WITH RANDOM PRODUCTION & INDUSTRY EVENTS */
     function advanceWeek() {
       GAME_STATE.week++;
       if (GAME_STATE.debt > 0) {
@@ -2517,9 +2588,67 @@
       processWeeklyNews();
       driftRivalsAndFranchises();
 
+      // Trigger random production/industry event (30% chance per week if active productions exist)
+      if (GAME_STATE.activeProductions.length > 0 && Math.random() < 0.32) {
+        triggerRandomStudioEvent();
+      }
+
       saveState();
       renderAll();
       showToast(`Week ${GAME_STATE.week}!`, "info");
+    }
+
+    let ACTIVE_EVENT_TARGET_FILM = null;
+    function triggerRandomStudioEvent() {
+      const film = GAME_STATE.activeProductions[Math.floor(Math.random() * GAME_STATE.activeProductions.length)];
+      if (!film) return;
+      ACTIVE_EVENT_TARGET_FILM = film;
+
+      const ev = RANDOM_EVENTS_POOL[Math.floor(Math.random() * RANDOM_EVENTS_POOL.length)];
+      document.getElementById("event-modal-title").innerText = `${ev.title} (${film.title})`;
+      document.getElementById("event-modal-desc").innerText = ev.desc;
+
+      const choicesDiv = document.getElementById("event-modal-choices");
+      choicesDiv.innerHTML = ev.choices.map((c, idx) => `
+        <button class="event-choice-btn" onclick="resolveRandomEvent(${idx}, '${encodeURIComponent(JSON.stringify(ev))}')">
+          <div style="font-weight:700; font-size:0.82rem; color:var(--gold-bright);">${c.label}</div>
+        </button>
+      `).join('');
+
+      document.getElementById("modal-random-event").classList.add("active");
+    }
+
+    function resolveRandomEvent(choiceIdx, encodedEv) {
+      const ev = JSON.parse(decodeURIComponent(encodedEv));
+      const choice = ev.choices[choiceIdx];
+      const film = ACTIVE_EVENT_TARGET_FILM;
+
+      if (choice && film) {
+        if (choice.cashDelta < 0 && GAME_STATE.cash < Math.abs(choice.cashDelta)) {
+          showToast("Insufficient treasury cash for this choice!", "error");
+          return;
+        }
+        GAME_STATE.cash += (choice.cashDelta || 0);
+        if (choice.cashDelta < 0) film.cost += Math.abs(choice.cashDelta);
+        if (choice.repDelta) GAME_STATE.reputation = Math.min(100, Math.max(10, GAME_STATE.reputation + choice.repDelta));
+        if (choice.hypeDelta) film.hype = Math.min(100, Math.max(5, (film.hype || 50) + choice.hypeDelta));
+        if (choice.qualityDelta) film.quality = Math.min(99, Math.max(40, (film.quality || 75) + choice.qualityDelta));
+        if (choice.delayWeeks) {
+          film.weeksRemaining += choice.delayWeeks;
+          film.releaseWeek += choice.delayWeeks;
+        }
+
+        // Log event in Trade Wire
+        GAME_STATE.newsArchive.unshift({
+          week: GAME_STATE.week,
+          text: `[Breaking on ${film.title}] ${ev.title} - Studio took decisive action.`
+        });
+      }
+
+      document.getElementById("modal-random-event").classList.remove("active");
+      saveState();
+      renderAll();
+      showToast("Event resolved!", "success");
     }
 
     function applySpilloverToVeterans() {
@@ -2603,7 +2732,6 @@
       triggerConfetti();
     }
 
-    /* NO 53-WEEK CAP: RUNS ENDLESSLY UNTIL HYPE & SCREENS DEPLETE */
     function processTheatreCollections() {
       GAME_STATE.theatreRuns.forEach(run => {
         if (!run.active) return;
@@ -2631,7 +2759,7 @@
           publicitySurgeMult = 1.25;
         } else {
           let hypeDecay = 10;
-          if (run.quality >= 92) hypeDecay = 2; // High quality sustains hype very long
+          if (run.quality >= 92) hypeDecay = 2;
           else if (run.quality >= 85) hypeDecay = 5;
           else if (run.quality < 65) hypeDecay = 16;
           run.activeHype = Math.max(0, run.activeHype - hypeDecay);
@@ -2670,7 +2798,6 @@
           showToast(`PLATINUM JUBILEE! "${run.title}" reaches 75 weeks in theatres!`, "success");
         }
 
-        // Archive only when hype drops below 5 or active screens drop under 50
         if (run.activeHype <= 4 || run.activeScreens < 50) {
           run.active = false;
           archiveReleasedMovie(run);
@@ -2762,7 +2889,6 @@
       renderTheatricalRuns();
     }
 
-    /* VERDICT APPEARS ONLY AFTER 4 WEEKS OF THEATRICAL RUN */
     function renderTheatricalRuns() {
       const container = document.getElementById("theatrical-runs-container");
       const upContainer = document.getElementById("theatrical-upcoming-container");
@@ -3177,7 +3303,7 @@
 
     function openCreateFranchiseModal() {
       const titleVal = document.getElementById("movie-title").value.trim();
-      document.getElementById("new-franchise-name").value = titleVal ? `${titleVal} Universe` : "My Cinematic Universe";
+      document.getElementById("new-franchise-name").value = titleVal ? `${titleVal} Universe` : "";
       document.getElementById("modal-franchise").classList.add("active");
     }
     
@@ -3383,12 +3509,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v112b", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v112c", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v112b");
+        const raw = localStorage.getItem("bollywood_tycoon_v112c");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
