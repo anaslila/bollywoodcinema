@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.12(c1) — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.12(d) — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -20,10 +20,13 @@
     :root {
       --bg-base: #0d0d11;
       --bg-surface: #14141c;
-      --bg-surface-elevated: #1a1a24;
-      --bg-card: rgba(23, 23, 33, 0.88);
-      --border-color: rgba(212, 175, 55, 0.28);
-      --border-color-subtle: rgba(255, 255, 255, 0.08);
+      --bg-surface-elevated: #1c1c26;
+      --bg-card: rgba(23, 23, 33, 0.90);
+      --bg-header: rgba(13, 13, 17, 0.95);
+      --bg-hud: rgba(18, 18, 24, 0.96);
+      --bg-input: #0a0a0e;
+      --border-color: rgba(212, 175, 55, 0.32);
+      --border-color-subtle: rgba(255, 255, 255, 0.10);
       --gold-primary: #d4af37;
       --gold-bright: #f5c518;
       --gold-gradient: linear-gradient(135deg, #f5c518 0%, #d4af37 60%, #aa8010 100%);
@@ -40,19 +43,25 @@
     }
 
     [data-theme="light"] {
-      --bg-base: #f5f5fa;
+      --bg-base: #f2f3f7;
       --bg-surface: #ffffff;
-      --bg-surface-elevated: #ececf2;
-      --bg-card: rgba(255, 255, 255, 0.96);
-      --border-color: rgba(184, 134, 11, 0.40);
+      --bg-surface-elevated: #e6e8f0;
+      --bg-card: rgba(255, 255, 255, 0.97);
+      --bg-header: rgba(255, 255, 255, 0.96);
+      --bg-hud: rgba(255, 255, 255, 0.98);
+      --bg-input: #f8f9fc;
+      --border-color: rgba(180, 128, 8, 0.45);
       --border-color-subtle: rgba(0, 0, 0, 0.12);
       --gold-primary: #b8860b;
-      --gold-bright: #996515;
-      --gold-gradient: linear-gradient(135deg, #b8860b 0%, #d4af37 60%, #855c04 100%);
-      --text-main: #14141c;
-      --text-muted: #4b4b5e;
-      --text-subtle: #79798e;
-      --toast-bg: #14141c;
+      --gold-bright: #8a5a00;
+      --gold-gradient: linear-gradient(135deg, #f5c518 0%, #d4af37 65%, #b8860b 100%);
+      --text-main: #12121a;
+      --text-muted: #4a4b5d;
+      --text-subtle: #787a8f;
+      --success: #15803d;
+      --danger: #dc2626;
+      --warning: #d97706;
+      --toast-bg: #16161f;
       --toast-text: #ffffff;
     }
 
@@ -66,6 +75,7 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -86,12 +96,13 @@
     .splash-content { width: 360px; height: 640px; background: #000; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(212, 175, 55, 0.25); }
     .splash-gif { width: 100%; height: 100%; object-fit: cover; }
 
+    /* Sticky Header */
     header.main-header {
       position: sticky;
       top: 0;
       z-index: 900;
       backdrop-filter: blur(16px);
-      background: rgba(13, 13, 17, 0.94);
+      background: var(--bg-header);
       border-bottom: 1px solid var(--border-color);
       padding: 8px 12px;
       display: flex;
@@ -99,7 +110,6 @@
       justify-content: space-between;
       gap: 8px;
     }
-    [data-theme="light"] header.main-header { background: rgba(255, 255, 255, 0.95); }
 
     .brand-section { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
     .brand-icon { width: 34px; height: 34px; border-radius: 6px; object-fit: cover; border: 1.5px solid var(--gold-primary); flex-shrink: 0; }
@@ -114,8 +124,8 @@
       border-radius: 4px;
       outline: none;
       white-space: nowrap;
-      min-width: 70px;
-      flex-shrink: 1;
+      width: 100%;
+      max-width: 260px;
     }
     .studio-name-input:focus { border-color: var(--gold-primary); background: var(--bg-surface); }
 
@@ -131,6 +141,7 @@
       font-size: 0.75rem;
       font-weight: 600;
       white-space: nowrap;
+      color: var(--text-main);
     }
     .stat-badge i { color: var(--gold-bright); font-size: 0.78rem; }
     .badge-cash .badge-val { color: var(--success); font-weight: 800; }
@@ -152,41 +163,66 @@
       box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
     }
 
-    .mobile-bottom-advance-bar {
+    /* Mobile Bottom Footer Dock (Money + Advance Week) */
+    .mobile-bottom-footer {
       display: none;
       position: fixed;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 0;
+      left: 0;
+      right: 0;
       z-index: 890;
-      width: auto;
-      pointer-events: auto;
+      background: var(--bg-header);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-color);
+      padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+    }
+    .mobile-footer-cash {
+      display: flex;
+      flex-direction: column;
+    }
+    .mobile-footer-cash-lbl {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    .mobile-footer-cash-val {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--success);
     }
     .btn-advance-mobile {
       background: var(--gold-gradient);
       color: #0b0b0e;
       border: 1.5px solid #fff3b0;
-      padding: 12px 28px;
-      border-radius: 30px;
+      padding: 10px 24px;
+      border-radius: 26px;
       font-weight: 900;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-family: var(--font-display);
       letter-spacing: 0.5px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.85), 0 0 15px rgba(245, 197, 24, 0.5);
-      transition: transform 0.15s ease;
+      gap: 7px;
+      box-shadow: 0 4px 16px rgba(212, 175, 55, 0.45);
+      margin: 0 auto;
     }
-    .btn-advance-mobile:active { transform: scale(0.95); }
+    .btn-advance-mobile:active { transform: scale(0.96); }
 
     @media (max-width: 768px) {
       .btn-advance-desktop { display: none !important; }
-      .mobile-bottom-advance-bar { display: block; }
-      main.app-viewport { padding-bottom: 95px !important; }
-      .cost-inflow-hud { bottom: 68px !important; }
+      .header-stats .badge-cash { display: none !important; }
+      .mobile-bottom-footer { display: flex; }
+      .studio-name-input { max-width: 195px; font-size: 0.9rem; }
+      main.app-viewport { padding-bottom: 155px !important; }
+      .floating-wizard-controls { bottom: 112px !important; }
+      .cost-inflow-hud { bottom: 58px !important; border-radius: 8px; padding: 8px 10px; }
     }
 
     .btn-theme-toggle {
@@ -241,12 +277,12 @@
       box-shadow: 0 0 8px var(--gold-primary);
     }
 
-    main.app-viewport { flex: 1; padding: 12px; max-width: 1300px; width: 100%; margin: 0 auto 75px auto; }
+    main.app-viewport { flex: 1; padding: 12px; max-width: 1300px; width: 100%; margin: 0 auto 120px auto; }
     .tab-view { display: none; }
     .tab-view.active { display: block; animation: fadeIn 0.2s ease forwards; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-    .card { background: var(--bg-card); border: 1px solid var(--border-color-subtle); border-radius: 10px; padding: 14px; backdrop-filter: blur(12px); margin-bottom: 14px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-color-subtle); border-radius: 10px; padding: 14px; backdrop-filter: blur(12px); margin-bottom: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
     .card-title { font-family: var(--font-display); font-size: 1.05rem; color: var(--gold-bright); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 
     .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
@@ -281,9 +317,9 @@
     }
 
     .verdict-pill { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; }
-    .verdict-disaster, .verdict-flop { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
-    .verdict-below-average, .verdict-average { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
-    .verdict-above-average, .verdict-semi-hit, .verdict-hit { background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.4); }
+    .verdict-disaster, .verdict-flop { background: rgba(239, 68, 68, 0.18); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.4); }
+    .verdict-below-average, .verdict-average { background: rgba(245, 158, 11, 0.18); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.4); }
+    .verdict-above-average, .verdict-semi-hit, .verdict-hit { background: rgba(34, 197, 94, 0.18); color: var(--success); border: 1px solid rgba(34, 197, 94, 0.4); }
     .verdict-super-hit, .verdict-super-duper-hit, .verdict-blockbuster, .verdict-all-time-blockbuster { background: var(--gold-gradient); color: #000; border: 1px solid #fff3b0; box-shadow: 0 0 8px rgba(245, 197, 24, 0.5); }
 
     .wizard-steps-indicator { display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 8px 10px; margin-bottom: 14px; overflow-x: auto; gap: 6px; }
@@ -294,12 +330,27 @@
     .wizard-step-node.active .step-circle { background: var(--gold-gradient); color: #000; border-color: var(--gold-bright); font-weight: 900; }
     .wizard-step-node.completed .step-circle { background: var(--success); color: #000; border-color: var(--success); }
 
-    .pipeline-step-pane { display: none; }
+    .pipeline-step-pane { display: none; padding-bottom: 15px; }
     .pipeline-step-pane.active { display: block; }
     .step-badge { display: inline-block; background: var(--gold-primary); color: #000; font-weight: 800; font-size: 0.68rem; padding: 2px 6px; border-radius: 3px; margin-bottom: 4px; text-transform: uppercase; }
     .step-heading { font-family: var(--font-display); font-size: 1.1rem; color: var(--gold-bright); }
     .step-subtext { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; margin-bottom: 10px; }
-    .wizard-navigation-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--border-color-subtle); }
+
+    /* Floating Sticky Wizard Controls Above Budget HUD */
+    .floating-wizard-controls {
+      position: sticky;
+      bottom: 62px;
+      z-index: 810;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
 
     .tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 8px; margin-top: 8px; }
     @media (max-width: 600px) { .tiles-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 6px; } }
@@ -319,31 +370,31 @@
       transition: all 0.15s ease;
     }
     .tile-card:hover { border-color: var(--gold-primary); }
-    .tile-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.12); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+    .tile-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.14); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
     .tile-img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; margin-bottom: 4px; border: 1.5px solid var(--border-color); background: #202028; }
     .tile-icon-box { width: 42px; height: 42px; border-radius: 50%; background: rgba(212, 175, 55, 0.12); border: 1px solid var(--gold-primary); display: flex; align-items: center; justify-content: center; color: var(--gold-bright); font-size: 1.1rem; margin-bottom: 4px; }
     .tile-name { font-size: 0.74rem; font-weight: 700; color: var(--text-main); line-height: 1.1; margin-bottom: 2px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .tile-meta { font-size: 0.65rem; color: var(--text-muted); line-height: 1.1; margin-bottom: 2px; }
     .tile-fee { font-size: 0.68rem; font-weight: 700; color: var(--gold-bright); margin-top: auto; }
 
-    .role-toggle { display: flex; width: 100%; background: rgba(0, 0, 0, 0.4); border-radius: 4px; margin-top: 4px; overflow: hidden; border: 1px solid var(--border-color-subtle); }
+    .role-toggle { display: flex; width: 100%; background: var(--bg-surface-elevated); border-radius: 4px; margin-top: 4px; overflow: hidden; border: 1px solid var(--border-color-subtle); }
     .role-btn { flex: 1; padding: 2px 0; font-size: 0.62rem; font-weight: 700; background: transparent; border: none; color: var(--text-muted); cursor: pointer; }
     .role-btn.active { background: var(--gold-primary); color: #000; }
 
-    .loc-scope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 100%; margin-top: 4px; background: rgba(0,0,0,0.4); padding: 2px; border-radius: 4px; }
+    .loc-scope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 100%; margin-top: 4px; background: var(--bg-surface-elevated); padding: 2px; border-radius: 4px; }
     .loc-scope-btn { padding: 2px 0; font-size: 0.58rem; font-weight: 700; background: transparent; border: none; color: var(--text-muted); cursor: pointer; border-radius: 2px; }
     .loc-scope-btn.active { background: var(--gold-primary); color: #000; }
 
     .franchise-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-top: 6px; margin-bottom: 12px; }
     .franchise-tile-card { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 8px; cursor: pointer; text-align: left; }
     .franchise-tile-card:hover { border-color: var(--gold-primary); }
-    .franchise-tile-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.12); }
+    .franchise-tile-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.14); }
     .fran-tile-title { font-size: 0.75rem; font-weight: 800; color: var(--gold-bright); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
     .fran-tile-meta { font-size: 0.66rem; color: var(--text-muted); }
 
     .brand-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 8px; margin-top: 8px; }
     .brand-card { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 8px 6px; text-align: center; cursor: pointer; position: relative; }
-    .brand-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.12); }
+    .brand-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.14); }
     .brand-logo-img { height: 32px; max-width: 100%; object-fit: contain; margin-bottom: 4px; }
     .brand-name { font-size: 0.72rem; font-weight: 700; color: var(--text-main); }
     .brand-advance { font-size: 0.68rem; font-weight: 800; color: var(--success); }
@@ -369,7 +420,7 @@
       position: sticky;
       bottom: 8px;
       z-index: 800;
-      background: rgba(18, 18, 24, 0.95);
+      background: var(--bg-hud);
       backdrop-filter: blur(14px);
       border: 1px solid var(--gold-primary);
       border-radius: 10px;
@@ -379,7 +430,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      margin-top: 14px;
+      margin-top: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
     .hud-stat-col { display: flex; flex-direction: column; }
     .hud-label { font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); }
@@ -403,13 +455,13 @@
 
     .week-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-top: 8px; max-height: 280px; overflow-y: auto; padding: 2px; }
     .week-tile { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 6px; padding: 6px; cursor: pointer; text-align: left; }
-    .week-tile.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.14); }
+    .week-tile.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.16); }
     .week-tile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
     .week-tile-num { font-size: 0.76rem; font-weight: 800; color: var(--gold-bright); }
     .week-tile-impact { font-size: 0.65rem; font-weight: 800; padding: 1px 4px; border-radius: 4px; }
     .week-tile-impact.pos { background: rgba(34, 197, 94, 0.2); color: var(--success); }
     .week-tile-impact.neg { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-    .week-tile-impact.neu { background: rgba(255, 255, 255, 0.1); color: var(--text-muted); }
+    .week-tile-impact.neu { background: var(--bg-surface-elevated); color: var(--text-muted); }
     .week-tile-fest { font-size: 0.65rem; color: var(--text-muted); margin-bottom: 3px; }
     .week-tile-rival { font-size: 0.64rem; color: var(--warning); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -420,15 +472,16 @@
 
     .studios-intel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
     .studio-intel-card { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 12px; position: relative; }
-    .studio-intel-card.my-studio { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.05); }
+    .studio-intel-card.my-studio { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.08); }
     .studio-intel-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--border-color); }
     .studio-intel-card.my-studio::before { background: var(--gold-gradient); }
 
     .news-pagination-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-color-subtle); }
 
+    /* Non-disruptive Toasts: Top-right on Desktop, Above Bottom Footer on Mobile */
     #toast-container {
       position: fixed;
-      top: 65px;
+      top: 98px;
       right: 12px;
       z-index: 1000;
       display: flex;
@@ -438,6 +491,15 @@
       max-width: 320px;
       width: calc(100% - 24px);
     }
+    @media (max-width: 768px) {
+      #toast-container {
+        top: auto;
+        bottom: 66px;
+        left: 12px;
+        right: 12px;
+        max-width: none;
+      }
+    }
     .toast-msg {
       background: var(--toast-bg) !important;
       border-left: 3.5px solid var(--gold-bright);
@@ -446,7 +508,7 @@
       border-radius: 6px;
       font-size: 0.78rem;
       font-weight: 600;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(8px);
       pointer-events: auto;
       display: flex;
@@ -478,13 +540,14 @@
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.65);
+      color: var(--text-main);
     }
 
     .event-choice-btn {
       width: 100%;
       text-align: left;
-      background: var(--bg-base);
+      background: var(--bg-input);
       border: 1px solid var(--border-color);
       border-radius: 8px;
       padding: 10px 12px;
@@ -495,7 +558,7 @@
     }
     .event-choice-btn:hover {
       border-color: var(--gold-bright);
-      background: rgba(212, 175, 55, 0.1);
+      background: rgba(212, 175, 55, 0.12);
     }
 
     .btn-gold {
@@ -512,7 +575,7 @@
       gap: 5px;
     }
     .btn-outline {
-      background: transparent;
+      background: var(--bg-surface);
       border: 1px solid var(--border-color);
       color: var(--text-main);
       padding: 7px 14px;
@@ -521,10 +584,23 @@
       font-size: 0.8rem;
       cursor: pointer;
     }
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--danger);
+      color: var(--danger);
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
 
     .input-field {
       width: 100%;
-      background: var(--bg-base);
+      background: var(--bg-input);
       border: 1px solid var(--border-color-subtle);
       border-radius: 6px;
       padding: 8px 10px;
@@ -572,11 +648,16 @@
     </div>
   </header>
 
-  <!-- Mobile Bottom Center Advance Week Bar -->
-  <div class="mobile-bottom-advance-bar">
+  <!-- Mobile Bottom Footer Dock (Treasury Balance + Advance Week) -->
+  <div class="mobile-bottom-footer">
+    <div class="mobile-footer-cash">
+      <span class="mobile-footer-cash-lbl">Treasury Funds</span>
+      <span class="mobile-footer-cash-val" id="mobile-stat-cash">₹50 Cr</span>
+    </div>
     <button class="btn-advance-mobile" id="btn-advance-week-mobile">
       <i class="fa-solid fa-forward-step"></i> ADVANCE WEEK
     </button>
+    <div style="width: 48px;"></div>
   </div>
 
   <!-- Tab Navigation -->
@@ -626,7 +707,7 @@
       </div>
     </section>
 
-    <!-- 2. NEW MOVIE PIPELINE TAB (8 STEPS) -->
+    <!-- 2. NEW MOVIE PIPELINE TAB (8 STEPS WITH FLOATING CONTROLS) -->
     <section id="tab-new-movie" class="tab-view">
       <div class="card">
         <div class="card-title"><i class="fa-solid fa-clapperboard"></i> Filmmaking Pipeline Wizard</div>
@@ -674,7 +755,7 @@
 
           <label style="font-size:0.78rem; font-weight:700; margin-bottom:4px; display:block;">Project Title:</label>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
-            <input type="text" id="movie-title" class="input-field" placeholder="Enter Project Title" style="flex:1; margin-bottom:0;">
+            <input type="text" id="movie-title" class="input-field" placeholder="Enter Movie Title..." style="flex:1; margin-bottom:0;">
             <button class="btn-outline" id="btn-random-title"><i class="fa-solid fa-dice"></i> Random Title</button>
           </div>
 
@@ -767,11 +848,6 @@
           </div>
 
           <div class="tiles-grid" id="preset-posters-grid" style="grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));"></div>
-
-          <div class="wizard-navigation-bar">
-            <span></span>
-            <button class="btn-gold" onclick="goToStep(2)">Next: Choose Cast <i class="fa-solid fa-arrow-right"></i></button>
-          </div>
         </div>
 
         <!-- STEP 2: CAST SELECTION -->
@@ -782,10 +858,6 @@
             <p class="step-subtext">Cast size directly impacts international shooting travel & accommodation budgets!</p>
           </div>
           <div class="tiles-grid" id="actors-selection-grid"></div>
-          <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(1)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(3)">Next: Choose Director <i class="fa-solid fa-arrow-right"></i></button>
-          </div>
         </div>
 
         <!-- STEP 3: DIRECTOR SELECTION -->
@@ -796,10 +868,6 @@
             <p class="step-subtext">Select 1 director. Affects critical reception, box office hold, and awards contention.</p>
           </div>
           <div class="tiles-grid" id="directors-selection-grid"></div>
-          <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(2)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(4)">Next: Locations <i class="fa-solid fa-arrow-right"></i></button>
-          </div>
         </div>
 
         <!-- STEP 4: SHOOTING LOCATIONS -->
@@ -810,13 +878,7 @@
             <p class="step-subtext">Select multiple destinations. Toggle scope (Whole Movie / Half Movie / Shots / Songs). Prices scale with cast size!</p>
             <div style="font-size:0.75rem; color:var(--gold-bright); font-weight:700;" id="loc-cast-multiplier-label">Cast Travel Multiplier: 1.0x</div>
           </div>
-
           <div class="tiles-grid" id="locations-selection-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));"></div>
-
-          <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(3)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(5)">Next: Music & Lyrics <i class="fa-solid fa-arrow-right"></i></button>
-          </div>
         </div>
 
         <!-- STEP 5: MUSIC, ALBUM & LYRICS QUALITY -->
@@ -860,11 +922,6 @@
             <label style="font-size:0.78rem; font-weight:700;">Select Playback Singers:</label>
             <div class="tiles-grid" id="singers-selection-grid"></div>
           </div>
-
-          <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(4)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(6)">Next: Rights Deals <i class="fa-solid fa-arrow-right"></i></button>
-          </div>
         </div>
 
         <!-- STEP 6: PRE-RELEASE RIGHTS DEALS -->
@@ -885,11 +942,6 @@
 
           <label style="font-size:0.78rem; font-weight:700; margin-top:12px; display:block;">Satellite TV Broadcast Rights:</label>
           <div class="brand-tiles-grid" id="satellite-rights-grid"></div>
-
-          <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(5)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(7)">Next: Targeted Marketing <i class="fa-solid fa-arrow-right"></i></button>
-          </div>
         </div>
 
         <!-- STEP 7: TARGETED MARKETING -->
@@ -925,11 +977,6 @@
           </div>
 
           <div class="tiles-grid" id="marketing-campaigns-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));"></div>
-
-          <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(6)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(8)">Next: Release Slate <i class="fa-solid fa-arrow-right"></i></button>
-          </div>
         </div>
 
         <!-- STEP 8: RELEASE WINDOW & GREENLIGHT -->
@@ -941,15 +988,20 @@
           </div>
 
           <div class="week-tiles-grid" id="release-week-grid"></div>
-
-          <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(7)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" id="btn-confirm-production" style="padding:8px 20px; font-size:0.86rem;">
-              <i class="fa-solid fa-rocket"></i> Launch Production
-            </button>
-          </div>
         </div>
 
+        <!-- Floating Sticky Wizard Next/Back Controls Above Budget HUD -->
+        <div class="floating-wizard-controls">
+          <button class="btn-outline" id="btn-wizard-prev" onclick="wizardPrevStep()">
+            <i class="fa-solid fa-arrow-left"></i> Back
+          </button>
+          <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted);" id="wizard-step-counter-label">Step 1 of 8</span>
+          <button class="btn-gold" id="btn-wizard-next" onclick="wizardNextStep()">
+            Next <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Dual Live Costing & Earnings HUD -->
         <div class="cost-inflow-hud">
           <div class="hud-stat-col">
             <span class="hud-label">Budget & Promos</span>
@@ -1001,12 +1053,14 @@
       </div>
     </section>
 
-    <!-- 4. STUDIOS INTELLIGENCE TAB -->
+    <!-- 4. STUDIOS INTELLIGENCE TAB (WITH COMPANY ACQUISITION / SELL STUDIO) -->
     <section id="tab-studios" class="tab-view">
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-building"></i> Bollywood Studio Rankings</span>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Ranked dynamically by Total Net Worth & Fame</span>
+          <button class="btn-danger" style="font-size:0.74rem; padding:5px 10px;" onclick="openSellCompanyModal()">
+            <i class="fa-solid fa-handshake"></i> Sell My Studio
+          </button>
         </div>
         <div class="studios-intel-grid" id="studios-intel-grid"></div>
       </div>
@@ -1108,7 +1162,7 @@
       </div>
 
       <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">Studio Name:</label>
-      <input type="text" id="onboard-studio-name" class="input-field" placeholder="e.g. Novus Film Productions, Royal Cinema" value="Novus Film Productions">
+      <input type="text" id="onboard-studio-name" class="input-field" placeholder="e.g. Novus Film Productions" value="Novus Film Productions">
 
       <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">Studio Head / Producer Name:</label>
       <input type="text" id="onboard-head-name" class="input-field" placeholder="Enter Studio Head Name" value="Studio Founder">
@@ -1128,6 +1182,43 @@
     </div>
   </div>
 
+  <!-- MODAL: SELL COMPANY & BUYOUT NEGOTIATION -->
+  <div class="modal-overlay" id="modal-sell-company">
+    <div class="modal-window">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem;"><i class="fa-solid fa-handshake"></i> Studio Acquisition & Buyout</h3>
+        <button class="btn-outline" style="padding:2px 8px;" onclick="closeSellCompanyModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div style="background:var(--bg-input); border:1px solid var(--border-color-subtle); border-radius:8px; padding:10px; margin-bottom:12px; font-size:0.8rem;">
+        <div>Current Studio Valuation: <strong style="color:var(--gold-bright);" id="sell-studio-valuation">₹0</strong></div>
+        <div style="margin-top:4px;">Prospective Buyer: <strong style="color:var(--text-main);" id="sell-buyer-name">Jio Studios</strong></div>
+        <div style="margin-top:4px; font-size:0.95rem;">Active Buyout Offer: <strong style="color:var(--success);" id="sell-current-offer">₹0</strong></div>
+      </div>
+
+      <div id="sell-negotiation-status" style="font-size:0.78rem; color:var(--warning); margin-bottom:10px; font-weight:600;"></div>
+
+      <label style="font-size:0.75rem; font-weight:700; display:block; margin-bottom:6px;">Negotiate Counter-Offer:</label>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+        <button class="curved-choice-btn" onclick="negotiateBuyoutPercentage(5)">+5% Higher</button>
+        <button class="curved-choice-btn" onclick="negotiateBuyoutPercentage(10)">+10% Higher</button>
+        <button class="curved-choice-btn" onclick="negotiateBuyoutPercentage(20)">+20% Higher</button>
+      </div>
+
+      <div style="display:flex; gap:6px; margin-bottom:14px;">
+        <input type="number" id="sell-custom-counter-cr" class="input-field" placeholder="Enter custom amount in Crores (e.g. 250)" style="margin-bottom:0; flex:1;">
+        <button class="btn-outline" onclick="negotiateBuyoutCustom()">Pitch Offer</button>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; gap:8px;">
+        <button class="btn-danger" onclick="closeSellCompanyModal()">Walk Away</button>
+        <button class="btn-gold" id="btn-accept-buyout" onclick="acceptCompanyBuyout()">
+          <i class="fa-solid fa-check"></i> Accept Offer & Sell Studio
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: RANDOM PRODUCTION / INDUSTRY EVENT -->
   <div class="modal-overlay" id="modal-random-event">
     <div class="modal-window">
@@ -1144,7 +1235,7 @@
   <div class="modal-overlay" id="modal-franchise">
     <div class="modal-window">
       <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem; margin-bottom:10px;">Create New Studio Universe</h3>
-      <input type="text" id="new-franchise-name" class="input-field" placeholder="Franchise Name (e.g. Spy Universe, Cop Universe)">
+      <input type="text" id="new-franchise-name" class="input-field" placeholder="Franchise Name">
       <textarea id="new-franchise-desc" class="input-field" rows="3" placeholder="Franchise Lore & Theme"></textarea>
       <div style="display:flex; justify-content:flex-end; gap:6px;">
         <button class="btn-outline" onclick="closeCreateFranchiseModal(true)">Cancel</button>
@@ -1188,14 +1279,14 @@
   <!-- END OF PART 1 — APPEND PART 2 IMMEDIATELY BELOW THIS LINE -->
 <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.12(c1) — COMPLETE TYCOON ENGINE (PART 2)
+       BOLLYWOOD CINEMA v1.12(d) — COMPLETE TYCOON ENGINE (PART 2)
        ========================================================================= */
 
     function dismissSplash() {
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v112c1_init")) {
+        if (!localStorage.getItem("bollywood_tycoon_v112d_init")) {
           const modal = document.getElementById("modal-onboarding");
           if (modal) modal.classList.add("active");
         }
@@ -1207,6 +1298,12 @@
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) dismissSplash();
     }, { once: true });
+
+    const FICTIONAL_MOVIE_TITLES = [
+      "Aakhri Baazi", "Raaz Mahal", "Sultan Returns", "Mumbai Mafia", "The Last Emperor", "Jung Ka Junoon", "Ishqnama", "Badla 3", "MahaYudh", "Khiladi 786 Returns", "Raktbeej", "Mission Kashmir 2", "Sikandar Returns", "Shaitaan Returns", "Dilwale 3", "Kaal Chakra", "Operation Trishul", "Maharaja", "Aag Ka Dariya", "Zakhmi Sher", "Raja Hindustani 2", "Dhadkan 2", "Black Tiger", "Chakravyuh", "Junglee 2", "Mumbai Express", "Aakhri Jung", "The Revenge", "Sher-e-Hindustan", "Khooni Khel", "Baazigar Returns", "Ishq Ka Junoon", "Toofan 2", "Vijaypath Returns", "Samrat", "Kaala Saaya", "Operation Dastaan", "Badshah 2", "Rang De Ishq", "Maut Ka Khel", "Agni Pariksha", "Rudra", "Dushman 2", "Singham Returns 3", "Ek Tha Sultan", "The Untold Story", "Jazbaat", "Aakhri Faisla", "Vardi", "Mahakaal",
+      "Agnipath Returns", "Khoj", "Raja Vikram", "Sitamgarh", "The Final Hunt", "Jaanbaaz", "Kaali Raat", "Mardaani 3", "Junooniyat", "Fatehgarh", "Aakhri Mohabbat", "Vansh", "Darr Ka Saya", "Raja Babu 2", "Karmayudh", "Shatranj", "Khoon Ka Karz", "Nishaan", "Badlaav", "Azaad Parinda", "Suryavanshi 2", "Dil Ki Jung", "Rangbaaz", "Kaalpurush", "Sikandar-e-Azam", "Aakhri Raasta 2", "Maya Mahal", "Khiladi No. 1", "Jungbaz", "Dharamveer", "Rannbhoomi", "Tehelka 2", "Raakh", "Dhokebaaz", "Ishq Aur Inteqam", "Zanjeer Returns", "Maha Sangram", "Gumnaam Shehar", "Raja Rani 3", "Aandhi Toofan", "Sherdil", "Kaali Duniya", "Vishwaroop", "Murder Express", "Satrangi Ishq", "Chandni Chowk 2", "Diler", "Aakhri Sipahi", "Krantiveer 2", "Khiladiyon Ka Khiladi 2", "Aagaz", "Sultanpur", "Jeevan Mrityu", "Sazaa", "Rang Mahal", "Nirbhay", "Dastaan-e-Mumbai", "Raazdar", "Benaam Rishta", "Dhoop Chhaon", "The Black Fortress", "Rudraksh 2", "Kaal Yatra", "Shikari", "Dushmani", "Aakhri Gawah", "Jalaluddin", "Ishqbaaz", "Maha Kaal", "Sangharsh 2", "Dil Se Dushman", "Khatarnak", "Vijeta", "Naya Daur 2", "Chingari", "Sultan-e-Hind", "Maut Ki Jung", "Aakhri Badla", "Khiladi Returns", "Raaz-e-Haqeeqat", "Dhadak 3", "Zulm", "Maharathi", "Dastaan", "Sikandar Ka Insaaf", "Kaal Kothri", "Bharat Ke Veer", "Jaanam", "Aag Aur Angaare", "The Last Warrior", "Mitti", "Diler Jawan", "Murder Mansion", "Raja Vikramaditya", "Ishq Mein Qurbaan", "Sangram 3", "Shatru", "Aakhri Manzil", "Vardi Wala", "Andhera", "Maha Rakshak", "Kaal Bhairav", "Duniya Meri Mutthi Mein 2", "Raaz-e-Sultan", "Jung Ka Badshah", "Chor Bazaar", "Dil Ka Faisla", "Azaadi Ke Deewane", "Sannata", "Ek Aur Sikandar", "Raktcharitra 3", "Naya Khiladi", "The Forgotten King", "Benaam Badshah", "Aakhri Dastaan", "Toofani", "Maut Ka Sauda", "Sher Khan", "Jeevan Yudh", "Shikaar 2", "Maya Jaal", "Karmveer", "Aag Ke Sholay", "Dushman-e-Watan", "Chakradhar", "Raat Ka Raaz", "Siyasat", "Aakhri Chunauti", "Ishqnama 2", "Badshah-e-Hind", "Zakhm 2", "Maha Pralay", "Jungli Raja", "Khiladiyon Ki Jung", "Aakhri Insaaf", "Sone Ka Sher", "Darr Returns", "Kaala Baaz", "Murder City", "Sangdil", "Raja Ka Raj", "The Great Maharaja", "Inteqam", "Aakhri Kasam", "Vijay Singh", "Dharam Yudh", "Sultan Ka Vaar", "Nishachar", "Ek Tha Baaz", "Khooni Darwaza", "Rannveer", "Aakhri Taqdeer", "Maha Shakti", "Zameen Ka Badshah", "Ishq Ki Aag", "Dushman Ka Dushman", "Tridev Returns", "Samay Chakra", "Aakhri Jungli",
+      "Aasmaan Ke Paar", "Raakh Ka Taj", "Sheher-e-Khamoshi", "Saatva Darwaza", "Neeli Aag", "Khwabon Ka Qaatil", "Zameer Ki Jung", "Sunehri Raat", "Aakhri Sawaal", "Dil Ka Samandar", "Kaali Lakeer", "Waqt Ka Shikaar", "Satrangi Aandhi", "Mitti Ka Sikandar", "Qismatnama", "Andekha Raasta", "Surkh Nishaan", "Khamosh Gawah", "Parchhaiyon Ka Sheher", "Aag Ke Musafir", "Dastaan-e-Zulmat", "Saat Khoon Maaf Nahi", "Sitam Ka Mausam", "Neend Ka Saudagar", "Ajnabi Khoon", "Teesra Chehra", "Gumnaam Raaj", "Sone Ki Zanjeer", "Aakhri Aasmaan", "Khwabon Ka Mahal", "Laal Samandar", "Raaz-e-Raat", "Bechain Rooh", "Zinda Nishaan", "Sheeshon Ka Sheher", "Maut Ki Lakeer", "Jalte Hain Chirag", "Safed Andhera", "Kismat Ka Khel", "Ajnabi Duniya", "Dhuaan Mahal", "Khaufnama", "Ek Raat Ka Qatl", "Toota Hua Taaj", "Paanchva Darwaza", "Rait Ka Toofan", "Sard Hawayein", "Aakhri Musafir", "Kaanch Ka Dil", "Jazbe Ka Junoon", "Zameen Ke Neeche", "Siyah Aasmaan", "Chand Ka Qaatil", "Gehra Zakham", "Anjaani Manzil", "Qatl Ki Raat", "Dilon Ka Hisab", "Aasmaani Dushman", "Mitti Mein Sona", "Khauf Ke Saaye", "Doosri Zindagi", "Sannate Ki Awaaz", "Paanchva Khiladi", "Laapata Sheher", "Kaalikh", "Jhootha Chehra", "Sone Ka Pinjra", "Aakhri Tamanna", "Rishton Ka Qatl", "Dhundhla Sach", "Tez Nazar", "Barood Ki Baarish", "Ek Adhoora Khwab", "Sheher Ka Raaz", "Khaak Aur Khazana", "Raaton Ka Raahi", "Zulfon Ke Saaye", "Dariya-e-Khoon", "Aakhri Hukum", "Bikhre Sitare", "Khwabon Ki Qeemat", "Namak Ka Karz", "Chupke Se Qatl", "Sitamgar", "Pehla Gunaah", "Aasmaan Ka Waaris", "Gehri Chaal", "Kachchi Deewar", "Sunehra Qafila", "Katilana Ishq", "Raat Ka Waaris", "Dhoondta Dil", "Laal Haveli Ka Raaz", "Tanha Sipahi", "Qismat Ka Darbar", "Ajnabi Waaris", "Dard Ka Samandar", "Aag Mein Phool", "BeNaam Qasoor", "Chaar Deewaron Ke Paar", "Siyah Panna", "Mitti Ka Karz", "Aakhri Goonj", "Pehchaan Ke Peechhe", "Saatva Saaya", "Khwabon Ka Shikaar", "Raat Ki Tehreer", "Dilon Ka Toofan", "Khoj-e-Wajood", "Sunehri Qaid", "Ajnabi Aaina", "Zakhmon Ka Sheher", "Dhundh Ka Raaj", "Ishq Ka Muqadma", "Khaali Kursi", "Qatl-e-Khwab", "Gumnaam Badshahat", "Aakhri Udaan", "Neend Mein Qaatil", "Sitaron Ka Qatl", "Benaam Manzil", "Zameer Ka Saudagar", "Aag Ka Aaina", "Pardah-e-Raaz", "Ek Mutthi Aasmaan", "Khamosh Toofan", "Rait Ka Mahal", "Kismat Ke Kaidi", "Ajnabi Faisla", "Dardnama", "Sheher-e-Ajnabi", "Chandni Ka Zehar", "Aakhri Dastak", "Wajood Ka Sawal", "Kaali Kitaab", "Sone Ki Mitti", "Qurbat", "Gehraaiyon Ka Raaz", "Paanchva Mausam", "Aakhri Roshni", "Toote Taaj Ka Waaris", "Dilon Ka Qila", "Zulmat Ke Paar", "Aasmaan Ki Qasam", "Ek Khamosh Qatl", "Raat Ka Musavvir"
+    ];
 
     const POSTER_PRESETS = [
       "https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/23/10/06%20-%20Back%20to%20the%20Future.jpg",
@@ -1465,9 +1562,12 @@
     let ACTIVE_PUBLICITY_RUN_ID = null;
     let CURRENT_NEWS_PAGE = 0;
 
-    // Global state for active random event modal
+    // Global Event & M&A States
     let ACTIVE_EVENT_TARGET_FILM = null;
     let CURRENT_RANDOM_EVENT = null;
+    let ACTIVE_BUYOUT_OFFER = 0;
+    let ACTIVE_BUYOUT_BUYER = "";
+    let NEGOTIATION_ATTEMPTS = 0;
 
     let CURRENT_DRAFT = {
       title: "",
@@ -1528,8 +1628,7 @@
       document.getElementById("btn-theme-toggle").addEventListener("click", toggleTheme);
 
       document.getElementById("btn-random-title").addEventListener("click", () => {
-        const titles = ["Aakhri Baazi", "Raaz Mahal", "Sultan Returns", "Mumbai Mafia", "The Last Emperor", "Jung Ka Junoon", "Ishqnama", "Badla 3", "MahaYudh", "Khiladi 786 Returns", "Raktbeej", "Mission Kashmir 2", "Sikandar Returns", "Shaitaan Returns", "Dilwale 3", "Kaal Chakra", "Operation Trishul", "Maharaja", "Aag Ka Dariya", "Zakhmi Sher", "Raja Hindustani 2", "Dhadkan 2", "Black Tiger", "Chakravyuh", "Junglee 2", "Mumbai Express", "Aakhri Jung", "The Revenge", "Sher-e-Hindustan", "Khooni Khel", "Baazigar Returns", "Ishq Ka Junoon", "Toofan 2", "Vijaypath Returns", "Samrat", "Kaala Saaya", "Operation Dastaan", "Badshah 2", "Rang De Ishq", "Maut Ka Khel", "Agni Pariksha", "Rudra", "Dushman 2", "Singham Returns 3", "Ek Tha Sultan", "The Untold Story", "Jazbaat", "Aakhri Faisla", "Vardi", "Mahakaal","Agnipath Returns", "Khoj", "Raja Vikram", "Sitamgarh", "The Final Hunt", "Jaanbaaz", "Kaali Raat", "Mardaani 3", "Junooniyat", "Fatehgarh", "Aakhri Mohabbat", "Vansh", "Darr Ka Saya", "Raja Babu 2", "Karmayudh", "Shatranj", "Khoon Ka Karz", "Nishaan", "Badlaav", "Azaad Parinda", "Suryavanshi 2", "Dil Ki Jung", "Rangbaaz", "Kaalpurush", "Sikandar-e-Azam", "Aakhri Raasta 2", "Maya Mahal", "Khiladi No. 1", "Jungbaz", "Dharamveer", "Rannbhoomi", "Tehelka 2", "Raakh", "Dhokebaaz", "Ishq Aur Inteqam", "Zanjeer Returns", "Maha Sangram", "Gumnaam Shehar", "Raja Rani 3", "Aandhi Toofan", "Sherdil", "Kaali Duniya", "Vishwaroop", "Murder Express", "Satrangi Ishq", "Chandni Chowk 2", "Diler", "Aakhri Sipahi", "Krantiveer 2", "Khiladiyon Ka Khiladi 2", "Aagaz", "Sultanpur", "Jeevan Mrityu", "Sazaa", "Rang Mahal", "Nirbhay", "Dastaan-e-Mumbai", "Raazdar", "Benaam Rishta", "Dhoop Chhaon", "The Black Fortress", "Rudraksh 2", "Kaal Yatra", "Shikari", "Dushmani", "Aakhri Gawah", "Jalaluddin", "Ishqbaaz", "Maha Kaal", "Sangharsh 2", "Dil Se Dushman", "Khatarnak", "Vijeta", "Naya Daur 2", "Chingari", "Sultan-e-Hind", "Maut Ki Jung", "Aakhri Badla", "Khiladi Returns", "Raaz-e-Haqeeqat", "Dhadak 3", "Zulm", "Maharathi", "Dastaan", "Sikandar Ka Insaaf", "Kaal Kothri", "Bharat Ke Veer", "Jaanam", "Aag Aur Angaare", "The Last Warrior", "Mitti", "Diler Jawan", "Murder Mansion", "Raja Vikramaditya", "Ishq Mein Qurbaan", "Sangram 3", "Shatru", "Aakhri Manzil", "Vardi Wala", "Andhera", "Maha Rakshak", "Kaal Bhairav", "Duniya Meri Mutthi Mein 2", "Raaz-e-Sultan", "Jung Ka Badshah", "Chor Bazaar", "Dil Ka Faisla", "Azaadi Ke Deewane", "Sannata", "Ek Aur Sikandar", "Raktcharitra 3", "Naya Khiladi", "The Forgotten King", "Benaam Badshah", "Aakhri Dastaan", "Toofani", "Maut Ka Sauda", "Sher Khan", "Jeevan Yudh", "Shikaar 2", "Maya Jaal", "Karmveer", "Aag Ke Sholay", "Dushman-e-Watan", "Chakradhar", "Raat Ka Raaz", "Siyasat", "Aakhri Chunauti", "Ishqnama 2", "Badshah-e-Hind", "Zakhm 2", "Maha Pralay", "Jungli Raja", "Khiladiyon Ki Jung", "Aakhri Insaaf", "Sone Ka Sher", "Darr Returns", "Kaala Baaz", "Murder City", "Sangdil", "Raja Ka Raj", "The Great Maharaja", "Inteqam", "Aakhri Kasam", "Vijay Singh", "Dharam Yudh", "Sultan Ka Vaar", "Nishachar", "Ek Tha Baaz", "Khooni Darwaza", "Rannveer", "Aakhri Taqdeer", "Maha Shakti", "Zameen Ka Badshah", "Ishq Ki Aag", "Dushman Ka Dushman", "Tridev Returns", "Samay Chakra", "Aakhri Jungli","Aasmaan Ke Paar", "Raakh Ka Taj", "Sheher-e-Khamoshi", "Saatva Darwaza", "Neeli Aag", "Khwabon Ka Qaatil", "Zameer Ki Jung", "Sunehri Raat", "Aakhri Sawaal", "Dil Ka Samandar", "Kaali Lakeer", "Waqt Ka Shikaar", "Satrangi Aandhi", "Mitti Ka Sikandar", "Qismatnama", "Andekha Raasta", "Surkh Nishaan", "Khamosh Gawah", "Parchhaiyon Ka Sheher", "Aag Ke Musafir", "Dastaan-e-Zulmat", "Saat Khoon Maaf Nahi", "Sitam Ka Mausam", "Neend Ka Saudagar", "Ajnabi Khoon", "Teesra Chehra", "Gumnaam Raaj", "Sone Ki Zanjeer", "Aakhri Aasmaan", "Khwabon Ka Mahal", "Laal Samandar", "Raaz-e-Raat", "Bechain Rooh", "Zinda Nishaan", "Sheeshon Ka Sheher", "Maut Ki Lakeer", "Jalte Hain Chirag", "Safed Andhera", "Kismat Ka Khel", "Ajnabi Duniya", "Dhuaan Mahal", "Khaufnama", "Ek Raat Ka Qatl", "Toota Hua Taaj", "Paanchva Darwaza", "Rait Ka Toofan", "Sard Hawayein", "Aakhri Musafir", "Kaanch Ka Dil", "Jazbe Ka Junoon", "Zameen Ke Neeche", "Siyah Aasmaan", "Chand Ka Qaatil", "Gehra Zakham", "Anjaani Manzil", "Qatl Ki Raat", "Dilon Ka Hisab", "Aasmaani Dushman", "Mitti Mein Sona", "Khauf Ke Saaye", "Doosri Zindagi", "Sannate Ki Awaaz", "Paanchva Khiladi", "Laapata Sheher", "Kaalikh", "Jhootha Chehra", "Sone Ka Pinjra", "Aakhri Tamanna", "Rishton Ka Qatl", "Dhundhla Sach", "Tez Nazar", "Barood Ki Baarish", "Ek Adhoora Khwab", "Sheher Ka Raaz", "Khaak Aur Khazana", "Raaton Ka Raahi", "Zulfon Ke Saaye", "Dariya-e-Khoon", "Aakhri Hukum", "Bikhre Sitare", "Khwabon Ki Qeemat", "Namak Ka Karz", "Chupke Se Qatl", "Sitamgar", "Pehla Gunaah", "Aasmaan Ka Waaris", "Gehri Chaal", "Kachchi Deewar", "Sunehra Qafila", "Katilana Ishq", "Raat Ka Waaris", "Dhoondta Dil", "Laal Haveli Ka Raaz", "Tanha Sipahi", "Qismat Ka Darbar", "Ajnabi Waaris", "Dard Ka Samandar", "Aag Mein Phool", "BeNaam Qasoor", "Chaar Deewaron Ke Paar", "Siyah Panna", "Mitti Ka Karz", "Aakhri Goonj", "Pehchaan Ke Peechhe", "Saatva Saaya", "Khwabon Ka Shikaar", "Raat Ki Tehreer", "Dilon Ka Toofan", "Khoj-e-Wajood", "Sunehri Qaid", "Ajnabi Aaina", "Zakhmon Ka Sheher", "Dhundh Ka Raaj", "Ishq Ka Muqadma", "Khaali Kursi", "Qatl-e-Khwab", "Gumnaam Badshahat", "Aakhri Udaan", "Neend Mein Qaatil", "Sitaron Ka Qatl", "Benaam Manzil", "Zameer Ka Saudagar", "Aag Ka Aaina", "Pardah-e-Raaz", "Ek Mutthi Aasmaan", "Khamosh Toofan", "Rait Ka Mahal", "Kismat Ke Kaidi", "Ajnabi Faisla", "Dardnama", "Sheher-e-Ajnabi", "Chandni Ka Zehar", "Aakhri Dastak", "Wajood Ka Sawal", "Kaali Kitaab", "Sone Ki Mitti", "Qurbat", "Gehraaiyon Ka Raaz", "Paanchva Mausam", "Aakhri Roshni", "Toote Taaj Ka Waaris", "Dilon Ka Qila", "Zulmat Ke Paar", "Aasmaan Ki Qasam", "Ek Khamosh Qatl", "Raat Ka Musavvir"];
-        const chosen = titles[Math.floor(Math.random() * titles.length)];
+        const chosen = FICTIONAL_MOVIE_TITLES[Math.floor(Math.random() * FICTIONAL_MOVIE_TITLES.length)];
         document.getElementById("movie-title").value = chosen;
         CURRENT_DRAFT.title = chosen;
         syncFranchiseNameFromTitle();
@@ -1581,7 +1680,6 @@
         });
       });
 
-      document.getElementById("btn-confirm-production").addEventListener("click", greenlightFilm);
       document.getElementById("btn-confirm-rerelease").addEventListener("click", confirmReReleaseExecution);
       document.addEventListener("click", playHaptic);
     }
@@ -1612,7 +1710,7 @@
       GAME_STATE.studioName = chosenName;
       GAME_STATE.studioHead = chosenHead;
       GAME_STATE.cash = SELECTED_ONBOARD_CAPITAL;
-      localStorage.setItem("bollywood_tycoon_v112c1_init", "true");
+      localStorage.setItem("bollywood_tycoon_v112d_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
@@ -1680,6 +1778,41 @@
       updateCostHUD();
     }
 
+    /* FLOATING WIZARD NAVIGATION CONTROLS */
+    function wizardPrevStep() {
+      if (CURRENT_WIZARD_STEP > 1) {
+        goToStep(CURRENT_WIZARD_STEP - 1);
+      }
+    }
+
+    function wizardNextStep() {
+      if (CURRENT_WIZARD_STEP < 8) {
+        goToStep(CURRENT_WIZARD_STEP + 1);
+      } else {
+        greenlightFilm();
+      }
+    }
+
+    function updateFloatingWizardButtons() {
+      const prevBtn = document.getElementById("btn-wizard-prev");
+      const nextBtn = document.getElementById("btn-wizard-next");
+      const lbl = document.getElementById("wizard-step-counter-label");
+
+      if (prevBtn) {
+        prevBtn.style.visibility = CURRENT_WIZARD_STEP === 1 ? "hidden" : "visible";
+      }
+      if (lbl) {
+        lbl.innerText = `Step ${CURRENT_WIZARD_STEP} of 8`;
+      }
+      if (nextBtn) {
+        if (CURRENT_WIZARD_STEP === 8) {
+          nextBtn.innerHTML = `<i class="fa-solid fa-rocket"></i> Launch Film`;
+        } else {
+          nextBtn.innerHTML = `Next <i class="fa-solid fa-arrow-right"></i>`;
+        }
+      }
+    }
+
     function goToStep(stepNumber) {
       if (stepNumber < 1 || stepNumber > 8) return;
       if (stepNumber > 1 && CURRENT_WIZARD_STEP === 1 && !CURRENT_DRAFT.title.trim()) {
@@ -1704,6 +1837,8 @@
       document.querySelectorAll(".pipeline-step-pane").forEach(pane => pane.classList.remove("active"));
       const activePane = document.getElementById(`wizard-step-${CURRENT_WIZARD_STEP}`);
       if (activePane) activePane.classList.add("active");
+
+      updateFloatingWizardButtons();
       window.scrollTo({ top: 110, behavior: 'smooth' });
     }
 
@@ -1726,14 +1861,25 @@
       renderCalendar();
       renderStudiosIntel();
       renderPaginatedNews();
+      updateFloatingWizardButtons();
       updateCostHUD();
     }
 
+    function getStudioValuation() {
+      const runningGross = GAME_STATE.theatreRuns.filter(r => r.active).reduce((sum, r) => sum + (r.totalGross || 0), 0);
+      const archivedGross = GAME_STATE.releasedMovies.reduce((sum, m) => sum + (m.totalGross || 0), 0);
+      return Math.max(100000000, GAME_STATE.cash + (GAME_STATE.reputation * 15000000) + Math.round((runningGross + archivedGross) * 0.4) - GAME_STATE.debt);
+    }
+
     function updateHeaderStats() {
-      document.getElementById("stat-cash").innerText = formatINR(GAME_STATE.cash);
+      const formattedCash = formatINR(GAME_STATE.cash);
+      document.getElementById("stat-cash").innerText = formattedCash;
+      const mobCash = document.getElementById("mobile-stat-cash");
+      if (mobCash) mobCash.innerText = formattedCash;
+
       document.getElementById("stat-week").innerText = GAME_STATE.week;
       document.getElementById("stat-rep").innerText = GAME_STATE.reputation;
-      document.getElementById("dash-net-worth").innerText = formatINR(GAME_STATE.cash + (GAME_STATE.reputation * 10000000));
+      document.getElementById("dash-net-worth").innerText = formatINR(getStudioValuation());
       document.getElementById("dash-released-count").innerText = GAME_STATE.releasedMovies.length + GAME_STATE.theatreRuns.filter(r => r.active).length;
       document.getElementById("dash-awards-count").innerHTML = `<i class="fa-solid fa-award"></i> ${GAME_STATE.totalAwardsWon}`;
 
@@ -1741,7 +1887,7 @@
       const archivedGross = GAME_STATE.releasedMovies.reduce((sum, m) => sum + (m.totalGross || 0), 0);
       document.getElementById("dash-box-office").innerText = formatINR(runningGross + archivedGross);
 
-      document.getElementById("fin-cash").innerText = formatINR(GAME_STATE.cash);
+      document.getElementById("fin-cash").innerText = formattedCash;
       document.getElementById("fin-debt").innerText = formatINR(GAME_STATE.debt);
       document.getElementById("fin-interest").innerText = formatINR(Math.round(GAME_STATE.debt * 0.015)) + " /wk";
     }
@@ -1754,7 +1900,7 @@
         id: "my_studio",
         name: GAME_STATE.studioName,
         boss: GAME_STATE.studioHead || "Studio Founder",
-        capital: GAME_STATE.cash,
+        capital: getStudioValuation(),
         films: GAME_STATE.releasedMovies.length,
         fame: GAME_STATE.reputation,
         isPlayer: true
@@ -1773,12 +1919,116 @@
             </span>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Head: ${s.boss}</div>
-          <div style="font-size:0.8rem; margin-bottom:3px;">Treasury / Net Worth: <strong style="color:var(--success);">${formatINR(s.capital)}</strong></div>
+          <div style="font-size:0.8rem; margin-bottom:3px;">Studio Valuation: <strong style="color:var(--success);">${formatINR(s.capital)}</strong></div>
           <div style="font-size:0.8rem; margin-bottom:3px;">Films Catalog: <strong>${s.films} Films</strong></div>
           <div style="font-size:0.8rem; margin-bottom:6px;">Fame / Prestige: <strong style="color:var(--gold-bright);">${s.fame}/100</strong></div>
           ${s.slate ? `<div style="font-size:0.72rem; color:var(--gold-bright); border-top:1px dashed var(--border-color-subtle); padding-top:4px; margin-top:6px;">Slate: <span style="color:var(--text-muted);">${s.slate}</span></div>` : ''}
         </div>
       `).join('');
+    }
+
+    /* COMPANY ACQUISITION & VALUATION NEGOTIATION SYSTEM */
+    function openSellCompanyModal() {
+      const val = getStudioValuation();
+      const buyer = COMPETITOR_STUDIOS[Math.floor(Math.random() * COMPETITOR_STUDIOS.length)];
+      ACTIVE_BUYOUT_BUYER = buyer.name;
+      NEGOTIATION_ATTEMPTS = 0;
+
+      // Initial buyer offer ranges between 85% and 115% of valuation
+      const variance = 0.85 + (Math.random() * 0.30);
+      ACTIVE_BUYOUT_OFFER = Math.round(val * variance);
+
+      document.getElementById("sell-studio-valuation").innerText = formatINR(val);
+      document.getElementById("sell-buyer-name").innerText = ACTIVE_BUYOUT_BUYER;
+      document.getElementById("sell-current-offer").innerText = formatINR(ACTIVE_BUYOUT_OFFER);
+      document.getElementById("sell-negotiation-status").innerText = `${ACTIVE_BUYOUT_BUYER} has submitted an initial acquisition bid.`;
+      document.getElementById("sell-custom-counter-cr").value = "";
+      document.getElementById("modal-sell-company").classList.add("active");
+    }
+
+    function closeSellCompanyModal() {
+      document.getElementById("modal-sell-company").classList.remove("active");
+    }
+
+    function negotiateBuyoutPercentage(pct) {
+      const targetAmount = Math.round(ACTIVE_BUYOUT_OFFER * (1 + pct / 100));
+      evaluateBuyerResponse(targetAmount);
+    }
+
+    function negotiateBuyoutCustom() {
+      const crVal = parseFloat(document.getElementById("sell-custom-counter-cr").value);
+      if (isNaN(crVal) || crVal <= 0) {
+        showToast("Enter a valid valuation in Crores!", "error");
+        return;
+      }
+      const targetAmount = Math.round(crVal * 10000000);
+      evaluateBuyerResponse(targetAmount);
+    }
+
+    function evaluateBuyerResponse(askedAmount) {
+      const statusEl = document.getElementById("sell-negotiation-status");
+      statusEl.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${ACTIVE_BUYOUT_BUYER} board is reviewing your counter-offer of ${formatINR(askedAmount)}...`;
+
+      setTimeout(() => {
+        NEGOTIATION_ATTEMPTS++;
+        const valuation = getStudioValuation();
+        const maxWillingToPay = valuation * (1.10 + (GAME_STATE.reputation / 200));
+
+        if (NEGOTIATION_ATTEMPTS > 3 && askedAmount > maxWillingToPay) {
+          statusEl.innerHTML = `<span style="color:var(--danger);">${ACTIVE_BUYOUT_BUYER} rejected your counter-offer and holds firm at ${formatINR(ACTIVE_BUYOUT_OFFER)}.</span>`;
+          return;
+        }
+
+        if (askedAmount <= maxWillingToPay) {
+          ACTIVE_BUYOUT_OFFER = askedAmount;
+          document.getElementById("sell-current-offer").innerText = formatINR(ACTIVE_BUYOUT_OFFER);
+          statusEl.innerHTML = `<span style="color:var(--success);">${ACTIVE_BUYOUT_BUYER} ACCEPTED your counter-offer of ${formatINR(ACTIVE_BUYOUT_OFFER)}!</span>`;
+        } else {
+          // Buyer counter-offers halfway up
+          const counterOffer = Math.round((ACTIVE_BUYOUT_OFFER + Math.min(askedAmount, maxWillingToPay)) / 2);
+          if (counterOffer > ACTIVE_BUYOUT_OFFER) {
+            ACTIVE_BUYOUT_OFFER = counterOffer;
+            document.getElementById("sell-current-offer").innerText = formatINR(ACTIVE_BUYOUT_OFFER);
+            statusEl.innerHTML = `<span style="color:var(--warning);">${ACTIVE_BUYOUT_BUYER} rejected ${formatINR(askedAmount)}, but countered with ${formatINR(ACTIVE_BUYOUT_OFFER)}.</span>`;
+          } else {
+            statusEl.innerHTML = `<span style="color:var(--danger);">${ACTIVE_BUYOUT_BUYER} declined to raise their offer beyond ${formatINR(ACTIVE_BUYOUT_OFFER)}.</span>`;
+          }
+        }
+      }, 1500);
+    }
+
+    function acceptCompanyBuyout() {
+      const soldPrice = ACTIVE_BUYOUT_OFFER;
+      const oldName = GAME_STATE.studioName;
+      closeSellCompanyModal();
+      triggerConfetti();
+
+      // Reset Game State & Start Fresh Empire
+      localStorage.removeItem("bollywood_tycoon_v112d");
+      localStorage.removeItem("bollywood_tycoon_v112d_init");
+
+      GAME_STATE = {
+        studioName: "Novus Film Productions",
+        studioHead: "Studio Founder",
+        cash: 500000000,
+        week: 1,
+        reputation: 75,
+        debt: 0,
+        totalAwardsWon: 0,
+        newsArchive: [],
+        activeProductions: [],
+        theatreRuns: [],
+        releasedMovies: [],
+        franchises: []
+      };
+
+      saveState();
+      renderAll();
+      showToast(`Sold "${oldName}" for ${formatINR(soldPrice)}! Starting fresh empire...`, "success");
+      
+      setTimeout(() => {
+        document.getElementById("modal-onboarding").classList.add("active");
+      }, 1200);
     }
 
     function handlePosterUpload(e) {
@@ -2557,7 +2807,6 @@
       return { label: "All-Time Blockbuster", css: "verdict-all-time-blockbuster", desc: "Exceptional success by historical standards" };
     }
 
-    /* ADVANCE WEEK WITH FIXED RANDOM EVENT HANDLER */
     function advanceWeek() {
       GAME_STATE.week++;
       if (GAME_STATE.debt > 0) {
@@ -2816,7 +3065,7 @@
 
       const listContainer = document.getElementById("post-publicity-options");
       listContainer.innerHTML = POST_RELEASE_CAMPAIGNS.map(c => `
-        <div style="background:var(--bg-base); border:1px solid var(--border-color-subtle); border-radius:8px; padding:10px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+        <div style="background:var(--bg-input); border:1px solid var(--border-color-subtle); border-radius:8px; padding:10px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
           <div>
             <div style="font-weight:700; font-size:0.84rem; color:var(--gold-bright);">${c.name}</div>
             <div style="font-size:0.72rem; color:var(--text-muted);">${c.desc}</div>
@@ -2927,7 +3176,7 @@
                   <div style="flex:1; min-width:0;">
                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                       <span style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright);">${run.title}</span>
-                      ${showVerdict ? `<span class="verdict-pill ${currentVerdict.css}">${currentVerdict.label}</span>` : `<span class="verdict-pill" style="background:rgba(255,255,255,0.08); color:var(--text-muted);">Verdict after Wk 4</span>`}
+                      ${showVerdict ? `<span class="verdict-pill ${currentVerdict.css}">${currentVerdict.label}</span>` : `<span class="verdict-pill" style="background:var(--bg-surface-elevated); color:var(--text-muted);">Verdict after Wk 4</span>`}
                     </div>
                     <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">
                       ${run.genre} • ${run.releaseFormat === 'ott_satellite' ? 'Streaming Series' : `Wk ${run.currentWeekOfRun} in Cinemas`} ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}
@@ -3035,7 +3284,7 @@
           <div>
             <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
               <span class="step-badge">${film.genre}</span>
-              ${showVerdict ? `<span class="verdict-pill ${v.css}">${v.label}</span>` : `<span class="verdict-pill" style="background:rgba(255,255,255,0.08); color:var(--text-muted);">Verdict Pending (Wk ${film.currentWeekOfRun}/4)</span>`}
+              ${showVerdict ? `<span class="verdict-pill ${v.css}">${v.label}</span>` : `<span class="verdict-pill" style="background:var(--bg-surface-elevated); color:var(--text-muted);">Verdict Pending (Wk ${film.currentWeekOfRun}/4)</span>`}
             </div>
             <h2 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.15rem;">${film.title}</h2>
             ${showVerdict ? `<div style="font-size:0.72rem; color:var(--text-muted);">${v.desc}</div>` : ''}
@@ -3513,12 +3762,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v112c1", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v112d", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v112c1");
+        const raw = localStorage.getItem("bollywood_tycoon_v112d");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
