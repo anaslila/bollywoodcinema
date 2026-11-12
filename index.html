@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.12(c) — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.12(c1) — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -553,7 +553,7 @@
   <header class="main-header">
     <div class="brand-section">
       <img src="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80" alt="App Icon" class="brand-icon">
-      <input type="text" id="studio-name-display" class="studio-name-input" value="APEX STUDIOS" title="Click to rename studio">
+      <input type="text" id="studio-name-display" class="studio-name-input" value="Novus Film Productions" title="Click to rename studio">
     </div>
 
     <div class="header-stats">
@@ -685,7 +685,6 @@
             <button class="curved-choice-btn" data-sq="masterpiece" onclick="setScriptQuality('masterpiece', this)">Award-Winning Masterpiece (₹5Cr, Score 95)</button>
           </div>
 
-          <!-- 5 Set Construction Scales (Fixed Grand City Sets Icon) -->
           <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Set Construction Scale:</label>
           <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;" id="set-scale-pills">
             <button class="curved-choice-btn active" data-set="minimal" onclick="setSetScale('minimal', this)">
@@ -705,7 +704,6 @@
             </button>
           </div>
 
-          <!-- Real-World VFX Studios -->
           <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">VFX & CGI Partner Studio:</label>
           <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;" id="vfx-quality-pills">
             <button class="curved-choice-btn active" data-vfx="none" onclick="setVfxQuality('none', this)">
@@ -738,11 +736,10 @@
             </button>
           </div>
 
-          <!-- 10 Genres -->
           <label style="font-size:0.78rem; font-weight:700;">Select Genre (10 Categories):</label>
           <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px; margin-bottom:14px;" id="genre-pills">
             <button class="curved-choice-btn active" data-genre="Action">Action</button>
-            <button class="curved-choice-btn" data-genre="Patriotic">Patriotic</button>
+            <button class="curved-choice-btn" data-genre="Patriotic">Patriotic (Holiday Boost)</button>
             <button class="curved-choice-btn" data-genre="Romance">Romance</button>
             <button class="curved-choice-btn" data-genre="Drama">Drama</button>
             <button class="curved-choice-btn" data-genre="Comedy">Comedy</button>
@@ -1101,7 +1098,7 @@
 
   </main>
 
-  <!-- MODAL: ONBOARDING (Studio Name, Studio Head Name & Starting Capital) -->
+  <!-- MODAL: ONBOARDING -->
   <div class="modal-overlay" id="modal-onboarding">
     <div class="modal-window">
       <div style="text-align:center; margin-bottom:14px;">
@@ -1111,7 +1108,7 @@
       </div>
 
       <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">Studio Name:</label>
-      <input type="text" id="onboard-studio-name" class="input-field" placeholder="e.g. Apex Studios, Royal Cinema" value="APEX STUDIOS">
+      <input type="text" id="onboard-studio-name" class="input-field" placeholder="e.g. Novus Film Productions, Royal Cinema" value="Novus Film Productions">
 
       <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">Studio Head / Producer Name:</label>
       <input type="text" id="onboard-head-name" class="input-field" placeholder="Enter Studio Head Name" value="Studio Founder">
@@ -1147,7 +1144,7 @@
   <div class="modal-overlay" id="modal-franchise">
     <div class="modal-window">
       <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem; margin-bottom:10px;">Create New Studio Universe</h3>
-      <input type="text" id="new-franchise-name" class="input-field" placeholder="Enter Franchise Name">
+      <input type="text" id="new-franchise-name" class="input-field" placeholder="Franchise Name (e.g. Spy Universe, Cop Universe)">
       <textarea id="new-franchise-desc" class="input-field" rows="3" placeholder="Franchise Lore & Theme"></textarea>
       <div style="display:flex; justify-content:flex-end; gap:6px;">
         <button class="btn-outline" onclick="closeCreateFranchiseModal(true)">Cancel</button>
@@ -1191,14 +1188,14 @@
   <!-- END OF PART 1 — APPEND PART 2 IMMEDIATELY BELOW THIS LINE -->
 <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.12(c) — COMPLETE TYCOON ENGINE (PART 2)
+       BOLLYWOOD CINEMA v1.12(c1) — COMPLETE TYCOON ENGINE (PART 2)
        ========================================================================= */
 
     function dismissSplash() {
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v112c_init")) {
+        if (!localStorage.getItem("bollywood_tycoon_v112c1_init")) {
           const modal = document.getElementById("modal-onboarding");
           if (modal) modal.classList.add("active");
         }
@@ -1364,7 +1361,6 @@
       { id: "pr_global_promo", name: "Global TV & International Multiplex Push", fee: 65000000, hypeAdd: 48, screenBoost: 1600, desc: "Massive overseas & Pan-India exhibitor expansion." }
     ];
 
-    /* RANDOM PRODUCTION & INDUSTRY EVENTS POOL */
     const RANDOM_EVENTS_POOL = [
       {
         title: "Lead Actor Injured During Stunt!",
@@ -1447,7 +1443,7 @@
     };
 
     let GAME_STATE = {
-      studioName: "APEX STUDIOS",
+      studioName: "Novus Film Productions",
       studioHead: "Studio Founder",
       cash: 500000000,
       week: 1,
@@ -1469,11 +1465,15 @@
     let ACTIVE_PUBLICITY_RUN_ID = null;
     let CURRENT_NEWS_PAGE = 0;
 
+    // Global state for active random event modal
+    let ACTIVE_EVENT_TARGET_FILM = null;
+    let CURRENT_RANDOM_EVENT = null;
+
     let CURRENT_DRAFT = {
       title: "",
       genre: "Action",
       releaseFormat: "theatres_ott",
-      franchiseId: null, // Strictly standalone by default
+      franchiseId: null,
       scriptQuality: "tight",
       setScale: "minimal",
       vfxQuality: "none",
@@ -1517,7 +1517,7 @@
       const nameInput = document.getElementById("studio-name-display");
       nameInput.value = GAME_STATE.studioName;
       nameInput.addEventListener("change", (e) => {
-        GAME_STATE.studioName = e.target.value.trim() || "APEX STUDIOS";
+        GAME_STATE.studioName = e.target.value.trim() || "Novus Film Productions";
         saveState();
         renderStudiosIntel();
         showToast("Studio name updated!", "success");
@@ -1528,7 +1528,7 @@
       document.getElementById("btn-theme-toggle").addEventListener("click", toggleTheme);
 
       document.getElementById("btn-random-title").addEventListener("click", () => {
-        const titles = ["Aakhri Baazi", "Raaz Mahal", "Sultan Returns", "Mumbai Mafia", "The Last Emperor", "Jung Ka Junoon", "Ishqnama", "Badla 3", "MahaYudh", "Khiladi 786 Returns", "Raktbeej", "Mission Kashmir 2", "Sikandar Returns", "Shaitaan Returns", "Dilwale 3", "Kaal Chakra", "Operation Trishul", "Maharaja", "Aag Ka Dariya", "Zakhmi Sher", "Raja Hindustani 2", "Dhadkan 2", "Black Tiger", "Chakravyuh", "Junglee 2", "Mumbai Express", "Aakhri Jung", "The Revenge", "Sher-e-Hindustan", "Khooni Khel", "Baazigar Returns", "Ishq Ka Junoon", "Toofan 2", "Vijaypath Returns", "Samrat", "Kaala Saaya", "Operation Dastaan", "Badshah 2", "Rang De Ishq", "Maut Ka Khel", "Agni Pariksha", "Rudra", "Dushman 2", "Singham Returns 3", "Ek Tha Sultan", "The Untold Story", "Jazbaat", "Aakhri Faisla", "Vardi", "Mahakaal"];
+        const titles = ["Aakhri Baazi", "Raaz Mahal", "Sultan Returns", "Mumbai Mafia", "The Last Emperor", "Jung Ka Junoon", "Ishqnama", "Badla 3", "MahaYudh", "Khiladi 786 Returns", "Raktbeej", "Mission Kashmir 2", "Sikandar Returns", "Shaitaan Returns", "Dilwale 3", "Kaal Chakra", "Operation Trishul", "Maharaja", "Aag Ka Dariya", "Zakhmi Sher", "Raja Hindustani 2", "Dhadkan 2", "Black Tiger", "Chakravyuh", "Junglee 2", "Mumbai Express", "Aakhri Jung", "The Revenge", "Sher-e-Hindustan", "Khooni Khel", "Baazigar Returns", "Ishq Ka Junoon", "Toofan 2", "Vijaypath Returns", "Samrat", "Kaala Saaya", "Operation Dastaan", "Badshah 2", "Rang De Ishq", "Maut Ka Khel", "Agni Pariksha", "Rudra", "Dushman 2", "Singham Returns 3", "Ek Tha Sultan", "The Untold Story", "Jazbaat", "Aakhri Faisla", "Vardi", "Mahakaal","Agnipath Returns", "Khoj", "Raja Vikram", "Sitamgarh", "The Final Hunt", "Jaanbaaz", "Kaali Raat", "Mardaani 3", "Junooniyat", "Fatehgarh", "Aakhri Mohabbat", "Vansh", "Darr Ka Saya", "Raja Babu 2", "Karmayudh", "Shatranj", "Khoon Ka Karz", "Nishaan", "Badlaav", "Azaad Parinda", "Suryavanshi 2", "Dil Ki Jung", "Rangbaaz", "Kaalpurush", "Sikandar-e-Azam", "Aakhri Raasta 2", "Maya Mahal", "Khiladi No. 1", "Jungbaz", "Dharamveer", "Rannbhoomi", "Tehelka 2", "Raakh", "Dhokebaaz", "Ishq Aur Inteqam", "Zanjeer Returns", "Maha Sangram", "Gumnaam Shehar", "Raja Rani 3", "Aandhi Toofan", "Sherdil", "Kaali Duniya", "Vishwaroop", "Murder Express", "Satrangi Ishq", "Chandni Chowk 2", "Diler", "Aakhri Sipahi", "Krantiveer 2", "Khiladiyon Ka Khiladi 2", "Aagaz", "Sultanpur", "Jeevan Mrityu", "Sazaa", "Rang Mahal", "Nirbhay", "Dastaan-e-Mumbai", "Raazdar", "Benaam Rishta", "Dhoop Chhaon", "The Black Fortress", "Rudraksh 2", "Kaal Yatra", "Shikari", "Dushmani", "Aakhri Gawah", "Jalaluddin", "Ishqbaaz", "Maha Kaal", "Sangharsh 2", "Dil Se Dushman", "Khatarnak", "Vijeta", "Naya Daur 2", "Chingari", "Sultan-e-Hind", "Maut Ki Jung", "Aakhri Badla", "Khiladi Returns", "Raaz-e-Haqeeqat", "Dhadak 3", "Zulm", "Maharathi", "Dastaan", "Sikandar Ka Insaaf", "Kaal Kothri", "Bharat Ke Veer", "Jaanam", "Aag Aur Angaare", "The Last Warrior", "Mitti", "Diler Jawan", "Murder Mansion", "Raja Vikramaditya", "Ishq Mein Qurbaan", "Sangram 3", "Shatru", "Aakhri Manzil", "Vardi Wala", "Andhera", "Maha Rakshak", "Kaal Bhairav", "Duniya Meri Mutthi Mein 2", "Raaz-e-Sultan", "Jung Ka Badshah", "Chor Bazaar", "Dil Ka Faisla", "Azaadi Ke Deewane", "Sannata", "Ek Aur Sikandar", "Raktcharitra 3", "Naya Khiladi", "The Forgotten King", "Benaam Badshah", "Aakhri Dastaan", "Toofani", "Maut Ka Sauda", "Sher Khan", "Jeevan Yudh", "Shikaar 2", "Maya Jaal", "Karmveer", "Aag Ke Sholay", "Dushman-e-Watan", "Chakradhar", "Raat Ka Raaz", "Siyasat", "Aakhri Chunauti", "Ishqnama 2", "Badshah-e-Hind", "Zakhm 2", "Maha Pralay", "Jungli Raja", "Khiladiyon Ki Jung", "Aakhri Insaaf", "Sone Ka Sher", "Darr Returns", "Kaala Baaz", "Murder City", "Sangdil", "Raja Ka Raj", "The Great Maharaja", "Inteqam", "Aakhri Kasam", "Vijay Singh", "Dharam Yudh", "Sultan Ka Vaar", "Nishachar", "Ek Tha Baaz", "Khooni Darwaza", "Rannveer", "Aakhri Taqdeer", "Maha Shakti", "Zameen Ka Badshah", "Ishq Ki Aag", "Dushman Ka Dushman", "Tridev Returns", "Samay Chakra", "Aakhri Jungli","Aasmaan Ke Paar", "Raakh Ka Taj", "Sheher-e-Khamoshi", "Saatva Darwaza", "Neeli Aag", "Khwabon Ka Qaatil", "Zameer Ki Jung", "Sunehri Raat", "Aakhri Sawaal", "Dil Ka Samandar", "Kaali Lakeer", "Waqt Ka Shikaar", "Satrangi Aandhi", "Mitti Ka Sikandar", "Qismatnama", "Andekha Raasta", "Surkh Nishaan", "Khamosh Gawah", "Parchhaiyon Ka Sheher", "Aag Ke Musafir", "Dastaan-e-Zulmat", "Saat Khoon Maaf Nahi", "Sitam Ka Mausam", "Neend Ka Saudagar", "Ajnabi Khoon", "Teesra Chehra", "Gumnaam Raaj", "Sone Ki Zanjeer", "Aakhri Aasmaan", "Khwabon Ka Mahal", "Laal Samandar", "Raaz-e-Raat", "Bechain Rooh", "Zinda Nishaan", "Sheeshon Ka Sheher", "Maut Ki Lakeer", "Jalte Hain Chirag", "Safed Andhera", "Kismat Ka Khel", "Ajnabi Duniya", "Dhuaan Mahal", "Khaufnama", "Ek Raat Ka Qatl", "Toota Hua Taaj", "Paanchva Darwaza", "Rait Ka Toofan", "Sard Hawayein", "Aakhri Musafir", "Kaanch Ka Dil", "Jazbe Ka Junoon", "Zameen Ke Neeche", "Siyah Aasmaan", "Chand Ka Qaatil", "Gehra Zakham", "Anjaani Manzil", "Qatl Ki Raat", "Dilon Ka Hisab", "Aasmaani Dushman", "Mitti Mein Sona", "Khauf Ke Saaye", "Doosri Zindagi", "Sannate Ki Awaaz", "Paanchva Khiladi", "Laapata Sheher", "Kaalikh", "Jhootha Chehra", "Sone Ka Pinjra", "Aakhri Tamanna", "Rishton Ka Qatl", "Dhundhla Sach", "Tez Nazar", "Barood Ki Baarish", "Ek Adhoora Khwab", "Sheher Ka Raaz", "Khaak Aur Khazana", "Raaton Ka Raahi", "Zulfon Ke Saaye", "Dariya-e-Khoon", "Aakhri Hukum", "Bikhre Sitare", "Khwabon Ki Qeemat", "Namak Ka Karz", "Chupke Se Qatl", "Sitamgar", "Pehla Gunaah", "Aasmaan Ka Waaris", "Gehri Chaal", "Kachchi Deewar", "Sunehra Qafila", "Katilana Ishq", "Raat Ka Waaris", "Dhoondta Dil", "Laal Haveli Ka Raaz", "Tanha Sipahi", "Qismat Ka Darbar", "Ajnabi Waaris", "Dard Ka Samandar", "Aag Mein Phool", "BeNaam Qasoor", "Chaar Deewaron Ke Paar", "Siyah Panna", "Mitti Ka Karz", "Aakhri Goonj", "Pehchaan Ke Peechhe", "Saatva Saaya", "Khwabon Ka Shikaar", "Raat Ki Tehreer", "Dilon Ka Toofan", "Khoj-e-Wajood", "Sunehri Qaid", "Ajnabi Aaina", "Zakhmon Ka Sheher", "Dhundh Ka Raaj", "Ishq Ka Muqadma", "Khaali Kursi", "Qatl-e-Khwab", "Gumnaam Badshahat", "Aakhri Udaan", "Neend Mein Qaatil", "Sitaron Ka Qatl", "Benaam Manzil", "Zameer Ka Saudagar", "Aag Ka Aaina", "Pardah-e-Raaz", "Ek Mutthi Aasmaan", "Khamosh Toofan", "Rait Ka Mahal", "Kismat Ke Kaidi", "Ajnabi Faisla", "Dardnama", "Sheher-e-Ajnabi", "Chandni Ka Zehar", "Aakhri Dastak", "Wajood Ka Sawal", "Kaali Kitaab", "Sone Ki Mitti", "Qurbat", "Gehraaiyon Ka Raaz", "Paanchva Mausam", "Aakhri Roshni", "Toote Taaj Ka Waaris", "Dilon Ka Qila", "Zulmat Ke Paar", "Aasmaan Ki Qasam", "Ek Khamosh Qatl", "Raat Ka Musavvir"];
         const chosen = titles[Math.floor(Math.random() * titles.length)];
         document.getElementById("movie-title").value = chosen;
         CURRENT_DRAFT.title = chosen;
@@ -1607,12 +1607,12 @@
     }
 
     function confirmStudioOnboarding() {
-      const chosenName = document.getElementById("onboard-studio-name").value.trim() || "APEX STUDIOS";
+      const chosenName = document.getElementById("onboard-studio-name").value.trim() || "Novus Film Productions";
       const chosenHead = document.getElementById("onboard-head-name").value.trim() || "Studio Founder";
       GAME_STATE.studioName = chosenName;
       GAME_STATE.studioHead = chosenHead;
       GAME_STATE.cash = SELECTED_ONBOARD_CAPITAL;
-      localStorage.setItem("bollywood_tycoon_v112c_init", "true");
+      localStorage.setItem("bollywood_tycoon_v112c1_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
@@ -2557,7 +2557,7 @@
       return { label: "All-Time Blockbuster", css: "verdict-all-time-blockbuster", desc: "Exceptional success by historical standards" };
     }
 
-    /* ADVANCE WEEK WITH RANDOM PRODUCTION & INDUSTRY EVENTS */
+    /* ADVANCE WEEK WITH FIXED RANDOM EVENT HANDLER */
     function advanceWeek() {
       GAME_STATE.week++;
       if (GAME_STATE.debt > 0) {
@@ -2588,8 +2588,7 @@
       processWeeklyNews();
       driftRivalsAndFranchises();
 
-      // Trigger random production/industry event (30% chance per week if active productions exist)
-      if (GAME_STATE.activeProductions.length > 0 && Math.random() < 0.32) {
+      if (GAME_STATE.activeProductions.length > 0 && Math.random() < 0.35) {
         triggerRandomStudioEvent();
       }
 
@@ -2598,19 +2597,20 @@
       showToast(`Week ${GAME_STATE.week}!`, "info");
     }
 
-    let ACTIVE_EVENT_TARGET_FILM = null;
     function triggerRandomStudioEvent() {
       const film = GAME_STATE.activeProductions[Math.floor(Math.random() * GAME_STATE.activeProductions.length)];
       if (!film) return;
       ACTIVE_EVENT_TARGET_FILM = film;
 
       const ev = RANDOM_EVENTS_POOL[Math.floor(Math.random() * RANDOM_EVENTS_POOL.length)];
+      CURRENT_RANDOM_EVENT = ev;
+
       document.getElementById("event-modal-title").innerText = `${ev.title} (${film.title})`;
       document.getElementById("event-modal-desc").innerText = ev.desc;
 
       const choicesDiv = document.getElementById("event-modal-choices");
       choicesDiv.innerHTML = ev.choices.map((c, idx) => `
-        <button class="event-choice-btn" onclick="resolveRandomEvent(${idx}, '${encodeURIComponent(JSON.stringify(ev))}')">
+        <button class="event-choice-btn" onclick="resolveRandomEvent(${idx})">
           <div style="font-weight:700; font-size:0.82rem; color:var(--gold-bright);">${c.label}</div>
         </button>
       `).join('');
@@ -2618,16 +2618,18 @@
       document.getElementById("modal-random-event").classList.add("active");
     }
 
-    function resolveRandomEvent(choiceIdx, encodedEv) {
-      const ev = JSON.parse(decodeURIComponent(encodedEv));
-      const choice = ev.choices[choiceIdx];
+    function resolveRandomEvent(choiceIdx) {
+      const ev = CURRENT_RANDOM_EVENT;
       const film = ACTIVE_EVENT_TARGET_FILM;
 
-      if (choice && film) {
+      if (ev && ev.choices && ev.choices[choiceIdx] && film) {
+        const choice = ev.choices[choiceIdx];
+
         if (choice.cashDelta < 0 && GAME_STATE.cash < Math.abs(choice.cashDelta)) {
-          showToast("Insufficient treasury cash for this choice!", "error");
+          showToast("Insufficient treasury cash for this option!", "error");
           return;
         }
+
         GAME_STATE.cash += (choice.cashDelta || 0);
         if (choice.cashDelta < 0) film.cost += Math.abs(choice.cashDelta);
         if (choice.repDelta) GAME_STATE.reputation = Math.min(100, Math.max(10, GAME_STATE.reputation + choice.repDelta));
@@ -2638,17 +2640,19 @@
           film.releaseWeek += choice.delayWeeks;
         }
 
-        // Log event in Trade Wire
+        if (!GAME_STATE.newsArchive) GAME_STATE.newsArchive = [];
         GAME_STATE.newsArchive.unshift({
           week: GAME_STATE.week,
-          text: `[Breaking on ${film.title}] ${ev.title} - Studio took decisive action.`
+          text: `[Breaking on ${film.title}] ${ev.title} — ${choice.label}`
         });
       }
 
+      CURRENT_RANDOM_EVENT = null;
+      ACTIVE_EVENT_TARGET_FILM = null;
       document.getElementById("modal-random-event").classList.remove("active");
       saveState();
       renderAll();
-      showToast("Event resolved!", "success");
+      showToast("Studio crisis handled!", "success");
     }
 
     function applySpilloverToVeterans() {
@@ -3303,7 +3307,7 @@
 
     function openCreateFranchiseModal() {
       const titleVal = document.getElementById("movie-title").value.trim();
-      document.getElementById("new-franchise-name").value = titleVal ? `${titleVal} Universe` : "";
+      document.getElementById("new-franchise-name").value = titleVal ? `${titleVal} Universe` : "My Cinematic Universe";
       document.getElementById("modal-franchise").classList.add("active");
     }
     
@@ -3509,12 +3513,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v112c", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v112c1", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v112c");
+        const raw = localStorage.getItem("bollywood_tycoon_v112c1");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
