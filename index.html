@@ -3,493 +3,197 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.12 — Studio Tycoon</title>
-  
+  <title>Bollywood Cinema v1.12(a) — Studio Tycoon</title>
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0d0d0f">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
   <style>
     :root {
-      --bg-base: #0d0d11;
-      --bg-surface: #14141c;
-      --bg-surface-elevated: #1a1a24;
-      --bg-card: rgba(23, 23, 33, 0.88);
-      --border-color: rgba(212, 175, 55, 0.28);
-      --border-color-subtle: rgba(255, 255, 255, 0.08);
-      --gold-primary: #d4af37;
-      --gold-bright: #f5c518;
-      --gold-gradient: linear-gradient(135deg, #f5c518 0%, #d4af37 60%, #aa8010 100%);
-      --text-main: #f8f8fc;
-      --text-muted: #a3a3bd;
-      --text-subtle: #6c6c82;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --toast-bg: #1c1c24;
-      --toast-text: #ffffff;
-      --font-display: 'Cinzel', serif;
-      --font-body: 'Outfit', sans-serif;
+      --bg-base:#0d0d11;--bg-surface:#14141c;--bg-card:rgba(23,23,33,0.9);
+      --border-color:rgba(212,175,55,0.28);--border-subtle:rgba(255,255,255,0.08);
+      --gold:#d4af37;--gold-bright:#f5c518;
+      --gold-grad:linear-gradient(135deg,#f5c518 0%,#d4af37 60%,#aa8010 100%);
+      --text-main:#f8f8fc;--text-muted:#a3a3bd;--text-subtle:#6c6c82;
+      --success:#22c55e;--danger:#ef4444;--warning:#f59e0b;
+      --toast-bg:#1c1c24;--toast-text:#ffffff;
+      --font-display:'Cinzel',serif;--font-body:'Outfit',sans-serif;
     }
-
     [data-theme="light"] {
-      --bg-base: #f5f5fa;
-      --bg-surface: #ffffff;
-      --bg-surface-elevated: #ececf2;
-      --bg-card: rgba(255, 255, 255, 0.96);
-      --border-color: rgba(184, 134, 11, 0.40);
-      --border-color-subtle: rgba(0, 0, 0, 0.12);
-      --gold-primary: #b8860b;
-      --gold-bright: #996515;
-      --gold-gradient: linear-gradient(135deg, #b8860b 0%, #d4af37 60%, #855c04 100%);
-      --text-main: #14141c;
-      --text-muted: #4b4b5e;
-      --text-subtle: #79798e;
-      --toast-bg: #14141c;
-      --toast-text: #ffffff;
+      --bg-base:#f5f5fa;--bg-surface:#ffffff;--bg-card:rgba(255,255,255,0.96);
+      --border-color:rgba(184,134,11,0.40);--border-subtle:rgba(0,0,0,0.12);
+      --gold:#b8860b;--gold-bright:#996515;
+      --gold-grad:linear-gradient(135deg,#b8860b 0%,#d4af37 60%,#855c04 100%);
+      --text-main:#14141c;--text-muted:#4b4b5e;--text-subtle:#79798e;
+      --toast-bg:#14141c;--toast-text:#ffffff;
     }
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+    body{background:var(--bg-base);color:var(--text-main);font-family:var(--font-body);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
+    #splash-screen{position:fixed;inset:0;background:#000;z-index:99999;display:flex;align-items:center;justify-content:center;transition:opacity 0.3s ease;}
+    #splash-screen.hidden{opacity:0!important;visibility:hidden!important;pointer-events:none!important;display:none!important;}
+    .splash-content{width:360px;height:640px;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 0 50px rgba(212,175,55,0.25);}
+    .splash-gif{width:100%;height:100%;object-fit:cover;}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    header.main-header{position:sticky;top:0;z-index:900;backdrop-filter:blur(16px);background:rgba(13,13,17,0.94);border-bottom:1px solid var(--border-color);padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+    [data-theme="light"] header.main-header{background:rgba(255,255,255,0.95);}
+    .brand-section{display:flex;align-items:center;gap:8px;min-width:0;flex:1;}
+    .brand-icon{width:34px;height:34px;border-radius:6px;object-fit:cover;border:1.5px solid var(--gold);flex-shrink:0;}
+    .studio-name-input{font-family:var(--font-display);font-size:0.95rem;font-weight:800;color:var(--gold-bright);background:transparent;border:1px dashed transparent;padding:2px 4px;border-radius:4px;outline:none;white-space:nowrap;min-width:75px;flex-shrink:1;}
+    .studio-name-input:focus{border-color:var(--gold);background:var(--bg-surface);}
 
-    body {
-      background-color: var(--bg-base);
-      color: var(--text-main);
-      font-family: var(--font-body);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-    }
+    .header-stats{display:flex;align-items:center;gap:6px;}
+    .stat-badge{display:flex;align-items:center;gap:4px;background:var(--bg-surface);border:1px solid var(--border-subtle);padding:4px 8px;border-radius:14px;font-size:0.75rem;font-weight:600;white-space:nowrap;}
+    .stat-badge i{color:var(--gold-bright);font-size:0.78rem;}
+    .badge-cash .badge-val{color:var(--success);font-weight:800;}
 
-    #splash-screen {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: #000;
-      z-index: 99999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.3s ease;
-    }
-    #splash-screen.hidden { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; display: none !important; }
-    .splash-content { width: 360px; height: 640px; background: #000; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(212, 175, 55, 0.25); }
-    .splash-gif { width: 100%; height: 100%; object-fit: cover; }
+    .header-actions{display:flex;align-items:center;gap:6px;}
+    .btn-advance-week{background:var(--gold-grad);color:#0b0b0e;border:none;padding:6px 10px;border-radius:8px;font-weight:800;font-size:0.78rem;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;box-shadow:0 2px 10px rgba(212,175,55,0.35);}
+    @media(max-width:600px){.btn-advance-week{padding:6px 8px;}.btn-advance-week .btn-text-full{display:none;}.studio-name-input{font-size:0.84rem;}}
+    .btn-theme-toggle{background:var(--bg-surface);border:1px solid var(--border-subtle);color:var(--gold);width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.8rem;}
 
-    header.main-header {
-      position: sticky;
-      top: 0;
-      z-index: 900;
-      backdrop-filter: blur(16px);
-      background: rgba(13, 13, 17, 0.94);
-      border-bottom: 1px solid var(--border-color);
-      padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-    [data-theme="light"] header.main-header { background: rgba(255, 255, 255, 0.95); }
+    nav.tab-nav{position:sticky;top:51px;z-index:850;background:var(--bg-surface);border-bottom:1px solid var(--border-subtle);padding:0 8px;display:flex;overflow-x:auto;scrollbar-width:none;gap:2px;}
+    nav.tab-nav::-webkit-scrollbar{display:none;}
+    .tab-btn{background:transparent;border:none;color:var(--text-muted);font-family:var(--font-body);font-size:0.8rem;font-weight:600;padding:9px 11px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;position:relative;}
+    .tab-btn.active{color:var(--gold-bright);}
+    .tab-btn.active::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:2.5px;background:var(--gold);border-radius:2px 2px 0 0;box-shadow:0 0 8px var(--gold);}
 
-    .brand-section { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
-    .brand-icon { width: 34px; height: 34px; border-radius: 6px; object-fit: cover; border: 1.5px solid var(--gold-primary); flex-shrink: 0; }
-    .studio-name-input {
-      font-family: var(--font-display);
-      font-size: 0.96rem;
-      font-weight: 800;
-      color: var(--gold-bright);
-      background: transparent;
-      border: 1px dashed transparent;
-      padding: 2px 4px;
-      border-radius: 4px;
-      outline: none;
-      white-space: nowrap;
-      min-width: 80px;
-      flex-shrink: 1;
-    }
-    .studio-name-input:focus { border-color: var(--gold-primary); background: var(--bg-surface); }
+    main.app-viewport{flex:1;padding:12px;max-width:1300px;width:100%;margin:0 auto 75px auto;}
+    .tab-view{display:none;}
+    .tab-view.active{display:block;animation:fadeIn 0.2s ease forwards;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
 
-    .header-stats { display: flex; align-items: center; gap: 6px; }
-    .stat-badge {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color-subtle);
-      padding: 4px 8px;
-      border-radius: 14px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .stat-badge i { color: var(--gold-bright); font-size: 0.78rem; }
-    .badge-cash .badge-val { color: var(--success); font-weight: 800; }
+    .card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;padding:14px;backdrop-filter:blur(12px);margin-bottom:14px;}
+    .card-title{font-family:var(--font-display);font-size:1.05rem;color:var(--gold-bright);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:6px;}
 
-    .header-actions { display: flex; align-items: center; gap: 6px; }
-    .btn-advance-week {
-      background: var(--gold-gradient);
-      color: #0b0b0e;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-weight: 800;
-      font-size: 0.78rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
-    }
-    .btn-advance-week .btn-text-full { display: inline; }
-    @media (max-width: 600px) {
-      .btn-advance-week { padding: 6px 8px; }
-      .btn-advance-week .btn-text-full { display: none; }
-      .studio-name-input { font-size: 0.86rem; }
-    }
+    .metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:14px;}
+    .metric-box{background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:8px;padding:10px 12px;position:relative;overflow:hidden;}
+    .metric-box::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);}
+    .metric-lbl{font-size:0.7rem;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;}
+    .metric-num{font-size:1.12rem;font-weight:800;color:var(--text-main);}
 
-    .btn-theme-toggle {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color-subtle);
-      color: var(--gold-primary);
-      width: 30px;
-      height: 30px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
+    .curved-choice-btn{background:var(--bg-surface);border:1.5px solid var(--border-subtle);color:var(--text-muted);padding:6px 13px;border-radius:20px;font-weight:600;font-size:0.76rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;user-select:none;transition:all 0.2s cubic-bezier(0.16,1,0.3,1);}
+    .curved-choice-btn:hover{border-color:var(--gold);color:var(--text-main);transform:translateY(-1px);}
+    .curved-choice-btn.active{background:var(--gold-grad)!important;color:#0b0b0e!important;border-color:var(--gold-bright)!important;font-weight:800!important;box-shadow:0 2px 12px rgba(245,197,24,0.45)!important;transform:scale(1.03);}
 
-    nav.tab-nav {
-      position: sticky;
-      top: 51px;
-      z-index: 850;
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border-color-subtle);
-      padding: 0 8px;
-      display: flex;
-      overflow-x: auto;
-      scrollbar-width: none;
-      gap: 2px;
-    }
-    nav.tab-nav::-webkit-scrollbar { display: none; }
-    .tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-family: var(--font-body);
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 9px 11px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-      position: relative;
-    }
-    .tab-btn.active { color: var(--gold-bright); }
-    .tab-btn.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 10%; right: 10%; height: 2.5px;
-      background: var(--gold-primary);
-      border-radius: 2px 2px 0 0;
-      box-shadow: 0 0 8px var(--gold-primary);
-    }
+    .wizard-steps-indicator{display:flex;align-items:center;justify-content:space-between;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:8px;padding:8px 10px;margin-bottom:14px;overflow-x:auto;gap:6px;}
+    .wizard-step-node{display:flex;align-items:center;gap:5px;font-size:0.73rem;font-weight:700;color:var(--text-muted);white-space:nowrap;cursor:pointer;opacity:0.65;}
+    .wizard-step-node.active{color:var(--gold-bright);opacity:1;}
+    .wizard-step-node.completed{color:var(--success);opacity:0.9;}
+    .step-circle{width:20px;height:20px;border-radius:50%;background:var(--bg-base);border:1px solid var(--border-color);display:flex;align-items:center;justify-content:center;font-size:0.65rem;}
+    .wizard-step-node.active .step-circle{background:var(--gold-grad);color:#000;border-color:var(--gold-bright);font-weight:900;}
+    .wizard-step-node.completed .step-circle{background:var(--success);color:#000;border-color:var(--success);}
 
-    main.app-viewport { flex: 1; padding: 12px; max-width: 1300px; width: 100%; margin: 0 auto 75px auto; }
-    .tab-view { display: none; }
-    .tab-view.active { display: block; animation: fadeIn 0.2s ease forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .pipeline-step-pane{display:none;}
+    .pipeline-step-pane.active{display:block;}
+    .step-badge{display:inline-block;background:var(--gold);color:#000;font-weight:800;font-size:0.68rem;padding:2px 6px;border-radius:3px;margin-bottom:4px;text-transform:uppercase;}
+    .step-heading{font-family:var(--font-display);font-size:1.1rem;color:var(--gold-bright);}
+    .step-subtext{font-size:0.76rem;color:var(--text-muted);margin-top:2px;margin-bottom:10px;}
+    .wizard-navigation-bar{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:12px;border-top:1px dashed var(--border-subtle);}
 
-    .card { background: var(--bg-card); border: 1px solid var(--border-color-subtle); border-radius: 10px; padding: 14px; backdrop-filter: blur(12px); margin-bottom: 14px; }
-    .card-title { font-family: var(--font-display); font-size: 1.05rem; color: var(--gold-bright); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .tiles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:8px;margin-top:8px;}
+    @media(max-width:600px){.tiles-grid{grid-template-columns:repeat(auto-fill,minmax(95px,1fr));gap:6px;}}
+    .tile-card{background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:8px;padding:6px;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;user-select:none;transition:all 0.15s ease;}
+    .tile-card:hover{border-color:var(--gold);}
+    .tile-card.selected{border-color:var(--gold-bright);background:rgba(212,175,55,0.12);box-shadow:0 0 10px rgba(212,175,55,0.3);}
+    .tile-img{width:52px;height:52px;border-radius:50%;object-fit:cover;margin-bottom:4px;border:1.5px solid var(--border-color);background:#202028;}
+    .tile-icon-box{width:46px;height:46px;border-radius:50%;background:rgba(212,175,55,0.1);border:1.5px solid var(--border-color);display:flex;align-items:center;justify-content:center;color:var(--gold-bright);font-size:1.15rem;margin-bottom:4px;}
+    .tile-name{font-size:0.73rem;font-weight:700;color:var(--text-main);line-height:1.15;margin-bottom:2px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .tile-meta{font-size:0.64rem;color:var(--text-muted);line-height:1.1;margin-bottom:2px;}
+    .tile-fee{font-size:0.68rem;font-weight:700;color:var(--gold-bright);margin-top:auto;}
 
-    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
-    .metric-box { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 10px 12px; position: relative; overflow: hidden; }
-    .metric-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gold-primary); }
-    .metric-lbl { font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
-    .metric-num { font-size: 1.15rem; font-weight: 800; color: var(--text-main); }
+    .role-toggle{display:flex;width:100%;background:rgba(0,0,0,0.4);border-radius:4px;margin-top:4px;overflow:hidden;border:1px solid var(--border-subtle);}
+    .role-btn{flex:1;padding:2px 0;font-size:0.62rem;font-weight:700;background:transparent;border:none;color:var(--text-muted);cursor:pointer;}
+    .role-btn.active{background:var(--gold);color:#000;}
 
-    .curved-choice-btn {
-      background: var(--bg-surface);
-      border: 1.5px solid var(--border-color-subtle);
-      color: var(--text-muted);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 0.78rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      user-select: none;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .curved-choice-btn:hover { border-color: var(--gold-primary); color: var(--text-main); transform: translateY(-1px); }
-    .curved-choice-btn.active {
-      background: var(--gold-gradient) !important;
-      color: #0b0b0e !important;
-      border-color: var(--gold-bright) !important;
-      font-weight: 800 !important;
-      box-shadow: 0 2px 12px rgba(245, 197, 24, 0.45) !important;
-      transform: scale(1.03);
-    }
+    /* Location 4-Option Scope Grid */
+    .loc-scope-grid{display:grid;grid-template-columns:1fr 1fr;width:100%;background:rgba(0,0,0,0.45);border-radius:4px;margin-top:4px;overflow:hidden;border:1px solid var(--border-subtle);gap:1px;}
+    .loc-scope-btn{padding:2px 0;font-size:0.58rem;font-weight:700;background:transparent;border:none;color:var(--text-muted);cursor:pointer;}
+    .loc-scope-btn.active{background:var(--gold);color:#000;}
 
-    .wizard-steps-indicator { display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 8px 10px; margin-bottom: 14px; overflow-x: auto; gap: 6px; }
-    .wizard-step-node { display: flex; align-items: center; gap: 5px; font-size: 0.74rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; cursor: pointer; opacity: 0.65; }
-    .wizard-step-node.active { color: var(--gold-bright); opacity: 1; }
-    .wizard-step-node.completed { color: var(--success); opacity: 0.9; }
-    .step-circle { width: 20px; height: 20px; border-radius: 50%; background: var(--bg-base); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; }
-    .wizard-step-node.active .step-circle { background: var(--gold-gradient); color: #000; border-color: var(--gold-bright); font-weight: 900; }
-    .wizard-step-node.completed .step-circle { background: var(--success); color: #000; border-color: var(--success); }
+    .franchise-tiles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:6px;margin-bottom:12px;}
+    .franchise-tile-card{background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:8px;padding:8px;cursor:pointer;text-align:left;transition:all 0.15s ease;}
+    .franchise-tile-card:hover{border-color:var(--gold);}
+    .franchise-tile-card.selected{border-color:var(--gold-bright);background:rgba(212,175,55,0.12);}
+    .fran-tile-title{font-size:0.75rem;font-weight:800;color:var(--gold-bright);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
+    .fran-tile-meta{font-size:0.66rem;color:var(--text-muted);}
 
-    .pipeline-step-pane { display: none; }
-    .pipeline-step-pane.active { display: block; }
-    .step-badge { display: inline-block; background: var(--gold-primary); color: #000; font-weight: 800; font-size: 0.68rem; padding: 2px 6px; border-radius: 3px; margin-bottom: 4px; text-transform: uppercase; }
-    .step-heading { font-family: var(--font-display); font-size: 1.1rem; color: var(--gold-bright); }
-    .step-subtext { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; margin-bottom: 10px; }
-    .wizard-navigation-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--border-color-subtle); }
+    .brand-tiles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:8px;margin-top:8px;}
+    .brand-card{background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:8px;padding:8px 6px;text-align:center;cursor:pointer;position:relative;}
+    .brand-card.selected{border-color:var(--gold-bright);background:rgba(212,175,55,0.12);}
+    .brand-logo-img{height:32px;max-width:100%;object-fit:contain;margin-bottom:4px;}
+    .brand-name{font-size:0.72rem;font-weight:700;color:var(--text-main);}
+    .brand-advance{font-size:0.68rem;font-weight:800;color:var(--success);}
+    .rival-bid-tag{font-size:0.58rem;background:rgba(34,197,94,0.2);color:var(--success);padding:1px 4px;border-radius:3px;font-weight:800;margin-top:2px;display:inline-block;}
 
-    .tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 8px; margin-top: 8px; }
-    @media (max-width: 600px) { .tiles-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 6px; } }
-    
-    .tile-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color-subtle);
-      border-radius: 8px;
-      padding: 6px;
-      cursor: pointer;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      user-select: none;
-      transition: all 0.15s ease;
-    }
-    .tile-card:hover { border-color: var(--gold-primary); }
-    .tile-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.12); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
-    .tile-img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; margin-bottom: 4px; border: 1.5px solid var(--border-color); background: #202028; }
-    .tile-name { font-size: 0.74rem; font-weight: 700; color: var(--text-main); line-height: 1.1; margin-bottom: 2px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .tile-meta { font-size: 0.65rem; color: var(--text-muted); line-height: 1.1; margin-bottom: 2px; }
-    .tile-fee { font-size: 0.68rem; font-weight: 700; color: var(--gold-bright); margin-top: auto; }
+    .marketing-filters-bar{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px;}
+    .marketing-stats-banner{background:var(--bg-surface);border:1px solid var(--gold);border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-around;gap:10px;text-align:center;}
+    .m-stat-title{font-size:0.68rem;text-transform:uppercase;color:var(--text-muted);}
+    .m-stat-val{font-size:1rem;font-weight:800;color:var(--gold-bright);}
 
-    .role-toggle { display: flex; width: 100%; background: rgba(0, 0, 0, 0.4); border-radius: 4px; margin-top: 4px; overflow: hidden; border: 1px solid var(--border-color-subtle); }
-    .role-btn { flex: 1; padding: 2px 0; font-size: 0.62rem; font-weight: 700; background: transparent; border: none; color: var(--text-muted); cursor: pointer; }
-    .role-btn.active { background: var(--gold-primary); color: #000; }
+    .cost-inflow-hud{position:sticky;bottom:8px;z-index:800;background:rgba(18,18,24,0.95);backdrop-filter:blur(14px);border:1px solid var(--gold);border-radius:10px;padding:10px 12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:14px;}
+    .hud-stat-col{display:flex;flex-direction:column;}
+    .hud-label{font-size:0.64rem;text-transform:uppercase;color:var(--text-muted);}
+    .hud-val{font-size:0.94rem;font-weight:800;}
+    .hud-val.cost{color:var(--danger);}
+    .hud-val.inflow{color:var(--success);}
+    .hud-val.net{color:var(--gold-bright);}
 
-    .franchise-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-top: 6px; margin-bottom: 12px; }
-    .franchise-tile-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color-subtle);
-      border-radius: 8px;
-      padding: 8px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.15s ease;
-    }
-    .franchise-tile-card:hover { border-color: var(--gold-primary); }
-    .franchise-tile-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.12); }
-    .fran-tile-title { font-size: 0.75rem; font-weight: 800; color: var(--gold-bright); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
-    .fran-tile-meta { font-size: 0.66rem; color: var(--text-muted); }
+    .user-uploaded-poster-container{margin-bottom:12px;padding:10px;background:rgba(212,175,55,0.08);border:1px dashed var(--gold);border-radius:8px;display:none;align-items:center;gap:12px;}
+    .user-uploaded-poster-container.visible{display:flex;}
+    .uploaded-preview-thumb{width:55px;height:78px;border-radius:4px;object-fit:cover;border:1.5px solid var(--gold-bright);}
 
-    .brand-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 8px; margin-top: 8px; }
-    .brand-card { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 8px 6px; text-align: center; cursor: pointer; }
-    .brand-card.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.12); }
-    .brand-logo-img { height: 32px; max-width: 100%; object-fit: contain; margin-bottom: 4px; }
-    .brand-name { font-size: 0.72rem; font-weight: 700; color: var(--text-main); }
-    .brand-advance { font-size: 0.68rem; font-weight: 800; color: var(--success); }
+    .week-tiles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:8px;max-height:280px;overflow-y:auto;padding:2px;}
+    .week-tile{background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:6px;padding:6px;cursor:pointer;text-align:left;position:relative;}
+    .week-tile.selected{border-color:var(--gold-bright);background:rgba(212,175,55,0.14);}
+    .week-tile-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;}
+    .week-tile-num{font-size:0.76rem;font-weight:800;color:var(--gold-bright);}
+    .week-tile-impact{font-size:0.65rem;font-weight:800;padding:1px 4px;border-radius:4px;}
+    .week-tile-impact.pos{background:rgba(34,197,94,0.2);color:var(--success);}
+    .week-tile-impact.neg{background:rgba(239,68,68,0.2);color:var(--danger);}
+    .week-tile-impact.neu{background:rgba(255,255,255,0.1);color:var(--text-muted);}
+    .week-tile-fest{font-size:0.65rem;color:var(--text-muted);margin-bottom:3px;}
+    .week-tile-rival{font-size:0.64rem;color:var(--warning);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-    .marketing-filters-bar { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; }
+    .theatre-run-card{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:8px;padding:12px;margin-bottom:10px;cursor:pointer;}
+    .theatre-run-card:hover{border-color:var(--gold-bright);}
+    .theatre-header{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+    .theatre-poster{width:48px;height:68px;border-radius:5px;object-fit:cover;border:1px solid var(--gold);}
 
-    .marketing-stats-banner {
-      background: var(--bg-surface);
-      border: 1px solid var(--gold-primary);
-      border-radius: 8px;
-      padding: 10px 14px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      gap: 10px;
-      text-align: center;
-    }
-    .m-stat-title { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); }
-    .m-stat-val { font-size: 1.05rem; font-weight: 800; color: var(--gold-bright); }
+    /* 11 Box Office Verdict Badges */
+    .verdict-pill{display:inline-block;font-size:0.65rem;font-weight:800;padding:2px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:0.4px;}
+    .v-disaster,.v-flop{background:rgba(239,68,68,0.22);color:#ef4444;border:1px solid #ef4444;}
+    .v-below-avg,.v-average{background:rgba(245,158,11,0.2);color:#f59e0b;border:1px solid #f59e0b;}
+    .v-above-avg,.v-semi-hit,.v-hit{background:rgba(34,197,94,0.2);color:#22c55e;border:1px solid #22c55e;}
+    .v-super-hit,.v-super-duper-hit,.v-blockbuster,.v-all-time-blockbuster{background:var(--gold-grad);color:#000;box-shadow:0 0 8px rgba(245,197,24,0.5);}
 
-    .cost-inflow-hud {
-      position: sticky;
-      bottom: 8px;
-      z-index: 800;
-      background: rgba(18, 18, 24, 0.95);
-      backdrop-filter: blur(14px);
-      border: 1px solid var(--gold-primary);
-      border-radius: 10px;
-      padding: 10px 12px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: 14px;
-    }
-    .hud-stat-col { display: flex; flex-direction: column; }
-    .hud-label { font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); }
-    .hud-val { font-size: 0.95rem; font-weight: 800; }
-    .hud-val.cost { color: var(--danger); }
-    .hud-val.inflow { color: var(--success); }
-    .hud-val.net { color: var(--gold-bright); }
+    .studios-intel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+    .studio-intel-card{background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:8px;padding:12px;position:relative;}
+    .studio-intel-card.my-studio{border-color:var(--gold-bright);background:rgba(212,175,55,0.05);}
+    .studio-intel-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--border-color);}
+    .studio-intel-card.my-studio::before{background:var(--gold-grad);}
 
-    .user-uploaded-poster-container {
-      margin-bottom: 12px;
-      padding: 10px;
-      background: rgba(212, 175, 55, 0.08);
-      border: 1px dashed var(--gold-primary);
-      border-radius: 8px;
-      display: none;
-      align-items: center;
-      gap: 12px;
-    }
-    .user-uploaded-poster-container.visible { display: flex; }
-    .uploaded-preview-thumb { width: 55px; height: 78px; border-radius: 4px; object-fit: cover; border: 1.5px solid var(--gold-bright); }
+    .news-pagination-bar{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:8px;border-top:1px dashed var(--border-subtle);}
 
-    .week-tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-top: 8px; max-height: 280px; overflow-y: auto; padding: 2px; }
-    .week-tile {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color-subtle);
-      border-radius: 6px;
-      padding: 6px;
-      cursor: pointer;
-      text-align: left;
-      position: relative;
-    }
-    .week-tile.selected { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.14); }
-    .week-tile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
-    .week-tile-num { font-size: 0.76rem; font-weight: 800; color: var(--gold-bright); }
-    .week-tile-impact { font-size: 0.65rem; font-weight: 800; padding: 1px 4px; border-radius: 4px; }
-    .week-tile-impact.pos { background: rgba(34, 197, 94, 0.2); color: var(--success); }
-    .week-tile-impact.neg { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-    .week-tile-impact.neu { background: rgba(255, 255, 255, 0.1); color: var(--text-muted); }
-    .week-tile-fest { font-size: 0.65rem; color: var(--text-muted); margin-bottom: 3px; }
-    .week-tile-rival { font-size: 0.64rem; color: var(--warning); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #toast-container{position:fixed;top:65px;right:12px;z-index:1000;display:flex;flex-direction:column;gap:6px;pointer-events:none;max-width:320px;width:calc(100% - 24px);}
+    .toast-msg{background:var(--toast-bg)!important;border-left:3.5px solid var(--gold-bright);color:var(--toast-text)!important;padding:8px 12px;border-radius:6px;font-size:0.78rem;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,0.7);pointer-events:auto;display:flex;align-items:center;gap:6px;}
+    .toast-msg span,.toast-msg i{color:#ffffff!important;}
+    .toast-msg.success{border-left-color:var(--success);}
+    .toast-msg.error{border-left-color:var(--danger);}
 
-    .theatre-run-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 10px; cursor: pointer; }
-    .theatre-run-card:hover { border-color: var(--gold-bright); }
-    .theatre-header { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
-    .theatre-poster { width: 48px; height: 68px; border-radius: 5px; object-fit: cover; border: 1px solid var(--gold-primary); }
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:950;display:none;align-items:center;justify-content:center;padding:12px;}
+    .modal-overlay.active{display:flex;}
+    .modal-window{background:var(--bg-surface);border:1px solid var(--gold);border-radius:12px;padding:18px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.85);}
 
-    .studios-intel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-    .studio-intel-card { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 12px; position: relative; }
-    .studio-intel-card.my-studio { border-color: var(--gold-bright); background: rgba(212, 175, 55, 0.05); }
-    .studio-intel-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--border-color); }
-    .studio-intel-card.my-studio::before { background: var(--gold-gradient); }
-
-    .news-pagination-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-color-subtle); }
-
-    #toast-container {
-      position: fixed;
-      top: 65px;
-      right: 12px;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      pointer-events: none;
-      max-width: 320px;
-      width: calc(100% - 24px);
-    }
-    .toast-msg {
-      background: var(--toast-bg) !important;
-      border-left: 3.5px solid var(--gold-bright);
-      color: var(--toast-text) !important;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      pointer-events: auto;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .toast-msg span, .toast-msg i { color: #ffffff !important; }
-    .toast-msg.success { border-left-color: var(--success); }
-    .toast-msg.error { border-left-color: var(--danger); }
-
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      z-index: 950;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-    }
-    .modal-overlay.active { display: flex; }
-    .modal-window {
-      background: var(--bg-surface);
-      border: 1px solid var(--gold-primary);
-      border-radius: 12px;
-      padding: 18px;
-      max-width: 520px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
-    }
-
-    .btn-gold {
-      background: var(--gold-gradient);
-      color: #0b0b0e;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-weight: 800;
-      font-size: 0.82rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 7px 14px;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-
-    .input-field {
-      width: 100%;
-      background: var(--bg-base);
-      border: 1px solid var(--border-color-subtle);
-      border-radius: 6px;
-      padding: 8px 10px;
-      color: var(--text-main);
-      font-family: var(--font-body);
-      font-size: 0.84rem;
-      margin-bottom: 10px;
-      outline: none;
-    }
-    .input-field:focus { border-color: var(--gold-primary); }
-
-    #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+    .btn-gold{background:var(--gold-grad);color:#0b0b0e;border:none;padding:8px 16px;border-radius:6px;font-weight:800;font-size:0.82rem;cursor:pointer;display:inline-flex;align-items:center;gap:5px;}
+    .btn-outline{background:transparent;border:1px solid var(--border-color);color:var(--text-main);padding:7px 14px;border-radius:6px;font-weight:600;font-size:0.8rem;cursor:pointer;}
+    .input-field{width:100%;background:var(--bg-base);border:1px solid var(--border-subtle);border-radius:6px;padding:8px 10px;color:var(--text-main);font-family:var(--font-body);font-size:0.84rem;margin-bottom:10px;outline:none;}
+    .input-field:focus{border-color:var(--gold);}
+    #confetti-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:999;}
   </style>
 </head>
 <body>
@@ -507,20 +211,14 @@
       <img src="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80" alt="App Icon" class="brand-icon">
       <input type="text" id="studio-name-display" class="studio-name-input" value="LILA PRODUCTIONS" title="Click to rename studio">
     </div>
-
     <div class="header-stats">
       <div class="stat-badge badge-cash"><i class="fa-solid fa-coins"></i><span class="badge-val" id="stat-cash">₹50 Cr</span></div>
       <div class="stat-badge"><i class="fa-solid fa-calendar-week"></i><span>W<strong class="badge-val" id="stat-week">1</strong></span></div>
       <div class="stat-badge"><i class="fa-solid fa-trophy"></i><span class="badge-val" id="stat-rep">75</span></div>
     </div>
-
     <div class="header-actions">
-      <button class="btn-advance-week" id="btn-advance-week" title="Advance Week">
-        <i class="fa-solid fa-forward-step"></i><span class="btn-text-full">Advance</span>
-      </button>
-      <button class="btn-theme-toggle" id="btn-theme-toggle" title="Toggle Theme">
-        <i class="fa-solid fa-sun"></i>
-      </button>
+      <button class="btn-advance-week" id="btn-advance-week" title="Advance Week"><i class="fa-solid fa-forward-step"></i><span class="btn-text-full">Advance</span></button>
+      <button class="btn-theme-toggle" id="btn-theme-toggle" title="Toggle Theme"><i class="fa-solid fa-sun"></i></button>
     </div>
   </header>
 
@@ -540,37 +238,35 @@
 
   <main class="app-viewport">
 
-    <!-- 1. DASHBOARD TAB -->
+    <!-- 1. DASHBOARD -->
     <section id="tab-dashboard" class="tab-view active">
       <div class="metrics-grid">
         <div class="metric-box"><div class="metric-lbl">Studio Net Worth</div><div class="metric-num" id="dash-net-worth">₹50.00 Cr</div></div>
         <div class="metric-box"><div class="metric-lbl">Total Theatrical Gross</div><div class="metric-num" id="dash-box-office">₹0</div></div>
         <div class="metric-box"><div class="metric-lbl">Released Films</div><div class="metric-num" id="dash-released-count">0</div></div>
-        <div class="metric-box"><div class="metric-lbl">Awards Won</div><div class="metric-num" id="dash-awards-count" style="color:var(--gold-bright);">🏆 0</div></div>
+        <div class="metric-box"><div class="metric-lbl">Awards Won</div><div class="metric-num" id="dash-awards-count" style="color:var(--gold-bright);"><i class="fa-solid fa-award"></i> 0</div></div>
       </div>
-
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-fire"></i> Active Productions on Floor</span>
-          <button class="btn-gold" style="font-size:0.72rem; padding:3px 8px;" onclick="switchTab('tab-new-movie')"><i class="fa-solid fa-plus"></i> Greenlight</button>
+          <button class="btn-gold" style="font-size:0.72rem;padding:3px 8px;" onclick="switchTab('tab-new-movie')"><i class="fa-solid fa-plus"></i> Greenlight</button>
         </div>
         <div id="dashboard-active-productions">
-          <p style="color:var(--text-muted); font-size:0.8rem;">No films currently on the floor. Go to "New Movie" to assemble your dream project!</p>
+          <p style="color:var(--text-muted);font-size:0.8rem;">No films currently on the floor. Go to "New Movie" to assemble your dream project!</p>
         </div>
       </div>
-
       <div class="card">
         <div class="card-title"><i class="fa-solid fa-newspaper"></i> Bollywood Trade & Wire</div>
-        <div id="dashboard-news-feed" style="font-size:0.8rem; line-height:1.5; color:var(--text-muted); min-height:120px;"></div>
+        <div id="dashboard-news-feed" style="font-size:0.8rem;line-height:1.5;color:var(--text-muted);min-height:110px;"></div>
         <div class="news-pagination-bar">
-          <button class="btn-outline" style="font-size:0.72rem; padding:3px 8px;" id="btn-news-prev" onclick="changeNewsPage(-1)"><i class="fa-solid fa-chevron-left"></i> Previous</button>
-          <span style="font-size:0.75rem; color:var(--text-muted);" id="news-page-indicator">Page 1</span>
-          <button class="btn-outline" style="font-size:0.72rem; padding:3px 8px;" id="btn-news-next" onclick="changeNewsPage(1)">Next <i class="fa-solid fa-chevron-right"></i></button>
+          <button class="btn-outline" style="font-size:0.72rem;padding:3px 8px;" id="btn-news-prev" onclick="changeNewsPage(-1)"><i class="fa-solid fa-chevron-left"></i> Previous</button>
+          <span style="font-size:0.75rem;color:var(--text-muted);" id="news-page-indicator">Page 1</span>
+          <button class="btn-outline" style="font-size:0.72rem;padding:3px 8px;" id="btn-news-next" onclick="changeNewsPage(1)">Next <i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
     </section>
 
-    <!-- 2. NEW MOVIE PIPELINE TAB -->
+    <!-- 2. NEW MOVIE PIPELINE WIZARD (8 STEPS) -->
     <section id="tab-new-movie" class="tab-view">
       <div class="card">
         <div class="card-title"><i class="fa-solid fa-clapperboard"></i> Filmmaking Pipeline Wizard</div>
@@ -579,84 +275,61 @@
           <div class="wizard-step-node active" data-step="1"><span class="step-circle">1</span> Script & Format</div>
           <div class="wizard-step-node" data-step="2"><span class="step-circle">2</span> Cast</div>
           <div class="wizard-step-node" data-step="3"><span class="step-circle">3</span> Director</div>
-          <div class="wizard-step-node" data-step="4"><span class="step-circle">4</span> Music & Lyrics</div>
-          <div class="wizard-step-node" data-step="5"><span class="step-circle">5</span> Rights</div>
-          <div class="wizard-step-node" data-step="6"><span class="step-circle">6</span> Targeted Marketing</div>
-          <div class="wizard-step-node" data-step="7"><span class="step-circle">7</span> Slate</div>
+          <div class="wizard-step-node" data-step="4"><span class="step-circle">4</span> Sets, VFX & Locations</div>
+          <div class="wizard-step-node" data-step="5"><span class="step-circle">5</span> Music & Lyrics</div>
+          <div class="wizard-step-node" data-step="6"><span class="step-circle">6</span> Rights</div>
+          <div class="wizard-step-node" data-step="7"><span class="step-circle">7</span> Marketing</div>
+          <div class="wizard-step-node" data-step="8"><span class="step-circle">8</span> Slate</div>
         </div>
 
-        <!-- STEP 1: SCRIPT, UNIVERSE, SCRIPT QUALITY & POSTER -->
+        <!-- STEP 1: UNIVERSE, TITLE, SCRIPT QUALITY, FORMAT & POSTER -->
         <div class="pipeline-step-pane active" id="wizard-step-1">
           <div class="step-header-box">
-            <span class="step-badge">Step 1 of 7</span>
-            <h3 class="step-heading">Script Concept & Universe Model</h3>
-            <p class="step-subtext">Choose your production universe, title, script quality, and release model.</p>
+            <span class="step-badge">Step 1 of 8</span>
+            <h3 class="step-heading">Universe, Script & Release Strategy</h3>
+            <p class="step-subtext">Configure franchise affiliation, project title, script tier, release model, and poster.</p>
           </div>
 
-          <!-- 1. FIRST OPTION: Production Universe Model -->
-          <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Production Universe Model:</label>
-          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;" id="franchise-model-pills">
-            <button class="curved-choice-btn active" data-model="standalone" onclick="setFranchiseModel('standalone', this)">
-              Standalone Film
-            </button>
-            <button class="curved-choice-btn" data-model="franchise" onclick="setFranchiseModel('franchise', this)">
-              Part of Franchise
-            </button>
+          <label style="font-size:0.78rem;font-weight:700;margin-bottom:6px;display:block;">Production Universe Model:</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;" id="franchise-model-pills">
+            <button class="curved-choice-btn active" data-model="standalone" onclick="setFranchiseModel('standalone',this)">Standalone Film</button>
+            <button class="curved-choice-btn" data-model="franchise" onclick="setFranchiseModel('franchise',this)">Part of Franchise</button>
           </div>
 
-          <div id="franchise-picker-container" style="display:none; margin-bottom:14px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <label style="font-size:0.75rem; font-weight:700;">Select Franchise Universe (Tiles):</label>
-              <button class="btn-outline" style="font-size:0.7rem; padding:2px 6px;" onclick="openCreateFranchiseModal()">
-                <i class="fa-solid fa-plus"></i> New Franchise
-              </button>
+          <div id="franchise-picker-container" style="display:none;margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <label style="font-size:0.75rem;font-weight:700;">Select Franchise Universe (Tiles):</label>
+              <button class="btn-outline" style="font-size:0.7rem;padding:2px 6px;" onclick="openCreateFranchiseModal()"><i class="fa-solid fa-plus"></i> New Franchise</button>
             </div>
-            
             <div class="franchise-tiles-grid" id="pipeline-franchise-tiles"></div>
-            
-            <div id="pipeline-franchise-edit-wrap" style="display:none; background:rgba(212,175,55,0.06); border:1px dashed var(--gold-primary); border-radius:6px; padding:6px 10px; margin-top:6px;">
-              <label style="font-size:0.72rem; color:var(--text-muted); display:block; margin-bottom:2px;">Editable Franchise Title (Auto-loaded):</label>
-              <input type="text" id="pipeline-active-franchise-name" class="input-field" style="margin-bottom:0; font-size:0.78rem; padding:4px 8px;">
+            <div id="pipeline-franchise-edit-wrap" style="display:none;background:rgba(212,175,55,0.06);border:1px dashed var(--gold);border-radius:6px;padding:6px 10px;margin-top:6px;">
+              <label style="font-size:0.72rem;color:var(--text-muted);display:block;margin-bottom:2px;">Editable Franchise Title (Auto-loaded):</label>
+              <input type="text" id="pipeline-active-franchise-name" class="input-field" style="margin-bottom:0;font-size:0.78rem;padding:4px 8px;">
             </div>
           </div>
 
-          <!-- 2. Project Title Input -->
-          <label style="font-size:0.78rem; font-weight:700; margin-bottom:4px; display:block;">Project Title:</label>
-          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
-            <input type="text" id="movie-title" class="input-field" placeholder="Enter Project Title (e.g. Tiger Zinda Hai 2)" style="flex:1; margin-bottom:0;">
+          <label style="font-size:0.78rem;font-weight:700;margin-bottom:4px;display:block;">Project Title:</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+            <input type="text" id="movie-title" class="input-field" placeholder="Enter Project Title (e.g. Tiger Zinda Hai 2)" style="flex:1;margin-bottom:0;">
             <button class="btn-outline" id="btn-random-title"><i class="fa-solid fa-dice"></i> Random Title</button>
           </div>
 
-          <!-- 3. SCRIPT QUALITY (BELOW NAME OF PROJECT) -->
-          <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Script Quality Tier (Affects Base Quality & Critical Response):</label>
-          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;" id="script-quality-pills">
-            <button class="curved-choice-btn" data-sq="masala" onclick="setScriptQuality('masala', this)">
-              Standard Masala Draft (Score 55)
-            </button>
-            <button class="curved-choice-btn active" data-sq="tight" onclick="setScriptQuality('tight', this)">
-              Polished Screenplay (Score 75)
-            </button>
-            <button class="curved-choice-btn" data-sq="masterpiece" onclick="setScriptQuality('masterpiece', this)">
-              Award-Winning Masterpiece (Score 95)
-            </button>
+          <label style="font-size:0.78rem;font-weight:700;margin-bottom:6px;display:block;">Script Quality Tier:</label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;" id="script-quality-pills">
+            <button class="curved-choice-btn" data-sq="masala" onclick="setScriptQuality('masala',this)">Standard Masala (₹25L, Score 55)</button>
+            <button class="curved-choice-btn active" data-sq="tight" onclick="setScriptQuality('tight',this)">Polished Screenplay (₹1.5Cr, Score 75)</button>
+            <button class="curved-choice-btn" data-sq="masterpiece" onclick="setScriptQuality('masterpiece',this)">Masterpiece Script (₹5Cr, Score 95)</button>
           </div>
 
-          <!-- 4. RELEASE FORMAT (1st Theatres & OTT, 2nd Only Theatres, 3rd OTT & Satellite) -->
-          <label style="font-size:0.78rem; font-weight:700; margin-bottom:6px; display:block;">Release Format (How to Release):</label>
-          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;" id="release-format-pills">
-            <button class="curved-choice-btn active" data-format="theatres_ott" onclick="setReleaseFormat('theatres_ott', this)">
-              <i class="fa-solid fa-film"></i> Theatres & OTT (Default)
-            </button>
-            <button class="curved-choice-btn" data-format="only_theatres" onclick="setReleaseFormat('only_theatres', this)">
-              <i class="fa-solid fa-ticket"></i> Only Theatres (Exclusive)
-            </button>
-            <button class="curved-choice-btn" data-format="ott_satellite" onclick="setReleaseFormat('ott_satellite', this)">
-              <i class="fa-solid fa-tv"></i> OTT & Satellite Direct
-            </button>
+          <label style="font-size:0.78rem;font-weight:700;margin-bottom:6px;display:block;">Release Format (How to Release):</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;" id="release-format-pills">
+            <button class="curved-choice-btn active" data-format="theatres_ott" onclick="setReleaseFormat('theatres_ott',this)"><i class="fa-solid fa-film"></i> Theatres & OTT</button>
+            <button class="curved-choice-btn" data-format="only_theatres" onclick="setReleaseFormat('only_theatres',this)"><i class="fa-solid fa-ticket"></i> Only Theatres</button>
+            <button class="curved-choice-btn" data-format="ott_satellite" onclick="setReleaseFormat('ott_satellite',this)"><i class="fa-solid fa-tv"></i> OTT & Satellite</button>
           </div>
 
-          <label style="font-size:0.78rem; font-weight:700;">Select Genre:</label>
-          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px; margin-bottom:14px;" id="genre-pills">
+          <label style="font-size:0.78rem;font-weight:700;">Select Genre:</label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;margin-bottom:14px;" id="genre-pills">
             <button class="curved-choice-btn active" data-genre="Action">Action</button>
             <button class="curved-choice-btn" data-genre="Romance">Romance</button>
             <button class="curved-choice-btn" data-genre="Drama">Drama</button>
@@ -665,23 +338,21 @@
             <button class="curved-choice-btn" data-genre="Horror-Comedy">Horror-Comedy</button>
           </div>
 
-          <label style="font-size:0.78rem; font-weight:700; margin-bottom:4px; display:block;">Select or Upload Movie Poster:</label>
+          <label style="font-size:0.78rem;font-weight:700;margin-bottom:4px;display:block;">Select or Upload Movie Poster:</label>
           <div style="margin-bottom:8px;">
             <input type="file" id="poster-file-input" accept="image/*" style="display:none;" onchange="handlePosterUpload(event)">
-            <button class="btn-outline" style="font-size:0.75rem;" onclick="document.getElementById('poster-file-input').click()">
-              <i class="fa-solid fa-upload"></i> Upload from Device
-            </button>
+            <button class="btn-outline" style="font-size:0.75rem;" onclick="document.getElementById('poster-file-input').click()"><i class="fa-solid fa-upload"></i> Upload from Device</button>
           </div>
 
           <div id="user-uploaded-poster-box" class="user-uploaded-poster-container">
             <img id="user-uploaded-img" src="" alt="Custom Poster" class="uploaded-preview-thumb">
             <div>
-              <div style="font-weight:700; font-size:0.8rem; color:var(--gold-bright);">Custom Uploaded Poster Selected</div>
-              <div style="font-size:0.7rem; color:var(--text-muted);">Will appear across all cinema runs, promotions, and dossiers.</div>
+              <div style="font-weight:700;font-size:0.8rem;color:var(--gold-bright);">Custom Uploaded Poster Selected</div>
+              <div style="font-size:0.7rem;color:var(--text-muted);">Will appear across all cinema runs, promotions, and dossiers.</div>
             </div>
           </div>
 
-          <div class="tiles-grid" id="preset-posters-grid" style="grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));"></div>
+          <div class="tiles-grid" id="preset-posters-grid" style="grid-template-columns:repeat(auto-fill,minmax(75px,1fr));"></div>
 
           <div class="wizard-navigation-bar">
             <span></span>
@@ -692,9 +363,9 @@
         <!-- STEP 2: CAST SELECTION -->
         <div class="pipeline-step-pane" id="wizard-step-2">
           <div class="step-header-box">
-            <span class="step-badge">Step 2 of 7</span>
+            <span class="step-badge">Step 2 of 8</span>
             <h3 class="step-heading">Star Cast & Ensemble</h3>
-            <p class="step-subtext">Cast fees dynamically reflect franchise demand. Tap card to toggle!</p>
+            <p class="step-subtext">Cast fees dynamically scale with franchise demand. Tap card to toggle Lead or Supporting!</p>
           </div>
           <div class="tiles-grid" id="actors-selection-grid"></div>
           <div class="wizard-navigation-bar">
@@ -706,46 +377,75 @@
         <!-- STEP 3: DIRECTOR SELECTION -->
         <div class="pipeline-step-pane" id="wizard-step-3">
           <div class="step-header-box">
-            <span class="step-badge">Step 3 of 7</span>
+            <span class="step-badge">Step 3 of 8</span>
             <h3 class="step-heading">Director & Visionary</h3>
             <p class="step-subtext">Select 1 director. Affects critical reception, box office hold, and awards contention.</p>
           </div>
           <div class="tiles-grid" id="directors-selection-grid"></div>
           <div class="wizard-navigation-bar">
             <button class="btn-outline" onclick="goToStep(2)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(4)">Next: Music & Playback <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn-gold" onclick="goToStep(4)">Next: Sets, VFX & Locations <i class="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>
 
-        <!-- STEP 4: MUSIC, ALBUM & LYRICS QUALITY -->
+        <!-- STEP 4: SETS, VFX QUALITY & MULTI-LOCATION SHOOTING -->
         <div class="pipeline-step-pane" id="wizard-step-4">
           <div class="step-header-box">
-            <span class="step-badge">Step 4 of 7</span>
+            <span class="step-badge">Step 4 of 8</span>
+            <h3 class="step-heading">Production Sets, VFX & Global Locations</h3>
+            <p class="step-subtext">Select set design, visual effects tier, and shooting destinations. Location fees scale with cast travel size!</p>
+          </div>
+
+          <label style="font-size:0.78rem;font-weight:700;display:block;margin-bottom:6px;">Set Construction Scale:</label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;" id="set-scale-pills">
+            <button class="curved-choice-btn active" data-scale="minimal" onclick="setSetScale('minimal',this)"><i class="fa-solid fa-house"></i> Real / Minimal Sets (₹50L)</button>
+            <button class="curved-choice-btn" data-scale="studio" onclick="setSetScale('studio',this)"><i class="fa-solid fa-building"></i> Custom Film City Sets (₹4Cr)</button>
+            <button class="curved-choice-btn" data-scale="palace" onclick="setSetScale('palace',this)"><i class="fa-solid fa-crown"></i> Grand Period Palaces (₹18Cr)</button>
+          </div>
+
+          <label style="font-size:0.78rem;font-weight:700;display:block;margin-bottom:6px;">Visual Effects (VFX) Quality:</label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;" id="vfx-quality-pills">
+            <button class="curved-choice-btn active" data-vfx="none" onclick="setVfxQuality('none',this)"><i class="fa-solid fa-video"></i> Practical / Minimal VFX (₹20L)</button>
+            <button class="curved-choice-btn" data-vfx="standard" onclick="setVfxQuality('standard',this)"><i class="fa-solid fa-wand-magic-sparkles"></i> Standard CGI Enhancement (₹5Cr)</button>
+            <button class="curved-choice-btn" data-vfx="high" onclick="setVfxQuality('high',this)"><i class="fa-solid fa-fire-flame-curved"></i> High-Octane Action VFX (₹22Cr)</button>
+            <button class="curved-choice-btn" data-vfx="hollywood" onclick="setVfxQuality('hollywood',this)"><i class="fa-solid fa-shuttle-space"></i> Hollywood-Grade Pan-India VFX (₹55Cr)</button>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <label style="font-size:0.78rem;font-weight:700;">Shooting Locations (Multi-Select & Scope):</label>
+            <span style="font-size:0.7rem;color:var(--gold-bright);font-weight:700;" id="loc-cast-multiplier-label">Cast Travel Multiplier: 1.00x</span>
+          </div>
+          <div class="tiles-grid" id="locations-selection-grid"></div>
+
+          <div class="wizard-navigation-bar">
+            <button class="btn-outline" onclick="goToStep(3)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn-gold" onclick="goToStep(5)">Next: Music & Lyrics <i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 5: MUSIC & LYRICS -->
+        <div class="pipeline-step-pane" id="wizard-step-5">
+          <div class="step-header-box">
+            <span class="step-badge">Step 5 of 8</span>
             <h3 class="step-heading">Music Direction, Lyrics & Playback</h3>
             <p class="step-subtext">Select music composer, lyrics pedigree, tracks, and playback voices.</p>
           </div>
 
-          <label style="font-size:0.78rem; font-weight:700;">Select Music Composer:</label>
+          <label style="font-size:0.78rem;font-weight:700;">Select Music Composer:</label>
           <div class="tiles-grid" id="composers-selection-grid"></div>
 
-          <div style="margin-top:14px; margin-bottom:10px;">
-            <label style="font-size:0.78rem; font-weight:700; display:block; margin-bottom:6px;">Poetry & Lyrics Quality Tier:</label>
-            <div style="display:flex; gap:6px; flex-wrap:wrap;" id="lyrics-quality-pills">
-              <button class="curved-choice-btn active" data-tier="standard" onclick="setLyricsQuality('standard', this)">
-                <i class="fa-solid fa-pen"></i> Standard Commercial (₹5 Lakhs)
-              </button>
-              <button class="curved-choice-btn" data-tier="poetic" onclick="setLyricsQuality('poetic', this)">
-                <i class="fa-solid fa-feather-pointed"></i> Poetic Urdu / Sufi (₹20 Lakhs, +Hype)
-              </button>
-              <button class="curved-choice-btn" data-tier="legend" onclick="setLyricsQuality('legend', this)">
-                <i class="fa-solid fa-award"></i> Legendary Maestro Lyricist (₹60 Lakhs, +Awards & Holds)
-              </button>
+          <div style="margin-top:14px;margin-bottom:10px;">
+            <label style="font-size:0.78rem;font-weight:700;display:block;margin-bottom:6px;">Poetry & Lyrics Quality Tier:</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;" id="lyrics-quality-pills">
+              <button class="curved-choice-btn active" data-tier="standard" onclick="setLyricsQuality('standard',this)"><i class="fa-solid fa-pen"></i> Standard Commercial (₹15L)</button>
+              <button class="curved-choice-btn" data-tier="poetic" onclick="setLyricsQuality('poetic',this)"><i class="fa-solid fa-feather-pointed"></i> Poetic Urdu / Sufi (₹60L)</button>
+              <button class="curved-choice-btn" data-tier="legend" onclick="setLyricsQuality('legend',this)"><i class="fa-solid fa-award"></i> Legendary Lyricist (₹1.8Cr)</button>
             </div>
           </div>
 
-          <div style="margin-top:12px; margin-bottom:10px;">
-            <label style="font-size:0.78rem; font-weight:700;">Number of Original Songs:</label>
-            <div style="display:flex; gap:6px; margin-top:4px; flex-wrap:wrap;" id="song-count-pills">
+          <div style="margin-top:12px;margin-bottom:10px;">
+            <label style="font-size:0.78rem;font-weight:700;">Number of Original Songs:</label>
+            <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;" id="song-count-pills">
               <button class="curved-choice-btn" data-count="0">0 (Songless)</button>
               <button class="curved-choice-btn" data-count="1">1 Track</button>
               <button class="curved-choice-btn active" data-count="2">2 Tracks</button>
@@ -754,84 +454,75 @@
             </div>
           </div>
 
-          <label style="font-size:0.78rem; font-weight:700;">Select Playback Singers:</label>
+          <label style="font-size:0.78rem;font-weight:700;">Select Playback Singers:</label>
           <div class="tiles-grid" id="singers-selection-grid"></div>
 
           <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(3)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(5)">Next: Rights Deals <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn-outline" onclick="goToStep(4)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn-gold" onclick="goToStep(6)">Next: Rights Deals <i class="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>
 
-        <!-- STEP 5: PRE-RELEASE RIGHTS DEALS -->
-        <div class="pipeline-step-pane" id="wizard-step-5">
+        <!-- STEP 6: PRE-RELEASE RIGHTS DEALS -->
+        <div class="pipeline-step-pane" id="wizard-step-6">
           <div class="step-header-box">
-            <span class="step-badge">Step 5 of 7</span>
+            <span class="step-badge">Step 6 of 8</span>
             <h3 class="step-heading">Pre-Release Rights (Guaranteed Inflow)</h3>
-            <p class="step-subtext">Direct OTT releases and prestigious franchises trigger bidding wars with higher recoveries.</p>
+            <p class="step-subtext">Rival streaming platforms & labels outbid previous franchise partners for blockbuster sequels!</p>
           </div>
 
-          <label style="font-size:0.78rem; font-weight:700;">Music Rights Partner:</label>
+          <label style="font-size:0.78rem;font-weight:700;">Music Rights Partner:</label>
           <div class="brand-tiles-grid" id="music-rights-grid"></div>
 
           <div id="ott-rights-section">
-            <label style="font-size:0.78rem; font-weight:700; margin-top:12px; display:block;">Worldwide Digital Streaming Rights (OTT):</label>
+            <label style="font-size:0.78rem;font-weight:700;margin-top:12px;display:block;">Worldwide Digital Streaming Rights (OTT):</label>
             <div class="brand-tiles-grid" id="ott-rights-grid"></div>
           </div>
 
-          <label style="font-size:0.78rem; font-weight:700; margin-top:12px; display:block;">Satellite TV Broadcast Rights:</label>
+          <label style="font-size:0.78rem;font-weight:700;margin-top:12px;display:block;">Satellite TV Broadcast Rights:</label>
           <div class="brand-tiles-grid" id="satellite-rights-grid"></div>
 
           <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(4)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(6)">Next: Targeted Marketing <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn-outline" onclick="goToStep(5)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn-gold" onclick="goToStep(7)">Next: Targeted Marketing <i class="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>
 
-        <!-- STEP 6: TARGETED MARKETING -->
-        <div class="pipeline-step-pane" id="wizard-step-6">
+        <!-- STEP 7: TARGETED MARKETING -->
+        <div class="pipeline-step-pane" id="wizard-step-7">
           <div class="step-header-box">
-            <span class="step-badge">Step 6 of 7</span>
+            <span class="step-badge">Step 7 of 8</span>
             <h3 class="step-heading">Targeted Marketing Campaigns</h3>
             <p class="step-subtext">Select specific promotion channels. Watch Audience Reach & Hype meters update live!</p>
           </div>
 
           <div class="marketing-stats-banner">
-            <div>
-              <div class="m-stat-title">Audience Reach</div>
-              <div class="m-stat-val" id="m-stat-reach">1.2M Viewers</div>
-            </div>
-            <div>
-              <div class="m-stat-title">Campaign Hype Meter</div>
-              <div class="m-stat-val" id="m-stat-hype">🔥 49 / 100</div>
-            </div>
-            <div>
-              <div class="m-stat-title">Total Promo Spend</div>
-              <div class="m-stat-val" id="m-stat-cost">₹4.00 Cr</div>
-            </div>
+            <div><div class="m-stat-title">Audience Reach</div><div class="m-stat-val" id="m-stat-reach">1.2M Viewers</div></div>
+            <div><div class="m-stat-title">Campaign Hype Meter</div><div class="m-stat-val" id="m-stat-hype"><i class="fa-solid fa-fire"></i> 49 / 100</div></div>
+            <div><div class="m-stat-title">Total Promo Spend</div><div class="m-stat-val" id="m-stat-cost">₹4.00 Cr</div></div>
           </div>
 
           <div class="marketing-filters-bar" id="marketing-filters">
-            <button class="curved-choice-btn active" onclick="filterMarketing('all', this)">All (26)</button>
-            <button class="curved-choice-btn" onclick="filterMarketing('Traditional', this)">Print & Outdoor</button>
-            <button class="curved-choice-btn" onclick="filterMarketing('Digital', this)">Digital & TV</button>
-            <button class="curved-choice-btn" onclick="filterMarketing('Theatrical', this)">Cinema Trailers</button>
-            <button class="curved-choice-btn" onclick="filterMarketing('Press', this)">Press Meets</button>
-            <button class="curved-choice-btn" onclick="filterMarketing('Grand', this)">Grand Events</button>
+            <button class="curved-choice-btn active" onclick="filterMarketing('all',this)">All (26)</button>
+            <button class="curved-choice-btn" onclick="filterMarketing('Traditional',this)">Print & Outdoor</button>
+            <button class="curved-choice-btn" onclick="filterMarketing('Digital',this)">Digital & TV</button>
+            <button class="curved-choice-btn" onclick="filterMarketing('Theatrical',this)">Cinema Trailers</button>
+            <button class="curved-choice-btn" onclick="filterMarketing('Press',this)">Press Meets</button>
+            <button class="curved-choice-btn" onclick="filterMarketing('Grand',this)">Grand Events</button>
           </div>
 
-          <div class="tiles-grid" id="marketing-campaigns-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));"></div>
+          <div class="tiles-grid" id="marketing-campaigns-grid" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr));"></div>
 
           <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(5)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" onclick="goToStep(7)">Next: Release Slate <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn-outline" onclick="goToStep(6)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn-gold" onclick="goToStep(8)">Next: Release Slate <i class="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>
 
-        <!-- STEP 7: RELEASE WINDOW & GREENLIGHT -->
-        <div class="pipeline-step-pane" id="wizard-step-7">
+        <!-- STEP 8: RELEASE WINDOW & GREENLIGHT -->
+        <div class="pipeline-step-pane" id="wizard-step-8">
           <div class="step-header-box">
-            <span class="step-badge">Step 7 of 7</span>
+            <span class="step-badge">Step 8 of 8</span>
             <h3 class="step-heading">Release Window & Greenlight (Weeks 2 to 30)</h3>
             <p class="step-subtext">Check holiday surge percentages, rival clashes & your own scheduled films before locking!</p>
           </div>
@@ -839,73 +530,52 @@
           <div class="week-tiles-grid" id="release-week-grid"></div>
 
           <div class="wizard-navigation-bar">
-            <button class="btn-outline" onclick="goToStep(6)"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <button class="btn-gold" id="btn-confirm-production" style="padding:8px 20px; font-size:0.86rem;">
-              <i class="fa-solid fa-rocket"></i> Launch Production
-            </button>
+            <button class="btn-outline" onclick="goToStep(7)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn-gold" id="btn-confirm-production" style="padding:8px 20px;font-size:0.86rem;"><i class="fa-solid fa-rocket"></i> Launch Production</button>
           </div>
         </div>
 
         <div class="cost-inflow-hud">
-          <div class="hud-stat-col">
-            <span class="hud-label">Budget & Promos</span>
-            <span class="hud-val cost" id="hud-total-cost">₹0</span>
-          </div>
-          <div class="hud-stat-col">
-            <span class="hud-label">Rights Recoveries</span>
-            <span class="hud-val inflow" id="hud-total-inflow">₹0</span>
-          </div>
-          <div class="hud-stat-col">
-            <span class="hud-label">Net Outlay</span>
-            <span class="hud-val net" id="hud-net-outlay">₹0</span>
-          </div>
+          <div class="hud-stat-col"><span class="hud-label">Budget & Promos</span><span class="hud-val cost" id="hud-total-cost">₹0</span></div>
+          <div class="hud-stat-col"><span class="hud-label">Rights Recoveries</span><span class="hud-val inflow" id="hud-total-inflow">₹0</span></div>
+          <div class="hud-stat-col"><span class="hud-label">Net Outlay</span><span class="hud-val net" id="hud-net-outlay">₹0</span></div>
         </div>
-
       </div>
     </section>
 
     <!-- 3. IN THEATRES TAB (ORDERED: 1. UPCOMING, 2. RUNNING, 3. ARCHIVED) -->
     <section id="tab-theatre-runs" class="tab-view">
-      <!-- 1. UPCOMING MOVIES ON TOP -->
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-hourglass-half"></i> Upcoming Releases on Horizon</span>
-          <span style="font-size:0.75rem; color:var(--gold-bright);">Pre-Release Audience Hype & Target Screens</span>
+          <span style="font-size:0.75rem;color:var(--gold-bright);">Pre-Release Hype & Target Screens</span>
         </div>
-        <div id="theatrical-upcoming-container">
-          <p style="color:var(--text-muted); font-size:0.8rem;">No upcoming productions scheduled yet.</p>
-        </div>
+        <div id="theatrical-upcoming-container"><p style="color:var(--text-muted);font-size:0.8rem;">No upcoming productions scheduled yet.</p></div>
       </div>
 
-      <!-- 2. RUNNING MOVIES BELOW UPCOMING -->
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-ticket"></i> Live Theatrical Runs</span>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Real-time Screens & Collections (Tap for Dossier)</span>
+          <span style="font-size:0.75rem;color:var(--text-muted);">Boost Hype Post-Release for 2-4 Week Gross Surge</span>
         </div>
-        <div id="theatrical-runs-container">
-          <p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in cinema halls. Launch a movie in "New Movie" to witness its box office trajectory!</p>
-        </div>
+        <div id="theatrical-runs-container"><p style="color:var(--text-muted);font-size:0.8rem;">No films currently running in cinema halls.</p></div>
       </div>
 
-      <!-- 3. ARCHIVED MOVIES AT LAST -->
       <div class="card">
         <div class="card-title">
-          <span><i class="fa-solid fa-box-archive"></i> Archived Completed Theatrical Runs</span>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Final Lifetime Records</span>
+          <span><i class="fa-solid fa-box-archive"></i> Archived Completed Runs & Box Office Verdicts</span>
+          <span style="font-size:0.75rem;color:var(--text-muted);">Tap for Full Trade Dossier</span>
         </div>
-        <div id="theatrical-archived-container">
-          <p style="color:var(--text-muted); font-size:0.8rem;">No archived theatrical runs yet.</p>
-        </div>
+        <div id="theatrical-archived-container"><p style="color:var(--text-muted);font-size:0.8rem;">No completed runs archived yet.</p></div>
       </div>
     </section>
 
-    <!-- 4. STUDIOS INTELLIGENCE TAB (SORTED STRICTLY BY RANKING) -->
+    <!-- 4. STUDIOS INTELLIGENCE TAB -->
     <section id="tab-studios" class="tab-view">
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-building"></i> Bollywood Studio Rankings</span>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Ranked dynamically by Total Net Worth & Fame</span>
+          <span style="font-size:0.75rem;color:var(--text-muted);">Ranked dynamically by Total Net Worth & Fame</span>
         </div>
         <div class="studios-intel-grid" id="studios-intel-grid"></div>
       </div>
@@ -916,20 +586,16 @@
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-sitemap"></i> Studio Universes</span>
-          <button class="btn-gold" style="font-size:0.72rem; padding:3px 8px;" onclick="openCreateFranchiseModal()"><i class="fa-solid fa-plus"></i> New Franchise</button>
+          <button class="btn-gold" style="font-size:0.72rem;padding:3px 8px;" onclick="openCreateFranchiseModal()"><i class="fa-solid fa-plus"></i> New Franchise</button>
         </div>
-        <div id="studio-franchises-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:10px; margin-bottom:16px;"></div>
+        <div id="studio-franchises-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px;"></div>
 
         <div class="card-title" style="margin-top:14px;"><i class="fa-solid fa-ranking-star"></i> Pan-India Top 100 Franchise Leaderboard</div>
         <div style="overflow-x:auto;">
-          <table style="width:100%; border-collapse:collapse; font-size:0.78rem; text-align:left;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.78rem;text-align:left;">
             <thead>
-              <tr style="border-bottom:1px solid var(--border-color); color:var(--gold-bright);">
-                <th style="padding:6px;">Rank</th>
-                <th style="padding:6px;">Franchise</th>
-                <th style="padding:6px;">Films</th>
-                <th style="padding:6px;">Gross</th>
-                <th style="padding:6px;">Prestige</th>
+              <tr style="border-bottom:1px solid var(--border-color);color:var(--gold-bright);">
+                <th style="padding:6px;">Rank</th><th style="padding:6px;">Franchise</th><th style="padding:6px;">Films</th><th style="padding:6px;">Gross</th><th style="padding:6px;">Prestige</th>
               </tr>
             </thead>
             <tbody id="pan-india-franchise-tbody"></tbody>
@@ -943,11 +609,9 @@
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-compact-disc"></i> Studio Filmography & 4K Remasters</span>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Tap film to view complete dossier</span>
+          <span style="font-size:0.75rem;color:var(--text-muted);">Tap film to view complete dossier</span>
         </div>
-        <div id="releases-filmography-container">
-          <p style="color:var(--text-muted); font-size:0.8rem;">No movies archived yet. Release films to unlock 4K remaster re-release privileges!</p>
-        </div>
+        <div id="releases-filmography-container"><p style="color:var(--text-muted);font-size:0.8rem;">No movies archived yet.</p></div>
       </div>
     </section>
 
@@ -976,10 +640,9 @@
           <div class="metric-box"><div class="metric-lbl">Outstanding Debt</div><div class="metric-num" id="fin-debt">₹0</div></div>
           <div class="metric-box"><div class="metric-lbl">Weekly Interest</div><div class="metric-num" id="fin-interest">₹0 /wk</div></div>
         </div>
-
         <div style="margin-top:12px;">
-          <label style="font-size:0.78rem; font-weight:700; color:var(--gold-bright);">Take Studio Loan (1.5% weekly interest):</label>
-          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;">
+          <label style="font-size:0.78rem;font-weight:700;color:var(--gold-bright);">Take Studio Loan (1.5% weekly interest):</label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
             <button class="btn-gold" onclick="takeStudioLoan(100000000)"><i class="fa-solid fa-hand-holding-dollar"></i> Borrow ₹10 Cr</button>
             <button class="btn-gold" onclick="takeStudioLoan(500000000)"><i class="fa-solid fa-hand-holding-dollar"></i> Borrow ₹50 Cr</button>
             <button class="btn-gold" onclick="takeStudioLoan(1000000000)"><i class="fa-solid fa-hand-holding-dollar"></i> Borrow ₹100 Cr</button>
@@ -987,8 +650,7 @@
             <button class="btn-gold" onclick="takeStudioLoan(5000000000)"><i class="fa-solid fa-hand-holding-dollar"></i> Borrow ₹500 Cr</button>
           </div>
         </div>
-
-        <div style="margin-top:16px; padding-top:10px; border-top:1px dashed var(--border-color-subtle); display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="margin-top:16px;padding-top:10px;border-top:1px dashed var(--border-subtle);display:flex;gap:8px;flex-wrap:wrap;">
           <button class="btn-outline" onclick="repayPartialLoan(500000000)"><i class="fa-solid fa-money-bill-transfer"></i> Repay ₹50 Cr</button>
           <button class="btn-outline" onclick="repayStudioLoan()"><i class="fa-solid fa-check-double"></i> Repay All Debt</button>
         </div>
@@ -1000,50 +662,59 @@
   <!-- MODAL: ONBOARDING -->
   <div class="modal-overlay" id="modal-onboarding">
     <div class="modal-window">
-      <div style="text-align:center; margin-bottom:14px;">
-        <i class="fa-solid fa-clapperboard" style="font-size:2rem; color:var(--gold-bright); margin-bottom:6px;"></i>
-        <h2 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.2rem;">Establish Your Movie Studio</h2>
-        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Name your studio and choose your starting treasury funds.</p>
+      <div style="text-align:center;margin-bottom:14px;">
+        <i class="fa-solid fa-clapperboard" style="font-size:2rem;color:var(--gold-bright);margin-bottom:6px;"></i>
+        <h2 style="font-family:var(--font-display);color:var(--gold-bright);font-size:1.2rem;">Establish Your Movie Studio</h2>
+        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">Name your studio and choose your starting treasury funds.</p>
       </div>
-
-      <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">Studio Name:</label>
+      <label style="font-size:0.78rem;font-weight:700;color:var(--text-main);margin-bottom:4px;display:block;">Studio Name:</label>
       <input type="text" id="onboard-studio-name" class="input-field" placeholder="e.g. Lila Productions, Apex Films" value="LILA PRODUCTIONS">
-
-      <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:6px; display:block;">Starting Capital:</label>
-      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;" id="onboard-capital-options">
+      <label style="font-size:0.78rem;font-weight:700;color:var(--text-main);margin-bottom:6px;display:block;">Starting Capital:</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;" id="onboard-capital-options">
         <button class="curved-choice-btn" data-amount="100000000">₹10 Crores</button>
         <button class="curved-choice-btn active" data-amount="500000000">₹50 Crores</button>
         <button class="curved-choice-btn" data-amount="1000000000">₹100 Crores</button>
         <button class="curved-choice-btn" data-amount="5000000000">₹500 Crores</button>
         <button class="curved-choice-btn" data-amount="10000000000">₹1,000 Crores</button>
       </div>
-
-      <button class="btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="confirmStudioOnboarding()">
-        <i class="fa-solid fa-film"></i> Launch Studio Empire
-      </button>
+      <button class="btn-gold" style="width:100%;justify-content:center;padding:10px;" onclick="confirmStudioOnboarding()"><i class="fa-solid fa-film"></i> Launch Studio Empire</button>
     </div>
   </div>
 
-  <!-- MODAL: FRANCHISE -->
+  <!-- MODAL: CREATE FRANCHISE -->
   <div class="modal-overlay" id="modal-franchise">
     <div class="modal-window">
-      <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem; margin-bottom:10px;">Create New Studio Universe</h3>
+      <h3 style="font-family:var(--font-display);color:var(--gold-bright);font-size:1.1rem;margin-bottom:10px;">Create New Studio Universe</h3>
       <input type="text" id="new-franchise-name" class="input-field" placeholder="Franchise Name (e.g. Spy Universe, Cop Universe)">
       <textarea id="new-franchise-desc" class="input-field" rows="3" placeholder="Franchise Lore & Theme"></textarea>
-      <div style="display:flex; justify-content:flex-end; gap:6px;">
+      <div style="display:flex;justify-content:flex-end;gap:6px;">
         <button class="btn-outline" onclick="closeCreateFranchiseModal(true)">Cancel</button>
         <button class="btn-gold" onclick="confirmCreateFranchise()">Register Franchise</button>
       </div>
     </div>
   </div>
 
+  <!-- MODAL: POST-RELEASE PUBLICITY BOOST -->
+  <div class="modal-overlay" id="modal-post-publicity">
+    <div class="modal-window">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <h3 style="font-family:var(--font-display);color:var(--gold-bright);font-size:1.1rem;"><i class="fa-solid fa-bullhorn"></i> Post-Release Publicity Surge</h3>
+        <button class="btn-outline" style="padding:2px 8px;" onclick="closePostPublicityModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px;">
+        Invest in fresh post-release publicity to reignite audience curiosity, reclaim multiplex screens, and boost collections for 3 weeks!
+      </p>
+      <div id="post-publicity-options" style="display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+  </div>
+
   <!-- MODAL: 4K RE-RELEASE WEEK SCHEDULER -->
   <div class="modal-overlay" id="modal-rerelease">
     <div class="modal-window">
-      <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem; margin-bottom:4px;">Schedule 4K Remaster Release</h3>
-      <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">Pick an upcoming week for the worldwide IMAX 4K re-release (Cost: ₹2 Cr marketing):</p>
+      <h3 style="font-family:var(--font-display);color:var(--gold-bright);font-size:1.1rem;margin-bottom:4px;">Schedule 4K Remaster Release</h3>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:10px;">Pick an upcoming week for the worldwide IMAX 4K re-release (Cost: ₹2 Cr marketing):</p>
       <div class="week-tiles-grid" id="rerelease-week-grid" style="margin-bottom:14px;"></div>
-      <div style="display:flex; justify-content:flex-end; gap:6px;">
+      <div style="display:flex;justify-content:flex-end;gap:6px;">
         <button class="btn-outline" onclick="closeReReleaseModal()">Cancel</button>
         <button class="btn-gold" id="btn-confirm-rerelease"><i class="fa-solid fa-rocket"></i> Launch 4K Release</button>
       </div>
@@ -1057,24 +728,23 @@
 
   <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.12 — CORE TYCOON ENGINE
+       BOLLYWOOD CINEMA v1.12(a) — COMPLETE ENGINE
        ========================================================================= */
 
     function dismissSplash() {
-      const splash = document.getElementById("splash-screen");
-      if (splash && !splash.classList.contains("hidden")) {
-        splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v112_init")) {
-          const modal = document.getElementById("modal-onboarding");
-          if (modal) modal.classList.add("active");
+      const s = document.getElementById("splash-screen");
+      if (s && !s.classList.contains("hidden")) {
+        s.classList.add("hidden");
+        if (!localStorage.getItem("bollywood_tycoon_v112a_init")) {
+          const m = document.getElementById("modal-onboarding");
+          if (m) m.classList.add("active");
         }
       }
     }
-
     setTimeout(dismissSplash, 1500);
     window.addEventListener("click", () => {
-      const splash = document.getElementById("splash-screen");
-      if (splash && !splash.classList.contains("hidden")) dismissSplash();
+      const s = document.getElementById("splash-screen");
+      if (s && !s.classList.contains("hidden")) dismissSplash();
     }, { once: true });
 
     const POSTER_PRESETS = [
@@ -1144,6 +814,34 @@
       { id: "sng_badshah", name: "Badshah", photo: "https://m.media-amazon.com/images/M/MV5BNjdlM2Q1ZDgtYjUzOC00ZmIyLWE2YTEtYWJlZDQ5NTM4ODE1XkEyXkFqcGc@._V1_.jpg", skill: 88, fee: 2000000 }
     ];
 
+    const SHOOTING_LOCATIONS = [
+      { id: "loc_india_in", name: "India (Indoor Studio)", baseCost: 1500000, icon: "fa-warehouse", appeal: 2 },
+      { id: "loc_mumbai", name: "Mumbai & Goa", baseCost: 3000000, icon: "fa-city", appeal: 4 },
+      { id: "loc_kashmir", name: "Kashmir & Ladakh", baseCost: 6000000, icon: "fa-mountain-sun", appeal: 8 },
+      { id: "loc_rajasthan", name: "Rajasthan Royal Forts", baseCost: 5500000, icon: "fa-fort-awesome", appeal: 7 },
+      { id: "loc_kerala", name: "Kerala Backwaters", baseCost: 4000000, icon: "fa-water", appeal: 5 },
+      { id: "loc_dubai", name: "Dubai & Abu Dhabi", baseCost: 12000000, icon: "fa-mosque", appeal: 10 },
+      { id: "loc_london", name: "London, UK", baseCost: 16000000, icon: "fa-landmark", appeal: 12 },
+      { id: "loc_paris", name: "Paris, France", baseCost: 18000000, icon: "fa-tower-observation", appeal: 14 },
+      { id: "loc_switzerland", name: "Swiss Alps", baseCost: 20000000, icon: "fa-snowflake", appeal: 15 },
+      { id: "loc_italy", name: "Rome & Venice, Italy", baseCost: 19000000, icon: "fa-archway", appeal: 14 },
+      { id: "loc_newyork", name: "New York, USA", baseCost: 22000000, icon: "fa-building-user", appeal: 16 },
+      { id: "loc_losangeles", name: "Los Angeles, USA", baseCost: 21000000, icon: "fa-sun", appeal: 15 },
+      { id: "loc_greenland", name: "Greenland Glaciers", baseCost: 30000000, icon: "fa-icicles", appeal: 20 },
+      { id: "loc_iceland", name: "Iceland Volcanoes", baseCost: 28000000, icon: "fa-volcano", appeal: 19 },
+      { id: "loc_spain", name: "Barcelona & Madrid", baseCost: 16500000, icon: "fa-guitar", appeal: 12 },
+      { id: "loc_greece", name: "Santorini, Greece", baseCost: 17500000, icon: "fa-umbrella-beach", appeal: 13 },
+      { id: "loc_tokyo", name: "Tokyo & Kyoto, Japan", baseCost: 24000000, icon: "fa-torii-gate", appeal: 16 },
+      { id: "loc_sydney", name: "Sydney, Australia", baseCost: 19500000, icon: "fa-bridge-water", appeal: 14 },
+      { id: "loc_capetown", name: "Cape Town, SA", baseCost: 15000000, icon: "fa-compass", appeal: 11 },
+      { id: "loc_russia", name: "Moscow & Siberia", baseCost: 17000000, icon: "fa-chess-rook", appeal: 13 },
+      { id: "loc_thailand", name: "Bangkok & Phuket", baseCost: 8500000, icon: "fa-palmtree", appeal: 8 },
+      { id: "loc_singapore", name: "Singapore Marina", baseCost: 13000000, icon: "fa-ship", appeal: 11 },
+      { id: "loc_turkey", name: "Istanbul & Cappadocia", baseCost: 14000000, icon: "fa-wind", appeal: 12 },
+      { id: "loc_egypt", name: "Cairo & Pyramids", baseCost: 15500000, icon: "fa-monument", appeal: 13 },
+      { id: "loc_scotland", name: "Scottish Highlands", baseCost: 16000000, icon: "fa-cloud-rain", appeal: 12 }
+    ];
+
     const MUSIC_LABELS = [
       { id: "tseries", name: "T-Series", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-kB66e_3TTITEHRMQKX5qZqNCygVnO6xSOxlbn3a1GQ&s=10", baseAdvance: 150000000 },
       { id: "sonymusic", name: "Sony Music", logo: "https://images.seeklogo.com/logo-png/26/1/sony-music-logo-png_seeklogo-261658.png", baseAdvance: 120000000 },
@@ -1193,6 +891,13 @@
       { id: "m_burj_khalifa", name: "Burj Khalifa Projection", fee: 80000000, hype: 75, reach: "Worldwide Viral", cat: "Grand" },
       { id: "m_grand_song", name: "Grand Dance Video", fee: 35000000, hype: 34, reach: "Chartbuster", cat: "Grand" },
       { id: "m_10city_tour", name: "10 Cities Campus Tour", fee: 40000000, hype: 40, reach: "Youth Craze", cat: "Grand" }
+    ];
+
+    const POST_RELEASE_CAMPAIGNS = [
+      { id: "pr_success_bash", name: "Success Press Meet & Media Party", fee: 15000000, hypeAdd: 14, screenBoost: 450, desc: "Celebrate opening momentum with national media." },
+      { id: "pr_reels_blitz", name: "Viral Instagram & YouTube Shorts Blitz", fee: 25000000, hypeAdd: 22, screenBoost: 750, desc: "Flood social media with iconic scene clips & music." },
+      { id: "pr_city_visits", name: "Lead Cast Surprise Theatre Visits", fee: 40000000, hypeAdd: 32, screenBoost: 1100, desc: "Lead stars greet fans live in packed single screens & multiplexes." },
+      { id: "pr_global_promo", name: "Global TV & International Multiplex Push", fee: 65000000, hypeAdd: 45, screenBoost: 1600, desc: "Massive overseas & Pan-India exhibitor expansion." }
     ];
 
     let COMPETITOR_STUDIOS = [
@@ -1245,14 +950,18 @@
     let CURRENT_MARKETING_FILTER = "all";
     let ACTIVE_RERELEASE_FILM_ID = null;
     let SELECTED_RERELEASE_OFFSET = 2;
+    let ACTIVE_PUBLICITY_RUN_ID = null;
     let CURRENT_NEWS_PAGE = 0;
 
     let CURRENT_DRAFT = {
       title: "",
       genre: "Action",
-      releaseFormat: "theatres_ott", // 'theatres_ott' (default) | 'only_theatres' | 'ott_satellite'
+      releaseFormat: "theatres_ott",
       franchiseId: null,
-      scriptQuality: "tight", // 'masala' (55) | 'tight' (75) | 'masterpiece' (95)
+      scriptQuality: "tight",
+      setScale: "minimal",
+      vfxQuality: "none",
+      locations: [{ id: "loc_india_in", scope: "whole" }],
       lyricsTier: "standard",
       posterUrl: POSTER_PRESETS[0],
       customPosterUploaded: false,
@@ -1284,7 +993,6 @@
       document.querySelectorAll(".tab-btn").forEach(btn => {
         btn.addEventListener("click", () => switchTab(btn.dataset.tab));
       });
-
       document.querySelectorAll(".wizard-step-node").forEach(node => {
         node.addEventListener("click", () => goToStep(parseInt(node.dataset.step)));
       });
@@ -1375,27 +1083,41 @@
       const chosenName = document.getElementById("onboard-studio-name").value.trim() || "LILA PRODUCTIONS";
       GAME_STATE.studioName = chosenName;
       GAME_STATE.cash = SELECTED_ONBOARD_CAPITAL;
-      localStorage.setItem("bollywood_tycoon_v112_init", "true");
+      localStorage.setItem("bollywood_tycoon_v112a_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
       updateHeaderStats();
       renderStudiosIntel();
-      showToast(`🎬 Founded with ${formatINR(SELECTED_ONBOARD_CAPITAL)}!`, "success");
+      showToast(`Founded with ${formatINR(SELECTED_ONBOARD_CAPITAL)}!`, "success");
       triggerConfetti();
     }
 
     function setScriptQuality(tier, el) {
       CURRENT_DRAFT.scriptQuality = tier;
       document.querySelectorAll("#script-quality-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
-      el.classList.add("active");
+      if (el) el.classList.add("active");
+      updateCostHUD();
+    }
+
+    function setSetScale(scale, el) {
+      CURRENT_DRAFT.setScale = scale;
+      document.querySelectorAll("#set-scale-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
+      if (el) el.classList.add("active");
+      updateCostHUD();
+    }
+
+    function setVfxQuality(vfx, el) {
+      CURRENT_DRAFT.vfxQuality = vfx;
+      document.querySelectorAll("#vfx-quality-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
+      if (el) el.classList.add("active");
       updateCostHUD();
     }
 
     function setReleaseFormat(format, el) {
       CURRENT_DRAFT.releaseFormat = format;
       document.querySelectorAll("#release-format-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
-      el.classList.add("active");
+      if (el) el.classList.add("active");
 
       const ottSec = document.getElementById("ott-rights-section");
       if (ottSec) {
@@ -1408,7 +1130,7 @@
 
     function setFranchiseModel(model, el) {
       document.querySelectorAll("#franchise-model-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
-      el.classList.add("active");
+      if (el) el.classList.add("active");
 
       if (model === "franchise") {
         if (GAME_STATE.franchises.length === 0) {
@@ -1424,20 +1146,21 @@
     function setLyricsQuality(tier, el) {
       CURRENT_DRAFT.lyricsTier = tier;
       document.querySelectorAll("#lyrics-quality-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
-      el.classList.add("active");
+      if (el) el.classList.add("active");
       renderBrandRights();
       updateCostHUD();
     }
 
     function goToStep(stepNumber) {
-      if (stepNumber < 1 || stepNumber > 7) return;
+      if (stepNumber < 1 || stepNumber > 8) return;
       if (stepNumber > 1 && CURRENT_WIZARD_STEP === 1 && !CURRENT_DRAFT.title.trim()) {
         showToast("Please enter a project title!", "error");
         return;
       }
       CURRENT_WIZARD_STEP = stepNumber;
       
-      if (CURRENT_WIZARD_STEP === 5) {
+      if (CURRENT_WIZARD_STEP === 4) renderLocationsTiles();
+      if (CURRENT_WIZARD_STEP === 6) {
         renderBrandRights();
         updateCostHUD();
       }
@@ -1458,6 +1181,7 @@
       renderPresetPosters();
       renderActorTiles();
       renderDirectorTiles();
+      renderLocationsTiles();
       renderComposerTiles();
       renderSingerTiles();
       renderBrandRights();
@@ -1478,13 +1202,13 @@
       document.getElementById("stat-week").innerText = GAME_STATE.week;
       document.getElementById("stat-rep").innerText = GAME_STATE.reputation;
       document.getElementById("dash-net-worth").innerText = formatINR(GAME_STATE.cash + (GAME_STATE.reputation * 10000000));
-      document.getElementById("dash-awards-count").innerText = `🏆 ${GAME_STATE.totalAwardsWon}`;
+      document.getElementById("dash-released-count").innerText = GAME_STATE.releasedMovies.length;
+      document.getElementById("dash-awards-count").innerHTML = `<i class="fa-solid fa-award"></i> ${GAME_STATE.totalAwardsWon}`;
       document.getElementById("fin-cash").innerText = formatINR(GAME_STATE.cash);
       document.getElementById("fin-debt").innerText = formatINR(GAME_STATE.debt);
       document.getElementById("fin-interest").innerText = formatINR(Math.round(GAME_STATE.debt * 0.015)) + " /wk";
     }
 
-    /* STUDIOS SECTION: SORTED PURELY BY RANKING (YOUR STUDIO SITS AT ITS TRUE RANK) */
     function renderStudiosIntel() {
       const container = document.getElementById("studios-intel-grid");
       if (!container) return;
@@ -1500,23 +1224,22 @@
       };
 
       const allStudios = [...COMPETITOR_STUDIOS, myStudioData].sort((a, b) => {
-        // Primary sort: Treasury Capital, Secondary: Fame
         return (b.capital + (b.fame * 10000000)) - (a.capital + (a.fame * 10000000));
       });
 
       container.innerHTML = allStudios.map((s, idx) => `
         <div class="studio-intel-card ${s.isPlayer ? 'my-studio' : ''}">
-          <div style="font-family:var(--font-display); font-size:1.05rem; color:var(--gold-bright); display:flex; justify-content:space-between; align-items:center;">
+          <div style="font-family:var(--font-display);font-size:1.05rem;color:var(--gold-bright);display:flex;justify-content:space-between;align-items:center;">
             <span>#${idx+1} ${s.name}</span>
-            <span class="step-badge" style="background:${s.isPlayer ? 'var(--gold-bright)' : 'rgba(255,255,255,0.1)'}; color:${s.isPlayer ? '#000' : 'var(--text-muted)'};">
+            <span class="step-badge" style="background:${s.isPlayer ? 'var(--gold-bright)' : 'rgba(255,255,255,0.1)'};color:${s.isPlayer ? '#000' : 'var(--text-muted)'};">
               ${s.isPlayer ? 'YOU' : `Rank ${idx+1}`}
             </span>
           </div>
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Head: ${s.boss}</div>
-          <div style="font-size:0.8rem; margin-bottom:3px;">Treasury / Net Worth: <strong style="color:var(--success);">${formatINR(s.capital)}</strong></div>
-          <div style="font-size:0.8rem; margin-bottom:3px;">Films Catalog: <strong>${s.films} Films</strong></div>
-          <div style="font-size:0.8rem; margin-bottom:6px;">Fame / Prestige: <strong style="color:var(--gold-bright);">${s.fame}/100</strong></div>
-          ${s.slate ? `<div style="font-size:0.72rem; color:var(--gold-bright); border-top:1px dashed var(--border-color-subtle); padding-top:4px; margin-top:6px;">Slate: <span style="color:var(--text-muted);">${s.slate}</span></div>` : ''}
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:8px;">Head: ${s.boss}</div>
+          <div style="font-size:0.8rem;margin-bottom:3px;">Treasury / Net Worth: <strong style="color:var(--success);">${formatINR(s.capital)}</strong></div>
+          <div style="font-size:0.8rem;margin-bottom:3px;">Films Catalog: <strong>${s.films} Films</strong></div>
+          <div style="font-size:0.8rem;margin-bottom:6px;">Fame / Prestige: <strong style="color:var(--gold-bright);">${s.fame}/100</strong></div>
+          ${s.slate ? `<div style="font-size:0.72rem;color:var(--gold-bright);border-top:1px dashed var(--border-subtle);padding-top:4px;margin-top:6px;">Slate: <span style="color:var(--text-muted);">${s.slate}</span></div>` : ''}
         </div>
       `).join('');
     }
@@ -1534,6 +1257,7 @@
         img.src = base64Url;
         box.classList.add("visible");
         document.querySelectorAll(".preset-poster-card").forEach(c => c.classList.remove("selected"));
+        rememberFranchisePreferences();
         showToast("Custom poster selected!", "success");
       };
       reader.readAsDataURL(file);
@@ -1543,8 +1267,8 @@
       const container = document.getElementById("preset-posters-grid");
       container.innerHTML = POSTER_PRESETS.map((url, idx) => `
         <div class="tile-card preset-poster-card ${(!CURRENT_DRAFT.customPosterUploaded && CURRENT_DRAFT.posterUrl === url) ? 'selected' : ''}" onclick="selectPresetPoster('${url}')">
-          <img src="${url}" style="width:100%; height:80px; object-fit:cover; border-radius:4px;">
-          <span style="font-size:0.62rem; color:var(--text-muted); margin-top:2px;">Preset ${idx+1}</span>
+          <img src="${url}" style="width:100%;height:80px;object-fit:cover;border-radius:4px;">
+          <span style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Preset ${idx+1}</span>
         </div>
       `).join('');
     }
@@ -1554,38 +1278,110 @@
       CURRENT_DRAFT.customPosterUploaded = false;
       document.getElementById("user-uploaded-poster-box").classList.remove("visible");
       document.querySelectorAll(".preset-poster-card").forEach(c => c.classList.toggle("selected", c.querySelector('img').src === url));
+      rememberFranchisePreferences();
+    }
+
+    function getCastTravelMultiplier() {
+      const count = Math.max(1, CURRENT_DRAFT.cast.length);
+      return 1 + ((count - 1) * 0.25);
+    }
+
+    function calculateLocationEntryCost(locObj, scope) {
+      const castMult = getCastTravelMultiplier();
+      let scopeFactor = 1.0;
+      if (scope === "half") scopeFactor = 0.60;
+      else if (scope === "shots") scopeFactor = 0.35;
+      else if (scope === "songs") scopeFactor = 0.25;
+      return Math.round(locObj.baseCost * scopeFactor * castMult);
+    }
+
+    function renderLocationsTiles() {
+      const container = document.getElementById("locations-selection-grid");
+      if (!container) return;
+
+      const multLbl = document.getElementById("loc-cast-multiplier-label");
+      if (multLbl) {
+        multLbl.innerText = `Cast Travel Multiplier: ${getCastTravelMultiplier().toFixed(2)}x (${CURRENT_DRAFT.cast.length} Cast)`;
+      }
+
+      container.innerHTML = SHOOTING_LOCATIONS.map(loc => {
+        const selectedObj = CURRENT_DRAFT.locations.find(l => l.id === loc.id);
+        const isSelected = !!selectedObj;
+        const scope = selectedObj ? selectedObj.scope : "whole";
+        const displayPrice = calculateLocationEntryCost(loc, scope);
+
+        return `
+          <div class="tile-card ${isSelected ? 'selected' : ''}" onclick="toggleLocationCard('${loc.id}',event)">
+            <div class="tile-icon-box"><i class="fa-solid ${loc.icon}"></i></div>
+            <div class="tile-name" title="${loc.name}">${loc.name}</div>
+            <div class="tile-meta">+${loc.appeal} Visual Appeal</div>
+            <div class="tile-fee">${formatINR(displayPrice)}</div>
+            ${isSelected ? `
+              <div class="loc-scope-grid" onclick="event.stopPropagation()">
+                <button class="loc-scope-btn ${scope === 'whole' ? 'active' : ''}" onclick="setLocationScope('${loc.id}','whole',event)">Whole</button>
+                <button class="loc-scope-btn ${scope === 'half' ? 'active' : ''}" onclick="setLocationScope('${loc.id}','half',event)">Half</button>
+                <button class="loc-scope-btn ${scope === 'shots' ? 'active' : ''}" onclick="setLocationScope('${loc.id}','shots',event)">Shots</button>
+                <button class="loc-scope-btn ${scope === 'songs' ? 'active' : ''}" onclick="setLocationScope('${loc.id}','songs',event)">Songs</button>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleLocationCard(locId, event) {
+      if (event) event.stopPropagation();
+      const idx = CURRENT_DRAFT.locations.findIndex(l => l.id === locId);
+      if (idx > -1) {
+        if (CURRENT_DRAFT.locations.length > 1) {
+          CURRENT_DRAFT.locations.splice(idx, 1);
+        } else {
+          showToast("At least one shooting location is required!", "error");
+        }
+      } else {
+        const defaultScope = CURRENT_DRAFT.locations.length === 0 ? "whole" : "half";
+        CURRENT_DRAFT.locations.push({ id: locId, scope: defaultScope });
+      }
+      renderLocationsTiles();
+      updateCostHUD();
+    }
+
+    function setLocationScope(locId, newScope, event) {
+      if (event) event.stopPropagation();
+      const item = CURRENT_DRAFT.locations.find(l => l.id === locId);
+      if (item) {
+        item.scope = newScope;
+        renderLocationsTiles();
+        updateCostHUD();
+      }
     }
 
     function getDynamicActorFee(actor) {
       if (!CURRENT_DRAFT.franchiseId) return actor.fee;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (!f) return actor.fee;
-      const demandMult = 1.0 + ((f.rating / 100) * 0.45);
-      return Math.round(actor.fee * demandMult);
+      return Math.round(actor.fee * (1.0 + ((f.rating / 100) * 0.45)));
     }
 
     function getDynamicDirectorFee(dir) {
       if (!CURRENT_DRAFT.franchiseId) return dir.fee;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (!f) return dir.fee;
-      const demandMult = 1.0 + ((f.rating / 100) * 0.40);
-      return Math.round(dir.fee * demandMult);
+      return Math.round(dir.fee * (1.0 + ((f.rating / 100) * 0.40)));
     }
 
     function getDynamicComposerFee(comp) {
       if (!CURRENT_DRAFT.franchiseId) return comp.fee;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (!f) return comp.fee;
-      const demandMult = 1.0 + ((f.rating / 100) * 0.35);
-      return Math.round(comp.fee * demandMult);
+      return Math.round(comp.fee * (1.0 + ((f.rating / 100) * 0.35)));
     }
 
     function getDynamicSingerFee(sng) {
       if (!CURRENT_DRAFT.franchiseId) return sng.fee;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (!f) return sng.fee;
-      const demandMult = 1.0 + ((f.rating / 100) * 0.30);
-      return Math.round(sng.fee * demandMult);
+      return Math.round(sng.fee * (1.0 + ((f.rating / 100) * 0.30)));
     }
 
     function renderActorTiles() {
@@ -1599,15 +1395,15 @@
         const dynamicFee = getDynamicActorFee(actor);
 
         return `
-          <div class="tile-card ${isSelected ? 'selected' : ''}" id="actor-card-${actor.id}" onclick="toggleActorCard('${actor.id}', event)">
+          <div class="tile-card ${isSelected ? 'selected' : ''}" id="actor-card-${actor.id}" onclick="toggleActorCard('${actor.id}',event)">
             <img src="${actor.photo}" alt="${actor.name}" class="tile-img">
             <div class="tile-name">${actor.name}</div>
             <div class="tile-meta">Pop: ${actor.popularity} | Craft: ${actor.skill}</div>
             <div class="tile-fee">${formatINR(dynamicFee)}</div>
             ${isSelected ? `
               <div class="role-toggle" onclick="event.stopPropagation()">
-                <button class="role-btn ${role === 'Lead' ? 'active' : ''}" onclick="setActorRole('${actor.id}', 'Lead', event)">Lead</button>
-                <button class="role-btn ${role === 'Supporting' ? 'active' : ''}" onclick="setActorRole('${actor.id}', 'Supporting', event)">Supp</button>
+                <button class="role-btn ${role === 'Lead' ? 'active' : ''}" onclick="setActorRole('${actor.id}','Lead',event)">Lead</button>
+                <button class="role-btn ${role === 'Supporting' ? 'active' : ''}" onclick="setActorRole('${actor.id}','Supporting',event)">Supp</button>
               </div>
             ` : ''}
           </div>
@@ -1636,6 +1432,7 @@
         CURRENT_DRAFT.cast.push({ id: actorId, role });
       }
       renderActorTiles();
+      renderLocationsTiles();
       rememberFranchisePreferences();
       renderBrandRights();
       updateCostHUD();
@@ -1655,17 +1452,14 @@
 
     function renderDirectorTiles() {
       const container = document.getElementById("directors-selection-grid");
-      container.innerHTML = REAL_DIRECTORS.map(dir => {
-        const dynamicFee = getDynamicDirectorFee(dir);
-        return `
-          <div class="tile-card ${CURRENT_DRAFT.directorId === dir.id ? 'selected' : ''}" onclick="selectDirector('${dir.id}')">
-            <img src="${dir.photo}" alt="${dir.name}" class="tile-img">
-            <div class="tile-name">${dir.name}</div>
-            <div class="tile-meta">${dir.style}</div>
-            <div class="tile-fee">${formatINR(dynamicFee)}</div>
-          </div>
-        `;
-      }).join('');
+      container.innerHTML = REAL_DIRECTORS.map(dir => `
+        <div class="tile-card ${CURRENT_DRAFT.directorId === dir.id ? 'selected' : ''}" onclick="selectDirector('${dir.id}')">
+          <img src="${dir.photo}" alt="${dir.name}" class="tile-img">
+          <div class="tile-name">${dir.name}</div>
+          <div class="tile-meta">${dir.style}</div>
+          <div class="tile-fee">${formatINR(getDynamicDirectorFee(dir))}</div>
+        </div>
+      `).join('');
     }
 
     function selectDirector(id) {
@@ -1677,17 +1471,14 @@
 
     function renderComposerTiles() {
       const container = document.getElementById("composers-selection-grid");
-      container.innerHTML = REAL_COMPOSERS.map(c => {
-        const dynamicFee = getDynamicComposerFee(c);
-        return `
-          <div class="tile-card ${CURRENT_DRAFT.composerId === c.id ? 'selected' : ''}" onclick="selectComposer('${c.id}')">
-            <img src="${c.photo}" alt="${c.name}" class="tile-img">
-            <div class="tile-name">${c.name}</div>
-            <div class="tile-meta">Melody: ${c.skill}</div>
-            <div class="tile-fee">${formatINR(dynamicFee)}</div>
-          </div>
-        `;
-      }).join('');
+      container.innerHTML = REAL_COMPOSERS.map(c => `
+        <div class="tile-card ${CURRENT_DRAFT.composerId === c.id ? 'selected' : ''}" onclick="selectComposer('${c.id}')">
+          <img src="${c.photo}" alt="${c.name}" class="tile-img">
+          <div class="tile-name">${c.name}</div>
+          <div class="tile-meta">Melody: ${c.skill}</div>
+          <div class="tile-fee">${formatINR(getDynamicComposerFee(c))}</div>
+        </div>
+      `).join('');
     }
 
     function selectComposer(id) {
@@ -1700,17 +1491,14 @@
 
     function renderSingerTiles() {
       const container = document.getElementById("singers-selection-grid");
-      container.innerHTML = REAL_SINGERS.map(s => {
-        const dynamicFee = getDynamicSingerFee(s);
-        return `
-          <div class="tile-card ${CURRENT_DRAFT.singers.includes(s.id) ? 'selected' : ''}" onclick="toggleSinger('${s.id}')">
-            <img src="${s.photo}" alt="${s.name}" class="tile-img">
-            <div class="tile-name">${s.name}</div>
-            <div class="tile-meta">Vocals: ${s.skill}</div>
-            <div class="tile-fee">${formatINR(dynamicFee)} / track</div>
-          </div>
-        `;
-      }).join('');
+      container.innerHTML = REAL_SINGERS.map(s => `
+        <div class="tile-card ${CURRENT_DRAFT.singers.includes(s.id) ? 'selected' : ''}" onclick="toggleSinger('${s.id}')">
+          <img src="${s.photo}" alt="${s.name}" class="tile-img">
+          <div class="tile-name">${s.name}</div>
+          <div class="tile-meta">Vocals: ${s.skill}</div>
+          <div class="tile-fee">${formatINR(getDynamicSingerFee(s))} / track</div>
+        </div>
+      `).join('');
     }
 
     function toggleSinger(id) {
@@ -1725,31 +1513,46 @@
     }
 
     function renderBrandRights() {
-      document.getElementById("music-rights-grid").innerHTML = MUSIC_LABELS.map(lbl => `
-        <div class="brand-card ${CURRENT_DRAFT.musicRightsId === lbl.id ? 'selected' : ''}" onclick="selectMusicRights('${lbl.id}')">
-          <img src="${lbl.logo}" class="brand-logo-img" alt="${lbl.name}">
-          <div class="brand-name">${lbl.name}</div>
-          <div class="brand-advance">+${formatINR(calculateMusicAdvance(lbl))}</div>
-        </div>
-      `).join('');
+      const fran = CURRENT_DRAFT.franchiseId ? GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId) : null;
+      const hasPrevSuccess = fran && fran.films > 0;
+
+      document.getElementById("music-rights-grid").innerHTML = MUSIC_LABELS.map(lbl => {
+        const isRivalOutbid = hasPrevSuccess && fran.lastMusicRights && fran.lastMusicRights !== lbl.id;
+        return `
+          <div class="brand-card ${CURRENT_DRAFT.musicRightsId === lbl.id ? 'selected' : ''}" onclick="selectMusicRights('${lbl.id}')">
+            <img src="${lbl.logo}" class="brand-logo-img" alt="${lbl.name}">
+            <div class="brand-name">${lbl.name}</div>
+            <div class="brand-advance">+${formatINR(calculateMusicAdvance(lbl))}</div>
+            ${isRivalOutbid ? `<div class="rival-bid-tag">+28% RIVAL BID</div>` : ''}
+          </div>
+        `;
+      }).join('');
 
       if (CURRENT_DRAFT.releaseFormat !== "only_theatres") {
-        document.getElementById("ott-rights-grid").innerHTML = OTT_PLATFORMS.map(p => `
-          <div class="brand-card ${CURRENT_DRAFT.ottRightsId === p.id ? 'selected' : ''}" onclick="selectOttRights('${p.id}')">
-            <img src="${p.logo}" class="brand-logo-img" alt="${p.name}">
-            <div class="brand-name">${p.name}</div>
-            <div class="brand-advance">+${formatINR(calculateOttAdvance(p))}</div>
-          </div>
-        `).join('');
+        document.getElementById("ott-rights-grid").innerHTML = OTT_PLATFORMS.map(p => {
+          const isRivalOutbid = hasPrevSuccess && fran.lastOttRights && fran.lastOttRights !== p.id;
+          return `
+            <div class="brand-card ${CURRENT_DRAFT.ottRightsId === p.id ? 'selected' : ''}" onclick="selectOttRights('${p.id}')">
+              <img src="${p.logo}" class="brand-logo-img" alt="${p.name}">
+              <div class="brand-name">${p.name}</div>
+              <div class="brand-advance">+${formatINR(calculateOttAdvance(p))}</div>
+              ${isRivalOutbid ? `<div class="rival-bid-tag">+35% RIVAL BID</div>` : ''}
+            </div>
+          `;
+        }).join('');
       }
 
-      document.getElementById("satellite-rights-grid").innerHTML = SATELLITE_CHANNELS.map(ch => `
-        <div class="brand-card ${CURRENT_DRAFT.satelliteRightsId === ch.id ? 'selected' : ''}" onclick="selectSatelliteRights('${ch.id}')">
-          <img src="${ch.logo}" class="brand-logo-img" alt="${ch.name}">
-          <div class="brand-name">${ch.name}</div>
-          <div class="brand-advance">+${formatINR(calculateSatelliteAdvance(ch))}</div>
-        </div>
-      `).join('');
+      document.getElementById("satellite-rights-grid").innerHTML = SATELLITE_CHANNELS.map(ch => {
+        const isRivalOutbid = hasPrevSuccess && fran.lastSatRights && fran.lastSatRights !== ch.id;
+        return `
+          <div class="brand-card ${CURRENT_DRAFT.satelliteRightsId === ch.id ? 'selected' : ''}" onclick="selectSatelliteRights('${ch.id}')">
+            <img src="${ch.logo}" class="brand-logo-img" alt="${ch.name}">
+            <div class="brand-name">${ch.name}</div>
+            <div class="brand-advance">+${formatINR(calculateSatelliteAdvance(ch))}</div>
+            ${isRivalOutbid ? `<div class="rival-bid-tag">+25% RIVAL BID</div>` : ''}
+          </div>
+        `;
+      }).join('');
     }
 
     function selectMusicRights(id) { CURRENT_DRAFT.musicRightsId = id; rememberFranchisePreferences(); renderBrandRights(); updateCostHUD(); }
@@ -1769,7 +1572,12 @@
       const composerBonus = CURRENT_DRAFT.composerId ? 1.4 : 1.0;
       const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 1.4 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 1.2 : 1.0);
       const franMult = getFranchiseFameMultiplier();
-      return Math.round(lbl.baseAdvance * (albumSize / 2) * composerBonus * lyricsBonus * franMult);
+      let rivalBoost = 1.0;
+      if (CURRENT_DRAFT.franchiseId) {
+        const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
+        if (f && f.films > 0 && f.lastMusicRights && f.lastMusicRights !== lbl.id) rivalBoost = 1.28;
+      }
+      return Math.round(lbl.baseAdvance * (albumSize / 2) * composerBonus * lyricsBonus * franMult * rivalBoost);
     }
 
     function calculateOttAdvance(p) {
@@ -1777,13 +1585,23 @@
       const starPower = getCastStarPower();
       const franMult = getFranchiseFameMultiplier();
       const directOttMult = CURRENT_DRAFT.releaseFormat === "ott_satellite" ? 1.75 : 1.0;
-      return Math.round(p.baseAdvance * (starPower / 70) * p.mult * franMult * directOttMult);
+      let rivalBoost = 1.0;
+      if (CURRENT_DRAFT.franchiseId) {
+        const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
+        if (f && f.films > 0 && f.lastOttRights && f.lastOttRights !== p.id) rivalBoost = 1.35;
+      }
+      return Math.round(p.baseAdvance * (starPower / 70) * p.mult * franMult * directOttMult * rivalBoost);
     }
 
     function calculateSatelliteAdvance(ch) {
       const starPower = getCastStarPower();
       const franMult = getFranchiseFameMultiplier();
-      return Math.round(ch.baseAdvance * (starPower / 75) * ch.mult * franMult);
+      let rivalBoost = 1.0;
+      if (CURRENT_DRAFT.franchiseId) {
+        const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
+        if (f && f.films > 0 && f.lastSatRights && f.lastSatRights !== ch.id) rivalBoost = 1.25;
+      }
+      return Math.round(ch.baseAdvance * (starPower / 75) * ch.mult * franMult * rivalBoost);
     }
 
     function getCastStarPower() {
@@ -1796,14 +1614,10 @@
         }, 0);
         starPower = Math.round(totalPop / Math.max(1, CURRENT_DRAFT.cast.length * 0.75));
       }
-
       if (CURRENT_DRAFT.franchiseId) {
         const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
-        if (f && f.rating > 70) {
-          starPower = Math.max(starPower, f.rating);
-        }
+        if (f && f.rating > 70) starPower = Math.max(starPower, f.rating);
       }
-
       return Math.min(100, starPower);
     }
 
@@ -1817,50 +1631,37 @@
     function renderMarketingPromos() {
       const container = document.getElementById("marketing-campaigns-grid");
       const list = CURRENT_MARKETING_FILTER === "all" ? TARGETED_MARKETING : TARGETED_MARKETING.filter(m => m.cat === CURRENT_MARKETING_FILTER);
-
       container.innerHTML = list.map(promo => `
         <div class="tile-card ${CURRENT_DRAFT.promos.includes(promo.id) ? 'selected' : ''}" onclick="togglePromo('${promo.id}')">
-          <i class="fa-solid ${getMarketingIcon(promo.cat)}" style="font-size:1.1rem; color:var(--gold-bright); margin-bottom:4px;"></i>
+          <i class="fa-solid ${getMarketingIcon(promo.cat)}" style="font-size:1.1rem;color:var(--gold-bright);margin-bottom:4px;"></i>
           <div class="tile-name" title="${promo.name}">${promo.name}</div>
           <div class="tile-meta">+${promo.hype} Hype</div>
           <div class="tile-fee">${formatINR(promo.fee)}</div>
         </div>
       `).join('');
-
       updateMarketingMeters();
     }
 
     function updateMarketingMeters() {
-      let totalHype = 25;
-      let totalSpend = 0;
-      let reachCount = 1000000;
-
+      let totalHype = 25, totalSpend = 0, reachCount = 1000000;
       if (CURRENT_DRAFT.releaseFormat === "only_theatres") totalHype += 15;
       if (CURRENT_DRAFT.lyricsTier === "legend") totalHype += 12;
       else if (CURRENT_DRAFT.lyricsTier === "poetic") totalHype += 6;
 
       CURRENT_DRAFT.promos.forEach(pId => {
         const p = TARGETED_MARKETING.find(x => x.id === pId);
-        if (p) {
-          totalHype += p.hype;
-          totalSpend += p.fee;
-          reachCount += (p.fee / 50);
-        }
+        if (p) { totalHype += p.hype; totalSpend += p.fee; reachCount += (p.fee / 50); }
       });
 
       if (CURRENT_DRAFT.franchiseId) {
         const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
         if (f) totalHype += Math.round(f.rating * 0.15);
       }
-
       totalHype = Math.min(100, totalHype);
       const reachText = reachCount >= 10000000 ? (reachCount / 10000000).toFixed(1) + " Cr Audiences" : (reachCount / 100000).toFixed(1) + "L Audiences";
-
-      const rEl = document.getElementById("m-stat-reach");
-      const hEl = document.getElementById("m-stat-hype");
-      const cEl = document.getElementById("m-stat-cost");
+      const rEl = document.getElementById("m-stat-reach"), hEl = document.getElementById("m-stat-hype"), cEl = document.getElementById("m-stat-cost");
       if (rEl) rEl.innerText = reachText;
-      if (hEl) hEl.innerText = `🔥 ${totalHype} / 100`;
+      if (hEl) hEl.innerHTML = `<i class="fa-solid fa-fire"></i> ${totalHype} / 100`;
       if (cEl) cEl.innerText = formatINR(totalSpend);
     }
 
@@ -1873,11 +1674,8 @@
     }
 
     function togglePromo(id) {
-      if (CURRENT_DRAFT.promos.includes(id)) {
-        CURRENT_DRAFT.promos = CURRENT_DRAFT.promos.filter(x => x !== id);
-      } else {
-        CURRENT_DRAFT.promos.push(id);
-      }
+      if (CURRENT_DRAFT.promos.includes(id)) CURRENT_DRAFT.promos = CURRENT_DRAFT.promos.filter(x => x !== id);
+      else CURRENT_DRAFT.promos.push(id);
       renderMarketingPromos();
       updateCostHUD();
     }
@@ -1906,8 +1704,8 @@
               <span class="week-tile-impact ${impactClass}">${impactText}</span>
             </div>
             <div class="week-tile-fest">${season.name}</div>
-            ${myScheduled ? `<div style="font-size:0.64rem; color:var(--success); font-weight:700;">🎬 Our: ${myScheduled.title}</div>` : ''}
-            ${rival ? `<div class="week-tile-rival" title="${rival.title} (${rival.studio})">⚠️ ${rival.title}</div>` : (!myScheduled ? `<div style="font-size:0.62rem; color:var(--text-subtle);">Clear Window</div>` : '')}
+            ${myScheduled ? `<div style="font-size:0.64rem;color:var(--success);font-weight:700;"><i class="fa-solid fa-clapperboard"></i> Our: ${myScheduled.title}</div>` : ''}
+            ${rival ? `<div class="week-tile-rival" title="${rival.title} (${rival.studio})"><i class="fa-solid fa-triangle-exclamation"></i> ${rival.title}</div>` : (!myScheduled ? `<div style="font-size:0.62rem;color:var(--text-subtle);">Clear Window</div>` : '')}
           </div>
         `;
       }
@@ -1932,7 +1730,25 @@
     }
 
     function calculateProductionCosts() {
-      let cost = 50000000;
+      let cost = 35000000;
+      if (CURRENT_DRAFT.scriptQuality === "masterpiece") cost += 50000000;
+      else if (CURRENT_DRAFT.scriptQuality === "tight") cost += 15000000;
+      else cost += 2500000;
+
+      if (CURRENT_DRAFT.setScale === "palace") cost += 180000000;
+      else if (CURRENT_DRAFT.setScale === "studio") cost += 40000000;
+      else cost += 5000000;
+
+      if (CURRENT_DRAFT.vfxQuality === "hollywood") cost += 550000000;
+      else if (CURRENT_DRAFT.vfxQuality === "high") cost += 220000000;
+      else if (CURRENT_DRAFT.vfxQuality === "standard") cost += 50000000;
+      else cost += 2000000;
+
+      CURRENT_DRAFT.locations.forEach(locEntry => {
+        const locObj = SHOOTING_LOCATIONS.find(l => l.id === locEntry.id);
+        if (locObj) cost += calculateLocationEntryCost(locObj, locEntry.scope);
+      });
+
       CURRENT_DRAFT.cast.forEach(c => {
         const a = ALL_ACTORS.find(x => x.id === c.id);
         if (a) {
@@ -1940,19 +1756,21 @@
           cost += c.role === 'Lead' ? dynamicFee : Math.round(dynamicFee * 0.45);
         }
       });
+
       if (CURRENT_DRAFT.directorId) {
         const d = REAL_DIRECTORS.find(x => x.id === CURRENT_DRAFT.directorId);
         if (d) cost += getDynamicDirectorFee(d);
       }
+
       if (CURRENT_DRAFT.composerId) {
         const comp = REAL_COMPOSERS.find(x => x.id === CURRENT_DRAFT.composerId);
         if (comp) cost += getDynamicComposerFee(comp);
       }
 
       if (CURRENT_DRAFT.songCount > 0) {
-        if (CURRENT_DRAFT.lyricsTier === 'legend') cost += 6000000;
-        else if (CURRENT_DRAFT.lyricsTier === 'poetic') cost += 2000000;
-        else cost += 500000;
+        if (CURRENT_DRAFT.lyricsTier === 'legend') cost += 18000000;
+        else if (CURRENT_DRAFT.lyricsTier === 'poetic') cost += 6000000;
+        else cost += 1500000;
       }
 
       if (CURRENT_DRAFT.songCount > 0 && CURRENT_DRAFT.singers.length > 0) {
@@ -1961,10 +1779,12 @@
           if (sng) cost += (getDynamicSingerFee(sng) * CURRENT_DRAFT.songCount);
         });
       }
+
       CURRENT_DRAFT.promos.forEach(pId => {
         const p = TARGETED_MARKETING.find(x => x.id === pId);
         if (p) cost += p.fee;
       });
+
       return cost;
     }
 
@@ -1972,12 +1792,10 @@
       let inflow = 0;
       const mLabel = MUSIC_LABELS.find(x => x.id === CURRENT_DRAFT.musicRightsId);
       if (mLabel) inflow += calculateMusicAdvance(mLabel);
-      
       if (CURRENT_DRAFT.releaseFormat !== "only_theatres") {
         const ott = OTT_PLATFORMS.find(x => x.id === CURRENT_DRAFT.ottRightsId);
         if (ott) inflow += calculateOttAdvance(ott);
       }
-
       const sat = SATELLITE_CHANNELS.find(x => x.id === CURRENT_DRAFT.satelliteRightsId);
       if (sat) inflow += calculateSatelliteAdvance(sat);
       return inflow;
@@ -2013,6 +1831,8 @@
       if (CURRENT_DRAFT.releaseFormat === "only_theatres") campaignHype += 15;
       if (CURRENT_DRAFT.lyricsTier === "legend") campaignHype += 12;
       else if (CURRENT_DRAFT.lyricsTier === "poetic") campaignHype += 6;
+      if (CURRENT_DRAFT.vfxQuality === "hollywood") campaignHype += 12;
+      else if (CURRENT_DRAFT.vfxQuality === "high") campaignHype += 6;
 
       CURRENT_DRAFT.promos.forEach(pId => {
         const p = TARGETED_MARKETING.find(x => x.id === pId);
@@ -2037,6 +1857,9 @@
         releaseFormat: CURRENT_DRAFT.releaseFormat,
         franchiseId: CURRENT_DRAFT.franchiseId,
         scriptQuality: CURRENT_DRAFT.scriptQuality,
+        setScale: CURRENT_DRAFT.setScale,
+        vfxQuality: CURRENT_DRAFT.vfxQuality,
+        locations: JSON.parse(JSON.stringify(CURRENT_DRAFT.locations)),
         lyricsTier: CURRENT_DRAFT.lyricsTier,
         posterUrl: CURRENT_DRAFT.posterUrl,
         cast: JSON.parse(JSON.stringify(CURRENT_DRAFT.cast)),
@@ -2055,11 +1878,11 @@
       };
 
       GAME_STATE.activeProductions.push(newFilm);
-      rememberFranchisePreferences(); // Save package for subsequent franchise parts
+      rememberFranchisePreferences(true);
       saveState();
 
       const screenMsg = startingScreens > 0 ? `Screens: ${startingScreens.toLocaleString()}` : `Direct OTT & Satellite Premiere`;
-      showToast(`🎬 "${newFilm.title}" greenlit! ${screenMsg}`, "success");
+      showToast(`"${newFilm.title}" greenlit! ${screenMsg}`, "success");
       triggerConfetti();
 
       document.getElementById("movie-title").value = "";
@@ -2075,14 +1898,40 @@
       const castPower = getCastStarPower();
       const comp = REAL_COMPOSERS.find(c => c.id === CURRENT_DRAFT.composerId);
       const musicScore = comp ? comp.skill : 75;
-      const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 6 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 3 : 0);
+      const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 5 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 2 : 0);
+      const vfxBonus = CURRENT_DRAFT.vfxQuality === 'hollywood' ? 7 : (CURRENT_DRAFT.vfxQuality === 'high' ? 4 : (CURRENT_DRAFT.vfxQuality === 'standard' ? 2 : 0));
+      const setBonus = CURRENT_DRAFT.setScale === 'palace' ? 4 : (CURRENT_DRAFT.setScale === 'studio' ? 2 : 0);
 
-      // SCRIPT QUALITY TIER INFLUENCE
+      let locBonus = 0;
+      CURRENT_DRAFT.locations.forEach(l => {
+        const obj = SHOOTING_LOCATIONS.find(x => x.id === l.id);
+        if (obj) locBonus += Math.round(obj.appeal * 0.25);
+      });
+      locBonus = Math.min(8, locBonus);
+
       let scriptScore = 75;
       if (CURRENT_DRAFT.scriptQuality === 'masterpiece') scriptScore = 95;
       else if (CURRENT_DRAFT.scriptQuality === 'masala') scriptScore = 55;
 
-      return Math.min(99, Math.max(50, Math.round((dirScore * 0.35) + (castPower * 0.30) + (scriptScore * 0.20) + (musicScore * 0.15)) + lyricsBonus + Math.floor(Math.random() * 4) - 2));
+      return Math.min(99, Math.max(50, Math.round((dirScore * 0.30) + (castPower * 0.30) + (scriptScore * 0.20) + (musicScore * 0.10)) + lyricsBonus + vfxBonus + setBonus + locBonus));
+    }
+
+    function computeBoxOfficeVerdict(film) {
+      const totalRecovery = film.producerEarnings + film.inflow;
+      const budget = Math.max(1, film.cost);
+      const roi = totalRecovery / budget;
+
+      if (roi < 0.45) return { label: "Disaster", css: "v-disaster", desc: "Massive financial loss" };
+      if (roi < 0.70) return { label: "Flop", css: "v-flop", desc: "Failed to recover its investment" };
+      if (roi < 0.90) return { label: "Below Average", css: "v-below-avg", desc: "Recovered a portion, but incurred losses" };
+      if (roi < 1.05) return { label: "Average", css: "v-average", desc: "Approximately recovered its investment" };
+      if (roi < 1.25) return { label: "Above Average", css: "v-above-avg", desc: "Recovered investment with some profit" };
+      if (roi < 1.50) return { label: "Semi Hit", css: "v-semi-hit", desc: "Decent commercial success" };
+      if (roi < 1.85) return { label: "Hit", css: "v-hit", desc: "Good commercial success" };
+      if (roi < 2.30) return { label: "Super Hit", css: "v-super-hit", desc: "Strong profits" };
+      if (roi < 2.80) return { label: "Super Duper Hit", css: "v-super-duper-hit", desc: "Exceptional profits" };
+      if (roi < 3.60) return { label: "Blockbuster", css: "v-blockbuster", desc: "Huge commercial success" };
+      return { label: "All-Time Blockbuster", css: "v-all-time-blockbuster", desc: "Exceptional success by historical standards" };
     }
 
     function advanceWeek() {
@@ -2107,9 +1956,7 @@
       const cycleWeek = ((GAME_STATE.week - 1) % 52) + 1;
       if (RIVAL_SCHEDULED_RELEASES[cycleWeek]) newlyReleasedAny = true;
 
-      if (newlyReleasedAny) {
-        applySpilloverToVeterans();
-      }
+      if (newlyReleasedAny) applySpilloverToVeterans();
 
       checkAwardsSeason();
       processWeeklyNews();
@@ -2129,7 +1976,7 @@
           const share = Math.round(bump * 0.5);
           run.producerEarnings += share;
           GAME_STATE.cash += share;
-          showToast(`🎟️ "${run.title}" saw theatre rush spillover! (+${formatINR(bump)})`, "info");
+          showToast(`"${run.title}" saw theatre rush spillover! (+${formatINR(bump)})`, "info");
         }
       });
     }
@@ -2159,12 +2006,13 @@
           weeklyHistory: [digitalRoyalties],
           activeHype: film.hype || 50,
           activeScreens: 0,
+          boostTurnsRemaining: 0,
           active: true,
           jubilee: null
         };
         GAME_STATE.cash += digitalRoyalties;
         GAME_STATE.theatreRuns.unshift(streamEntry);
-        showToast(`📺 "${film.title}" premiered worldwide on digital stream!`, "success");
+        showToast(`"${film.title}" premiered worldwide on digital stream!`, "success");
         triggerConfetti();
         return;
       }
@@ -2175,7 +2023,7 @@
       let clashMult = 1.0;
       if (rival) clashMult = (100 + rival.clash) / 100;
 
-      const starPower = film.cast.reduce((acc, c) => acc + (ALL_ACTORS.find(a => a.id === c.id)?.popularity || 70), 0) / Math.max(1, film.cast.length);
+const starPower = film.cast.reduce((acc, c) => acc + (ALL_ACTORS.find(a => a.id === c.id)?.popularity || 70), 0) / Math.max(1, film.cast.length);
       const hypeFactor = ((film.hype || 50) / 45);
       
       const opening = Math.round((starPower * 4200000) * season.mult * clashMult * (film.quality / 80) * hypeFactor);
@@ -2188,13 +2036,14 @@
         weeklyHistory: [opening],
         activeHype: film.hype || 50,
         activeScreens: film.screens || 4200,
+        boostTurnsRemaining: 0,
         active: true,
         jubilee: null
       };
 
       GAME_STATE.cash += theatreEntry.producerEarnings;
       GAME_STATE.theatreRuns.unshift(theatreEntry);
-      showToast(`🎉 "${film.title}" opened on ${theatreEntry.activeScreens.toLocaleString()} screens! W1: ${formatINR(opening)}`, "success");
+      showToast(`"${film.title}" opened on ${theatreEntry.activeScreens.toLocaleString()} screens! W1: ${formatINR(opening)}`, "success");
       triggerConfetti();
     }
 
@@ -2219,15 +2068,23 @@
           return;
         }
 
-        let hypeDecay = 10;
-        if (run.quality >= 92) hypeDecay = 3;
-        else if (run.quality >= 85) hypeDecay = 6;
-        else if (run.quality < 65) hypeDecay = 18;
-
-        run.activeHype = Math.max(5, run.activeHype - hypeDecay);
+        // Check if post-release publicity surge is active (2-4 weeks surge window)
+        let publicitySurgeMult = 1.0;
+        if (run.boostTurnsRemaining && run.boostTurnsRemaining > 0) {
+          run.boostTurnsRemaining--;
+          publicitySurgeMult = 1.25; // +25% weekly collections boost
+        } else {
+          let hypeDecay = 10;
+          if (run.quality >= 92) hypeDecay = 3;
+          else if (run.quality >= 85) hypeDecay = 6;
+          else if (run.quality < 65) hypeDecay = 18;
+          run.activeHype = Math.max(5, run.activeHype - hypeDecay);
+        }
 
         const screenDecayRatio = (run.activeHype / 100) * (run.quality / 80);
-        run.activeScreens = Math.max(150, Math.round(run.activeScreens * Math.min(1.05, Math.max(0.40, screenDecayRatio))));
+        if (publicitySurgeMult === 1.0) {
+          run.activeScreens = Math.max(150, Math.round(run.activeScreens * Math.min(1.05, Math.max(0.40, screenDecayRatio))));
+        }
 
         let holdRatio = 0.55; 
         if (run.quality >= 95) holdRatio = 0.94;
@@ -2236,7 +2093,7 @@
         else if (run.quality >= 70) holdRatio = 0.58;
         else holdRatio = 0.35;
 
-        const thisGross = Math.max(200000, Math.round(lastColl * holdRatio * 0.98));
+        const thisGross = Math.max(200000, Math.round(lastColl * holdRatio * publicitySurgeMult));
         run.weeklyHistory.push(thisGross);
         run.totalGross += thisGross;
 
@@ -2247,11 +2104,11 @@
         if (run.currentWeekOfRun === 25 && run.quality >= 88 && !run.jubilee) {
           run.jubilee = "Silver Jubilee (25 Weeks)";
           GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 8);
-          showToast(`🏆 SILVER JUBILEE! "${run.title}" completes 25 weeks!`, "success");
+          showToast(`SILVER JUBILEE! "${run.title}" completes 25 weeks!`, "success");
         } else if (run.currentWeekOfRun >= 53 && run.quality >= 95 && !run.jubilee?.includes("Golden")) {
           run.jubilee = "Golden Jubilee (53 Weeks - Historic All-Time Legend)";
           GAME_STATE.reputation = 100;
-          showToast(`🌟 HISTORIC GOLDEN JUBILEE! "${run.title}" completes 53 weeks!`, "success");
+          showToast(`HISTORIC GOLDEN JUBILEE! "${run.title}" completes 53 weeks!`, "success");
         }
 
         let maxWeeks = 6;
@@ -2267,23 +2124,78 @@
       });
     }
 
+    /* POST-RELEASE MARKETING & PUBLICITY BOOST MODAL */
+    function openPostPublicityModal(runId) {
+      ACTIVE_PUBLICITY_RUN_ID = runId;
+      const run = GAME_STATE.theatreRuns.find(r => r.id === runId);
+      if (!run) return;
+
+      const listContainer = document.getElementById("post-publicity-options");
+      listContainer.innerHTML = POST_RELEASE_CAMPAIGNS.map(c => `
+        <div style="background:var(--bg-base); border:1px solid var(--border-color-subtle); border-radius:8px; padding:10px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+          <div>
+            <div style="font-weight:700; font-size:0.84rem; color:var(--gold-bright);">${c.name}</div>
+            <div style="font-size:0.72rem; color:var(--text-muted);">${c.desc}</div>
+            <div style="font-size:0.72rem; color:var(--success); font-weight:700; margin-top:2px;">
+              +${c.hypeAdd} Hype • +${c.screenBoost} Screens • 3-Week Gross Surge
+            </div>
+          </div>
+          <button class="btn-gold" style="white-space:nowrap; font-size:0.76rem;" onclick="applyPostPublicity('${c.id}')">
+            ${formatINR(c.fee)}
+          </button>
+        </div>
+      `).join('');
+
+      document.getElementById("modal-post-publicity").classList.add("active");
+    }
+
+    function closePostPublicityModal() { document.getElementById("modal-post-publicity").classList.remove("active"); }
+
+    function applyPostPublicity(campId) {
+      const run = GAME_STATE.theatreRuns.find(r => r.id === ACTIVE_PUBLICITY_RUN_ID);
+      const camp = POST_RELEASE_CAMPAIGNS.find(c => c.id === campId);
+      if (!run || !camp) return;
+
+      if (GAME_STATE.cash < camp.fee) {
+        showToast("Insufficient funds for publicity campaign!", "error");
+        return;
+      }
+
+      GAME_STATE.cash -= camp.fee;
+      run.cost += camp.fee;
+      run.activeHype = Math.min(100, (run.activeHype || 30) + camp.hypeAdd);
+      run.activeScreens = Math.min(7500, (run.activeScreens || 2000) + camp.screenBoost);
+      run.boostTurnsRemaining = 3;
+
+      saveState();
+      closePostPublicityModal();
+      renderAll();
+      showToast(`Hype surged to ${run.activeHype}/100! Screens increased to ${run.activeScreens.toLocaleString()}!`, "success");
+      triggerConfetti();
+    }
+
     function checkAwardsSeason() {
       if (GAME_STATE.week % 12 === 0 && GAME_STATE.releasedMovies.length > 0) {
         const topContenders = GAME_STATE.releasedMovies.filter(m => m.quality >= 85);
         if (topContenders.length > 0) {
           const winner = topContenders[Math.floor(Math.random() * topContenders.length)];
-          const titles = ["Best Film", "Best Director", "Best Actor", "Best Music Album", "Best Lyrics"];
+          const titles = ["Best Film", "Best Director", "Best Actor", "Best Music Album", "Best Lyrics", "Best Visual Effects"];
           const category = titles[Math.floor(Math.random() * titles.length)];
           winner.awardsWon.push(category);
           GAME_STATE.totalAwardsWon++;
           GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 5);
-          showToast(`🏆 AWARD WON! "${winner.title}" takes "${category}"!`, "success");
+          showToast(`AWARD WON! "${winner.title}" takes "${category}"!`, "success");
           triggerConfetti();
         }
       }
     }
 
     function archiveReleasedMovie(run) {
+      const verdictObj = computeBoxOfficeVerdict(run);
+      run.verdict = verdictObj.label;
+      run.verdictCss = verdictObj.css;
+      run.verdictDesc = verdictObj.desc;
+
       GAME_STATE.releasedMovies.unshift(JSON.parse(JSON.stringify(run)));
       if (run.franchiseId) {
         const fran = GAME_STATE.franchises.find(f => f.id === run.franchiseId);
@@ -2293,17 +2205,15 @@
           fran.rating = Math.round((fran.rating + run.quality) / 2);
         }
       }
-      showToast(`🎬 "${run.title}" concluded run. Lifetime: ${formatINR(run.totalGross)}`, "info");
+      showToast(`"${run.title}" Verdict: ${verdictObj.label}! Lifetime: ${formatINR(run.totalGross)}`, "info");
       renderTheatricalRuns();
     }
 
-    /* IN THEATRES RENDERING: 1. UPCOMING, 2. RUNNING, 3. ARCHIVED */
     function renderTheatricalRuns() {
       const container = document.getElementById("theatrical-runs-container");
       const upContainer = document.getElementById("theatrical-upcoming-container");
       const archContainer = document.getElementById("theatrical-archived-container");
 
-      // 1. Upcoming Section
       if (upContainer) {
         upContainer.innerHTML = GAME_STATE.activeProductions.length === 0
           ? `<p style="color:var(--text-muted); font-size:0.8rem;">No upcoming productions scheduled yet.</p>`
@@ -2313,62 +2223,73 @@
               <div style="flex:1;">
                 <div style="font-family:var(--font-display); font-size:0.86rem; color:var(--gold-bright);">${prod.title}</div>
                 <div style="font-size:0.72rem; color:var(--text-muted);">${prod.genre} • Releasing in ${prod.weeksRemaining} Weeks (Week ${prod.releaseWeek})</div>
-                <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">Audience Buzz: 🔥 ${prod.hype || 50}/100 | ${prod.releaseFormat === 'ott_satellite' ? 'Direct Digital Stream' : `Target Screens: ${(prod.screens || 0).toLocaleString()}`}</div>
+                <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">Audience Buzz: ${prod.hype || 50}/100 | ${prod.releaseFormat === 'ott_satellite' ? 'Direct Digital Stream' : `Target Screens: ${(prod.screens || 0).toLocaleString()}`}</div>
               </div>
             </div>
           `).join('');
       }
 
-      // 2. Running Section
       if (container) {
         const runningFilms = GAME_STATE.theatreRuns.filter(r => r.active);
         container.innerHTML = runningFilms.length === 0 
           ? `<p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in cinema halls. Launch a movie in "New Movie" to witness its box office trajectory!</p>`
-          : runningFilms.map(run => `
-            <div class="theatre-run-card" onclick="openMovieDossier('${run.id}', true)">
-              <div class="theatre-header">
-                <img src="${run.posterUrl}" class="theatre-poster" alt="${run.title}">
-                <div style="flex:1; min-width:0;">
-                  <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${run.title}</div>
-                  <div style="font-size:0.72rem; color:var(--text-muted); margin-top:1px;">
-                    ${run.genre} • ${run.releaseFormat === 'ott_satellite' ? 'Streaming Series' : `Wk ${run.currentWeekOfRun} in Cinemas`} ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}
+          : runningFilms.map(run => {
+            const currentVerdict = computeBoxOfficeVerdict(run);
+            return `
+              <div class="theatre-run-card" onclick="openMovieDossier('${run.id}', true)">
+                <div class="theatre-header">
+                  <img src="${run.posterUrl}" class="theatre-poster" alt="${run.title}">
+                  <div style="flex:1; min-width:0;">
+                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                      <span style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright);">${run.title}</span>
+                      <span class="verdict-pill ${currentVerdict.css}">${currentVerdict.label}</span>
+                    </div>
+                    <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">
+                      ${run.genre} • ${run.releaseFormat === 'ott_satellite' ? 'Streaming Series' : `Wk ${run.currentWeekOfRun} in Cinemas`} ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}
+                    </div>
+                    <div style="font-size:0.72rem; color:var(--warning); font-weight:700; margin-top:2px;">
+                      ${run.releaseFormat === 'ott_satellite' ? 'Direct Digital Streaming' : `Active Screens: ${(run.activeScreens || 0).toLocaleString()} | Hype: ${run.activeHype || 30}/100 ${run.boostTurnsRemaining > 0 ? `<span style="color:var(--success);">(Surge Active: ${run.boostTurnsRemaining}w)</span>` : ''}`}
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-main); margin-top:2px;">
+                      Budget: <strong style="color:var(--danger);">${formatINR(run.cost)}</strong> | Gross: <strong style="color:var(--success);">${formatINR(run.totalGross)}</strong>
+                    </div>
                   </div>
-                  <div style="font-size:0.72rem; color:var(--warning); font-weight:700; margin-top:2px;">
-                    ${run.releaseFormat === 'ott_satellite' ? 'Direct Digital Streaming' : `Active Screens: ${(run.activeScreens || 0).toLocaleString()} | Hype: 🔥 ${run.activeHype || 30}/100`}
-                  </div>
-                  <div style="font-size:0.75rem; color:var(--text-main); margin-top:2px;">
-                    Budget: <strong style="color:var(--danger);">${formatINR(run.cost)}</strong> | Gross: <strong style="color:var(--success);">${formatINR(run.totalGross)}</strong>
-                  </div>
+                  ${run.releaseFormat !== 'ott_satellite' ? `
+                    <button class="btn-gold" style="font-size:0.7rem; padding:5px 9px;" onclick="event.stopPropagation(); openPostPublicityModal('${run.id}')">
+                      <i class="fa-solid fa-bullhorn"></i> Boost Hype
+                    </button>
+                  ` : ''}
                 </div>
-                <div><span class="step-badge" style="background:var(--success); font-size:0.65rem;">Running</span></div>
+                <div style="display:flex; gap:4px; overflow-x:auto; padding-bottom:2px;">
+                  ${run.weeklyHistory.map((amt, idx) => `
+                    <div style="background:var(--bg-card); border:1px solid var(--border-color-subtle); border-radius:4px; padding:3px 6px; text-align:center; min-width:65px;">
+                      <div style="font-size:0.6rem; color:var(--text-subtle);">W${idx+1}</div>
+                      <div style="font-size:0.68rem; font-weight:700; color:var(--gold-bright);">${formatINR(amt)}</div>
+                    </div>
+                  `).join('')}
+                </div>
               </div>
-              <div style="display:flex; gap:4px; overflow-x:auto; padding-bottom:2px;">
-                ${run.weeklyHistory.map((amt, idx) => `
-                  <div style="background:var(--bg-card); border:1px solid var(--border-color-subtle); border-radius:4px; padding:3px 6px; text-align:center; min-width:65px;">
-                    <div style="font-size:0.6rem; color:var(--text-subtle);">W${idx+1}</div>
-                    <div style="font-size:0.68rem; font-weight:700; color:var(--gold-bright);">${formatINR(amt)}</div>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          `).join('');
+            `;
+          }).join('');
       }
 
-      // 3. Archived Section At Last
       if (archContainer) {
         archContainer.innerHTML = GAME_STATE.releasedMovies.length === 0
           ? `<p style="color:var(--text-muted); font-size:0.8rem;">No completed runs archived yet.</p>`
-          : GAME_STATE.releasedMovies.slice(0, 5).map(m => `
-            <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); border:1px solid var(--border-color-subtle); border-radius:6px; padding:6px 10px; margin-bottom:6px; cursor:pointer;" onclick="openMovieDossier('${m.id}', false)">
-              <div>
-                <strong style="color:var(--gold-bright); font-size:0.82rem;">${m.title}</strong>
-                <span style="font-size:0.7rem; color:var(--text-muted); margin-left:6px;">${m.genre}</span>
+          : GAME_STATE.releasedMovies.slice(0, 5).map(m => {
+            const v = m.verdict ? { label: m.verdict, css: m.verdictCss } : computeBoxOfficeVerdict(m);
+            return `
+              <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-surface); border:1px solid var(--border-color-subtle); border-radius:6px; padding:6px 10px; margin-bottom:6px; cursor:pointer;" onclick="openMovieDossier('${m.id}', false)">
+                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                  <strong style="color:var(--gold-bright); font-size:0.82rem;">${m.title}</strong>
+                  <span class="verdict-pill ${v.css}">${v.label}</span>
+                </div>
+                <div style="font-size:0.75rem;">
+                  Gross: <strong style="color:var(--success);">${formatINR(m.totalGross)}</strong>
+                </div>
               </div>
-              <div style="font-size:0.75rem;">
-                Gross: <strong style="color:var(--success);">${formatINR(m.totalGross)}</strong>
-              </div>
-            </div>
-          `).join('');
+            `;
+          }).join('');
       }
     }
 
@@ -2379,22 +2300,29 @@
         container.innerHTML = `<p style="color:var(--text-muted); font-size:0.8rem;">No movies archived yet.</p>`;
         return;
       }
-      container.innerHTML = GAME_STATE.releasedMovies.map(movie => `
-        <div class="card" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; cursor:pointer;" onclick="openMovieDossier('${movie.id}', false)">
-          <img src="${movie.posterUrl}" style="width:52px; height:74px; border-radius:5px; object-fit:cover; border:1px solid var(--gold-primary);">
-          <div style="flex:1; min-width:0;">
-            <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright);">${movie.title}</div>
-            <div style="font-size:0.72rem; color:var(--text-muted);">
-              ${movie.genre} • Budget: <strong style="color:var(--danger);">${formatINR(movie.cost)}</strong> | Gross: <strong style="color:var(--gold-bright);">${formatINR(movie.totalGross)}</strong>
+      container.innerHTML = GAME_STATE.releasedMovies.map(movie => {
+        const v = movie.verdict ? { label: movie.verdict, css: movie.verdictCss, desc: movie.verdictDesc } : computeBoxOfficeVerdict(movie);
+        return `
+          <div class="card" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; cursor:pointer;" onclick="openMovieDossier('${movie.id}', false)">
+            <img src="${movie.posterUrl}" style="width:52px; height:74px; border-radius:5px; object-fit:cover; border:1px solid var(--gold-primary);">
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                <span style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright);">${movie.title}</span>
+                <span class="verdict-pill ${v.css}">${v.label}</span>
+              </div>
+              <div style="font-size:0.7rem; color:var(--text-muted); font-style:italic; margin-top:1px;">"${v.desc}"</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">
+                ${movie.genre} • Budget: <strong style="color:var(--danger);">${formatINR(movie.cost)}</strong> | Gross: <strong style="color:var(--gold-bright);">${formatINR(movie.totalGross)}</strong>
+              </div>
+              <div style="font-size:0.74rem; color:var(--success); font-weight:700;">Net Profit: ${formatINR(movie.producerEarnings + movie.inflow - movie.cost)}</div>
+              ${movie.awardsWon && movie.awardsWon.length > 0 ? `<div style="font-size:0.68rem; color:var(--gold-bright); margin-top:2px;"><i class="fa-solid fa-award"></i> ${movie.awardsWon.join(', ')}</div>` : ''}
             </div>
-            <div style="font-size:0.74rem; color:var(--success); font-weight:700;">Net Profit: ${formatINR(movie.producerEarnings + movie.inflow - movie.cost)}</div>
-            ${movie.awardsWon && movie.awardsWon.length > 0 ? `<div style="font-size:0.68rem; color:var(--gold-bright); margin-top:2px;">🏆 ${movie.awardsWon.join(', ')}</div>` : ''}
+            <button class="btn-gold" style="font-size:0.72rem; padding:5px 10px;" onclick="event.stopPropagation(); openReReleaseScheduler('${movie.id}')">
+              <i class="fa-solid fa-rotate-right"></i> 4K Re-Release
+            </button>
           </div>
-          <button class="btn-gold" style="font-size:0.72rem; padding:5px 10px;" onclick="event.stopPropagation(); openReReleaseScheduler('${movie.id}')">
-            <i class="fa-solid fa-rotate-right"></i> 4K Re-Release
-          </button>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function openMovieDossier(movieId, isRunning) {
@@ -2405,23 +2333,37 @@
         const actor = ALL_ACTORS.find(a => a.id === c.id);
         return `${actor ? actor.name : 'Star'} (${c.role})`;
       }).join(', ');
+      const v = film.verdict ? { label: film.verdict, css: film.verdictCss, desc: film.verdictDesc } : computeBoxOfficeVerdict(film);
+
+      const locsText = (film.locations || []).map(l => {
+        const obj = SHOOTING_LOCATIONS.find(x => x.id === l.id);
+        return obj ? `${obj.name} (${l.scope})` : '';
+      }).filter(Boolean).join(', ');
 
       const netProfit = film.producerEarnings + film.inflow - film.cost;
       const modalWin = document.getElementById("modal-dossier-window");
 
       modalWin.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
-          <div><span class="step-badge">${film.genre}</span><h2 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.15rem;">${film.title}</h2></div>
+          <div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+              <span class="step-badge">${film.genre}</span>
+              <span class="verdict-pill ${v.css}">${v.label}</span>
+            </div>
+            <h2 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.15rem;">${film.title}</h2>
+            <div style="font-size:0.72rem; color:var(--text-muted);">${v.desc}</div>
+          </div>
           <button class="btn-outline" style="padding:3px 8px; font-size:0.75rem;" onclick="closeMovieDossier()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div style="display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
           <img src="${film.posterUrl}" style="width:75px; height:105px; border-radius:6px; object-fit:cover; border:1.5px solid var(--gold-bright);">
           <div style="flex:1; font-size:0.78rem;">
             <div>Format: <strong style="color:var(--gold-bright);">${film.releaseFormat === 'only_theatres' ? 'Only Theatres (Exclusive)' : (film.releaseFormat === 'ott_satellite' ? 'Direct OTT & Satellite' : 'Theatres & OTT')}</strong></div>
-            <div style="margin-top:2px;">Helmed By: <strong style="color:var(--text-main);">${dir ? dir.name : 'Director'}</strong></div>
+            <div style="margin-top:2px;">Director: <strong style="color:var(--text-main);">${dir ? dir.name : 'Director'}</strong></div>
             <div style="margin-top:2px;">Cast: <span style="color:var(--text-muted);">${castNames}</span></div>
-            <div style="margin-top:2px;">Quality Score: <strong style="color:var(--gold-bright);">${film.quality}/100</strong></div>
-            ${film.awardsWon && film.awardsWon.length > 0 ? `<div style="color:var(--gold-bright); margin-top:3px;">🏆 ${film.awardsWon.join(', ')}</div>` : ''}
+            <div style="margin-top:2px;">Locations: <span style="color:var(--text-muted);">${locsText || 'India Studio'}</span></div>
+            <div style="margin-top:2px;">Quality Rating: <strong style="color:var(--gold-bright);">${film.quality}/100</strong></div>
+            ${film.awardsWon && film.awardsWon.length > 0 ? `<div style="color:var(--gold-bright); margin-top:3px;"><i class="fa-solid fa-award"></i> ${film.awardsWon.join(', ')}</div>` : ''}
           </div>
         </div>
         <div class="card" style="margin-bottom:10px; padding:10px;">
@@ -2492,18 +2434,45 @@
       GAME_STATE.activeProductions.push(reReleaseRun);
       saveState();
       closeReReleaseModal();
-      showToast(`🎬 "${reReleaseRun.title}" slotted for Week ${releaseWeek}!`, "success");
+      showToast(`"${reReleaseRun.title}" slotted for Week ${releaseWeek}!`, "success");
       triggerConfetti();
       switchTab("tab-theatre-runs");
       renderAll();
     }
 
-    /* AUTO-LOAD FRANCHISE PACKAGE (CAST, DIRECTORS, SINGERS, RIGHTS) */
     function autoLoadFranchisePackage(franId) {
       const f = GAME_STATE.franchises.find(x => x.id === franId);
       if (!f || !f.savedPackage) return;
       
       const pkg = f.savedPackage;
+      if (pkg.posterUrl) {
+        CURRENT_DRAFT.posterUrl = pkg.posterUrl;
+        CURRENT_DRAFT.customPosterUploaded = !!pkg.customPosterUploaded;
+        if (CURRENT_DRAFT.customPosterUploaded) {
+          document.getElementById("user-uploaded-img").src = pkg.posterUrl;
+          document.getElementById("user-uploaded-poster-box").classList.add("visible");
+        } else {
+          document.getElementById("user-uploaded-poster-box").classList.remove("visible");
+        }
+      }
+
+      if (pkg.genre) {
+        CURRENT_DRAFT.genre = pkg.genre;
+        document.querySelectorAll("#genre-pills .curved-choice-btn").forEach(x => x.classList.toggle("active", x.dataset.genre === pkg.genre));
+      }
+
+      if (pkg.releaseFormat) {
+        CURRENT_DRAFT.releaseFormat = pkg.releaseFormat;
+        document.querySelectorAll("#release-format-pills .curved-choice-btn").forEach(x => x.classList.toggle("active", x.dataset.format === pkg.releaseFormat));
+        const ottSec = document.getElementById("ott-rights-section");
+        if (ottSec) ottSec.style.display = pkg.releaseFormat === "only_theatres" ? "none" : "block";
+      }
+
+      if (pkg.scriptQuality) {
+        CURRENT_DRAFT.scriptQuality = pkg.scriptQuality;
+        document.querySelectorAll("#script-quality-pills .curved-choice-btn").forEach(x => x.classList.toggle("active", x.dataset.sq === pkg.scriptQuality));
+      }
+
       if (pkg.cast && pkg.cast.length > 0) CURRENT_DRAFT.cast = JSON.parse(JSON.stringify(pkg.cast));
       if (pkg.directorId) CURRENT_DRAFT.directorId = pkg.directorId;
       if (pkg.composerId) CURRENT_DRAFT.composerId = pkg.composerId;
@@ -2512,20 +2481,27 @@
       if (pkg.ottRightsId) CURRENT_DRAFT.ottRightsId = pkg.ottRightsId;
       if (pkg.satelliteRightsId) CURRENT_DRAFT.satelliteRightsId = pkg.satelliteRightsId;
 
+      renderPresetPosters();
       renderActorTiles();
+      renderLocationsTiles();
       renderDirectorTiles();
       renderComposerTiles();
       renderSingerTiles();
       renderBrandRights();
       updateCostHUD();
-      showToast(`⚡ Auto-loaded cast & crew from ${f.name}!`, "info");
+      showToast(`Auto-loaded full template from ${f.name}!`, "info");
     }
 
-    function rememberFranchisePreferences() {
+    function rememberFranchisePreferences(recordRightsPartners) {
       if (!CURRENT_DRAFT.franchiseId) return;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (f) {
         f.savedPackage = {
+          posterUrl: CURRENT_DRAFT.posterUrl,
+          customPosterUploaded: CURRENT_DRAFT.customPosterUploaded,
+          genre: CURRENT_DRAFT.genre,
+          releaseFormat: CURRENT_DRAFT.releaseFormat,
+          scriptQuality: CURRENT_DRAFT.scriptQuality,
           cast: JSON.parse(JSON.stringify(CURRENT_DRAFT.cast)),
           directorId: CURRENT_DRAFT.directorId,
           composerId: CURRENT_DRAFT.composerId,
@@ -2534,6 +2510,11 @@
           ottRightsId: CURRENT_DRAFT.ottRightsId,
           satelliteRightsId: CURRENT_DRAFT.satelliteRightsId
         };
+        if (recordRightsPartners) {
+          f.lastMusicRights = CURRENT_DRAFT.musicRightsId;
+          f.lastOttRights = CURRENT_DRAFT.ottRightsId;
+          f.lastSatRights = CURRENT_DRAFT.satelliteRightsId;
+        }
       }
     }
 
@@ -2554,6 +2535,7 @@
         document.getElementById("pipeline-franchise-edit-wrap").style.display = "none";
       }
       renderActorTiles();
+      renderLocationsTiles();
       renderDirectorTiles();
       renderComposerTiles();
       renderSingerTiles();
@@ -2584,7 +2566,7 @@
       container.innerHTML = GAME_STATE.franchises.map(f => `
         <div class="franchise-tile-card ${CURRENT_DRAFT.franchiseId === f.id ? 'selected' : ''}" onclick="selectPipelineFranchise('${f.id}')">
           <div class="fran-tile-title">${f.name}</div>
-          <div class="fran-tile-meta">⭐ ${f.rating} Fame • ${f.films} Films</div>
+          <div class="fran-tile-meta"><i class="fa-solid fa-star"></i> ${f.rating} Fame • ${f.films} Films</div>
         </div>
       `).join('');
 
@@ -2645,7 +2627,6 @@
     function closeCreateFranchiseModal(cancelledByUser) {
       document.getElementById("modal-franchise").classList.remove("active");
       if (cancelledByUser && GAME_STATE.franchises.length === 0) {
-        // Auto direct to standalone movie if user cancelled and no franchise exists
         setFranchiseModel('standalone', document.querySelector("#franchise-model-pills .curved-choice-btn[data-model='standalone']"));
         showToast("Switched to Standalone Film model.", "info");
       }
@@ -2663,6 +2644,7 @@
       renderPipelineFranchiseTiles();
       renderFranchiseView();
       renderActorTiles();
+      renderLocationsTiles();
       renderDirectorTiles();
       renderComposerTiles();
       renderSingerTiles();
@@ -2686,8 +2668,8 @@
           <div class="card" style="margin-bottom:0; padding:6px; ${myFilms.length > 0 ? 'border-color:var(--gold-bright);' : ''}">
             <div style="font-size:0.72rem; font-weight:800; color:var(--gold-bright);">Week ${w}</div>
             <div style="font-size:0.65rem; color:var(--text-muted);">${season.name}</div>
-            ${rival ? `<div style="font-size:0.64rem; color:var(--warning);">⚠️ ${rival.title}</div>` : ''}
-            ${myFilms.map(f => `<div style="font-size:0.7rem; font-weight:700; color:var(--success); margin-top:2px;">🎬 ${f.title}</div>`).join('')}
+            ${rival ? `<div style="font-size:0.64rem; color:var(--warning);"><i class="fa-solid fa-triangle-exclamation"></i> ${rival.title}</div>` : ''}
+            ${myFilms.map(f => `<div style="font-size:0.7rem; font-weight:700; color:var(--success); margin-top:2px;"><i class="fa-solid fa-clapperboard"></i> ${f.title}</div>`).join('')}
           </div>
         `;
       }
@@ -2844,12 +2826,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v112", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v112a", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v112");
+        const raw = localStorage.getItem("bollywood_tycoon_v112a");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
