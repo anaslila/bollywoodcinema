@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.12(d) — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.12(e) — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -36,8 +36,9 @@
       --success: #22c55e;
       --danger: #ef4444;
       --warning: #f59e0b;
-      --toast-bg: #1c1c24;
+      --toast-bg: #1c1c26;
       --toast-text: #ffffff;
+      --toast-border: rgba(255, 255, 255, 0.12);
       --font-display: 'Cinzel', serif;
       --font-body: 'Outfit', sans-serif;
     }
@@ -61,8 +62,9 @@
       --success: #15803d;
       --danger: #dc2626;
       --warning: #d97706;
-      --toast-bg: #16161f;
-      --toast-text: #ffffff;
+      --toast-bg: #ffffff;
+      --toast-text: #12121a;
+      --toast-border: rgba(0, 0, 0, 0.15);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -163,7 +165,7 @@
       box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
     }
 
-    /* Mobile Bottom Footer Dock (Money + Advance Week) */
+    /* Mobile Bottom Footer Dock */
     .mobile-bottom-footer {
       display: none;
       position: fixed;
@@ -180,21 +182,9 @@
       gap: 10px;
       box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
     }
-    .mobile-footer-cash {
-      display: flex;
-      flex-direction: column;
-    }
-    .mobile-footer-cash-lbl {
-      font-size: 0.62rem;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      font-weight: 700;
-    }
-    .mobile-footer-cash-val {
-      font-size: 0.98rem;
-      font-weight: 800;
-      color: var(--success);
-    }
+    .mobile-footer-cash { display: flex; flex-direction: column; }
+    .mobile-footer-cash-lbl { font-size: 0.62rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
+    .mobile-footer-cash-val { font-size: 0.98rem; font-weight: 800; color: var(--success); }
     .btn-advance-mobile {
       background: var(--gold-gradient);
       color: #0b0b0e;
@@ -322,6 +312,19 @@
     .verdict-above-average, .verdict-semi-hit, .verdict-hit { background: rgba(34, 197, 94, 0.18); color: var(--success); border: 1px solid rgba(34, 197, 94, 0.4); }
     .verdict-super-hit, .verdict-super-duper-hit, .verdict-blockbuster, .verdict-all-time-blockbuster { background: var(--gold-gradient); color: #000; border: 1px solid #fff3b0; box-shadow: 0 0 8px rgba(245, 197, 24, 0.5); }
 
+    .jubilee-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      background: rgba(212, 175, 55, 0.18);
+      color: var(--gold-bright);
+      border: 1px solid var(--gold-primary);
+    }
+
     .wizard-steps-indicator { display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 8px 10px; margin-bottom: 14px; overflow-x: auto; gap: 6px; }
     .wizard-step-node { display: flex; align-items: center; gap: 5px; font-size: 0.74rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; cursor: pointer; opacity: 0.65; }
     .wizard-step-node.active { color: var(--gold-bright); opacity: 1; }
@@ -336,7 +339,6 @@
     .step-heading { font-family: var(--font-display); font-size: 1.1rem; color: var(--gold-bright); }
     .step-subtext { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; margin-bottom: 10px; }
 
-    /* Floating Sticky Wizard Controls Above Budget HUD */
     .floating-wizard-controls {
       position: sticky;
       bottom: 62px;
@@ -478,7 +480,7 @@
 
     .news-pagination-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-color-subtle); }
 
-    /* Non-disruptive Toasts: Top-right on Desktop, Above Bottom Footer on Mobile */
+    /* Adaptive Light & Dark Toast Notifications */
     #toast-container {
       position: fixed;
       top: 98px;
@@ -502,22 +504,26 @@
     }
     .toast-msg {
       background: var(--toast-bg) !important;
-      border-left: 3.5px solid var(--gold-bright);
+      border: 1px solid var(--toast-border);
+      border-left: 4px solid var(--gold-bright);
       color: var(--toast-text) !important;
       padding: 8px 12px;
       border-radius: 6px;
       font-size: 0.78rem;
       font-weight: 600;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
       backdrop-filter: blur(8px);
       pointer-events: auto;
       display: flex;
       align-items: center;
       gap: 6px;
     }
-    .toast-msg span, .toast-msg i { color: #ffffff !important; }
+    .toast-msg span { color: var(--toast-text) !important; }
+    .toast-msg i { color: var(--gold-bright) !important; }
     .toast-msg.success { border-left-color: var(--success); }
+    .toast-msg.success i { color: var(--success) !important; }
     .toast-msg.error { border-left-color: var(--danger); }
+    .toast-msg.error i { color: var(--danger) !important; }
 
     .modal-overlay {
       position: fixed;
@@ -648,7 +654,7 @@
     </div>
   </header>
 
-  <!-- Mobile Bottom Footer Dock (Treasury Balance + Advance Week) -->
+  <!-- Mobile Bottom Footer Dock -->
   <div class="mobile-bottom-footer">
     <div class="mobile-footer-cash">
       <span class="mobile-footer-cash-lbl">Treasury Funds</span>
@@ -707,7 +713,7 @@
       </div>
     </section>
 
-    <!-- 2. NEW MOVIE PIPELINE TAB (8 STEPS WITH FLOATING CONTROLS) -->
+    <!-- 2. NEW MOVIE PIPELINE TAB (8 STEPS) -->
     <section id="tab-new-movie" class="tab-view">
       <div class="card">
         <div class="card-title"><i class="fa-solid fa-clapperboard"></i> Filmmaking Pipeline Wizard</div>
@@ -932,8 +938,11 @@
             <p class="step-subtext">Successful franchises trigger bidding wars across Music, OTT, and Satellite networks!</p>
           </div>
 
-          <label style="font-size:0.78rem; font-weight:700;">Music Rights Partner:</label>
-          <div class="brand-tiles-grid" id="music-rights-grid"></div>
+          <!-- Hidden automatically if 0 (Songless) is selected -->
+          <div id="music-rights-section">
+            <label style="font-size:0.78rem; font-weight:700;">Music Rights Partner:</label>
+            <div class="brand-tiles-grid" id="music-rights-grid"></div>
+          </div>
 
           <div id="ott-rights-section">
             <label style="font-size:0.78rem; font-weight:700; margin-top:12px; display:block;">Worldwide Digital Streaming Rights (OTT):</label>
@@ -990,7 +999,7 @@
           <div class="week-tiles-grid" id="release-week-grid"></div>
         </div>
 
-        <!-- Floating Sticky Wizard Next/Back Controls Above Budget HUD -->
+        <!-- Floating Sticky Wizard Next/Back Controls -->
         <div class="floating-wizard-controls">
           <button class="btn-outline" id="btn-wizard-prev" onclick="wizardPrevStep()">
             <i class="fa-solid fa-arrow-left"></i> Back
@@ -1053,7 +1062,7 @@
       </div>
     </section>
 
-    <!-- 4. STUDIOS INTELLIGENCE TAB (WITH COMPANY ACQUISITION / SELL STUDIO) -->
+    <!-- 4. STUDIOS INTELLIGENCE TAB -->
     <section id="tab-studios" class="tab-view">
       <div class="card">
         <div class="card-title">
@@ -1158,7 +1167,7 @@
       <div style="text-align:center; margin-bottom:14px;">
         <i class="fa-solid fa-clapperboard" style="font-size:2rem; color:var(--gold-bright); margin-bottom:6px;"></i>
         <h2 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.2rem;">Establish Your Movie Studio</h2>
-        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Name your studio, enter the founder's name, and choose your starting funds.</p>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Name your studio and enter the founder's name.</p>
       </div>
 
       <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">Studio Name:</label>
@@ -1167,13 +1176,20 @@
       <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">Studio Head / Producer Name:</label>
       <input type="text" id="onboard-head-name" class="input-field" placeholder="Enter Studio Head Name" value="Studio Founder">
 
-      <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:6px; display:block;">Starting Capital:</label>
-      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;" id="onboard-capital-options">
-        <button class="curved-choice-btn" data-amount="100000000">₹10 Crores</button>
-        <button class="curved-choice-btn active" data-amount="500000000">₹50 Crores</button>
-        <button class="curved-choice-btn" data-amount="1000000000">₹100 Crores</button>
-        <button class="curved-choice-btn" data-amount="5000000000">₹500 Crores</button>
-        <button class="curved-choice-btn" data-amount="10000000000">₹1,000 Crores</button>
+      <div id="onboard-capital-presets-section">
+        <label style="font-size:0.78rem; font-weight:700; color:var(--text-main); margin-bottom:6px; display:block;">Starting Capital:</label>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;" id="onboard-capital-options">
+          <button class="curved-choice-btn" data-amount="100000000">₹10 Crores</button>
+          <button class="curved-choice-btn active" data-amount="500000000">₹50 Crores</button>
+          <button class="curved-choice-btn" data-amount="1000000000">₹100 Crores</button>
+          <button class="curved-choice-btn" data-amount="5000000000">₹500 Crores</button>
+          <button class="curved-choice-btn" data-amount="10000000000">₹1,000 Crores</button>
+        </div>
+      </div>
+
+      <div id="onboard-carryover-banner" style="display:none; background:rgba(34, 197, 94, 0.12); border:1px solid var(--success); border-radius:8px; padding:10px; margin-bottom:16px; text-align:center;">
+        <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase;">Buyout Proceeds Carried Forward</div>
+        <div style="font-size:1.15rem; font-weight:900; color:var(--success); margin-top:2px;" id="onboard-carryover-amount">₹0</div>
       </div>
 
       <button class="btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="confirmStudioOnboarding()">
@@ -1279,16 +1295,17 @@
   <!-- END OF PART 1 — APPEND PART 2 IMMEDIATELY BELOW THIS LINE -->
 <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.12(d) — COMPLETE TYCOON ENGINE (PART 2)
+       BOLLYWOOD CINEMA v1.12(e) — COMPLETE TYCOON ENGINE (PART 2)
        ========================================================================= */
+
+    let CARRIED_OVER_CAPITAL = null;
 
     function dismissSplash() {
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v112d_init")) {
-          const modal = document.getElementById("modal-onboarding");
-          if (modal) modal.classList.add("active");
+        if (!localStorage.getItem("bollywood_tycoon_v112e_init")) {
+          openOnboardingModal(null);
         }
       }
     }
@@ -1400,6 +1417,7 @@
       { id: "loc_scotland", name: "Scottish Highlands", baseCost: 16000000, icon: "fa-cloud-rain", appeal: 12 }
     ];
 
+    /* YRF MUSIC LOGO LOCKED IN */
     const MUSIC_LABELS = [
       { id: "tseries", name: "T-Series", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-kB66e_3TTITEHRMQKX5qZqNCygVnO6xSOxlbn3a1GQ&s=10", baseAdvance: 150000000 },
       { id: "sonymusic", name: "Sony Music", logo: "https://images.seeklogo.com/logo-png/26/1/sony-music-logo-png_seeklogo-261658.png", baseAdvance: 120000000 },
@@ -1562,7 +1580,6 @@
     let ACTIVE_PUBLICITY_RUN_ID = null;
     let CURRENT_NEWS_PAGE = 0;
 
-    // Global Event & M&A States
     let ACTIVE_EVENT_TARGET_FILM = null;
     let CURRENT_RANDOM_EVENT = null;
     let ACTIVE_BUYOUT_OFFER = 0;
@@ -1656,6 +1673,7 @@
           document.querySelectorAll("#genre-pills .curved-choice-btn").forEach(x => x.classList.remove("active"));
           p.classList.add("active");
           CURRENT_DRAFT.genre = p.dataset.genre;
+          rememberFranchisePreferences();
           renderReleaseWeekTiles();
           updateCostHUD();
         });
@@ -1689,6 +1707,10 @@
       if (sec) {
         sec.style.display = CURRENT_DRAFT.songCount === 0 ? "none" : "block";
       }
+      const mRightsSec = document.getElementById("music-rights-section");
+      if (mRightsSec) {
+        mRightsSec.style.display = CURRENT_DRAFT.songCount === 0 ? "none" : "block";
+      }
     }
 
     function switchTab(tabId) {
@@ -1704,26 +1726,57 @@
       document.getElementById("btn-theme-toggle").innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
     }
 
+    /* ONBOARDING WITH OPTIONAL CARRYOVER CAPITAL */
+    function openOnboardingModal(carryoverAmount) {
+      CARRIED_OVER_CAPITAL = carryoverAmount;
+      const presetsSec = document.getElementById("onboard-capital-presets-section");
+      const carryoverBanner = document.getElementById("onboard-carryover-banner");
+      const carryoverVal = document.getElementById("onboard-carryover-amount");
+
+      if (carryoverAmount && carryoverAmount > 0) {
+        presetsSec.style.display = "none";
+        carryoverBanner.style.display = "block";
+        carryoverVal.innerText = formatINR(carryoverAmount);
+      } else {
+        presetsSec.style.display = "block";
+        carryoverBanner.style.display = "none";
+      }
+      document.getElementById("modal-onboarding").classList.add("active");
+    }
+
     function confirmStudioOnboarding() {
       const chosenName = document.getElementById("onboard-studio-name").value.trim() || "Novus Film Productions";
       const chosenHead = document.getElementById("onboard-head-name").value.trim() || "Studio Founder";
       GAME_STATE.studioName = chosenName;
       GAME_STATE.studioHead = chosenHead;
-      GAME_STATE.cash = SELECTED_ONBOARD_CAPITAL;
-      localStorage.setItem("bollywood_tycoon_v112d_init", "true");
+      GAME_STATE.cash = CARRIED_OVER_CAPITAL ? CARRIED_OVER_CAPITAL : SELECTED_ONBOARD_CAPITAL;
+      CARRIED_OVER_CAPITAL = null;
+
+      localStorage.setItem("bollywood_tycoon_v112e_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
       updateHeaderStats();
       renderStudiosIntel();
+      addTradeNews(`New banner "${chosenName}" founded by ${chosenHead} with ${formatINR(GAME_STATE.cash)} treasury!`);
       showToast(`Founded ${chosenName} led by ${chosenHead}!`, "success");
       triggerConfetti();
+    }
+
+    function addTradeNews(msg) {
+      if (!GAME_STATE.newsArchive) GAME_STATE.newsArchive = [];
+      GAME_STATE.newsArchive.unshift({
+        week: GAME_STATE.week,
+        text: msg
+      });
+      renderPaginatedNews();
     }
 
     function setScriptQuality(tier, el) {
       CURRENT_DRAFT.scriptQuality = tier;
       document.querySelectorAll("#script-quality-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
       if (el) el.classList.add("active");
+      rememberFranchisePreferences();
       updateCostHUD();
     }
 
@@ -1750,6 +1803,7 @@
       if (ottSec) {
         ottSec.style.display = format === "only_theatres" ? "none" : "block";
       }
+      rememberFranchisePreferences();
       renderBrandRights();
       updateCostHUD();
       updateMarketingMeters();
@@ -1778,11 +1832,8 @@
       updateCostHUD();
     }
 
-    /* FLOATING WIZARD NAVIGATION CONTROLS */
     function wizardPrevStep() {
-      if (CURRENT_WIZARD_STEP > 1) {
-        goToStep(CURRENT_WIZARD_STEP - 1);
-      }
+      if (CURRENT_WIZARD_STEP > 1) goToStep(CURRENT_WIZARD_STEP - 1);
     }
 
     function wizardNextStep() {
@@ -1798,18 +1849,12 @@
       const nextBtn = document.getElementById("btn-wizard-next");
       const lbl = document.getElementById("wizard-step-counter-label");
 
-      if (prevBtn) {
-        prevBtn.style.visibility = CURRENT_WIZARD_STEP === 1 ? "hidden" : "visible";
-      }
-      if (lbl) {
-        lbl.innerText = `Step ${CURRENT_WIZARD_STEP} of 8`;
-      }
+      if (prevBtn) prevBtn.style.visibility = CURRENT_WIZARD_STEP === 1 ? "hidden" : "visible";
+      if (lbl) lbl.innerText = `Step ${CURRENT_WIZARD_STEP} of 8`;
       if (nextBtn) {
-        if (CURRENT_WIZARD_STEP === 8) {
-          nextBtn.innerHTML = `<i class="fa-solid fa-rocket"></i> Launch Film`;
-        } else {
-          nextBtn.innerHTML = `Next <i class="fa-solid fa-arrow-right"></i>`;
-        }
+        nextBtn.innerHTML = CURRENT_WIZARD_STEP === 8
+          ? `<i class="fa-solid fa-rocket"></i> Launch Film`
+          : `Next <i class="fa-solid fa-arrow-right"></i>`;
       }
     }
 
@@ -1824,6 +1869,7 @@
       if (CURRENT_WIZARD_STEP === 4) renderLocationsTiles();
       if (CURRENT_WIZARD_STEP === 5) toggleSingersVisibility();
       if (CURRENT_WIZARD_STEP === 6) {
+        toggleSingersVisibility();
         renderBrandRights();
         updateCostHUD();
       }
@@ -1927,14 +1973,13 @@
       `).join('');
     }
 
-    /* COMPANY ACQUISITION & VALUATION NEGOTIATION SYSTEM */
+    /* COMPANY ACQUISITION & CARRYOVER TO NEW EMPIRE */
     function openSellCompanyModal() {
       const val = getStudioValuation();
       const buyer = COMPETITOR_STUDIOS[Math.floor(Math.random() * COMPETITOR_STUDIOS.length)];
       ACTIVE_BUYOUT_BUYER = buyer.name;
       NEGOTIATION_ATTEMPTS = 0;
 
-      // Initial buyer offer ranges between 85% and 115% of valuation
       const variance = 0.85 + (Math.random() * 0.30);
       ACTIVE_BUYOUT_OFFER = Math.round(val * variance);
 
@@ -1984,7 +2029,6 @@
           document.getElementById("sell-current-offer").innerText = formatINR(ACTIVE_BUYOUT_OFFER);
           statusEl.innerHTML = `<span style="color:var(--success);">${ACTIVE_BUYOUT_BUYER} ACCEPTED your counter-offer of ${formatINR(ACTIVE_BUYOUT_OFFER)}!</span>`;
         } else {
-          // Buyer counter-offers halfway up
           const counterOffer = Math.round((ACTIVE_BUYOUT_OFFER + Math.min(askedAmount, maxWillingToPay)) / 2);
           if (counterOffer > ACTIVE_BUYOUT_OFFER) {
             ACTIVE_BUYOUT_OFFER = counterOffer;
@@ -2000,22 +2044,23 @@
     function acceptCompanyBuyout() {
       const soldPrice = ACTIVE_BUYOUT_OFFER;
       const oldName = GAME_STATE.studioName;
+      const oldHead = GAME_STATE.studioHead;
       closeSellCompanyModal();
       triggerConfetti();
 
-      // Reset Game State & Start Fresh Empire
-      localStorage.removeItem("bollywood_tycoon_v112d");
-      localStorage.removeItem("bollywood_tycoon_v112d_init");
+      localStorage.removeItem("bollywood_tycoon_v112e");
+      localStorage.removeItem("bollywood_tycoon_v112e_init");
 
+      // Carry over the exact sold amount into the new company!
       GAME_STATE = {
         studioName: "Novus Film Productions",
-        studioHead: "Studio Founder",
-        cash: 500000000,
+        studioHead: oldHead,
+        cash: soldPrice,
         week: 1,
         reputation: 75,
         debt: 0,
         totalAwardsWon: 0,
-        newsArchive: [],
+        newsArchive: [{ week: 1, text: `BLOCKBUSTER DEAL: ${ACTIVE_BUYOUT_BUYER} acquired ${oldName} for ${formatINR(soldPrice)}!` }],
         activeProductions: [],
         theatreRuns: [],
         releasedMovies: [],
@@ -2024,11 +2069,13 @@
 
       saveState();
       renderAll();
-      showToast(`Sold "${oldName}" for ${formatINR(soldPrice)}! Starting fresh empire...`, "success");
+      showToast(`Sold "${oldName}" for ${formatINR(soldPrice)}! Launch your next banner...`, "success");
       
       setTimeout(() => {
-        document.getElementById("modal-onboarding").classList.add("active");
-      }, 1200);
+        document.getElementById("onboard-studio-name").value = "";
+        document.getElementById("onboard-head-name").value = oldHead;
+        openOnboardingModal(soldPrice);
+      }, 1000);
     }
 
     function handlePosterUpload(e) {
@@ -2316,19 +2363,21 @@
       const fran = CURRENT_DRAFT.franchiseId ? GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId) : null;
       const hasPrevSuccess = fran && fran.films > 0;
 
-      document.getElementById("music-rights-grid").innerHTML = MUSIC_LABELS.map(lbl => {
-        const isRivalOutbid = hasPrevSuccess && fran.lastMusicRights && fran.lastMusicRights !== lbl.id;
-        const isRenewalSurge = hasPrevSuccess && fran.lastMusicRights === lbl.id;
-        return `
-          <div class="brand-card ${CURRENT_DRAFT.musicRightsId === lbl.id ? 'selected' : ''}" onclick="selectMusicRights('${lbl.id}')">
-            <img src="${lbl.logo}" class="brand-logo-img" alt="${lbl.name}">
-            <div class="brand-name">${lbl.name}</div>
-            <div class="brand-advance">+${formatINR(calculateMusicAdvance(lbl))}</div>
-            ${isRivalOutbid ? `<div class="rival-bid-tag">+28% RIVAL BID</div>` : ''}
-            ${isRenewalSurge ? `<div class="rival-bid-tag" style="background:rgba(212,175,55,0.2); color:var(--gold-bright);">+15% RENEWAL</div>` : ''}
-          </div>
-        `;
-      }).join('');
+      if (CURRENT_DRAFT.songCount > 0) {
+        document.getElementById("music-rights-grid").innerHTML = MUSIC_LABELS.map(lbl => {
+          const isRivalOutbid = hasPrevSuccess && fran.lastMusicRights && fran.lastMusicRights !== lbl.id;
+          const isRenewalSurge = hasPrevSuccess && fran.lastMusicRights === lbl.id;
+          return `
+            <div class="brand-card ${CURRENT_DRAFT.musicRightsId === lbl.id ? 'selected' : ''}" onclick="selectMusicRights('${lbl.id}')">
+              <img src="${lbl.logo}" class="brand-logo-img" alt="${lbl.name}">
+              <div class="brand-name">${lbl.name}</div>
+              <div class="brand-advance">+${formatINR(calculateMusicAdvance(lbl))}</div>
+              ${isRivalOutbid ? `<div class="rival-bid-tag">+28% RIVAL BID</div>` : ''}
+              ${isRenewalSurge ? `<div class="rival-bid-tag" style="background:rgba(212,175,55,0.2); color:var(--gold-bright);">+15% RENEWAL</div>` : ''}
+            </div>
+          `;
+        }).join('');
+      }
 
       if (CURRENT_DRAFT.releaseFormat !== "only_theatres") {
         document.getElementById("ott-rights-grid").innerHTML = OTT_PLATFORMS.map(p => {
@@ -2374,7 +2423,7 @@
 
     function calculateMusicAdvance(lbl) {
       const albumSize = CURRENT_DRAFT.songCount;
-      if (albumSize === 0) return 10000000;
+      if (albumSize === 0) return 0; // Songless movies earn ₹0 Music Rights
       const composerBonus = CURRENT_DRAFT.composerId ? 1.4 : 1.0;
       const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 1.4 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 1.2 : 1.0);
       const franMult = getFranchiseFameMultiplier();
@@ -2649,8 +2698,10 @@
 
     function calculateGuaranteedInflow() {
       let inflow = 0;
-      const mLabel = MUSIC_LABELS.find(x => x.id === CURRENT_DRAFT.musicRightsId);
-      if (mLabel) inflow += calculateMusicAdvance(mLabel);
+      if (CURRENT_DRAFT.songCount > 0) {
+        const mLabel = MUSIC_LABELS.find(x => x.id === CURRENT_DRAFT.musicRightsId);
+        if (mLabel) inflow += calculateMusicAdvance(mLabel);
+      }
       
       if (CURRENT_DRAFT.releaseFormat !== "only_theatres") {
         const ott = OTT_PLATFORMS.find(x => x.id === CURRENT_DRAFT.ottRightsId);
@@ -2742,6 +2793,7 @@
 
       GAME_STATE.activeProductions.push(newFilm);
       rememberFranchisePreferences(true);
+      addTradeNews(`[${GAME_STATE.studioName}] Officially greenlit "${newFilm.title}" (${newFilm.genre}) for Week ${releaseWeek} on a budget of ${formatINR(totalCost)}!`);
       saveState();
 
       const screenMsg = startingScreens > 0 ? `Screens: ${startingScreens.toLocaleString()}` : `Direct OTT & Satellite Premiere`;
@@ -2889,11 +2941,7 @@
           film.releaseWeek += choice.delayWeeks;
         }
 
-        if (!GAME_STATE.newsArchive) GAME_STATE.newsArchive = [];
-        GAME_STATE.newsArchive.unshift({
-          week: GAME_STATE.week,
-          text: `[Breaking on ${film.title}] ${ev.title} — ${choice.label}`
-        });
+        addTradeNews(`[${GAME_STATE.studioName}] ${ev.title} on "${film.title}" — ${choice.label}`);
       }
 
       CURRENT_RANDOM_EVENT = null;
@@ -2949,6 +2997,7 @@
         };
         GAME_STATE.cash += digitalRoyalties;
         GAME_STATE.theatreRuns.unshift(streamEntry);
+        addTradeNews(`[${GAME_STATE.studioName}] "${film.title}" premiered globally on digital streaming!`);
         showToast(`"${film.title}" premiered worldwide on digital stream!`, "success");
         triggerConfetti();
         return;
@@ -2981,10 +3030,12 @@
 
       GAME_STATE.cash += theatreEntry.producerEarnings;
       GAME_STATE.theatreRuns.unshift(theatreEntry);
+      addTradeNews(`[${GAME_STATE.studioName}] "${film.title}" released across ${theatreEntry.activeScreens.toLocaleString()} screens, opening to ${formatINR(opening)} in Week 1!`);
       showToast(`"${film.title}" opened on ${theatreEntry.activeScreens.toLocaleString()} screens! W1: ${formatINR(opening)}`, "success");
       triggerConfetti();
     }
 
+    /* ALL 6 OFFICIAL JUBILEE MILESTONES (15w, 25w, 50w, 60w, 75w, 150w) */
     function processTheatreCollections() {
       GAME_STATE.theatreRuns.forEach(run => {
         if (!run.active) return;
@@ -3038,17 +3089,35 @@
         run.producerEarnings += share;
         GAME_STATE.cash += share;
 
-        if (run.currentWeekOfRun === 25 && !run.jubilee) {
+        // Check Official Jubilee Tiers
+        if (run.currentWeekOfRun === 15) {
+          run.jubilee = "Crystal Jubilee (15 Weeks)";
+          GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 4);
+          addTradeNews(`[${GAME_STATE.studioName}] "${run.title}" celebrates Crystal Jubilee (15 Weeks) in theatres!`);
+          showToast(`CRYSTAL JUBILEE! "${run.title}" completes 15 weeks!`, "success");
+        } else if (run.currentWeekOfRun === 25) {
           run.jubilee = "Silver Jubilee (25 Weeks)";
           GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 8);
+          addTradeNews(`[${GAME_STATE.studioName}] "${run.title}" achieves Silver Jubilee (25 Weeks) milestone!`);
           showToast(`SILVER JUBILEE! "${run.title}" completes 25 weeks!`, "success");
-        } else if (run.currentWeekOfRun === 50 && !run.jubilee?.includes("Golden")) {
-          run.jubilee = "Golden Jubilee (50 Weeks - DDLJ Status)";
+        } else if (run.currentWeekOfRun === 50) {
+          run.jubilee = "Golden Jubilee (50 Weeks)";
+          GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 15);
+          addTradeNews(`[${GAME_STATE.studioName}] HISTORIC! "${run.title}" completes a Golden Jubilee (50 Weeks) run!`);
+          showToast(`GOLDEN JUBILEE! "${run.title}" completes 50 weeks!`, "success");
+        } else if (run.currentWeekOfRun === 60) {
+          run.jubilee = "Diamond Jubilee (60 Weeks)";
+          addTradeNews(`[${GAME_STATE.studioName}] "${run.title}" crosses 60 weeks to achieve Diamond Jubilee!`);
+          showToast(`DIAMOND JUBILEE! "${run.title}" completes 60 weeks!`, "success");
+        } else if (run.currentWeekOfRun === 75) {
+          run.jubilee = "Platinum Jubilee (75 Weeks)";
+          addTradeNews(`[${GAME_STATE.studioName}] "${run.title}" hits 75 weeks in cinemas — Platinum Jubilee!`);
+          showToast(`PLATINUM JUBILEE! "${run.title}" completes 75 weeks!`, "success");
+        } else if (run.currentWeekOfRun === 150) {
+          run.jubilee = "Double Platinum Jubilee (150 Weeks)";
           GAME_STATE.reputation = 100;
-          showToast(`HISTORIC GOLDEN JUBILEE! "${run.title}" hits 50 weeks!`, "success");
-        } else if (run.currentWeekOfRun === 75 && !run.jubilee?.includes("Platinum")) {
-          run.jubilee = "Platinum Jubilee (75 Weeks - Unprecedented)";
-          showToast(`PLATINUM JUBILEE! "${run.title}" reaches 75 weeks in theatres!`, "success");
+          addTradeNews(`[${GAME_STATE.studioName}] UNPRECEDENTED! "${run.title}" completes 150 weeks — Double Platinum Jubilee!`);
+          showToast(`DOUBLE PLATINUM JUBILEE! "${run.title}" hits 150 weeks!`, "success");
         }
 
         if (run.activeHype <= 4 || run.activeScreens < 50) {
@@ -3100,6 +3169,7 @@
       run.activeScreens = Math.min(7500, (run.activeScreens || 2000) + camp.screenBoost);
       run.boostTurnsRemaining = 3;
 
+      addTradeNews(`[${GAME_STATE.studioName}] Launched "${camp.name}" for "${run.title}", expanding screens to ${run.activeScreens.toLocaleString()}!`);
       saveState();
       closePostPublicityModal();
       renderAll();
@@ -3117,6 +3187,7 @@
           winner.awardsWon.push(category);
           GAME_STATE.totalAwardsWon++;
           GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 5);
+          addTradeNews(`[${GAME_STATE.studioName}] AWARDS NIGHT: "${winner.title}" won "${category}"!`);
           showToast(`AWARD WON! "${winner.title}" takes "${category}"!`, "success");
           triggerConfetti();
         }
@@ -3138,6 +3209,7 @@
           fran.rating = Math.round((fran.rating + run.quality) / 2);
         }
       }
+      addTradeNews(`[${GAME_STATE.studioName}] "${run.title}" concluded its run with ${formatINR(run.totalGross)} gross — Declared ${verdictObj.label}!`);
       showToast(`"${run.title}" Verdict: ${verdictObj.label}! Lifetime: ${formatINR(run.totalGross)}`, "info");
       renderTheatricalRuns();
     }
@@ -3177,9 +3249,10 @@
                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                       <span style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright);">${run.title}</span>
                       ${showVerdict ? `<span class="verdict-pill ${currentVerdict.css}">${currentVerdict.label}</span>` : `<span class="verdict-pill" style="background:var(--bg-surface-elevated); color:var(--text-muted);">Verdict after Wk 4</span>`}
+                      ${run.jubilee ? `<span class="jubilee-badge"><i class="fa-solid fa-crown"></i> ${run.jubilee}</span>` : ''}
                     </div>
                     <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">
-                      ${run.genre} • ${run.releaseFormat === 'ott_satellite' ? 'Streaming Series' : `Wk ${run.currentWeekOfRun} in Cinemas`} ${run.jubilee ? `• <strong style="color:var(--gold-bright);">${run.jubilee}</strong>` : ''}
+                      ${run.genre} • ${run.releaseFormat === 'ott_satellite' ? 'Streaming Series' : `Wk ${run.currentWeekOfRun} in Cinemas`}
                     </div>
                     <div style="font-size:0.72rem; color:var(--warning); font-weight:700; margin-top:2px;">
                       ${run.releaseFormat === 'ott_satellite' ? 'Direct Digital Streaming' : `Active Screens: ${(run.activeScreens || 0).toLocaleString()} | Hype: ${run.activeHype || 30}/100 ${run.boostTurnsRemaining > 0 ? `<span style="color:var(--success);">(Surge Active: ${run.boostTurnsRemaining}w)</span>` : ''}`}
@@ -3217,6 +3290,7 @@
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                   <strong style="color:var(--gold-bright); font-size:0.82rem;">${m.title}</strong>
                   <span class="verdict-pill ${v.css}">${v.label}</span>
+                  ${m.jubilee ? `<span class="jubilee-badge">${m.jubilee}</span>` : ''}
                 </div>
                 <div style="font-size:0.75rem;">
                   Gross: <strong style="color:var(--success);">${formatINR(m.totalGross)}</strong>
@@ -3243,6 +3317,7 @@
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 <span style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright);">${movie.title}</span>
                 <span class="verdict-pill ${v.css}">${v.label}</span>
+                ${movie.jubilee ? `<span class="jubilee-badge"><i class="fa-solid fa-crown"></i> ${movie.jubilee}</span>` : ''}
               </div>
               <div style="font-size:0.7rem; color:var(--text-muted); font-style:italic; margin-top:1px;">"${v.desc}"</div>
               <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">
@@ -3282,9 +3357,10 @@
       modalWin.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
           <div>
-            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:4px;">
               <span class="step-badge">${film.genre}</span>
               ${showVerdict ? `<span class="verdict-pill ${v.css}">${v.label}</span>` : `<span class="verdict-pill" style="background:var(--bg-surface-elevated); color:var(--text-muted);">Verdict Pending (Wk ${film.currentWeekOfRun}/4)</span>`}
+              ${film.jubilee ? `<span class="jubilee-badge"><i class="fa-solid fa-crown"></i> ${film.jubilee}</span>` : ''}
             </div>
             <h2 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.15rem;">${film.title}</h2>
             ${showVerdict ? `<div style="font-size:0.72rem; color:var(--text-muted);">${v.desc}</div>` : ''}
@@ -3368,6 +3444,7 @@
       };
 
       GAME_STATE.activeProductions.push(reReleaseRun);
+      addTradeNews(`[${GAME_STATE.studioName}] Announced 4K IMAX Re-Release of "${film.title}" scheduled for Week ${releaseWeek}!`);
       saveState();
       closeReReleaseModal();
       showToast(`"${reReleaseRun.title}" slotted for Week ${releaseWeek}!`, "success");
@@ -3425,7 +3502,7 @@
       renderSingerTiles();
       renderBrandRights();
       updateCostHUD();
-      showToast(`Auto-loaded full template from ${f.name}!`, "info");
+      showToast(`Auto-loaded template from ${f.name}!`, "info");
     }
 
     function rememberFranchisePreferences(recordRightsPartners) {
@@ -3462,7 +3539,9 @@
         if (GAME_STATE.franchises.length === 0) {
           openCreateFranchiseModal();
         } else {
-          CURRENT_DRAFT.franchiseId = GAME_STATE.franchises[0].id;
+          if (!CURRENT_DRAFT.franchiseId) {
+            CURRENT_DRAFT.franchiseId = GAME_STATE.franchises[0].id;
+          }
           renderPipelineFranchiseTiles();
           autoLoadFranchisePackage(CURRENT_DRAFT.franchiseId);
         }
@@ -3568,13 +3647,24 @@
       }
     }
     
+    /* FIXED: IMMEDIATELY REVEALS FRANCHISE CONTAINER & SELECTS NEW TILE UPON CREATION */
     function confirmCreateFranchise() {
       const name = document.getElementById("new-franchise-name").value.trim();
       const desc = document.getElementById("new-franchise-desc").value.trim() || "High-stakes cinematic universe";
       if (!name) { showToast("Enter a franchise name!", "error"); return; }
+
       const newFran = { id: "fran_" + Date.now(), name, desc, films: 0, gross: 0, rating: 80, savedPackage: null };
       GAME_STATE.franchises.push(newFran);
       CURRENT_DRAFT.franchiseId = newFran.id;
+
+      // Ensure "Part of Franchise" button is active and picker container is visible immediately
+      document.querySelectorAll("#franchise-model-pills .curved-choice-btn").forEach(b => {
+        b.classList.toggle("active", b.dataset.model === "franchise");
+      });
+      const container = document.getElementById("franchise-picker-container");
+      if (container) container.style.display = "block";
+
+      rememberFranchisePreferences();
       saveState();
       closeCreateFranchiseModal(false);
       renderPipelineFranchiseTiles();
@@ -3587,7 +3677,8 @@
       renderBrandRights();
       updateCostHUD();
       updateMarketingMeters();
-      showToast(`Franchise "${name}" registered!`, "success");
+      addTradeNews(`[${GAME_STATE.studioName}] Registered a brand-new cinematic universe: "${name}"!`);
+      showToast(`Franchise "${name}" created & selected!`, "success");
     }
 
     function renderCalendar() {
@@ -3658,14 +3749,7 @@
         "Bollywood trade analysts predict a golden festival quarter ahead."
       ];
       const chosen = sampleEvents[Math.floor(Math.random() * sampleEvents.length)];
-      if (!GAME_STATE.newsArchive) GAME_STATE.newsArchive = [];
-      
-      GAME_STATE.newsArchive.unshift({
-        week: GAME_STATE.week,
-        text: chosen
-      });
-
-      renderPaginatedNews();
+      addTradeNews(chosen);
     }
 
     function renderPaginatedNews() {
@@ -3762,12 +3846,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v112d", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v112e", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v112d");
+        const raw = localStorage.getItem("bollywood_tycoon_v112e");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
