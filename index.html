@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.12(g) — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.12(h) — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -147,6 +147,7 @@
     }
     .stat-badge i { color: var(--gold-bright); font-size: 0.78rem; }
     .badge-cash .badge-val { color: var(--success); font-weight: 800; }
+    .badge-cash .badge-val.negative { color: var(--danger); }
 
     .header-actions { display: flex; align-items: center; gap: 6px; }
     .btn-advance-desktop {
@@ -185,6 +186,7 @@
     .mobile-footer-cash { display: flex; flex-direction: column; min-width: 72px; }
     .mobile-footer-cash-lbl { font-size: 0.58rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
     .mobile-footer-cash-val { font-size: 0.9rem; font-weight: 800; color: var(--success); white-space: nowrap; }
+    .mobile-footer-cash-val.negative { color: var(--danger); }
 
     .btn-advance-mobile {
       background: var(--gold-gradient);
@@ -922,12 +924,12 @@
           <div class="tiles-grid" id="directors-selection-grid"></div>
         </div>
 
-        <!-- STEP 4: SHOOTING LOCATIONS -->
+        <!-- STEP 4: SHOOTING LOCATIONS (SMART AUTO-SCOPE: 1ST WHOLE/HALF, SUBSEQUENT SHOTS) -->
         <div class="pipeline-step-pane" id="wizard-step-4">
           <div class="step-header-box">
             <span class="step-badge">Step 4 of 8</span>
             <h3 class="step-heading">Shooting Locations & Logistics</h3>
-            <p class="step-subtext">Select multiple destinations. Toggle scope (Whole Movie / Half Movie / Shots / Songs). Prices scale with cast size!</p>
+            <p class="step-subtext">Select at least 1 location. 1st click sets Whole Movie (subsequent clicks default to Shots; if 1st is Half, 2nd sets Half and 3rd+ sets Shots).</p>
             <div style="font-size:0.75rem; color:var(--gold-bright); font-weight:700;" id="loc-cast-multiplier-label">Cast Travel Multiplier: 1.0x</div>
           </div>
           <div class="tiles-grid" id="locations-selection-grid" style="grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));"></div>
@@ -1130,14 +1132,14 @@
       </div>
     </section>
 
-    <!-- 5. FRANCHISES TAB -->
+    <!-- 5. FRANCHISES TAB (WITH SELL FRANCHISE ACTION) -->
     <section id="tab-franchises" class="tab-view">
       <div class="card">
         <div class="card-title">
-          <span><i class="fa-solid fa-sitemap"></i> Studio Universes</span>
+          <span><i class="fa-solid fa-sitemap"></i> Studio Universes (Sell IP Anytime for Liquidity)</span>
           <button class="btn-gold" style="font-size:0.72rem; padding:3px 8px;" onclick="openCreateFranchiseModal()"><i class="fa-solid fa-plus"></i> New Franchise</button>
         </div>
-        <div id="studio-franchises-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:10px; margin-bottom:16px;"></div>
+        <div id="studio-franchises-list" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:10px; margin-bottom:16px;"></div>
 
         <div class="card-title" style="margin-top:14px;"><i class="fa-solid fa-ranking-star"></i> Pan-India Top 100 Franchise Leaderboard</div>
         <div style="overflow-x:auto;">
@@ -1170,7 +1172,7 @@
       </div>
     </section>
 
-    <!-- 7. STARS & TALENT POOL TAB (WITH LAUNCH NEW TALENT BUTTON) -->
+    <!-- 7. STARS & TALENT POOL TAB -->
     <section id="tab-stars" class="tab-view">
       <div class="card">
         <div class="card-title">
@@ -1216,7 +1218,7 @@
         </div>
 
         <div style="margin-top:12px;">
-          <label style="font-size:0.78rem; font-weight:700; color:var(--gold-bright);">Take Studio Loan (1.5% weekly interest):</label>
+          <label style="font-size:0.78rem; font-weight:700; color:var(--gold-bright);">Take Studio Loan (1.5% weekly interest — cash can drop into negative if interest exceeds balance):</label>
           <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;">
             <button class="btn-gold" onclick="takeStudioLoan(100000000)"><i class="fa-solid fa-hand-holding-dollar"></i> Borrow ₹10 Cr</button>
             <button class="btn-gold" onclick="takeStudioLoan(500000000)"><i class="fa-solid fa-hand-holding-dollar"></i> Borrow ₹50 Cr</button>
@@ -1235,7 +1237,7 @@
 
   </main>
 
-  <!-- MODAL: LAUNCH NEW TALENT (ACTOR, DIRECTOR, COMPOSER, SINGER) -->
+  <!-- MODAL: LAUNCH NEW TALENT -->
   <div class="modal-overlay" id="modal-launch-talent">
     <div class="modal-window">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -1306,7 +1308,7 @@
       </div>
 
       <div id="onboard-carryover-banner" style="display:none; background:rgba(34, 197, 94, 0.12); border:1px solid var(--success); border-radius:8px; padding:10px; margin-bottom:16px; text-align:center;">
-        <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase;">Buyout Proceeds Carried Forward</div>
+        <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase;">Net Buyout Proceeds (After Debt Settlement)</div>
         <div style="font-size:1.15rem; font-weight:900; color:var(--success); margin-top:2px;" id="onboard-carryover-amount">₹0</div>
       </div>
 
@@ -1316,7 +1318,7 @@
     </div>
   </div>
 
-  <!-- MODAL: SELL COMPANY & BUYOUT NEGOTIATION -->
+  <!-- MODAL: SELL COMPANY & BUYOUT NEGOTIATION (SHOWS DEBT DEDUCTION) -->
   <div class="modal-overlay" id="modal-sell-company">
     <div class="modal-window">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -1325,9 +1327,13 @@
       </div>
 
       <div style="background:var(--bg-input); border:1px solid var(--border-color-subtle); border-radius:8px; padding:10px; margin-bottom:12px; font-size:0.8rem;">
-        <div>Current Studio Valuation: <strong style="color:var(--gold-bright);" id="sell-studio-valuation">₹0</strong></div>
-        <div style="margin-top:4px;">Prospective Buyer: <strong style="color:var(--text-main);" id="sell-buyer-name">Jio Studios</strong></div>
-        <div style="margin-top:4px; font-size:0.95rem;">Active Buyout Offer: <strong style="color:var(--success);" id="sell-current-offer">₹0</strong></div>
+        <div>Gross Studio Valuation: <strong style="color:var(--gold-bright);" id="sell-studio-valuation">₹0</strong></div>
+        <div style="margin-top:3px;">Prospective Buyer: <strong style="color:var(--text-main);" id="sell-buyer-name">Jio Studios</strong></div>
+        <div style="margin-top:3px;">Gross Buyout Offer: <strong style="color:var(--success);" id="sell-current-offer">₹0</strong></div>
+        <div style="margin-top:3px; color:var(--danger);">Less Outstanding Debt: <strong id="sell-debt-deduction">-₹0</strong></div>
+        <div style="margin-top:6px; padding-top:6px; border-top:1px dashed var(--border-color-subtle); font-size:0.9rem;">
+          Net Cash in Hand (New Studio): <strong style="color:var(--gold-bright);" id="sell-net-handover">₹0</strong>
+        </div>
       </div>
 
       <div id="sell-negotiation-status" style="font-size:0.78rem; color:var(--warning); margin-bottom:10px; font-weight:600;"></div>
@@ -1353,6 +1359,44 @@
     </div>
   </div>
 
+  <!-- MODAL: SELL FRANCHISE IP RIGHTS -->
+  <div class="modal-overlay" id="modal-sell-franchise">
+    <div class="modal-window">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem;"><i class="fa-solid fa-sitemap"></i> Sell Franchise IP Rights</h3>
+        <button class="btn-outline" style="padding:2px 8px;" onclick="closeSellFranchiseModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div style="background:var(--bg-input); border:1px solid var(--border-color-subtle); border-radius:8px; padding:10px; margin-bottom:12px; font-size:0.8rem;">
+        <div>Franchise IP: <strong style="color:var(--gold-bright);" id="sell-fran-name">Universe</strong></div>
+        <div style="margin-top:3px;">Estimated IP Valuation: <strong style="color:var(--text-main);" id="sell-fran-valuation">₹0</strong></div>
+        <div style="margin-top:3px;">Interested Studio Buyer: <strong style="color:var(--text-main);" id="sell-fran-buyer">YRF</strong></div>
+        <div style="margin-top:5px; font-size:0.95rem;">Active IP Offer: <strong style="color:var(--success);" id="sell-fran-offer">₹0</strong></div>
+      </div>
+
+      <div id="sell-fran-status" style="font-size:0.78rem; color:var(--warning); margin-bottom:10px; font-weight:600;"></div>
+
+      <label style="font-size:0.75rem; font-weight:700; display:block; margin-bottom:6px;">Negotiate Franchise Price:</label>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+        <button class="curved-choice-btn" onclick="negotiateFranchisePercentage(5)">+5% Higher</button>
+        <button class="curved-choice-btn" onclick="negotiateFranchisePercentage(10)">+10% Higher</button>
+        <button class="curved-choice-btn" onclick="negotiateFranchisePercentage(20)">+20% Higher</button>
+      </div>
+
+      <div style="display:flex; gap:6px; margin-bottom:14px;">
+        <input type="number" id="sell-fran-custom-cr" class="input-field" placeholder="Custom amount in Crores (e.g. 80)" style="margin-bottom:0; flex:1;">
+        <button class="btn-outline" onclick="negotiateFranchiseCustom()">Pitch Offer</button>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; gap:8px;">
+        <button class="btn-danger" onclick="closeSellFranchiseModal()">Keep Franchise</button>
+        <button class="btn-gold" onclick="acceptFranchiseSale()">
+          <i class="fa-solid fa-coins"></i> Sell Franchise & Collect Cash
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: RANDOM PRODUCTION / INDUSTRY EVENT -->
   <div class="modal-overlay" id="modal-random-event">
     <div class="modal-window">
@@ -1365,7 +1409,7 @@
     </div>
   </div>
 
-  <!-- MODAL: FRANCHISE -->
+  <!-- MODAL: CREATE FRANCHISE -->
   <div class="modal-overlay" id="modal-franchise">
     <div class="modal-window">
       <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem; margin-bottom:10px;">Create New Studio Universe</h3>
@@ -1413,7 +1457,7 @@
   <!-- END OF PART 1 — APPEND PART 2 IMMEDIATELY BELOW THIS LINE -->
 <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.12(g) — COMPLETE TYCOON ENGINE (PART 2)
+       BOLLYWOOD CINEMA v1.12(h) — COMPLETE TYCOON ENGINE (PART 2)
        ========================================================================= */
 
     let CARRIED_OVER_CAPITAL = null;
@@ -1424,7 +1468,7 @@
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v112g_init")) {
+        if (!localStorage.getItem("bollywood_tycoon_v112h_init")) {
           openOnboardingModal(null);
         }
       }
@@ -1711,6 +1755,13 @@
     let ACTIVE_BUYOUT_BUYER = "";
     let NEGOTIATION_ATTEMPTS = 0;
 
+    // Franchise Sale State
+    let ACTIVE_SELL_FRAN_ID = null;
+    let ACTIVE_FRAN_OFFER = 0;
+    let ACTIVE_FRAN_BUYER = "";
+    let FRAN_NEGOTIATION_ATTEMPTS = 0;
+
+    /* NO DEFAULT SHOOTING LOCATIONS SELECTED */
     let CURRENT_DRAFT = {
       title: "",
       genre: "Action",
@@ -1719,7 +1770,7 @@
       scriptQuality: "tight",
       setScale: "minimal",
       vfxQuality: "none",
-      locations: [{ id: "loc_indoor_set", scope: "whole" }],
+      locations: [],
       lyricsTier: "standard",
       posterUrl: POSTER_PRESETS[0],
       customPosterUploaded: false,
@@ -1748,7 +1799,6 @@
       }
     });
 
-    /* MERGE SAVED CUSTOM TALENT FROM INTERNAL STORAGE */
     function mergeCustomTalentIntoRosters() {
       if (!GAME_STATE.customTalent) {
         GAME_STATE.customTalent = { actors: [], directors: [], composers: [], singers: [] };
@@ -1847,9 +1897,6 @@
       document.addEventListener("click", playHaptic);
     }
 
-    /* =========================================================================
-       LAUNCH NEW TALENT SYSTEM (SAVES IN INTERNAL STORAGE & GROWS ON HITS)
-       ========================================================================= */
     function openLaunchTalentModal(defaultRole) {
       LAUNCH_TALENT_ROLE = defaultRole || "actor";
       LAUNCH_TALENT_PHOTO_DATA = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
@@ -1918,7 +1965,6 @@
         };
         GAME_STATE.customTalent.actors.unshift(newActor);
         ALL_ACTORS.unshift(newActor);
-        // Auto-cast into current draft if in movie wizard
         CURRENT_DRAFT.cast.push({ id: newActor.id, role: CURRENT_DRAFT.cast.length === 0 ? "Lead" : "Supporting" });
       } else if (LAUNCH_TALENT_ROLE === "director") {
         const newDir = {
@@ -1969,7 +2015,6 @@
       triggerConfetti();
     }
 
-    /* GROW CUSTOM TALENT STATS & MARKET FEES WHEN THEIR MOVIES SUCCEED */
     function evolveTalentAfterFilmVerdict(film, verdictLabel) {
       const hitTiers = ["Semi Hit", "Hit", "Super Hit", "Super Duper Hit", "Blockbuster", "All-Time Blockbuster"];
       const isHit = hitTiers.includes(verdictLabel);
@@ -1979,11 +2024,10 @@
 
       const statGain = isBlockbuster ? 18 : 10;
       const feeGrowthMult = isBlockbuster ? 2.4 : 1.65;
-      const flatBonus = isBlockbuster ? 15000000 : 5000000; // ₹1.5 Cr or ₹50L base market jump
+      const flatBonus = isBlockbuster ? 15000000 : 5000000;
 
       let evolvedNames = [];
 
-      // 1. Evolve Cast
       (film.cast || []).forEach(c => {
         const actor = ALL_ACTORS.find(a => a.id === c.id);
         if (actor && actor.isCustom) {
@@ -1997,7 +2041,6 @@
         }
       });
 
-      // 2. Evolve Director
       const dir = REAL_DIRECTORS.find(d => d.id === film.directorId);
       if (dir && dir.isCustom) {
         dir.skill = Math.min(99, (dir.skill || 0) + statGain);
@@ -2006,7 +2049,6 @@
         evolvedNames.push(dir.name);
       }
 
-      // 3. Evolve Composer
       const comp = REAL_COMPOSERS.find(c => c.id === film.composerId);
       if (comp && comp.isCustom) {
         comp.skill = Math.min(99, (comp.skill || 0) + statGain);
@@ -2014,7 +2056,6 @@
         evolvedNames.push(comp.name);
       }
 
-      // 4. Evolve Singers
       (film.singers || []).forEach(sId => {
         const sng = REAL_SINGERS.find(s => s.id === sId);
         if (sng && sng.isCustom) {
@@ -2060,7 +2101,7 @@
       const carryoverBanner = document.getElementById("onboard-carryover-banner");
       const carryoverVal = document.getElementById("onboard-carryover-amount");
 
-      if (carryoverAmount && carryoverAmount > 0) {
+      if (carryoverAmount !== null) {
         presetsSec.style.display = "none";
         carryoverBanner.style.display = "block";
         carryoverVal.innerText = formatINR(carryoverAmount);
@@ -2076,10 +2117,10 @@
       const chosenHead = document.getElementById("onboard-head-name").value.trim() || "Studio Founder";
       GAME_STATE.studioName = chosenName;
       GAME_STATE.studioHead = chosenHead;
-      GAME_STATE.cash = CARRIED_OVER_CAPITAL ? CARRIED_OVER_CAPITAL : SELECTED_ONBOARD_CAPITAL;
+      GAME_STATE.cash = CARRIED_OVER_CAPITAL !== null ? CARRIED_OVER_CAPITAL : SELECTED_ONBOARD_CAPITAL;
       CARRIED_OVER_CAPITAL = null;
 
-      localStorage.setItem("bollywood_tycoon_v112g_init", "true");
+      localStorage.setItem("bollywood_tycoon_v112h_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
@@ -2242,14 +2283,23 @@
     function getStudioValuation() {
       const runningGross = GAME_STATE.theatreRuns.filter(r => r.active).reduce((sum, r) => sum + (r.totalGross || 0), 0);
       const archivedGross = GAME_STATE.releasedMovies.reduce((sum, m) => sum + (m.totalGross || 0), 0);
-      return Math.max(100000000, GAME_STATE.cash + (GAME_STATE.reputation * 15000000) + Math.round((runningGross + archivedGross) * 0.4) - GAME_STATE.debt);
+      return Math.max(100000000, Math.max(0, GAME_STATE.cash) + (GAME_STATE.reputation * 15000000) + Math.round((runningGross + archivedGross) * 0.4));
     }
 
+    /* SUPPORTS NEGATIVE TREASURY BALANCES IN RED */
     function updateHeaderStats() {
       const formattedCash = formatINR(GAME_STATE.cash);
-      document.getElementById("stat-cash").innerText = formattedCash;
+      const isNegative = GAME_STATE.cash < 0;
+
+      const statCashEl = document.getElementById("stat-cash");
+      statCashEl.innerText = formattedCash;
+      statCashEl.classList.toggle("negative", isNegative);
+
       const mobCash = document.getElementById("mobile-stat-cash");
-      if (mobCash) mobCash.innerText = formattedCash;
+      if (mobCash) {
+        mobCash.innerText = formattedCash;
+        mobCash.classList.toggle("negative", isNegative);
+      }
 
       document.getElementById("stat-week").innerText = GAME_STATE.week;
       const mobWeek = document.getElementById("mobile-stat-week");
@@ -2259,7 +2309,7 @@
       const mobRep = document.getElementById("mobile-stat-rep");
       if (mobRep) mobRep.innerText = GAME_STATE.reputation;
 
-      document.getElementById("dash-net-worth").innerText = formatINR(getStudioValuation());
+      document.getElementById("dash-net-worth").innerText = formatINR(getStudioValuation() - GAME_STATE.debt);
       document.getElementById("dash-released-count").innerText = GAME_STATE.releasedMovies.length + GAME_STATE.theatreRuns.filter(r => r.active).length;
       document.getElementById("dash-awards-count").innerHTML = `<i class="fa-solid fa-award"></i> ${GAME_STATE.totalAwardsWon}`;
 
@@ -2267,7 +2317,9 @@
       const archivedGross = GAME_STATE.releasedMovies.reduce((sum, m) => sum + (m.totalGross || 0), 0);
       document.getElementById("dash-box-office").innerText = formatINR(runningGross + archivedGross);
 
-      document.getElementById("fin-cash").innerText = formattedCash;
+      const finCashEl = document.getElementById("fin-cash");
+      finCashEl.innerText = formattedCash;
+      finCashEl.style.color = isNegative ? "var(--danger)" : "var(--text-main)";
       document.getElementById("fin-debt").innerText = formatINR(GAME_STATE.debt);
       document.getElementById("fin-interest").innerText = formatINR(Math.round(GAME_STATE.debt * 0.015)) + " /wk";
     }
@@ -2280,7 +2332,7 @@
         id: "my_studio",
         name: GAME_STATE.studioName,
         boss: GAME_STATE.studioHead || "Studio Founder",
-        capital: getStudioValuation(),
+        capital: Math.max(0, getStudioValuation() - GAME_STATE.debt),
         films: GAME_STATE.releasedMovies.length,
         fame: GAME_STATE.reputation,
         isPlayer: true
@@ -2307,6 +2359,17 @@
       `).join('');
     }
 
+    /* =========================================================================
+       SELL WHOLE STUDIO (GROSS OFFER - DEBTS = NEW STUDIO STARTING CASH)
+       ========================================================================= */
+    function updateSellStudioNetDisplay() {
+      const debt = GAME_STATE.debt || 0;
+      const netHandover = Math.max(0, ACTIVE_BUYOUT_OFFER - debt);
+      document.getElementById("sell-current-offer").innerText = formatINR(ACTIVE_BUYOUT_OFFER);
+      document.getElementById("sell-debt-deduction").innerText = "-" + formatINR(debt);
+      document.getElementById("sell-net-handover").innerText = formatINR(netHandover);
+    }
+
     function openSellCompanyModal() {
       const val = getStudioValuation();
       const buyer = COMPETITOR_STUDIOS[Math.floor(Math.random() * COMPETITOR_STUDIOS.length)];
@@ -2318,7 +2381,7 @@
 
       document.getElementById("sell-studio-valuation").innerText = formatINR(val);
       document.getElementById("sell-buyer-name").innerText = ACTIVE_BUYOUT_BUYER;
-      document.getElementById("sell-current-offer").innerText = formatINR(ACTIVE_BUYOUT_OFFER);
+      updateSellStudioNetDisplay();
       document.getElementById("sell-negotiation-status").innerText = `${ACTIVE_BUYOUT_BUYER} has submitted an initial acquisition bid.`;
       document.getElementById("sell-custom-counter-cr").value = "";
       document.getElementById("modal-sell-company").classList.add("active");
@@ -2359,13 +2422,13 @@
 
         if (askedAmount <= maxWillingToPay) {
           ACTIVE_BUYOUT_OFFER = askedAmount;
-          document.getElementById("sell-current-offer").innerText = formatINR(ACTIVE_BUYOUT_OFFER);
+          updateSellStudioNetDisplay();
           statusEl.innerHTML = `<span style="color:var(--success);">${ACTIVE_BUYOUT_BUYER} ACCEPTED your counter-offer of ${formatINR(ACTIVE_BUYOUT_OFFER)}!</span>`;
         } else {
           const counterOffer = Math.round((ACTIVE_BUYOUT_OFFER + Math.min(askedAmount, maxWillingToPay)) / 2);
           if (counterOffer > ACTIVE_BUYOUT_OFFER) {
             ACTIVE_BUYOUT_OFFER = counterOffer;
-            document.getElementById("sell-current-offer").innerText = formatINR(ACTIVE_BUYOUT_OFFER);
+            updateSellStudioNetDisplay();
             statusEl.innerHTML = `<span style="color:var(--warning);">${ACTIVE_BUYOUT_BUYER} rejected ${formatINR(askedAmount)}, but countered with ${formatINR(ACTIVE_BUYOUT_OFFER)}.</span>`;
           } else {
             statusEl.innerHTML = `<span style="color:var(--danger);">${ACTIVE_BUYOUT_BUYER} declined to raise their offer beyond ${formatINR(ACTIVE_BUYOUT_OFFER)}.</span>`;
@@ -2375,25 +2438,29 @@
     }
 
     function acceptCompanyBuyout() {
-      const soldPrice = ACTIVE_BUYOUT_OFFER;
+      const grossSoldPrice = ACTIVE_BUYOUT_OFFER;
+      const debtsCleared = GAME_STATE.debt || 0;
+      // Amount settled minus debts comes into hand in the new studio (minimum ₹5 Cr seed if debt wiped out everything)
+      const netProceedsInHand = Math.max(50000000, grossSoldPrice - debtsCleared);
+
       const oldName = GAME_STATE.studioName;
       const oldHead = GAME_STATE.studioHead;
       const savedCustom = GAME_STATE.customTalent || { actors: [], directors: [], composers: [], singers: [] };
       closeSellCompanyModal();
       triggerConfetti();
 
-      localStorage.removeItem("bollywood_tycoon_v112g");
-      localStorage.removeItem("bollywood_tycoon_v112g_init");
+      localStorage.removeItem("bollywood_tycoon_v112h");
+      localStorage.removeItem("bollywood_tycoon_v112h_init");
 
       GAME_STATE = {
         studioName: "Novus Film Productions",
         studioHead: oldHead,
-        cash: soldPrice,
+        cash: netProceedsInHand,
         week: 1,
         reputation: 75,
         debt: 0,
         totalAwardsWon: 0,
-        newsArchive: [{ week: 1, text: `BLOCKBUSTER DEAL: ${ACTIVE_BUYOUT_BUYER} acquired ${oldName} for ${formatINR(soldPrice)}!` }],
+        newsArchive: [{ week: 1, text: `BLOCKBUSTER DEAL: ${ACTIVE_BUYOUT_BUYER} acquired ${oldName} for ${formatINR(grossSoldPrice)}! After clearing ${formatINR(debtsCleared)} debt, ${formatINR(netProceedsInHand)} net proceeds remain.` }],
         activeProductions: [],
         theatreRuns: [],
         releasedMovies: [],
@@ -2403,13 +2470,132 @@
 
       saveState();
       renderAll();
-      showToast(`Sold "${oldName}" for ${formatINR(soldPrice)}! Launch your next banner...`, "success");
+      showToast(`Sold "${oldName}"! Net proceeds after debt: ${formatINR(netProceedsInHand)}`, "success");
       
       setTimeout(() => {
         document.getElementById("onboard-studio-name").value = "";
         document.getElementById("onboard-head-name").value = oldHead;
-        openOnboardingModal(soldPrice);
+        openOnboardingModal(netProceedsInHand);
       }, 1000);
+    }
+
+    /* =========================================================================
+       SELL INDIVIDUAL FRANCHISE IP RIGHTS TO RIVAL STUDIOS FOR IMMEDIATE CASH
+       ========================================================================= */
+    function getFranchiseValuation(fran) {
+      const baseValue = 80000000; // ₹8 Cr base IP value
+      const filmBonus = (fran.films || 0) * 65000000;
+      const grossBonus = Math.round((fran.gross || 0) * 0.22);
+      const fameBonus = (fran.rating || 70) * 1500000;
+      return baseValue + filmBonus + grossBonus + fameBonus;
+    }
+
+    function openSellFranchiseModal(franId) {
+      const fran = GAME_STATE.franchises.find(f => f.id === franId);
+      if (!fran) return;
+
+      ACTIVE_SELL_FRAN_ID = franId;
+      FRAN_NEGOTIATION_ATTEMPTS = 0;
+
+      const buyer = COMPETITOR_STUDIOS[Math.floor(Math.random() * COMPETITOR_STUDIOS.length)];
+      ACTIVE_FRAN_BUYER = buyer.name;
+
+      const val = getFranchiseValuation(fran);
+      const variance = 0.85 + (Math.random() * 0.30);
+      ACTIVE_FRAN_OFFER = Math.round(val * variance);
+
+      document.getElementById("sell-fran-name").innerText = fran.name;
+      document.getElementById("sell-fran-valuation").innerText = formatINR(val);
+      document.getElementById("sell-fran-buyer").innerText = ACTIVE_FRAN_BUYER;
+      document.getElementById("sell-fran-offer").innerText = formatINR(ACTIVE_FRAN_OFFER);
+      document.getElementById("sell-fran-status").innerText = `${ACTIVE_FRAN_BUYER} wants to acquire all rights to "${fran.name}".`;
+      document.getElementById("sell-fran-custom-cr").value = "";
+      document.getElementById("modal-sell-franchise").classList.add("active");
+    }
+
+    function closeSellFranchiseModal() {
+      document.getElementById("modal-sell-franchise").classList.remove("active");
+    }
+
+    function negotiateFranchisePercentage(pct) {
+      const target = Math.round(ACTIVE_FRAN_OFFER * (1 + pct / 100));
+      evaluateFranchiseBuyerResponse(target);
+    }
+
+    function negotiateFranchiseCustom() {
+      const crVal = parseFloat(document.getElementById("sell-fran-custom-cr").value);
+      if (isNaN(crVal) || crVal <= 0) {
+        showToast("Enter a valid amount in Crores!", "error");
+        return;
+      }
+      evaluateFranchiseBuyerResponse(Math.round(crVal * 10000000));
+    }
+
+    function evaluateFranchiseBuyerResponse(askedAmount) {
+      const fran = GAME_STATE.franchises.find(f => f.id === ACTIVE_SELL_FRAN_ID);
+      if (!fran) return;
+
+      const statusEl = document.getElementById("sell-fran-status");
+      statusEl.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${ACTIVE_FRAN_BUYER} is evaluating your counter-offer of ${formatINR(askedAmount)}...`;
+
+      setTimeout(() => {
+        FRAN_NEGOTIATION_ATTEMPTS++;
+        const val = getFranchiseValuation(fran);
+        const maxWilling = val * (1.15 + ((fran.rating || 75) / 250));
+
+        if (FRAN_NEGOTIATION_ATTEMPTS > 3 && askedAmount > maxWilling) {
+          statusEl.innerHTML = `<span style="color:var(--danger);">${ACTIVE_FRAN_BUYER} rejected ${formatINR(askedAmount)} and stands firm at ${formatINR(ACTIVE_FRAN_OFFER)}.</span>`;
+          return;
+        }
+
+        if (askedAmount <= maxWilling) {
+          ACTIVE_FRAN_OFFER = askedAmount;
+          document.getElementById("sell-fran-offer").innerText = formatINR(ACTIVE_FRAN_OFFER);
+          statusEl.innerHTML = `<span style="color:var(--success);">${ACTIVE_FRAN_BUYER} ACCEPTED your IP price of ${formatINR(ACTIVE_FRAN_OFFER)}!</span>`;
+        } else {
+          const counter = Math.round((ACTIVE_FRAN_OFFER + Math.min(askedAmount, maxWilling)) / 2);
+          if (counter > ACTIVE_FRAN_OFFER) {
+            ACTIVE_FRAN_OFFER = counter;
+            document.getElementById("sell-fran-offer").innerText = formatINR(ACTIVE_FRAN_OFFER);
+            statusEl.innerHTML = `<span style="color:var(--warning);">${ACTIVE_FRAN_BUYER} countered with ${formatINR(ACTIVE_FRAN_OFFER)} for the franchise rights.</span>`;
+          } else {
+            statusEl.innerHTML = `<span style="color:var(--danger);">${ACTIVE_FRAN_BUYER} will not go higher than ${formatINR(ACTIVE_FRAN_OFFER)}.</span>`;
+          }
+        }
+      }, 1400);
+    }
+
+    function acceptFranchiseSale() {
+      const idx = GAME_STATE.franchises.findIndex(f => f.id === ACTIVE_SELL_FRAN_ID);
+      if (idx === -1) return;
+
+      const soldFran = GAME_STATE.franchises[idx];
+      const saleAmount = ACTIVE_FRAN_OFFER;
+
+      // Credit studio treasury & transfer franchise to Pan-India Leaderboard under buyer
+      GAME_STATE.cash += saleAmount;
+      BENCHMARK_FRANCHISES.push({
+        name: soldFran.name,
+        studio: ACTIVE_FRAN_BUYER,
+        films: soldFran.films || 1,
+        gross: soldFran.gross || 0,
+        rating: soldFran.rating || 80
+      });
+
+      GAME_STATE.franchises.splice(idx, 1);
+
+      // Reset draft if currently selected
+      if (CURRENT_DRAFT.franchiseId === soldFran.id) {
+        CURRENT_DRAFT.franchiseId = null;
+        setFranchiseModel('standalone', document.querySelector("#franchise-model-pills .curved-choice-btn[data-model='standalone']"));
+      }
+
+      addTradeNews(`[${GAME_STATE.studioName}] Sold "${soldFran.name}" IP rights to ${ACTIVE_FRAN_BUYER} for ${formatINR(saleAmount)}!`);
+      saveState();
+      closeSellFranchiseModal();
+      renderAll();
+      triggerConfetti();
+      showToast(`Sold "${soldFran.name}" for +${formatINR(saleAmount)}!`, "success");
     }
 
     function handlePosterUpload(e) {
@@ -2497,18 +2683,27 @@
       }).join('');
     }
 
+    /* =========================================================================
+       SMART LOCATION SCOPE SELECTION LOGIC:
+       - 0 selected -> 1st click becomes "whole"
+       - 1 selected -> if 1st is "half", 2nd click becomes "half"; otherwise "shots"
+       - 2+ selected -> all subsequent clicks become "shots"
+       ========================================================================= */
     function toggleLocationCard(locId, event) {
       if (event) event.stopPropagation();
       const idx = CURRENT_DRAFT.locations.findIndex(l => l.id === locId);
       if (idx > -1) {
-        if (CURRENT_DRAFT.locations.length > 1) {
-          CURRENT_DRAFT.locations.splice(idx, 1);
-        } else {
-          showToast("At least one shooting location is required!", "error");
-        }
+        CURRENT_DRAFT.locations.splice(idx, 1);
       } else {
-        const defaultScope = CURRENT_DRAFT.locations.length === 0 ? "whole" : "half";
-        CURRENT_DRAFT.locations.push({ id: locId, scope: defaultScope });
+        let assignedScope = "shots";
+        if (CURRENT_DRAFT.locations.length === 0) {
+          assignedScope = "whole";
+        } else if (CURRENT_DRAFT.locations.length === 1 && CURRENT_DRAFT.locations[0].scope === "half") {
+          assignedScope = "half";
+        } else {
+          assignedScope = "shots";
+        }
+        CURRENT_DRAFT.locations.push({ id: locId, scope: assignedScope });
       }
       renderLocationsTiles();
       updateCostHUD();
@@ -2896,7 +3091,6 @@
       updateMarketingMeters();
     }
 
-    /* NEWCOMERS CONTRIBUTE 0 ORGANIC HYPE; ESTABLISHED STARS GIVE 2-10 MAX */
     function computeDraftHypeAndReach() {
       let marketingHype = 0;
       let totalSpend = 0;
@@ -2915,7 +3109,6 @@
       if (CURRENT_DRAFT.cast.length > 0) {
         const rawCastSum = CURRENT_DRAFT.cast.reduce((acc, c) => {
           const actor = ALL_ACTORS.find(a => a.id === c.id);
-          // Newcomers with 0 popularity contribute 0 hype
           return acc + (actor && actor.popularity > 0 ? (actor.popularity / 40) : 0);
         }, 0);
         if (rawCastSum > 0) {
@@ -3128,13 +3321,14 @@
       if (!CURRENT_DRAFT.title.trim()) { showToast("Enter a project title!", "error"); goToStep(1); return; }
       if (CURRENT_DRAFT.cast.length === 0) { showToast("Cast at least one actor!", "error"); goToStep(2); return; }
       if (!CURRENT_DRAFT.directorId) { showToast("Select a director!", "error"); goToStep(3); return; }
+      if (CURRENT_DRAFT.locations.length === 0) { showToast("Select at least one shooting location!", "error"); goToStep(4); return; }
 
       const totalCost = calculateProductionCosts();
       const totalInflow = calculateGuaranteedInflow();
       const netCashRequired = totalCost - totalInflow;
 
       if (netCashRequired > 0 && GAME_STATE.cash < netCashRequired) {
-        showToast("Insufficient funds! Borrow from Finances.", "error");
+        showToast("Insufficient funds! Borrow from Finances or sell a Franchise.", "error");
         return;
       }
 
@@ -3244,10 +3438,12 @@
       return { label: "All-Time Blockbuster", css: "verdict-all-time-blockbuster", desc: "Exceptional success by historical standards" };
     }
 
+    /* TREASURY CAN DROP INTO MINUS WHEN LOAN INTEREST EXCEEDS AVAILABLE CASH */
     function advanceWeek() {
       GAME_STATE.week++;
       if (GAME_STATE.debt > 0) {
-        GAME_STATE.cash = Math.max(0, GAME_STATE.cash - Math.round(GAME_STATE.debt * 0.015));
+        const interestCharge = Math.round(GAME_STATE.debt * 0.015);
+        GAME_STATE.cash -= interestCharge; // No Math.max(0) floor — cash goes negative if unpaid!
       }
 
       processTheatreCollections();
@@ -3592,7 +3788,6 @@
       run.verdictCss = verdictObj.css;
       run.verdictDesc = verdictObj.desc;
 
-      // Evolve custom debutants if the film scored a Hit or better!
       evolveTalentAfterFilmVerdict(run, verdictObj.label);
 
       GAME_STATE.releasedMovies.unshift(JSON.parse(JSON.stringify(run)));
@@ -3610,7 +3805,6 @@
       renderFranchiseView();
     }
 
-    /* VERDICTS DISPLAY IMMEDIATELY FROM WEEK 1 */
     function renderTheatricalRuns() {
       const container = document.getElementById("theatrical-runs-container");
       const upContainer = document.getElementById("theatrical-upcoming-container");
@@ -3997,16 +4191,22 @@
       autoLoadFranchisePackage(franId);
     }
 
+    /* STUDIO FRANCHISES WITH SELL IP BUTTON */
     function renderFranchiseView() {
       const studioList = document.getElementById("studio-franchises-list");
       if (studioList) {
         studioList.innerHTML = GAME_STATE.franchises.length === 0 
           ? `<p style="color:var(--text-muted); font-size:0.78rem; grid-column:1/-1;">No studio franchises yet. Click "+ New Franchise" to begin!</p>`
           : GAME_STATE.franchises.map(f => `
-            <div class="card" style="margin-bottom:0; border-color:var(--gold-primary);">
-              <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright); margin-bottom:2px;">${f.name}</div>
-              <p style="font-size:0.7rem; color:var(--text-muted); margin-bottom:4px;">${f.desc}</p>
-              <div style="font-size:0.75rem;">Films: <strong>${f.films}</strong> | Gross: <strong style="color:var(--success);">${formatINR(f.gross || 0)}</strong></div>
+            <div class="card" style="margin-bottom:0; border-color:var(--gold-primary); display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright); margin-bottom:2px;">${f.name}</div>
+                <p style="font-size:0.7rem; color:var(--text-muted); margin-bottom:4px;">${f.desc}</p>
+                <div style="font-size:0.75rem; margin-bottom:8px;">Films: <strong>${f.films}</strong> | Gross: <strong style="color:var(--success);">${formatINR(f.gross || 0)}</strong></div>
+              </div>
+              <button class="btn-danger" style="width:100%; justify-content:center; font-size:0.72rem; padding:5px 8px;" onclick="openSellFranchiseModal('${f.id}')">
+                <i class="fa-solid fa-handshake"></i> Sell Franchise IP
+              </button>
             </div>
           `).join('');
       }
@@ -4195,10 +4395,14 @@
       setTimeout(() => { toast.remove(); }, 3200);
     }
 
+    /* HANDLES NEGATIVE RUPEE FORMATTING CLEANLY */
     function formatINR(val) {
-      if (val >= 10000000) return "₹" + (val / 10000000).toFixed(2) + " Cr";
-      if (val >= 100000) return "₹" + (val / 100000).toFixed(2) + " Lakh";
-      return "₹" + (val || 0).toLocaleString('en-IN');
+      const num = val || 0;
+      const sign = num < 0 ? "-" : "";
+      const abs = Math.abs(num);
+      if (abs >= 10000000) return sign + "₹" + (abs / 10000000).toFixed(2) + " Cr";
+      if (abs >= 100000) return sign + "₹" + (abs / 100000).toFixed(2) + " Lakh";
+      return sign + "₹" + abs.toLocaleString('en-IN');
     }
 
     function playHaptic() {
@@ -4241,12 +4445,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v112g", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v112h", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v112g");
+        const raw = localStorage.getItem("bollywood_tycoon_v112h");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
