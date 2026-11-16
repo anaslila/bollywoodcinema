@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.12(f) — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.12(g) — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -165,7 +165,7 @@
       box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
     }
 
-    /* Mobile Bottom Footer Dock (Treasury Left, Advance Center, Week & Fame Right) */
+    /* Mobile Bottom Footer Dock */
     .mobile-bottom-footer {
       display: none;
       position: fixed;
@@ -206,12 +206,7 @@
     }
     .btn-advance-mobile:active { transform: scale(0.96); }
 
-    .mobile-footer-right-stats {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      justify-content: flex-end;
-    }
+    .mobile-footer-right-stats { display: flex; align-items: center; gap: 4px; justify-content: flex-end; }
     .mobile-mini-badge {
       background: var(--bg-surface);
       border: 1px solid var(--border-color-subtle);
@@ -296,7 +291,7 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
     .card { background: var(--bg-card); border: 1px solid var(--border-color-subtle); border-radius: 10px; padding: 14px; backdrop-filter: blur(12px); margin-bottom: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-    .card-title { font-family: var(--font-display); font-size: 1.05rem; color: var(--gold-bright); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .card-title { font-family: var(--font-display); font-size: 1.05rem; color: var(--gold-bright); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
 
     .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 14px; }
     .metric-box { background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 10px 12px; position: relative; overflow: hidden; }
@@ -346,6 +341,19 @@
       background: rgba(212, 175, 55, 0.18);
       color: var(--gold-bright);
       border: 1px solid var(--gold-primary);
+    }
+
+    .debut-badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: var(--gold-gradient);
+      color: #000;
+      font-size: 0.54rem;
+      font-weight: 900;
+      padding: 1px 4px;
+      border-radius: 3px;
+      text-transform: uppercase;
     }
 
     .wizard-steps-indicator { display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface); border: 1px solid var(--border-color-subtle); border-radius: 8px; padding: 8px 10px; margin-bottom: 14px; overflow-x: auto; gap: 6px; }
@@ -611,6 +619,9 @@
       font-weight: 600;
       font-size: 0.8rem;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
     .btn-danger {
       background: rgba(239, 68, 68, 0.15);
@@ -653,7 +664,7 @@
 
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- Sticky Header (Clean Studio Name & Theme Toggle on Mobile) -->
+  <!-- Sticky Header -->
   <header class="main-header">
     <div class="brand-section">
       <img src="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80" alt="App Icon" class="brand-icon">
@@ -676,7 +687,7 @@
     </div>
   </header>
 
-  <!-- Mobile Bottom Footer Dock (Treasury Left, Advance Center, Week & Fame Right) -->
+  <!-- Mobile Bottom Footer Dock -->
   <div class="mobile-bottom-footer">
     <div class="mobile-footer-cash">
       <span class="mobile-footer-cash-lbl">Treasury</span>
@@ -883,20 +894,30 @@
 
         <!-- STEP 2: CAST SELECTION -->
         <div class="pipeline-step-pane" id="wizard-step-2">
-          <div class="step-header-box">
-            <span class="step-badge">Step 2 of 8</span>
-            <h3 class="step-heading">Star Cast & Ensemble</h3>
-            <p class="step-subtext">Cast size impacts travel & stay budgets. High hype comes primarily from marketing!</p>
+          <div class="step-header-box" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+            <div>
+              <span class="step-badge">Step 2 of 8</span>
+              <h3 class="step-heading">Star Cast & Ensemble</h3>
+              <p class="step-subtext">Cast stars or launch a fresh debutant starting from 0 popularity & custom fee!</p>
+            </div>
+            <button class="btn-gold" style="font-size:0.74rem; padding:6px 12px;" onclick="openLaunchTalentModal('actor')">
+              <i class="fa-solid fa-user-plus"></i> Launch New Actor
+            </button>
           </div>
           <div class="tiles-grid" id="actors-selection-grid"></div>
         </div>
 
         <!-- STEP 3: DIRECTOR SELECTION -->
         <div class="pipeline-step-pane" id="wizard-step-3">
-          <div class="step-header-box">
-            <span class="step-badge">Step 3 of 8</span>
-            <h3 class="step-heading">Director & Visionary</h3>
-            <p class="step-subtext">Select 1 director. Affects critical reception, box office hold, and awards contention.</p>
+          <div class="step-header-box" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+            <div>
+              <span class="step-badge">Step 3 of 8</span>
+              <h3 class="step-heading">Director & Visionary</h3>
+              <p class="step-subtext">Select a visionary director or debut a new filmmaker.</p>
+            </div>
+            <button class="btn-gold" style="font-size:0.74rem; padding:6px 12px;" onclick="openLaunchTalentModal('director')">
+              <i class="fa-solid fa-user-plus"></i> Launch New Director
+            </button>
           </div>
           <div class="tiles-grid" id="directors-selection-grid"></div>
         </div>
@@ -914,10 +935,15 @@
 
         <!-- STEP 5: MUSIC, ALBUM & LYRICS QUALITY -->
         <div class="pipeline-step-pane" id="wizard-step-5">
-          <div class="step-header-box">
-            <span class="step-badge">Step 5 of 8</span>
-            <h3 class="step-heading">Music Direction, Lyrics & Playback</h3>
-            <p class="step-subtext">Select music composer, lyrics pedigree, tracks, and playback voices.</p>
+          <div class="step-header-box" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+            <div>
+              <span class="step-badge">Step 5 of 8</span>
+              <h3 class="step-heading">Music Direction, Lyrics & Playback</h3>
+              <p class="step-subtext">Select music composer, lyrics pedigree, tracks, and playback voices.</p>
+            </div>
+            <button class="btn-outline" style="font-size:0.74rem; padding:5px 10px;" onclick="openLaunchTalentModal('composer')">
+              <i class="fa-solid fa-music"></i> Launch Composer
+            </button>
           </div>
 
           <label style="font-size:0.78rem; font-weight:700;">Select Music Composer:</label>
@@ -950,7 +976,12 @@
           </div>
 
           <div id="singers-selection-section">
-            <label style="font-size:0.78rem; font-weight:700;">Select Playback Singers:</label>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+              <label style="font-size:0.78rem; font-weight:700;">Select Playback Singers:</label>
+              <button class="btn-outline" style="font-size:0.72rem; padding:4px 9px;" onclick="openLaunchTalentModal('singer')">
+                <i class="fa-solid fa-microphone"></i> Launch Singer
+              </button>
+            </div>
             <div class="tiles-grid" id="singers-selection-grid"></div>
           </div>
         </div>
@@ -1068,7 +1099,7 @@
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-ticket"></i> Live Theatrical Runs</span>
-          <span style="font-size:0.75rem; color:var(--text-muted);">Runs endlessly as long as Hype & Screens stay active!</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">Verdicts update live from Week 1!</span>
         </div>
         <div id="theatrical-runs-container">
           <p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in cinema halls.</p>
@@ -1139,11 +1170,30 @@
       </div>
     </section>
 
-    <!-- 7. STARS & TALENT POOL TAB -->
+    <!-- 7. STARS & TALENT POOL TAB (WITH LAUNCH NEW TALENT BUTTON) -->
     <section id="tab-stars" class="tab-view">
       <div class="card">
-        <div class="card-title"><i class="fa-solid fa-star"></i> Bollywood Star Roster</div>
+        <div class="card-title">
+          <span><i class="fa-solid fa-star"></i> Bollywood Talent Pool & Debutants</span>
+          <button class="btn-gold" style="font-size:0.74rem; padding:5px 12px;" onclick="openLaunchTalentModal('actor')">
+            <i class="fa-solid fa-user-plus"></i> Launch New Talent
+          </button>
+        </div>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">
+          Launched newcomers start at 0 popularity & stats with your custom fee. As their films achieve Hit or Blockbuster verdicts, their stardom and market price grow!
+        </p>
+
+        <h4 style="font-size:0.85rem; color:var(--gold-bright); margin-top:8px; margin-bottom:4px;">Actors & Actresses</h4>
         <div class="tiles-grid" id="roster-actors-grid"></div>
+
+        <h4 style="font-size:0.85rem; color:var(--gold-bright); margin-top:16px; margin-bottom:4px;">Directors</h4>
+        <div class="tiles-grid" id="roster-directors-grid"></div>
+
+        <h4 style="font-size:0.85rem; color:var(--gold-bright); margin-top:16px; margin-bottom:4px;">Music Composers</h4>
+        <div class="tiles-grid" id="roster-composers-grid"></div>
+
+        <h4 style="font-size:0.85rem; color:var(--gold-bright); margin-top:16px; margin-bottom:4px;">Playback Singers</h4>
+        <div class="tiles-grid" id="roster-singers-grid"></div>
       </div>
     </section>
 
@@ -1184,6 +1234,50 @@
     </section>
 
   </main>
+
+  <!-- MODAL: LAUNCH NEW TALENT (ACTOR, DIRECTOR, COMPOSER, SINGER) -->
+  <div class="modal-overlay" id="modal-launch-talent">
+    <div class="modal-window">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem;"><i class="fa-solid fa-user-plus"></i> Launch New Talent</h3>
+        <button class="btn-outline" style="padding:2px 8px;" onclick="closeLaunchTalentModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p style="font-size:0.74rem; color:var(--text-muted); margin-bottom:12px;">
+        Debut a newcomer with 0 popularity & 0 craft stats. Set their initial debut fee—as their films score Hits & Blockbusters, their stats and fee rise automatically!
+      </p>
+
+      <label style="font-size:0.76rem; font-weight:700; display:block; margin-bottom:4px;">Talent Role Category:</label>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;" id="launch-talent-role-pills">
+        <button class="curved-choice-btn active" data-trole="actor" onclick="setLaunchTalentRole('actor', this)">Actor / Actress</button>
+        <button class="curved-choice-btn" data-trole="director" onclick="setLaunchTalentRole('director', this)">Director</button>
+        <button class="curved-choice-btn" data-trole="composer" onclick="setLaunchTalentRole('composer', this)">Music Composer</button>
+        <button class="curved-choice-btn" data-trole="singer" onclick="setLaunchTalentRole('singer', this)">Playback Singer</button>
+      </div>
+
+      <label style="font-size:0.76rem; font-weight:700; display:block; margin-bottom:4px;">Full Name:</label>
+      <input type="text" id="launch-talent-name" class="input-field" placeholder="Enter Debutant Name...">
+
+      <label style="font-size:0.76rem; font-weight:700; display:block; margin-bottom:4px;">Debut Fee (in ₹ Lakhs):</label>
+      <input type="number" id="launch-talent-fee-lakhs" class="input-field" placeholder="e.g. 25 for ₹25 Lakhs (or 0 for free debut)" value="25" min="0">
+
+      <label style="font-size:0.76rem; font-weight:700; display:block; margin-bottom:6px;">Upload Profile Photo:</label>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+        <img id="launch-talent-preview" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style="width:58px; height:58px; border-radius:50%; object-fit:cover; border:1.5px solid var(--gold-bright); background:#222;">
+        <div>
+          <input type="file" id="launch-talent-photo-input" accept="image/*" style="display:none;" onchange="handleTalentPhotoUpload(event)">
+          <button class="btn-outline" style="font-size:0.74rem;" onclick="document.getElementById('launch-talent-photo-input').click()">
+            <i class="fa-solid fa-camera"></i> Upload Picture
+          </button>
+          <div style="font-size:0.68rem; color:var(--text-muted); margin-top:3px;">Saved permanently in internal storage.</div>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:6px;">
+        <button class="btn-outline" onclick="closeLaunchTalentModal()">Cancel</button>
+        <button class="btn-gold" onclick="confirmLaunchNewTalent()"><i class="fa-solid fa-star"></i> Launch Debutant</button>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL: ONBOARDING -->
   <div class="modal-overlay" id="modal-onboarding">
@@ -1319,16 +1413,18 @@
   <!-- END OF PART 1 — APPEND PART 2 IMMEDIATELY BELOW THIS LINE -->
 <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.12(f) — COMPLETE TYCOON ENGINE (PART 2)
+       BOLLYWOOD CINEMA v1.12(g) — COMPLETE TYCOON ENGINE (PART 2)
        ========================================================================= */
 
     let CARRIED_OVER_CAPITAL = null;
+    let LAUNCH_TALENT_ROLE = "actor";
+    let LAUNCH_TALENT_PHOTO_DATA = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
     function dismissSplash() {
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v112f_init")) {
+        if (!localStorage.getItem("bollywood_tycoon_v112g_init")) {
           openOnboardingModal(null);
         }
       }
@@ -1354,7 +1450,7 @@
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA_K8v8EwFKo8WgZYr7ZZItUSqdb6Az2lHzb6O8Jxw7w&s=10"
     ];
 
-    const REAL_DIRECTORS = [
+    let REAL_DIRECTORS = [
       { id: "dir_hirani", name: "Rajkumar Hirani", photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtWXrrDG1kiC5p2dk66JCTl0PMyBNpYOYFV9ZbQi6PaS0N73jGOFKgZYw&s=10", skill: 98, fee: 300000000, style: "Feel-Good 100% Hit Ratio" },
       { id: "dir_rajamouli", name: "S.S. Rajamouli", photo: "https://i.pinimg.com/736x/f2/93/67/f2936791a5a8de161a27d4e20409dd15.jpg", skill: 99, fee: 500000000, style: "Pan-India Mythological Spectacles" },
       { id: "dir_slb", name: "Sanjay Leela Bhansali", photo: "https://m.media-amazon.com/images/M/MV5BMzFiODBlYzEtN2Y0Ni00YzM0LWJlYTgtNTkwZGMwMzhjZWMwXkEyXkFqcGc@._V1_.jpg", skill: 95, fee: 250000000, style: "Lavish Visual Period Drama" },
@@ -1365,7 +1461,7 @@
       { id: "dir_siddharth", name: "Siddharth Anand", photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShc2YwwJKSr2ZwUaI8J023FJ77Km0a5bJlBv91GuCIf2cooww5jnij7EO3&s=10", skill: 94, fee: 280000000, style: "Slick International Spy Thrillers" }
     ];
 
-    const REAL_COMPOSERS = [
+    let REAL_COMPOSERS = [
       { id: "comp_pritam", name: "Pritam", photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuaK3qqD4sW4nlSG9Xq5z5kgcZECr2wFMyPLhHHmI6jQ&s", skill: 97, fee: 30000000 },
       { id: "comp_rahman", name: "A.R. Rahman", photo: "https://media.assettype.com/outlookbusiness/2025-03-17/fdj708md/Screenshot-2025-03-17-144454.png", skill: 99, fee: 45000000 },
       { id: "comp_anirudh", name: "Anirudh Ravichander", photo: "https://in.bmscdn.com/iedb/artist/images/website/poster/large/anirudh-ravichander-34897-1738571201.jpg", skill: 98, fee: 40000000 },
@@ -1376,7 +1472,7 @@
       { id: "comp_mithoon", name: "Mithoon", photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_0IWqA3Z7Q2oIqAy3JKyGx7mjTZ4pVwMK3AzG_o4XPg&s=10", skill: 90, fee: 14000000 }
     ];
 
-    const ALL_ACTORS = [
+    let ALL_ACTORS = [
       { id: "srk", name: "Shah Rukh Khan", photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Shah_Rukh_Khan_graces_the_launch_of_the_new_Santro.jpg/330px-Shah_Rukh_Khan_graces_the_launch_of_the_new_Santro.jpg", popularity: 99, skill: 95, fee: 1000000000, tier: "Megastar" },
       { id: "salman", name: "Salman Khan", photo: "https://m.media-amazon.com/images/M/MV5BMjMwNTIxODg0OF5BMl5BanBnXkFtZTgwODg2NzM0OTE@._V1_FMjpg_UX1000_.jpg/330px-Salman_Khan_at_CCF_event.jpg", popularity: 98, skill: 86, fee: 900000000, tier: "Megastar" },
       { id: "aamir", name: "Aamir Khan", photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRsS0YGpL1seqR4XvLGUquQo8yrxoEZyWfG8OTQFMtZQ&s=10/330px-Aamir_Khan_at_an_event_for_Secret_Superstar.jpg", popularity: 97, skill: 98, fee: 850000000, tier: "Megastar" },
@@ -1403,7 +1499,7 @@
       { id: "vijay_varma", name: "Vijay Varma", photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwa0HNmbr10y10Rl2riMoBgXWiNhAWWUBChuM1DrjBPQ&s=10", popularity: 87, skill: 94, fee: 35000000, tier: "A-Lister" }
     ];
 
-    const REAL_SINGERS = [
+    let REAL_SINGERS = [
       { id: "sng_arijit", name: "Arijit Singh", photo: "https://static.toiimg.com/thumb/92037952.jpg?photoid=92037952&width=600&resizemode=4", skill: 99, fee: 2500000 },
       { id: "sng_shreya", name: "Shreya Ghoshal", photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR7xMj8nV-hM_V4oJ3ZS067fxeDYlQ03v9Yz1u-iinuQ&s/330px-Shreya_Ghoshal_at_the_69th_National_Film_Awards.jpg", skill: 99, fee: 2200000 },
       { id: "sng_sonu", name: "Sonu Nigam", photo: "https://cdn.bollywoodmdb.com/fit-in/celebrities/images-1/600x600/sonu-nigam-698.jpg", skill: 97, fee: 1800000 },
@@ -1463,7 +1559,6 @@
       { id: "colorstvb", name: "Colors Cineplex", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeqXrC15ArSmDq9-1zD2IyHgJHTULk5rsoYNOoi_LeK9grAEBq1Dtgmk0&s=10", baseAdvance: 65000000, mult: 1.0 }
     ];
 
-    /* HYPE IS DRIVEN BY MARKETING: CALIBRATED HYPE VALUES */
     const TARGETED_MARKETING = [
       { id: "m_news", name: "Newspaper Spread", fee: 8000000, hype: 6, reach: 18000000, cat: "Traditional" },
       { id: "m_mag", name: "Magazine Cover", fee: 4000000, hype: 4, reach: 6000000, cat: "Traditional" },
@@ -1500,7 +1595,6 @@
       { id: "pr_global_promo", name: "Global TV & International Multiplex Push", fee: 80000000, hypeAdd: 36, screenBoost: 2800, desc: "Massive overseas & Pan-India exhibitor expansion." }
     ];
 
-    /* RANDOM PRODUCTION EVENTS (CAREFUL WITH HYPE — FOCUSED ON SCHEDULE, QUALITY & COST) */
     const RANDOM_EVENTS_POOL = [
       {
         title: "Lead Actor Injured During Stunt!",
@@ -1594,7 +1688,13 @@
       activeProductions: [],
       theatreRuns: [],
       releasedMovies: [],
-      franchises: []
+      franchises: [],
+      customTalent: {
+        actors: [],
+        directors: [],
+        composers: [],
+        singers: []
+      }
     };
 
     let SELECTED_ONBOARD_CAPITAL = 500000000;
@@ -1611,7 +1711,6 @@
     let ACTIVE_BUYOUT_BUYER = "";
     let NEGOTIATION_ATTEMPTS = 0;
 
-    /* DEFAULT PROMOS EMPTY SO HYPE STARTS AT 0 WITHOUT MARKETING */
     let CURRENT_DRAFT = {
       title: "",
       genre: "Action",
@@ -1639,6 +1738,7 @@
     window.addEventListener("DOMContentLoaded", () => {
       try {
         loadSaveState();
+        mergeCustomTalentIntoRosters();
         initUI();
         renderAll();
       } catch (err) {
@@ -1647,6 +1747,25 @@
         setTimeout(dismissSplash, 1500);
       }
     });
+
+    /* MERGE SAVED CUSTOM TALENT FROM INTERNAL STORAGE */
+    function mergeCustomTalentIntoRosters() {
+      if (!GAME_STATE.customTalent) {
+        GAME_STATE.customTalent = { actors: [], directors: [], composers: [], singers: [] };
+      }
+      (GAME_STATE.customTalent.actors || []).forEach(ct => {
+        if (!ALL_ACTORS.some(a => a.id === ct.id)) ALL_ACTORS.unshift(ct);
+      });
+      (GAME_STATE.customTalent.directors || []).forEach(ct => {
+        if (!REAL_DIRECTORS.some(d => d.id === ct.id)) REAL_DIRECTORS.unshift(ct);
+      });
+      (GAME_STATE.customTalent.composers || []).forEach(ct => {
+        if (!REAL_COMPOSERS.some(c => c.id === ct.id)) REAL_COMPOSERS.unshift(ct);
+      });
+      (GAME_STATE.customTalent.singers || []).forEach(ct => {
+        if (!REAL_SINGERS.some(s => s.id === ct.id)) REAL_SINGERS.unshift(ct);
+      });
+    }
 
     function initUI() {
       document.querySelectorAll(".tab-btn").forEach(btn => {
@@ -1728,6 +1847,189 @@
       document.addEventListener("click", playHaptic);
     }
 
+    /* =========================================================================
+       LAUNCH NEW TALENT SYSTEM (SAVES IN INTERNAL STORAGE & GROWS ON HITS)
+       ========================================================================= */
+    function openLaunchTalentModal(defaultRole) {
+      LAUNCH_TALENT_ROLE = defaultRole || "actor";
+      LAUNCH_TALENT_PHOTO_DATA = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+      document.getElementById("launch-talent-name").value = "";
+      document.getElementById("launch-talent-fee-lakhs").value = "25";
+      document.getElementById("launch-talent-preview").src = LAUNCH_TALENT_PHOTO_DATA;
+
+      document.querySelectorAll("#launch-talent-role-pills .curved-choice-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.trole === LAUNCH_TALENT_ROLE);
+      });
+
+      document.getElementById("modal-launch-talent").classList.add("active");
+    }
+
+    function closeLaunchTalentModal() {
+      document.getElementById("modal-launch-talent").classList.remove("active");
+    }
+
+    function setLaunchTalentRole(role, el) {
+      LAUNCH_TALENT_ROLE = role;
+      document.querySelectorAll("#launch-talent-role-pills .curved-choice-btn").forEach(b => b.classList.remove("active"));
+      if (el) el.classList.add("active");
+    }
+
+    function handleTalentPhotoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        LAUNCH_TALENT_PHOTO_DATA = event.target.result;
+        document.getElementById("launch-talent-preview").src = LAUNCH_TALENT_PHOTO_DATA;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function confirmLaunchNewTalent() {
+      const name = document.getElementById("launch-talent-name").value.trim();
+      const feeLakhs = parseFloat(document.getElementById("launch-talent-fee-lakhs").value);
+
+      if (!name) {
+        showToast("Please enter the debutant's full name!", "error");
+        return;
+      }
+      if (isNaN(feeLakhs) || feeLakhs < 0) {
+        showToast("Enter a valid debut fee (0 or higher)!", "error");
+        return;
+      }
+
+      const feeInRupees = Math.round(feeLakhs * 100000);
+      const id = "custom_" + LAUNCH_TALENT_ROLE + "_" + Date.now();
+
+      if (!GAME_STATE.customTalent) {
+        GAME_STATE.customTalent = { actors: [], directors: [], composers: [], singers: [] };
+      }
+
+      if (LAUNCH_TALENT_ROLE === "actor") {
+        const newActor = {
+          id,
+          name,
+          photo: LAUNCH_TALENT_PHOTO_DATA,
+          popularity: 0,
+          skill: 0,
+          fee: feeInRupees,
+          tier: "Debutant",
+          isCustom: true
+        };
+        GAME_STATE.customTalent.actors.unshift(newActor);
+        ALL_ACTORS.unshift(newActor);
+        // Auto-cast into current draft if in movie wizard
+        CURRENT_DRAFT.cast.push({ id: newActor.id, role: CURRENT_DRAFT.cast.length === 0 ? "Lead" : "Supporting" });
+      } else if (LAUNCH_TALENT_ROLE === "director") {
+        const newDir = {
+          id,
+          name,
+          photo: LAUNCH_TALENT_PHOTO_DATA,
+          skill: 0,
+          fee: feeInRupees,
+          style: "Debut Filmmaker",
+          isCustom: true
+        };
+        GAME_STATE.customTalent.directors.unshift(newDir);
+        REAL_DIRECTORS.unshift(newDir);
+        CURRENT_DRAFT.directorId = newDir.id;
+      } else if (LAUNCH_TALENT_ROLE === "composer") {
+        const newComp = {
+          id,
+          name,
+          photo: LAUNCH_TALENT_PHOTO_DATA,
+          skill: 0,
+          fee: feeInRupees,
+          isCustom: true
+        };
+        GAME_STATE.customTalent.composers.unshift(newComp);
+        REAL_COMPOSERS.unshift(newComp);
+        CURRENT_DRAFT.composerId = newComp.id;
+      } else if (LAUNCH_TALENT_ROLE === "singer") {
+        const newSinger = {
+          id,
+          name,
+          photo: LAUNCH_TALENT_PHOTO_DATA,
+          skill: 0,
+          fee: feeInRupees,
+          isCustom: true
+        };
+        GAME_STATE.customTalent.singers.unshift(newSinger);
+        REAL_SINGERS.unshift(newSinger);
+        if (CURRENT_DRAFT.songCount > 0) {
+          CURRENT_DRAFT.singers.push(newSinger.id);
+        }
+      }
+
+      saveState();
+      closeLaunchTalentModal();
+      renderAll();
+      addTradeNews(`[${GAME_STATE.studioName}] Launched fresh debutant ${name} (${LAUNCH_TALENT_ROLE.toUpperCase()}) into Bollywood!`);
+      showToast(`Launched ${name} (${LAUNCH_TALENT_ROLE})! Saved to Talent Pool.`, "success");
+      triggerConfetti();
+    }
+
+    /* GROW CUSTOM TALENT STATS & MARKET FEES WHEN THEIR MOVIES SUCCEED */
+    function evolveTalentAfterFilmVerdict(film, verdictLabel) {
+      const hitTiers = ["Semi Hit", "Hit", "Super Hit", "Super Duper Hit", "Blockbuster", "All-Time Blockbuster"];
+      const isHit = hitTiers.includes(verdictLabel);
+      const isBlockbuster = ["Super Hit", "Super Duper Hit", "Blockbuster", "All-Time Blockbuster"].includes(verdictLabel);
+
+      if (!isHit) return;
+
+      const statGain = isBlockbuster ? 18 : 10;
+      const feeGrowthMult = isBlockbuster ? 2.4 : 1.65;
+      const flatBonus = isBlockbuster ? 15000000 : 5000000; // ₹1.5 Cr or ₹50L base market jump
+
+      let evolvedNames = [];
+
+      // 1. Evolve Cast
+      (film.cast || []).forEach(c => {
+        const actor = ALL_ACTORS.find(a => a.id === c.id);
+        if (actor && actor.isCustom) {
+          actor.popularity = Math.min(99, (actor.popularity || 0) + statGain);
+          actor.skill = Math.min(99, (actor.skill || 0) + statGain);
+          actor.fee = Math.round((actor.fee * feeGrowthMult) + flatBonus);
+          if (actor.popularity >= 85) actor.tier = "Superstar";
+          else if (actor.popularity >= 60) actor.tier = "Rising Star";
+          else actor.tier = "Promising Face";
+          evolvedNames.push(actor.name);
+        }
+      });
+
+      // 2. Evolve Director
+      const dir = REAL_DIRECTORS.find(d => d.id === film.directorId);
+      if (dir && dir.isCustom) {
+        dir.skill = Math.min(99, (dir.skill || 0) + statGain);
+        dir.fee = Math.round((dir.fee * feeGrowthMult) + flatBonus);
+        dir.style = dir.skill >= 75 ? "Acclaimed Hitmaker" : "Emerging Visionary";
+        evolvedNames.push(dir.name);
+      }
+
+      // 3. Evolve Composer
+      const comp = REAL_COMPOSERS.find(c => c.id === film.composerId);
+      if (comp && comp.isCustom) {
+        comp.skill = Math.min(99, (comp.skill || 0) + statGain);
+        comp.fee = Math.round((comp.fee * feeGrowthMult) + 2500000);
+        evolvedNames.push(comp.name);
+      }
+
+      // 4. Evolve Singers
+      (film.singers || []).forEach(sId => {
+        const sng = REAL_SINGERS.find(s => s.id === sId);
+        if (sng && sng.isCustom) {
+          sng.skill = Math.min(99, (sng.skill || 0) + statGain);
+          sng.fee = Math.round((sng.fee * feeGrowthMult) + 500000);
+          evolvedNames.push(sng.name);
+        }
+      });
+
+      if (evolvedNames.length > 0) {
+        const uniqueNames = [...new Set(evolvedNames)].join(", ");
+        addTradeNews(`[Stardom Rise] Following "${film.title}" (${verdictLabel}), ${uniqueNames} saw a massive surge in popularity and market fee!`);
+      }
+    }
+
     function toggleSingersVisibility() {
       const sec = document.getElementById("singers-selection-section");
       if (sec) {
@@ -1777,7 +2079,7 @@
       GAME_STATE.cash = CARRIED_OVER_CAPITAL ? CARRIED_OVER_CAPITAL : SELECTED_ONBOARD_CAPITAL;
       CARRIED_OVER_CAPITAL = null;
 
-      localStorage.setItem("bollywood_tycoon_v112f_init", "true");
+      localStorage.setItem("bollywood_tycoon_v112g_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
@@ -2076,11 +2378,12 @@
       const soldPrice = ACTIVE_BUYOUT_OFFER;
       const oldName = GAME_STATE.studioName;
       const oldHead = GAME_STATE.studioHead;
+      const savedCustom = GAME_STATE.customTalent || { actors: [], directors: [], composers: [], singers: [] };
       closeSellCompanyModal();
       triggerConfetti();
 
-      localStorage.removeItem("bollywood_tycoon_v112f");
-      localStorage.removeItem("bollywood_tycoon_v112f_init");
+      localStorage.removeItem("bollywood_tycoon_v112g");
+      localStorage.removeItem("bollywood_tycoon_v112g_init");
 
       GAME_STATE = {
         studioName: "Novus Film Productions",
@@ -2094,7 +2397,8 @@
         activeProductions: [],
         theatreRuns: [],
         releasedMovies: [],
-        franchises: []
+        franchises: [],
+        customTalent: savedCustom
       };
 
       saveState();
@@ -2264,6 +2568,7 @@
 
         return `
           <div class="tile-card ${isSelected ? 'selected' : ''}" id="actor-card-${actor.id}" onclick="toggleActorCard('${actor.id}', event)">
+            ${actor.isCustom ? `<span class="debut-badge">NEW</span>` : ''}
             <img src="${actor.photo}" alt="${actor.name}" class="tile-img">
             <div class="tile-name">${actor.name}</div>
             <div class="tile-meta">Pop: ${actor.popularity} | Craft: ${actor.skill}</div>
@@ -2281,9 +2586,10 @@
       if (rosterContainer) {
         rosterContainer.innerHTML = ALL_ACTORS.map(a => `
           <div class="tile-card">
+            ${a.isCustom ? `<span class="debut-badge">NEW</span>` : ''}
             <img src="${a.photo}" class="tile-img">
             <div class="tile-name">${a.name}</div>
-            <div class="tile-meta">${a.tier}</div>
+            <div class="tile-meta">${a.tier} (Pop: ${a.popularity})</div>
             <div class="tile-fee">${formatINR(a.fee)}</div>
           </div>
         `).join('');
@@ -2322,17 +2628,32 @@
 
     function renderDirectorTiles() {
       const container = document.getElementById("directors-selection-grid");
+      const rosterContainer = document.getElementById("roster-directors-grid");
+
       container.innerHTML = REAL_DIRECTORS.map(dir => {
         const dynamicFee = getDynamicDirectorFee(dir);
         return `
           <div class="tile-card ${CURRENT_DRAFT.directorId === dir.id ? 'selected' : ''}" onclick="selectDirector('${dir.id}')">
+            ${dir.isCustom ? `<span class="debut-badge">NEW</span>` : ''}
             <img src="${dir.photo}" alt="${dir.name}" class="tile-img">
             <div class="tile-name">${dir.name}</div>
-            <div class="tile-meta">${dir.style}</div>
+            <div class="tile-meta">${dir.style} (Skill: ${dir.skill})</div>
             <div class="tile-fee">${formatINR(dynamicFee)}</div>
           </div>
         `;
       }).join('');
+
+      if (rosterContainer) {
+        rosterContainer.innerHTML = REAL_DIRECTORS.map(d => `
+          <div class="tile-card">
+            ${d.isCustom ? `<span class="debut-badge">NEW</span>` : ''}
+            <img src="${d.photo}" class="tile-img">
+            <div class="tile-name">${d.name}</div>
+            <div class="tile-meta">Skill: ${d.skill}</div>
+            <div class="tile-fee">${formatINR(d.fee)}</div>
+          </div>
+        `).join('');
+      }
     }
 
     function selectDirector(id) {
@@ -2344,10 +2665,13 @@
 
     function renderComposerTiles() {
       const container = document.getElementById("composers-selection-grid");
+      const rosterContainer = document.getElementById("roster-composers-grid");
+
       container.innerHTML = REAL_COMPOSERS.map(c => {
         const dynamicFee = getDynamicComposerFee(c);
         return `
           <div class="tile-card ${CURRENT_DRAFT.composerId === c.id ? 'selected' : ''}" onclick="selectComposer('${c.id}')">
+            ${c.isCustom ? `<span class="debut-badge">NEW</span>` : ''}
             <img src="${c.photo}" alt="${c.name}" class="tile-img">
             <div class="tile-name">${c.name}</div>
             <div class="tile-meta">Melody: ${c.skill}</div>
@@ -2355,6 +2679,18 @@
           </div>
         `;
       }).join('');
+
+      if (rosterContainer) {
+        rosterContainer.innerHTML = REAL_COMPOSERS.map(c => `
+          <div class="tile-card">
+            ${c.isCustom ? `<span class="debut-badge">NEW</span>` : ''}
+            <img src="${c.photo}" class="tile-img">
+            <div class="tile-name">${c.name}</div>
+            <div class="tile-meta">Melody: ${c.skill}</div>
+            <div class="tile-fee">${formatINR(c.fee)}</div>
+          </div>
+        `).join('');
+      }
     }
 
     function selectComposer(id) {
@@ -2367,10 +2703,13 @@
 
     function renderSingerTiles() {
       const container = document.getElementById("singers-selection-grid");
+      const rosterContainer = document.getElementById("roster-singers-grid");
+
       container.innerHTML = REAL_SINGERS.map(s => {
         const dynamicFee = getDynamicSingerFee(s);
         return `
           <div class="tile-card ${CURRENT_DRAFT.singers.includes(s.id) ? 'selected' : ''}" onclick="toggleSinger('${s.id}')">
+            ${s.isCustom ? `<span class="debut-badge">NEW</span>` : ''}
             <img src="${s.photo}" alt="${s.name}" class="tile-img">
             <div class="tile-name">${s.name}</div>
             <div class="tile-meta">Vocals: ${s.skill}</div>
@@ -2378,6 +2717,18 @@
           </div>
         `;
       }).join('');
+
+      if (rosterContainer) {
+        rosterContainer.innerHTML = REAL_SINGERS.map(s => `
+          <div class="tile-card">
+            ${s.isCustom ? `<span class="debut-badge">NEW</span>` : ''}
+            <img src="${s.photo}" class="tile-img">
+            <div class="tile-name">${s.name}</div>
+            <div class="tile-meta">Vocals: ${s.skill}</div>
+            <div class="tile-fee">${formatINR(s.fee)} / track</div>
+          </div>
+        `).join('');
+      }
     }
 
     function toggleSinger(id) {
@@ -2456,7 +2807,8 @@
     function calculateMusicAdvance(lbl) {
       const albumSize = CURRENT_DRAFT.songCount;
       if (albumSize === 0) return 0;
-      const composerBonus = CURRENT_DRAFT.composerId ? 1.3 : 1.0;
+      const comp = REAL_COMPOSERS.find(c => c.id === CURRENT_DRAFT.composerId);
+      const composerBonus = comp ? (0.7 + (comp.skill / 150)) : 0.75;
       const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 1.3 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 1.15 : 1.0);
       const franMult = getFranchiseFameMultiplier();
       
@@ -2472,7 +2824,7 @@
 
     function calculateOttAdvance(p) {
       if (CURRENT_DRAFT.releaseFormat === "only_theatres") return 0;
-      const starPower = getCastStarPower();
+      const starPower = Math.max(10, getCastStarPower());
       const franMult = getFranchiseFameMultiplier();
       const directOttMult = CURRENT_DRAFT.releaseFormat === "ott_satellite" ? 1.65 : 1.0;
 
@@ -2487,7 +2839,7 @@
     }
 
     function calculateSatelliteAdvance(ch) {
-      const starPower = getCastStarPower();
+      const starPower = Math.max(10, getCastStarPower());
       const franMult = getFranchiseFameMultiplier();
 
       let bidBoost = 1.0;
@@ -2501,12 +2853,12 @@
     }
 
     function getCastStarPower() {
-      let starPower = 40;
+      let starPower = 0;
       if (CURRENT_DRAFT.cast.length > 0) {
         const totalPop = CURRENT_DRAFT.cast.reduce((acc, c) => {
           const actor = ALL_ACTORS.find(a => a.id === c.id);
           const weight = c.role === 'Lead' ? 1.0 : 0.45;
-          return acc + ((actor ? actor.popularity : 50) * weight);
+          return acc + ((actor ? actor.popularity : 0) * weight);
         }, 0);
         starPower = Math.round(totalPop / Math.max(1, CURRENT_DRAFT.cast.length * 0.75));
       }
@@ -2544,13 +2896,12 @@
       updateMarketingMeters();
     }
 
-    /* STRICT HYPE FORMULA: 0 BASELINE; CAST MAX 10; FRANCHISE 2-5; REST ONLY FROM MARKETING */
+    /* NEWCOMERS CONTRIBUTE 0 ORGANIC HYPE; ESTABLISHED STARS GIVE 2-10 MAX */
     function computeDraftHypeAndReach() {
       let marketingHype = 0;
       let totalSpend = 0;
       let reachPopulation = 0;
 
-      // 1. Marketing Campaigns (Primary driver of Hype & Audience Reach)
       CURRENT_DRAFT.promos.forEach(pId => {
         const p = TARGETED_MARKETING.find(x => x.id === pId);
         if (p) {
@@ -2560,18 +2911,19 @@
         }
       });
 
-      // 2. Star Cast Organic Hype (Strictly capped at 10 max even if all stars are cast; 2-5 for typical stars)
       let castHype = 0;
       if (CURRENT_DRAFT.cast.length > 0) {
         const rawCastSum = CURRENT_DRAFT.cast.reduce((acc, c) => {
           const actor = ALL_ACTORS.find(a => a.id === c.id);
-          return acc + (actor ? (actor.popularity / 40) : 1);
+          // Newcomers with 0 popularity contribute 0 hype
+          return acc + (actor && actor.popularity > 0 ? (actor.popularity / 40) : 0);
         }, 0);
-        castHype = Math.min(10, Math.max(2, Math.round(rawCastSum)));
-        reachPopulation += (castHype * 1200000);
+        if (rawCastSum > 0) {
+          castHype = Math.min(10, Math.max(2, Math.round(rawCastSum)));
+          reachPopulation += (castHype * 1200000);
+        }
       }
 
-      // 3. Successful Franchise Organic Hype (2 to 5 bonus only if franchise has prior films)
       let franchiseHype = 0;
       if (CURRENT_DRAFT.franchiseId) {
         const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
@@ -2581,7 +2933,6 @@
         }
       }
 
-      // 4. Exclusive Theatre Bonus (+4 hype only if some marketing or cast exists)
       let exclusiveBonus = (CURRENT_DRAFT.releaseFormat === "only_theatres" && (marketingHype > 0 || castHype > 0)) ? 4 : 0;
 
       const totalHype = Math.min(100, marketingHype + castHype + franchiseHype + exclusiveBonus);
@@ -2773,7 +3124,6 @@
       document.getElementById("hud-net-outlay").innerText = (netOutlay > 0 ? "-" : "+") + formatINR(Math.abs(netOutlay));
     }
 
-    /* UNCAPPED SCREENS ALLOCATION DRIVEN BY HYPE */
     function greenlightFilm() {
       if (!CURRENT_DRAFT.title.trim()) { showToast("Enter a project title!", "error"); goToStep(1); return; }
       if (CURRENT_DRAFT.cast.length === 0) { showToast("Cast at least one actor!", "error"); goToStep(2); return; }
@@ -2792,7 +3142,6 @@
       const releaseWeek = GAME_STATE.week + CURRENT_DRAFT.releaseWeekOffset;
       const { totalHype } = computeDraftHypeAndReach();
 
-      // Uncapped Pan-India Screens: Low hype = very few screens; High hype = 10,000+ screens!
       let startingScreens = 0;
       if (CURRENT_DRAFT.releaseFormat !== "ott_satellite") {
         const rawScreens = Math.round(350 + (totalHype * 95) + (getCastStarPower() * 8));
@@ -2845,10 +3194,10 @@
 
     function computeQualityScore() {
       const dir = REAL_DIRECTORS.find(d => d.id === CURRENT_DRAFT.directorId);
-      const dirScore = dir ? dir.skill : 80;
+      const dirScore = dir ? dir.skill : 50;
       const castPower = getCastStarPower();
       const comp = REAL_COMPOSERS.find(c => c.id === CURRENT_DRAFT.composerId);
-      const musicScore = comp ? comp.skill : 75;
+      const musicScore = comp ? comp.skill : 50;
       const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 5 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 2 : 0);
       
       let vfxBonus = 0;
@@ -2874,7 +3223,7 @@
       if (CURRENT_DRAFT.scriptQuality === 'masterpiece') scriptScore = 95;
       else if (CURRENT_DRAFT.scriptQuality === 'masala') scriptScore = 55;
 
-      return Math.min(99, Math.max(50, Math.round((dirScore * 0.30) + (castPower * 0.30) + (scriptScore * 0.20) + (musicScore * 0.10)) + lyricsBonus + vfxBonus + setBonus + locBonus));
+      return Math.min(99, Math.max(35, Math.round((dirScore * 0.30) + (castPower * 0.30) + (scriptScore * 0.20) + (musicScore * 0.10)) + lyricsBonus + vfxBonus + setBonus + locBonus));
     }
 
     function computeBoxOfficeVerdict(film) {
@@ -2971,7 +3320,7 @@
         if (choice.cashDelta < 0) film.cost += Math.abs(choice.cashDelta);
         if (choice.repDelta) GAME_STATE.reputation = Math.min(100, Math.max(10, GAME_STATE.reputation + choice.repDelta));
         if (choice.hypeDelta) film.hype = Math.min(100, Math.max(0, (film.hype || 0) + choice.hypeDelta));
-        if (choice.qualityDelta) film.quality = Math.min(99, Math.max(40, (film.quality || 75) + choice.qualityDelta));
+        if (choice.qualityDelta) film.quality = Math.min(99, Math.max(35, (film.quality || 75) + choice.qualityDelta));
         if (choice.delayWeeks) {
           film.weeksRemaining += choice.delayWeeks;
           film.releaseWeek += choice.delayWeeks;
@@ -3016,7 +3365,6 @@
       });
     }
 
-    /* HYPE-DRIVEN OPENING WEEKEND: LOW HYPE = WEAK OPENING; HIGH HYPE = MASSIVE SURGE */
     function startTheatricalRun(film) {
       if (film.releaseFormat === "ott_satellite") {
         const digitalRoyalties = Math.round(film.inflow * 0.15);
@@ -3048,14 +3396,13 @@
       if (rival) clashMult = (100 + rival.clash) / 100;
       if (film.genre === "Patriotic" && (cycleWeek === 4 || cycleWeek === 33)) clashMult += 0.35;
 
-      const starPower = film.cast.reduce((acc, c) => acc + (ALL_ACTORS.find(a => a.id === c.id)?.popularity || 70), 0) / Math.max(1, film.cast.length);
+      const starPower = Math.max(15, film.cast.reduce((acc, c) => acc + (ALL_ACTORS.find(a => a.id === c.id)?.popularity || 10), 0) / Math.max(1, film.cast.length));
       
-      // Hype is critical: 0 hype yields minimal opening (0.12x); 100 hype yields full blockbuster potential (1.85x)
       const hypeVal = film.hype || 0;
       const hypeFactor = 0.12 + ((hypeVal / 100) * 1.75);
       
       const opening = Math.round((starPower * 2800000) * season.mult * clashMult * (film.quality / 85) * hypeFactor);
-      const share = Math.round(opening * 0.45); // Tougher 45% distributor split
+      const share = Math.round(opening * 0.45);
 
       const theatreEntry = {
         ...film,
@@ -3064,7 +3411,7 @@
         producerEarnings: share,
         weeklyHistory: [opening],
         activeHype: hypeVal,
-        activeScreens: film.screens || 400,
+        activeScreens: film.screens || 350,
         boostTurnsRemaining: 0,
         archivedRecorded: false,
         active: true,
@@ -3073,8 +3420,9 @@
 
       GAME_STATE.cash += share;
       GAME_STATE.theatreRuns.unshift(theatreEntry);
-      addTradeNews(`[${GAME_STATE.studioName}] "${film.title}" released across ${theatreEntry.activeScreens.toLocaleString()} screens, opening to ${formatINR(opening)} in Week 1!`);
-      showToast(`"${film.title}" opened on ${theatreEntry.activeScreens.toLocaleString()} screens! W1: ${formatINR(opening)}`, "success");
+      const w1Verdict = computeBoxOfficeVerdict(theatreEntry);
+      addTradeNews(`[${GAME_STATE.studioName}] "${film.title}" opened on ${theatreEntry.activeScreens.toLocaleString()} screens to ${formatINR(opening)} in Week 1 (${w1Verdict.label})!`);
+      showToast(`"${film.title}" opened to ${formatINR(opening)}! W1 Verdict: ${w1Verdict.label}`, "success");
       triggerConfetti();
     }
 
@@ -3194,7 +3542,6 @@
 
     function closePostPublicityModal() { document.getElementById("modal-post-publicity").classList.remove("active"); }
 
-    /* UNCAPPED SCREEN EXPANSION UPON POST-RELEASE PUBLICITY BOOST */
     function applyPostPublicity(campId) {
       const run = GAME_STATE.theatreRuns.find(r => r.id === ACTIVE_PUBLICITY_RUN_ID);
       const camp = POST_RELEASE_CAMPAIGNS.find(c => c.id === campId);
@@ -3208,7 +3555,7 @@
       GAME_STATE.cash -= camp.fee;
       run.cost += camp.fee;
       run.activeHype = Math.min(100, (run.activeHype || 0) + camp.hypeAdd);
-      run.activeScreens = (run.activeScreens || 500) + camp.screenBoost; // Uncapped screen boost
+      run.activeScreens = (run.activeScreens || 500) + camp.screenBoost;
       run.boostTurnsRemaining = 3;
 
       addTradeNews(`[${GAME_STATE.studioName}] Launched "${camp.name}" for "${run.title}", expanding screens to ${run.activeScreens.toLocaleString()}!`);
@@ -3236,7 +3583,6 @@
       }
     }
 
-    /* FIXED FRANCHISE GROSS GLITCH: PREVENTS DUPLICATE GROSS ADDITION */
     function archiveReleasedMovie(run) {
       if (run.archivedRecorded) return;
       run.archivedRecorded = true;
@@ -3245,6 +3591,9 @@
       run.verdict = verdictObj.label;
       run.verdictCss = verdictObj.css;
       run.verdictDesc = verdictObj.desc;
+
+      // Evolve custom debutants if the film scored a Hit or better!
+      evolveTalentAfterFilmVerdict(run, verdictObj.label);
 
       GAME_STATE.releasedMovies.unshift(JSON.parse(JSON.stringify(run)));
       if (run.franchiseId) {
@@ -3261,6 +3610,7 @@
       renderFranchiseView();
     }
 
+    /* VERDICTS DISPLAY IMMEDIATELY FROM WEEK 1 */
     function renderTheatricalRuns() {
       const container = document.getElementById("theatrical-runs-container");
       const upContainer = document.getElementById("theatrical-upcoming-container");
@@ -3286,7 +3636,6 @@
         container.innerHTML = runningFilms.length === 0 
           ? `<p style="color:var(--text-muted); font-size:0.8rem;">No films currently running in cinema halls.</p>`
           : runningFilms.map(run => {
-            const showVerdict = run.currentWeekOfRun >= 4;
             const currentVerdict = computeBoxOfficeVerdict(run);
             return `
               <div class="theatre-run-card" onclick="openMovieDossier('${run.id}', true)">
@@ -3295,7 +3644,7 @@
                   <div style="flex:1; min-width:0;">
                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                       <span style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright);">${run.title}</span>
-                      ${showVerdict ? `<span class="verdict-pill ${currentVerdict.css}">${currentVerdict.label}</span>` : `<span class="verdict-pill" style="background:var(--bg-surface-elevated); color:var(--text-muted);">Verdict after Wk 4</span>`}
+                      <span class="verdict-pill ${currentVerdict.css}">${currentVerdict.label}</span>
                       ${run.jubilee ? `<span class="jubilee-badge"><i class="fa-solid fa-crown"></i> ${run.jubilee}</span>` : ''}
                     </div>
                     <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">
@@ -3390,7 +3739,6 @@
         return `${actor ? actor.name : 'Star'} (${c.role})`;
       }).join(', ');
       
-      const showVerdict = !isRunning || film.currentWeekOfRun >= 4;
       const v = film.verdict ? { label: film.verdict, css: film.verdictCss, desc: film.verdictDesc } : computeBoxOfficeVerdict(film);
 
       const locsText = (film.locations || []).map(l => {
@@ -3406,11 +3754,11 @@
           <div>
             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:4px;">
               <span class="step-badge">${film.genre}</span>
-              ${showVerdict ? `<span class="verdict-pill ${v.css}">${v.label}</span>` : `<span class="verdict-pill" style="background:var(--bg-surface-elevated); color:var(--text-muted);">Verdict Pending (Wk ${film.currentWeekOfRun}/4)</span>`}
+              <span class="verdict-pill ${v.css}">${v.label}</span>
               ${film.jubilee ? `<span class="jubilee-badge"><i class="fa-solid fa-crown"></i> ${film.jubilee}</span>` : ''}
             </div>
             <h2 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.15rem;">${film.title}</h2>
-            ${showVerdict ? `<div style="font-size:0.72rem; color:var(--text-muted);">${v.desc}</div>` : ''}
+            <div style="font-size:0.72rem; color:var(--text-muted);">${v.desc}</div>
           </div>
           <button class="btn-outline" style="padding:3px 8px; font-size:0.75rem;" onclick="closeMovieDossier()"><i class="fa-solid fa-xmark"></i></button>
         </div>
@@ -3893,12 +4241,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v112f", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v112g", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v112f");
+        const raw = localStorage.getItem("bollywood_tycoon_v112g");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
