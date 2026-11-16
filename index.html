@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.12(i) — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.12(j) — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -343,6 +343,20 @@
       background: rgba(212, 175, 55, 0.18);
       color: var(--gold-bright);
       border: 1px solid var(--gold-primary);
+    }
+
+    .blast-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 0.62rem;
+      font-weight: 900;
+      background: var(--gold-gradient);
+      color: #000;
+      text-transform: uppercase;
+      box-shadow: 0 0 8px rgba(245, 197, 24, 0.6);
     }
 
     .debut-badge {
@@ -752,14 +766,11 @@
       </div>
     </section>
 
-    <!-- 2. NEW MOVIE PIPELINE TAB (8 STEPS) -->
+    <!-- 2. NEW MOVIE PIPELINE TAB (8 STEPS — NO RESET FORM BUTTON) -->
     <section id="tab-new-movie" class="tab-view">
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-clapperboard"></i> Filmmaking Pipeline Wizard</span>
-          <button class="btn-outline" style="font-size:0.7rem; padding:3px 8px;" onclick="resetDraftToFreshStandalone()">
-            <i class="fa-solid fa-rotate-left"></i> Reset Form
-          </button>
         </div>
 
         <div class="wizard-steps-indicator" id="pipeline-steps-indicator">
@@ -789,7 +800,7 @@
 
           <div id="franchise-picker-container" style="display:none; margin-bottom:14px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <label style="font-size:0.75rem; font-weight:700;">Tap a Franchise Tile to Auto-Load Its Last Template:</label>
+              <label style="font-size:0.75rem; font-weight:700;">Tap a Franchise Tile to Auto-Load Its Template:</label>
               <button class="btn-outline" style="font-size:0.7rem; padding:2px 6px;" onclick="openCreateFranchiseModal()">
                 <i class="fa-solid fa-plus"></i> New Franchise
               </button>
@@ -999,7 +1010,7 @@
           <div class="step-header-box">
             <span class="step-badge">Step 6 of 8</span>
             <h3 class="step-heading">Pre-Release Rights (Guaranteed Inflow)</h3>
-            <p class="step-subtext">Successful franchises trigger bidding wars; flop franchises face lower network valuations!</p>
+            <p class="step-subtext">Successful franchises trigger bidding wars; flop franchises face market value drops!</p>
           </div>
 
           <div id="music-rights-section">
@@ -1022,7 +1033,7 @@
             <div>
               <span class="step-badge">Step 7 of 8</span>
               <h3 class="step-heading">Targeted Marketing Campaigns (100-Point Ratio)</h3>
-              <p class="step-subtext">Every campaign holds an exact ratio out of 100. Select all 26 campaigns to hit 100/100 Hype! You can also boost hype anytime before release.</p>
+              <p class="step-subtext">Every campaign holds an exact ratio out of 100. Select all 26 campaigns to hit 100/100 Hype! Use Pre-Release Boost later to break past 100 for a Box Office Blast.</p>
             </div>
             <button class="btn-outline" style="font-size:0.72rem; padding:4px 10px;" onclick="selectAllMarketingCampaigns()">
               <i class="fa-solid fa-check-double"></i> Select All (100 Hype)
@@ -1097,12 +1108,12 @@
       </div>
     </section>
 
-    <!-- 3. IN THEATRES TAB (PRE-RELEASE MARKETING BOOST + LIVE RUNS) -->
+    <!-- 3. IN THEATRES TAB -->
     <section id="tab-theatre-runs" class="tab-view">
       <div class="card">
         <div class="card-title">
           <span><i class="fa-solid fa-hourglass-half"></i> Upcoming Releases on Horizon</span>
-          <span style="font-size:0.75rem; color:var(--gold-bright);">Run Pre-Release Marketing Anytime to Pump Week 1 Screens & Opening!</span>
+          <span style="font-size:0.75rem; color:var(--gold-bright);">Pre-Release Boost can push Hype beyond 100/100 for a Cinema Blast!</span>
         </div>
         <div id="theatrical-upcoming-container">
           <p style="color:var(--text-muted); font-size:0.8rem;">No upcoming productions scheduled yet.</p>
@@ -1248,7 +1259,7 @@
 
   </main>
 
-  <!-- MODAL: PRE-RELEASE MARKETING BOOST (FOR UPCOMING MOVIES) -->
+  <!-- MODAL: PRE-RELEASE MARKETING BOOST (BREAKS 100/100 FOR CINEMA BLAST) -->
   <div class="modal-overlay" id="modal-prerelease-publicity">
     <div class="modal-window">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -1256,10 +1267,10 @@
         <button class="btn-outline" style="padding:2px 8px;" onclick="closePreReleasePublicityModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">
-        Deploy pre-release marketing campaigns before launch! Spend is added directly to the movie's budget and pumps Week 1 cinema screen allocation & opening collections.
+        Deploy pre-release marketing before launch! Even if hype is already 100/100, pre-release boosts break past 100 to ignite a historic <strong>Cinema Blast</strong> on Week 1!
       </p>
-      <div style="background:var(--bg-input); border:1px solid var(--border-color-subtle); border-radius:6px; padding:8px 10px; margin-bottom:10px; font-size:0.78rem; display:flex; justify-content:space-between;">
-        <span>Current Hype: <strong style="color:var(--gold-bright);" id="prerel-current-hype">0/100</strong></span>
+      <div style="background:var(--bg-input); border:1px solid var(--border-color-subtle); border-radius:6px; padding:8px 10px; margin-bottom:10px; font-size:0.78rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+        <span>Current Hype: <strong style="color:var(--gold-bright);" id="prerel-current-hype">0 / 100</strong></span>
         <span>Target Screens: <strong style="color:var(--success);" id="prerel-current-screens">0</strong></span>
       </div>
       <div id="prerelease-publicity-options" style="display:flex; flex-direction:column; gap:8px;"></div>
@@ -1438,12 +1449,12 @@
     </div>
   </div>
 
-  <!-- MODAL: CREATE FRANCHISE -->
+  <!-- MODAL: CREATE FRANCHISE (STARTS COMPLETELY EMPTY) -->
   <div class="modal-overlay" id="modal-franchise">
     <div class="modal-window">
       <h3 style="font-family:var(--font-display); color:var(--gold-bright); font-size:1.1rem; margin-bottom:10px;">Create New Studio Universe</h3>
-      <input type="text" id="new-franchise-name" class="input-field" placeholder="Franchise Name">
-      <textarea id="new-franchise-desc" class="input-field" rows="3" placeholder="Franchise Lore & Theme"></textarea>
+      <input type="text" id="new-franchise-name" class="input-field" placeholder="Enter Franchise Name...">
+      <textarea id="new-franchise-desc" class="input-field" rows="3" placeholder="Franchise Lore & Theme (Optional)"></textarea>
       <div style="display:flex; justify-content:flex-end; gap:6px;">
         <button class="btn-outline" onclick="closeCreateFranchiseModal(true)">Cancel</button>
         <button class="btn-gold" onclick="confirmCreateFranchise()">Register Franchise</button>
@@ -1486,7 +1497,7 @@
   <!-- END OF PART 1 — APPEND PART 2 IMMEDIATELY BELOW THIS LINE -->
 <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.12(i) — COMPLETE TYCOON ENGINE (PART 2)
+       BOLLYWOOD CINEMA v1.12(j) — COMPLETE TYCOON ENGINE (PART 2)
        ========================================================================= */
 
     let CARRIED_OVER_CAPITAL = null;
@@ -1497,7 +1508,7 @@
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v112i_init")) {
+        if (!localStorage.getItem("bollywood_tycoon_v112j_init")) {
           openOnboardingModal(null);
         }
       }
@@ -1632,19 +1643,12 @@
       { id: "colorstvb", name: "Colors Cineplex", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeqXrC15ArSmDq9-1zD2IyHgJHTULk5rsoYNOoi_LeK9grAEBq1Dtgmk0&s=10", baseAdvance: 65000000, mult: 1.0 }
     ];
 
-    /* =========================================================================
-       26 MARKETING CAMPAIGNS:
-       - ALL PRICES STRICTLY INCREASED BY 350% (3.5x)
-       - EXACT HYPE RATIOS SUMMING TO 100.0 WHEN ALL 26 ARE SELECTED
-       ========================================================================= */
     const TARGETED_MARKETING = [
-      // Traditional (4 items -> 10.0 Hype)
       { id: "m_news", name: "Newspaper Spread", fee: 28000000, hype: 2.5, reach: 18000000, cat: "Traditional" },
       { id: "m_mag", name: "Magazine Cover", fee: 14000000, hype: 1.5, reach: 6000000, cat: "Traditional" },
       { id: "m_billboards", name: "Metro Billboards", fee: 63000000, hype: 4.0, reach: 35000000, cat: "Traditional" },
       { id: "m_radio", name: "Radio Jingle Blitz", fee: 21000000, hype: 2.0, reach: 22000000, cat: "Traditional" },
 
-      // Digital & TV (7 items -> 26.0 Hype)
       { id: "m_net_tv", name: "Network TV Prime", fee: 87500000, hype: 6.5, reach: 95000000, cat: "Digital" },
       { id: "m_cable_tv", name: "Cable TV Niche", fee: 35000000, hype: 2.5, reach: 24000000, cat: "Digital" },
       { id: "m_stream_ads", name: "Streaming Pre-Roll", fee: 52500000, hype: 4.0, reach: 42000000, cat: "Digital" },
@@ -1653,20 +1657,17 @@
       { id: "m_desktop", name: "Desktop Web Banners", fee: 17500000, hype: 2.0, reach: 14000000, cat: "Digital" },
       { id: "m_general_promo", name: "Brand Tie-in", fee: 49000000, hype: 3.5, reach: 30000000, cat: "Digital" },
 
-      // Cinema Trailers (4 items -> 12.0 Hype)
       { id: "m_trl_tiny", name: "Trailers (Tiny Theatres)", fee: 10500000, hype: 1.0, reach: 2000000, cat: "Theatrical" },
       { id: "m_trl_small", name: "Trailers (Small Theatres)", fee: 21000000, hype: 2.0, reach: 5000000, cat: "Theatrical" },
       { id: "m_trl_med", name: "Trailer (Medium Theatres)", fee: 42000000, hype: 3.5, reach: 12000000, cat: "Theatrical" },
       { id: "m_trl_large", name: "Trailers (Large Theatres)", fee: 84000000, hype: 5.5, reach: 30000000, cat: "Theatrical" },
 
-      // Press Meets (5 items -> 17.0 Hype)
       { id: "m_press_small", name: "Press (Small Hotel)", fee: 7000000, hype: 1.0, reach: 3000000, cat: "Press" },
       { id: "m_press_med", name: "Press (Medium Hotel)", fee: 17500000, hype: 2.0, reach: 9000000, cat: "Press" },
       { id: "m_press_large", name: "Press (Large Hotel)", fee: 35000000, hype: 3.5, reach: 18000000, cat: "Press" },
       { id: "m_press_5star", name: "Press (5-Star Hotel)", fee: 70000000, hype: 4.5, reach: 35000000, cat: "Press" },
       { id: "m_press_resort", name: "Press (Resort Hotel)", fee: 98000000, hype: 6.0, reach: 45000000, cat: "Press" },
 
-      // Grand Events (6 items -> 35.0 Hype) -> Total = 10 + 26 + 12 + 17 + 35 = 100.0 Exact!
       { id: "m_dig_teaser", name: "Digital Teaser Drop", fee: 35000000, hype: 3.5, reach: 45000000, cat: "Grand" },
       { id: "m_5star_teaser", name: "5-Star Press Teaser", fee: 77000000, hype: 5.0, reach: 65000000, cat: "Grand" },
       { id: "m_dig_trailer", name: "Digital Trailer Launch", fee: 105000000, hype: 6.5, reach: 120000000, cat: "Grand" },
@@ -1675,15 +1676,13 @@
       { id: "m_10city_tour", name: "10 Cities Campus Tour", fee: 140000000, hype: 6.0, reach: 55000000, cat: "Grand" }
     ];
 
-    /* PRE-RELEASE MARKETING BOOSTS (350% SCALED, ADDS TO BUDGET & PUMPS W1 SCREENS/GROSS) */
     const PRE_RELEASE_CAMPAIGNS = [
       { id: "pre_teaser_blitz", name: "Pan-India Digital Teaser & Reels Blitz", fee: 63000000, hypeAdd: 6.5, screenBoost: 650, desc: "Builds nationwide curiosity before release week." },
       { id: "pre_trailer_event", name: "Grand Multiplex Trailer Launch Tour", fee: 122500000, hypeAdd: 12.0, screenBoost: 1350, desc: "Secures prime single-screen and multiplex chains." },
       { id: "pre_reality_tv", name: "National TV Reality Show & Stadium Tour", fee: 192500000, hypeAdd: 18.5, screenBoost: 2200, desc: "Massive family audience pre-booking surge." },
-      { id: "pre_burj_global", name: "Burj Khalifa & Global IMAX Takeover", fee: 315000000, hypeAdd: 28.0, screenBoost: 3500, desc: "Unprecedented global hype pumping Week 1 collections." }
+      { id: "pre_burj_global", name: "Burj Khalifa & Global IMAX Takeover", fee: 315000000, hypeAdd: 28.0, screenBoost: 3500, desc: "Unprecedented global hype breaking 100/100 for a Cinema Blast." }
     ];
 
-    /* POST-RELEASE PUBLICITY BOOSTS (350% SCALED) */
     const POST_RELEASE_CAMPAIGNS = [
       { id: "pr_success_bash", name: "Success Press Meet & Media Party", fee: 63000000, hypeAdd: 10.0, screenBoost: 600, desc: "Celebrate opening momentum with national media." },
       { id: "pr_reels_blitz", name: "Viral Instagram & YouTube Shorts Blitz", fee: 105000000, hypeAdd: 16.0, screenBoost: 1100, desc: "Flood social media with iconic scene clips & music." },
@@ -1873,7 +1872,6 @@
       });
     }
 
-    /* RESETS DRAFT COMPLETELY TO FRESH STANDALONE (NO LAST MOVIE LOADED) */
     function resetDraftToFreshStandalone(silent) {
       CURRENT_DRAFT = getCleanDefaultDraft();
       const titleInput = document.getElementById("movie-title");
@@ -1916,7 +1914,6 @@
       if (!silent) {
         goToStep(1);
         renderAll();
-        showToast("Started fresh standalone project!", "info");
       }
     }
 
@@ -1952,14 +1949,12 @@
         const chosen = FICTIONAL_MOVIE_TITLES[Math.floor(Math.random() * FICTIONAL_MOVIE_TITLES.length)];
         document.getElementById("movie-title").value = chosen;
         CURRENT_DRAFT.title = chosen;
-        syncFranchiseNameFromTitle();
         rememberFranchisePreferences();
         updateCostHUD();
       });
 
       document.getElementById("movie-title").addEventListener("input", (e) => {
         CURRENT_DRAFT.title = e.target.value;
-        syncFranchiseNameFromTitle();
         rememberFranchisePreferences();
       });
 
@@ -2232,7 +2227,7 @@
       GAME_STATE.cash = CARRIED_OVER_CAPITAL !== null ? CARRIED_OVER_CAPITAL : SELECTED_ONBOARD_CAPITAL;
       CARRIED_OVER_CAPITAL = null;
 
-      localStorage.setItem("bollywood_tycoon_v112i_init", "true");
+      localStorage.setItem("bollywood_tycoon_v112j_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
@@ -2559,8 +2554,8 @@
       closeSellCompanyModal();
       triggerConfetti();
 
-      localStorage.removeItem("bollywood_tycoon_v112i");
-      localStorage.removeItem("bollywood_tycoon_v112i_init");
+      localStorage.removeItem("bollywood_tycoon_v112j");
+      localStorage.removeItem("bollywood_tycoon_v112j_init");
 
       GAME_STATE = {
         studioName: "Novus Film Productions",
@@ -2590,9 +2585,6 @@
       }, 1000);
     }
 
-    /* =========================================================================
-       SELL INDIVIDUAL FRANCHISE IP RIGHTS
-       ========================================================================= */
     function getFranchiseValuation(fran) {
       const baseValue = 80000000;
       const filmBonus = (fran.films || 0) * 65000000;
@@ -2825,12 +2817,11 @@
       }
     }
 
-    /* DYNAMIC TALENT FEES: HIKE ON HIT FRANCHISE, DROP ON FLOP FRANCHISE */
     function getFranchiseTalentMultiplier(maxBoost) {
       if (!CURRENT_DRAFT.franchiseId) return 1.0;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (!f || f.films === 0) return 1.0;
-      if (f.lastStatus === "flop") return 0.78; // 22% fee discount when franchise is flopping
+      if (f.lastStatus === "flop") return 0.78;
       return 1.0 + ((f.rating / 100) * maxBoost);
     }
 
@@ -3036,9 +3027,7 @@
       updateCostHUD();
     }
 
-    /* =========================================================================
-       RIGHTS OFFERS: SURGE FOR HIT FRANCHISES, DROP FOR FLOP FRANCHISES
-       ========================================================================= */
+    /* UPDATED TO USE "MARKET DROP" TAG FOR UNSUCCESSFUL FRANCHISES */
     function renderBrandRights() {
       const fran = CURRENT_DRAFT.franchiseId ? GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId) : null;
       const hasPrevFilms = fran && fran.films > 0;
@@ -3053,7 +3042,7 @@
               <img src="${lbl.logo}" class="brand-logo-img" alt="${lbl.name}">
               <div class="brand-name">${lbl.name}</div>
               <div class="brand-advance">+${formatINR(calculateMusicAdvance(lbl))}</div>
-              ${isFlopFran ? `<div class="rival-drop-tag">-30% Market Drop</div>` : ''}
+              ${isFlopFran ? `<div class="rival-drop-tag">-30% MARKET DROP</div>` : ''}
               ${isRivalOutbid ? `<div class="rival-bid-tag">+28% RIVAL BID</div>` : ''}
               ${isRenewalSurge ? `<div class="rival-bid-tag" style="background:rgba(212,175,55,0.2); color:var(--gold-bright);">+15% RENEWAL</div>` : ''}
             </div>
@@ -3070,7 +3059,7 @@
               <img src="${p.logo}" class="brand-logo-img" alt="${p.name}">
               <div class="brand-name">${p.name}</div>
               <div class="brand-advance">+${formatINR(calculateOttAdvance(p))}</div>
-              ${isFlopFran ? `<div class="rival-drop-tag">-35% Market Drop</div>` : ''}
+              ${isFlopFran ? `<div class="rival-drop-tag">-35% MARKET DROP</div>` : ''}
               ${isRivalOutbid ? `<div class="rival-bid-tag">+35% RIVAL BID</div>` : ''}
               ${isRenewalSurge ? `<div class="rival-bid-tag" style="background:rgba(212,175,55,0.2); color:var(--gold-bright);">+20% RENEWAL</div>` : ''}
             </div>
@@ -3086,7 +3075,7 @@
             <img src="${ch.logo}" class="brand-logo-img" alt="${ch.name}">
             <div class="brand-name">${ch.name}</div>
             <div class="brand-advance">+${formatINR(calculateSatelliteAdvance(ch))}</div>
-            ${isFlopFran ? `<div class="rival-drop-tag">-28% Market Drop</div>` : ''}
+            ${isFlopFran ? `<div class="rival-drop-tag">-28% MARKET DROP</div>` : ''}
             ${isRivalOutbid ? `<div class="rival-bid-tag">+25% RIVAL BID</div>` : ''}
             ${isRenewalSurge ? `<div class="rival-bid-tag" style="background:rgba(212,175,55,0.2); color:var(--gold-bright);">+12% RENEWAL</div>` : ''}
           </div>
@@ -3102,7 +3091,7 @@
       if (!CURRENT_DRAFT.franchiseId) return 1.0;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (!f || f.films === 0) return 1.0;
-      if (f.lastStatus === "flop") return 0.72; // Unsuccessful franchise reduces valuations
+      if (f.lastStatus === "flop") return 0.72;
       return 1.0 + ((f.rating / 100) * 0.85);
     }
 
@@ -3212,7 +3201,6 @@
       updateMarketingMeters();
     }
 
-    /* EXACT 100-POINT MARKETING RATIO: SELECTING ALL 26 CAMPAIGNS REACHES 100.0 */
     function computeDraftHypeAndReach() {
       let marketingHype = 0;
       let totalSpend = 0;
@@ -3227,7 +3215,6 @@
         }
       });
 
-      // Round to clean 1 decimal place so all 26 sum cleanly to 100.0
       marketingHype = Math.round(marketingHype * 10) / 10;
 
       let castHype = 0;
@@ -3443,9 +3430,8 @@
       document.getElementById("hud-net-outlay").innerText = (netOutlay > 0 ? "-" : "+") + formatINR(Math.abs(netOutlay));
     }
 
-    /* HYPE-DRIVEN SCREEN ALLOCATION: NO HYPE = VERY FEW SCREENS; HIGH HYPE = MASSIVE SCREENS */
     function computeScreensFromHype(hypeVal) {
-      if (hypeVal <= 0) return 50; // Zero hype = near-zero screens
+      if (hypeVal <= 0) return 50;
       if (hypeVal < 10) return Math.round(hypeVal * 35);
       return Math.round(350 + (hypeVal * 105) + (getCastStarPower() * 6));
     }
@@ -3511,7 +3497,6 @@
       showToast(`"${newFilm.title}" greenlit! ${screenMsg}`, "success");
       triggerConfetti();
 
-      // Reset draft completely to clean Standalone for next project!
       resetDraftToFreshStandalone(true);
       goToStep(1);
       switchTab("tab-theatre-runs");
@@ -3647,7 +3632,7 @@
         if (choice.cashDelta < 0) film.cost += Math.abs(choice.cashDelta);
         if (choice.repDelta) GAME_STATE.reputation = Math.min(100, Math.max(10, GAME_STATE.reputation + choice.repDelta));
         if (choice.hypeDelta) {
-          film.hype = Math.min(100, Math.max(0, (film.hype || 0) + choice.hypeDelta));
+          film.hype = Math.max(0, (film.hype || 0) + choice.hypeDelta);
           if (film.releaseFormat !== "ott_satellite") {
             film.screens = computeScreensFromHype(film.hype);
           }
@@ -3697,7 +3682,7 @@
       });
     }
 
-    /* HYPE -> SCREENS -> BOX OFFICE COLLECTION ENGINE */
+    /* HYPE > 100 TRIGGERS CINEMA BLAST MULTIPLIER IN WEEK 1 BOX OFFICE */
     function startTheatricalRun(film) {
       if (film.releaseFormat === "ott_satellite") {
         const digitalRoyalties = Math.round(film.inflow * 0.15);
@@ -3734,9 +3719,12 @@
       const hypeVal = film.hype || 0;
       const activeScreens = film.screens || computeScreensFromHype(hypeVal);
       
-      // If no hype -> very few screens -> opening collection drops sharply
+      // Overdrive multiplier when hype breaks past 100/100!
+      const isCinemaBlast = hypeVal > 100;
+      const blastBonus = isCinemaBlast ? (1 + ((hypeVal - 100) * 0.035)) : 1.0;
+      
       const screenMultiplier = activeScreens / 3500;
-      const hypeFactor = hypeVal <= 0 ? 0.04 : (0.10 + ((hypeVal / 100) * 1.95));
+      const hypeFactor = hypeVal <= 0 ? 0.04 : (0.10 + ((Math.min(100, hypeVal) / 100) * 1.95)) * blastBonus;
       
       const opening = Math.max(250000, Math.round((starPower * 2600000) * screenMultiplier * season.mult * clashMult * (film.quality / 85) * hypeFactor));
       const share = Math.round(opening * 0.45);
@@ -3749,6 +3737,7 @@
         weeklyHistory: [opening],
         activeHype: hypeVal,
         activeScreens: activeScreens,
+        isCinemaBlast: isCinemaBlast,
         boostTurnsRemaining: 0,
         archivedRecorded: false,
         active: true,
@@ -3758,8 +3747,9 @@
       GAME_STATE.cash += share;
       GAME_STATE.theatreRuns.unshift(theatreEntry);
       const w1Verdict = computeBoxOfficeVerdict(theatreEntry);
-      addTradeNews(`[${GAME_STATE.studioName}] "${film.title}" opened on ${theatreEntry.activeScreens.toLocaleString()} screens to ${formatINR(opening)} in Week 1 (${w1Verdict.label})!`);
-      showToast(`"${film.title}" opened to ${formatINR(opening)}! W1 Verdict: ${w1Verdict.label}`, "success");
+      const blastLog = isCinemaBlast ? " [CINEMA BLAST!]" : "";
+      addTradeNews(`[${GAME_STATE.studioName}] "${film.title}"${blastLog} opened on ${theatreEntry.activeScreens.toLocaleString()} screens to ${formatINR(opening)} in Week 1 (${w1Verdict.label})!`);
+      showToast(`"${film.title}"${blastLog} opened to ${formatINR(opening)}! W1: ${w1Verdict.label}`, "success");
       triggerConfetti();
     }
 
@@ -3793,14 +3783,14 @@
           if (run.quality >= 92) hypeDecay = 3;
           else if (run.quality >= 85) hypeDecay = 6;
           else if (run.quality < 65) hypeDecay = 18;
-          run.activeHype = Math.max(0, run.activeHype - hypeDecay);
+          run.activeHype = Math.max(0, Math.round((run.activeHype - hypeDecay) * 10) / 10);
         }
 
-        // If no hype, active screens drop rapidly and box office goes down
         if (run.activeHype <= 0) {
           run.activeScreens = 0;
         } else if (publicitySurgeMult === 1.0) {
-          const screenDecayRatio = (run.activeHype / 100) * (run.quality / 80);
+          const effectiveHype = Math.min(100, run.activeHype);
+          const screenDecayRatio = (effectiveHype / 100) * (run.quality / 80);
           run.activeScreens = Math.max(0, Math.round(run.activeScreens * Math.min(1.05, Math.max(0.42, screenDecayRatio))));
         }
 
@@ -3858,15 +3848,15 @@
       });
     }
 
-    /* =========================================================================
-       PRE-RELEASE MARKETING BOOST (ANYTIME BEFORE LAUNCH: 10W OR 1W OUT)
-       ========================================================================= */
+    /* PRE-RELEASE MARKETING BOOST BREAKS PAST 100/100 FOR CINEMA BLAST */
     function openPreReleasePublicityModal(prodId) {
       ACTIVE_PREREL_PROD_ID = prodId;
       const prod = GAME_STATE.activeProductions.find(p => p.id === prodId);
       if (!prod) return;
 
-      document.getElementById("prerel-current-hype").innerText = `${prod.hype || 0} / 100`;
+      const hVal = prod.hype || 0;
+      const blastTag = hVal > 100 ? ` <span class="blast-badge"><i class="fa-solid fa-fire"></i> CINEMA BLAST!</span>` : "";
+      document.getElementById("prerel-current-hype").innerHTML = `${hVal} / 100${blastTag}`;
       document.getElementById("prerel-current-screens").innerText = prod.releaseFormat === "ott_satellite" ? "Direct Digital" : `${(prod.screens || 0).toLocaleString()} Screens`;
 
       const listContainer = document.getElementById("prerelease-publicity-options");
@@ -3876,7 +3866,7 @@
             <div style="font-weight:700; font-size:0.84rem; color:var(--gold-bright);">${c.name}</div>
             <div style="font-size:0.72rem; color:var(--text-muted);">${c.desc}</div>
             <div style="font-size:0.72rem; color:var(--success); font-weight:700; margin-top:2px;">
-              +${c.hypeAdd} Pre-Release Hype • +${c.screenBoost} Week 1 Screens
+              +${c.hypeAdd} Hype (Breaks 100+!) • +${c.screenBoost} Week 1 Screens
             </div>
           </div>
           <button class="btn-gold" style="white-space:nowrap; font-size:0.76rem;" onclick="applyPreReleasePublicity('${c.id}')">
@@ -3903,17 +3893,19 @@
       }
 
       GAME_STATE.cash -= camp.fee;
-      prod.cost += camp.fee; // Spend adds into movie budget
-      prod.hype = Math.min(100, Math.round(((prod.hype || 0) + camp.hypeAdd) * 10) / 10);
+      prod.cost += camp.fee;
+      // Uncapped overdrive past 100!
+      prod.hype = Math.round(((prod.hype || 0) + camp.hypeAdd) * 10) / 10;
       if (prod.releaseFormat !== "ott_satellite") {
         prod.screens = (prod.screens || 350) + camp.screenBoost;
       }
 
-      addTradeNews(`[${GAME_STATE.studioName}] Deployed "${camp.name}" ahead of "${prod.title}" release — Hype surged to ${prod.hype}/100!`);
+      const blastMsg = prod.hype > 100 ? " (CINEMA BLAST OVERDRIVE!)" : "";
+      addTradeNews(`[${GAME_STATE.studioName}] Deployed "${camp.name}" ahead of "${prod.title}" release — Hype surged to ${prod.hype}/100${blastMsg}!`);
       saveState();
       closePreReleasePublicityModal();
       renderAll();
-      showToast(`"${prod.title}" Hype boosted to ${prod.hype}/100! Target Screens: ${(prod.screens || 0).toLocaleString()}`, "success");
+      showToast(`"${prod.title}" Hype surged to ${prod.hype}/100${blastMsg}!`, "success");
       triggerConfetti();
     }
 
@@ -3955,7 +3947,7 @@
 
       GAME_STATE.cash -= camp.fee;
       run.cost += camp.fee;
-      run.activeHype = Math.min(100, (run.activeHype || 0) + camp.hypeAdd);
+      run.activeHype = Math.round(((run.activeHype || 0) + camp.hypeAdd) * 10) / 10;
       run.activeScreens = (run.activeScreens || 500) + camp.screenBoost;
       run.boostTurnsRemaining = 3;
 
@@ -4025,22 +4017,28 @@
       if (upContainer) {
         upContainer.innerHTML = GAME_STATE.activeProductions.length === 0
           ? `<p style="color:var(--text-muted); font-size:0.8rem;">No upcoming productions scheduled yet.</p>`
-          : GAME_STATE.activeProductions.map(prod => `
-            <div style="display:flex; align-items:center; gap:10px; background:var(--bg-surface); border:1px solid var(--border-color-subtle); border-radius:8px; padding:8px; margin-bottom:8px; flex-wrap:wrap;">
-              <img src="${prod.posterUrl}" style="width:42px; height:58px; border-radius:4px; object-fit:cover;">
-              <div style="flex:1; min-width:160px;">
-                <div style="font-family:var(--font-display); font-size:0.88rem; color:var(--gold-bright);">${prod.title}</div>
-                <div style="font-size:0.72rem; color:var(--text-muted);">${prod.genre} • Releasing in ${prod.weeksRemaining} Wks (Week ${prod.releaseWeek})</div>
-                <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">
-                  Pre-Release Hype: ${prod.hype || 0}/100 | ${prod.releaseFormat === 'ott_satellite' ? 'Direct Digital Stream' : `Target Screens: ${(prod.screens || 0).toLocaleString()}`}
+          : GAME_STATE.activeProductions.map(prod => {
+            const isBlast = (prod.hype || 0) > 100;
+            return `
+              <div style="display:flex; align-items:center; gap:10px; background:var(--bg-surface); border:1px solid ${isBlast ? 'var(--gold-bright)' : 'var(--border-color-subtle)'}; border-radius:8px; padding:8px; margin-bottom:8px; flex-wrap:wrap;">
+                <img src="${prod.posterUrl}" style="width:42px; height:58px; border-radius:4px; object-fit:cover;">
+                <div style="flex:1; min-width:160px;">
+                  <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <span style="font-family:var(--font-display); font-size:0.88rem; color:var(--gold-bright);">${prod.title}</span>
+                    ${isBlast ? `<span class="blast-badge"><i class="fa-solid fa-fire"></i> CINEMA BLAST!</span>` : ''}
+                  </div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">${prod.genre} • Releasing in ${prod.weeksRemaining} Wks (Week ${prod.releaseWeek})</div>
+                  <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">
+                    Pre-Release Hype: ${prod.hype || 0}/100 | ${prod.releaseFormat === 'ott_satellite' ? 'Direct Digital Stream' : `Target Screens: ${(prod.screens || 0).toLocaleString()}`}
+                  </div>
+                  <div style="font-size:0.7rem; color:var(--text-muted);">Current Budget: <strong style="color:var(--danger);">${formatINR(prod.cost)}</strong></div>
                 </div>
-                <div style="font-size:0.7rem; color:var(--text-muted);">Current Budget: <strong style="color:var(--danger);">${formatINR(prod.cost)}</strong></div>
+                <button class="btn-gold" style="font-size:0.7rem; padding:6px 10px;" onclick="openPreReleasePublicityModal('${prod.id}')">
+                  <i class="fa-solid fa-fire"></i> Boost Pre-Release Hype
+                </button>
               </div>
-              <button class="btn-gold" style="font-size:0.7rem; padding:6px 10px;" onclick="openPreReleasePublicityModal('${prod.id}')">
-                <i class="fa-solid fa-fire"></i> Boost Pre-Release Hype
-              </button>
-            </div>
-          `).join('');
+            `;
+          }).join('');
       }
 
       if (container) {
@@ -4057,6 +4055,7 @@
                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                       <span style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright);">${run.title}</span>
                       <span class="verdict-pill ${currentVerdict.css}">${currentVerdict.label}</span>
+                      ${run.isCinemaBlast ? `<span class="blast-badge"><i class="fa-solid fa-fire"></i> CINEMA BLAST</span>` : ''}
                       ${run.jubilee ? `<span class="jubilee-badge"><i class="fa-solid fa-crown"></i> ${run.jubilee}</span>` : ''}
                     </div>
                     <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">
@@ -4262,18 +4261,17 @@
     }
 
     /* =========================================================================
-       FULL FRANCHISE TEMPLATE LOAD & SAVE (INCLUDES LAST TITLE, POSTER, CAST, MARKETING)
+       FRANCHISE TEMPLATE LOAD & SAVE (COPIES FRANCHISE NAME FIRST, THEN CONTINUES)
        ========================================================================= */
     function autoLoadFranchisePackage(franId) {
       const f = GAME_STATE.franchises.find(x => x.id === franId);
-      if (!f || !f.savedPackage) return;
-      
-      const pkg = f.savedPackage;
-      if (pkg.title) {
-        CURRENT_DRAFT.title = pkg.title;
-        const titleInput = document.getElementById("movie-title");
-        if (titleInput) titleInput.value = pkg.title;
-      }
+      if (!f) return;
+
+      const pkg = f.savedPackage || {};
+      const titleToUse = pkg.title || f.name;
+      CURRENT_DRAFT.title = titleToUse;
+      const titleInput = document.getElementById("movie-title");
+      if (titleInput) titleInput.value = titleToUse;
 
       if (pkg.posterUrl) {
         CURRENT_DRAFT.posterUrl = pkg.posterUrl;
@@ -4343,7 +4341,7 @@
       renderBrandRights();
       renderMarketingPromos();
       updateCostHUD();
-      showToast(`Loaded full template from ${f.name}!`, "info");
+      showToast(`Loaded template from ${f.name}!`, "info");
     }
 
     function rememberFranchisePreferences(recordRightsPartners) {
@@ -4351,7 +4349,7 @@
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (f) {
         f.savedPackage = {
-          title: CURRENT_DRAFT.title,
+          title: CURRENT_DRAFT.title || f.name,
           posterUrl: CURRENT_DRAFT.posterUrl,
           customPosterUploaded: CURRENT_DRAFT.customPosterUploaded,
           genre: CURRENT_DRAFT.genre,
@@ -4379,7 +4377,6 @@
       }
     }
 
-    /* SHOWS FRANCHISE TILES WITHOUT BY-DEFAULT SELECTING ANY UNTIL USER TAPS ONE */
     function toggleFranchiseSelect(isFranchise) {
       const container = document.getElementById("franchise-picker-container");
       container.style.display = isFranchise ? "block" : "none";
@@ -4388,7 +4385,7 @@
         if (GAME_STATE.franchises.length === 0) {
           openCreateFranchiseModal();
         } else {
-          CURRENT_DRAFT.franchiseId = null; // Leave unselected until player taps a franchise tile
+          CURRENT_DRAFT.franchiseId = null;
           renderPipelineFranchiseTiles();
         }
       } else {
@@ -4403,15 +4400,6 @@
       renderBrandRights();
       updateCostHUD();
       updateMarketingMeters();
-    }
-
-    function syncFranchiseNameFromTitle() {
-      if (document.getElementById("modal-franchise").classList.contains("active")) {
-        const titleVal = document.getElementById("movie-title").value.trim();
-        if (titleVal) {
-          document.getElementById("new-franchise-name").value = `${titleVal} Universe`;
-        }
-      }
     }
 
     function renderPipelineFranchiseTiles() {
@@ -4484,9 +4472,10 @@
       }
     }
 
+    /* NEW FRANCHISE INPUT STARTS EMPTY; COPIES NAME INTO PROJECT TITLE UPON CREATION */
     function openCreateFranchiseModal() {
-      const titleVal = document.getElementById("movie-title").value.trim();
-      document.getElementById("new-franchise-name").value = titleVal ? `${titleVal} Universe` : "";
+      document.getElementById("new-franchise-name").value = "";
+      document.getElementById("new-franchise-desc").value = "";
       document.getElementById("modal-franchise").classList.add("active");
     }
     
@@ -4506,6 +4495,11 @@
       const newFran = { id: "fran_" + Date.now(), name, desc, films: 0, gross: 0, rating: 80, lastStatus: "neutral", savedPackage: null };
       GAME_STATE.franchises.push(newFran);
       CURRENT_DRAFT.franchiseId = newFran.id;
+
+      // Copy franchise name directly into Project Title for the first movie
+      CURRENT_DRAFT.title = name;
+      const titleInput = document.getElementById("movie-title");
+      if (titleInput) titleInput.value = name;
 
       document.querySelectorAll("#franchise-model-pills .curved-choice-btn").forEach(b => {
         b.classList.toggle("active", b.dataset.model === "franchise");
@@ -4527,7 +4521,7 @@
       updateCostHUD();
       updateMarketingMeters();
       addTradeNews(`[${GAME_STATE.studioName}] Registered a brand-new cinematic universe: "${name}"!`);
-      showToast(`Franchise "${name}" created & selected!`, "success");
+      showToast(`Franchise "${name}" created & copied to Project Title!`, "success");
     }
 
     function renderCalendar() {
@@ -4698,12 +4692,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v112i", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v112j", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v112i");
+        const raw = localStorage.getItem("bollywood_tycoon_v112j");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
