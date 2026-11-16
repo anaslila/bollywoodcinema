@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Bollywood Cinema v1.12(e) — Studio Tycoon</title>
+  <title>Bollywood Cinema v1.12(f) — Studio Tycoon</title>
   
   <link rel="icon" type="image/jpeg" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
   <link rel="apple-touch-icon" href="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80">
@@ -127,7 +127,7 @@
       outline: none;
       white-space: nowrap;
       width: 100%;
-      max-width: 260px;
+      max-width: 280px;
     }
     .studio-name-input:focus { border-color: var(--gold-primary); background: var(--bg-surface); }
 
@@ -165,7 +165,7 @@
       box-shadow: 0 2px 10px rgba(212, 175, 55, 0.35);
     }
 
-    /* Mobile Bottom Footer Dock */
+    /* Mobile Bottom Footer Dock (Treasury Left, Advance Center, Week & Fame Right) */
     .mobile-bottom-footer {
       display: none;
       position: fixed;
@@ -176,40 +176,62 @@
       background: var(--bg-header);
       backdrop-filter: blur(16px);
       border-top: 1px solid var(--border-color);
-      padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
     }
-    .mobile-footer-cash { display: flex; flex-direction: column; }
-    .mobile-footer-cash-lbl { font-size: 0.62rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
-    .mobile-footer-cash-val { font-size: 0.98rem; font-weight: 800; color: var(--success); }
+    .mobile-footer-cash { display: flex; flex-direction: column; min-width: 72px; }
+    .mobile-footer-cash-lbl { font-size: 0.58rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
+    .mobile-footer-cash-val { font-size: 0.9rem; font-weight: 800; color: var(--success); white-space: nowrap; }
+
     .btn-advance-mobile {
       background: var(--gold-gradient);
       color: #0b0b0e;
       border: 1.5px solid #fff3b0;
-      padding: 10px 24px;
-      border-radius: 26px;
+      padding: 9px 18px;
+      border-radius: 24px;
       font-weight: 900;
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       font-family: var(--font-display);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
+      gap: 6px;
       box-shadow: 0 4px 16px rgba(212, 175, 55, 0.45);
-      margin: 0 auto;
+      white-space: nowrap;
     }
     .btn-advance-mobile:active { transform: scale(0.96); }
 
+    .mobile-footer-right-stats {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      justify-content: flex-end;
+    }
+    .mobile-mini-badge {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color-subtle);
+      padding: 4px 7px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      white-space: nowrap;
+    }
+    .mobile-mini-badge i { color: var(--gold-bright); font-size: 0.7rem; }
+
     @media (max-width: 768px) {
       .btn-advance-desktop { display: none !important; }
-      .header-stats .badge-cash { display: none !important; }
+      .header-stats { display: none !important; }
       .mobile-bottom-footer { display: flex; }
-      .studio-name-input { max-width: 195px; font-size: 0.9rem; }
+      .studio-name-input { max-width: 240px; font-size: 0.92rem; }
       main.app-viewport { padding-bottom: 155px !important; }
       .floating-wizard-controls { bottom: 112px !important; }
       .cost-inflow-hud { bottom: 58px !important; border-radius: 8px; padding: 8px 10px; }
@@ -219,14 +241,15 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-color-subtle);
       color: var(--gold-primary);
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
+      flex-shrink: 0;
     }
 
     nav.tab-nav {
@@ -480,7 +503,6 @@
 
     .news-pagination-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-color-subtle); }
 
-    /* Adaptive Light & Dark Toast Notifications */
     #toast-container {
       position: fixed;
       top: 98px;
@@ -631,7 +653,7 @@
 
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- Sticky Header -->
+  <!-- Sticky Header (Clean Studio Name & Theme Toggle on Mobile) -->
   <header class="main-header">
     <div class="brand-section">
       <img src="https://img.magnific.com/free-vector/realistic-bollywood-cinema-sign-illustration_23-2148470397.jpg?semt=ais_hybrid&w=740&q=80" alt="App Icon" class="brand-icon">
@@ -654,16 +676,19 @@
     </div>
   </header>
 
-  <!-- Mobile Bottom Footer Dock -->
+  <!-- Mobile Bottom Footer Dock (Treasury Left, Advance Center, Week & Fame Right) -->
   <div class="mobile-bottom-footer">
     <div class="mobile-footer-cash">
-      <span class="mobile-footer-cash-lbl">Treasury Funds</span>
+      <span class="mobile-footer-cash-lbl">Treasury</span>
       <span class="mobile-footer-cash-val" id="mobile-stat-cash">₹50 Cr</span>
     </div>
     <button class="btn-advance-mobile" id="btn-advance-week-mobile">
-      <i class="fa-solid fa-forward-step"></i> ADVANCE WEEK
+      <i class="fa-solid fa-forward-step"></i> ADVANCE
     </button>
-    <div style="width: 48px;"></div>
+    <div class="mobile-footer-right-stats">
+      <div class="mobile-mini-badge"><i class="fa-solid fa-calendar-week"></i><span>W<strong id="mobile-stat-week">1</strong></span></div>
+      <div class="mobile-mini-badge"><i class="fa-solid fa-trophy"></i><strong id="mobile-stat-rep">75</strong></div>
+    </div>
   </div>
 
   <!-- Tab Navigation -->
@@ -861,7 +886,7 @@
           <div class="step-header-box">
             <span class="step-badge">Step 2 of 8</span>
             <h3 class="step-heading">Star Cast & Ensemble</h3>
-            <p class="step-subtext">Cast size directly impacts international shooting travel & accommodation budgets!</p>
+            <p class="step-subtext">Cast size impacts travel & stay budgets. High hype comes primarily from marketing!</p>
           </div>
           <div class="tiles-grid" id="actors-selection-grid"></div>
         </div>
@@ -905,10 +930,10 @@
                 <i class="fa-solid fa-pen"></i> Standard Commercial (₹15L)
               </button>
               <button class="curved-choice-btn" data-tier="poetic" onclick="setLyricsQuality('poetic', this)">
-                <i class="fa-solid fa-feather-pointed"></i> Poetic Urdu / Sufi (₹60L, +Hype)
+                <i class="fa-solid fa-feather-pointed"></i> Poetic Urdu / Sufi (₹60L)
               </button>
               <button class="curved-choice-btn" data-tier="legend" onclick="setLyricsQuality('legend', this)">
-                <i class="fa-solid fa-award"></i> Legendary Maestro Lyricist (₹1.8Cr, +Awards & Holds)
+                <i class="fa-solid fa-award"></i> Legendary Maestro Lyricist (₹1.8Cr)
               </button>
             </div>
           </div>
@@ -938,7 +963,6 @@
             <p class="step-subtext">Successful franchises trigger bidding wars across Music, OTT, and Satellite networks!</p>
           </div>
 
-          <!-- Hidden automatically if 0 (Songless) is selected -->
           <div id="music-rights-section">
             <label style="font-size:0.78rem; font-weight:700;">Music Rights Partner:</label>
             <div class="brand-tiles-grid" id="music-rights-grid"></div>
@@ -958,21 +982,21 @@
           <div class="step-header-box">
             <span class="step-badge">Step 7 of 8</span>
             <h3 class="step-heading">Targeted Marketing Campaigns</h3>
-            <p class="step-subtext">Uncapped India population reach across 1,48,12,35,356 citizens (Adult cinema target demographic)!</p>
+            <p class="step-subtext">Without marketing, organic hype starts near 0! Invest heavily to drive Pan-India screen allocation & footfalls.</p>
           </div>
 
           <div class="marketing-stats-banner">
             <div>
               <div class="m-stat-title">Audience Reach (India)</div>
-              <div class="m-stat-val" id="m-stat-reach">1.20 Cr</div>
+              <div class="m-stat-val" id="m-stat-reach">0 People</div>
             </div>
             <div>
               <div class="m-stat-title">Campaign Hype Meter</div>
-              <div class="m-stat-val" id="m-stat-hype">49 / 100</div>
+              <div class="m-stat-val" id="m-stat-hype">0 / 100</div>
             </div>
             <div>
               <div class="m-stat-title">Total Promo Spend</div>
-              <div class="m-stat-val" id="m-stat-cost">₹4.00 Cr</div>
+              <div class="m-stat-val" id="m-stat-cost">₹0</div>
             </div>
           </div>
 
@@ -1295,7 +1319,7 @@
   <!-- END OF PART 1 — APPEND PART 2 IMMEDIATELY BELOW THIS LINE -->
 <script>
     /* =========================================================================
-       BOLLYWOOD CINEMA v1.12(e) — COMPLETE TYCOON ENGINE (PART 2)
+       BOLLYWOOD CINEMA v1.12(f) — COMPLETE TYCOON ENGINE (PART 2)
        ========================================================================= */
 
     let CARRIED_OVER_CAPITAL = null;
@@ -1304,7 +1328,7 @@
       const splash = document.getElementById("splash-screen");
       if (splash && !splash.classList.contains("hidden")) {
         splash.classList.add("hidden");
-        if (!localStorage.getItem("bollywood_tycoon_v112e_init")) {
+        if (!localStorage.getItem("bollywood_tycoon_v112f_init")) {
           openOnboardingModal(null);
         }
       }
@@ -1417,111 +1441,112 @@
       { id: "loc_scotland", name: "Scottish Highlands", baseCost: 16000000, icon: "fa-cloud-rain", appeal: 12 }
     ];
 
-    /* YRF MUSIC LOGO LOCKED IN */
     const MUSIC_LABELS = [
-      { id: "tseries", name: "T-Series", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-kB66e_3TTITEHRMQKX5qZqNCygVnO6xSOxlbn3a1GQ&s=10", baseAdvance: 150000000 },
-      { id: "sonymusic", name: "Sony Music", logo: "https://images.seeklogo.com/logo-png/26/1/sony-music-logo-png_seeklogo-261658.png", baseAdvance: 120000000 },
-      { id: "yrfmusic", name: "YRF Music", logo: "https://i.postimg.cc/dVJxKhw9/image.png", baseAdvance: 140000000 },
-      { id: "saregama", name: "Saregama", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCmcL_dl7IGqGbugQN-jIQF8W-ADuvbNaP41du-tG-_s-TQsE7Hj-j1DZk&s=10", baseAdvance: 100000000 }
+      { id: "tseries", name: "T-Series", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-kB66e_3TTITEHRMQKX5qZqNCygVnO6xSOxlbn3a1GQ&s=10", baseAdvance: 95000000 },
+      { id: "sonymusic", name: "Sony Music", logo: "https://images.seeklogo.com/logo-png/26/1/sony-music-logo-png_seeklogo-261658.png", baseAdvance: 80000000 },
+      { id: "yrfmusic", name: "YRF Music", logo: "https://i.postimg.cc/dVJxKhw9/image.png", baseAdvance: 90000000 },
+      { id: "saregama", name: "Saregama", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCmcL_dl7IGqGbugQN-jIQF8W-ADuvbNaP41du-tG-_s-TQsE7Hj-j1DZk&s=10", baseAdvance: 65000000 }
     ];
 
     const OTT_PLATFORMS = [
-      { id: "netflix", name: "Netflix", logo: "https://images.ctfassets.net/4cd45et68cgf/Rx83JoRDMkYNlMC9MKzcB/2b14d5a59fc3937afd3f03191e19502d/Netflix-Symbol.png?w=700&h=456", baseAdvance: 350000000, mult: 1.3 },
-      { id: "amazon", name: "Amazon Prime", logo: "https://www.rd.com/wp-content/uploads/2025/06/Amazon-Prime_via-amazon.com_.jpg", baseAdvance: 320000000, mult: 1.25 },
-      { id: "jiohotstar", name: "JioHotstar", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf1vDRL7wXVClmeMxyc5DRKw1RQ2TNdhLjS23sYsyZZRnpFapqt0OtXQC3&s=10", baseAdvance: 280000000, mult: 1.2 },
-      { id: "sonyliv", name: "Sony LIV", logo: "https://upload.wikimedia.org/wikipedia/commons/f/f7/SonyLIV_2020.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original", baseAdvance: 180000000, mult: 1.1 },
-      { id: "zee5", name: "ZEE5", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5a/Zee5-official-logo.jpeg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original", baseAdvance: 160000000, mult: 1.05 }
+      { id: "netflix", name: "Netflix", logo: "https://images.ctfassets.net/4cd45et68cgf/Rx83JoRDMkYNlMC9MKzcB/2b14d5a59fc3937afd3f03191e19502d/Netflix-Symbol.png?w=700&h=456", baseAdvance: 220000000, mult: 1.25 },
+      { id: "amazon", name: "Amazon Prime", logo: "https://www.rd.com/wp-content/uploads/2025/06/Amazon-Prime_via-amazon.com_.jpg", baseAdvance: 200000000, mult: 1.2 },
+      { id: "jiohotstar", name: "JioHotstar", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf1vDRL7wXVClmeMxyc5DRKw1RQ2TNdhLjS23sYsyZZRnpFapqt0OtXQC3&s=10", baseAdvance: 180000000, mult: 1.15 },
+      { id: "sonyliv", name: "Sony LIV", logo: "https://upload.wikimedia.org/wikipedia/commons/f/f7/SonyLIV_2020.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original", baseAdvance: 120000000, mult: 1.05 },
+      { id: "zee5", name: "ZEE5", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5a/Zee5-official-logo.jpeg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original", baseAdvance: 105000000, mult: 1.0 }
     ];
 
     const SATELLITE_CHANNELS = [
-      { id: "stargold", name: "Star Gold", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg4tFcXA9RLE-xLf2trV2orWJtK7PT2CzU8AeT-drS7A&s=10", baseAdvance: 150000000, mult: 1.2 },
-      { id: "sonymax", name: "Sony MAX", logo: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/SONY_MAX_Logo_2022.png/1280px-SONY_MAX_Logo_2022.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail", baseAdvance: 140000000, mult: 1.15 },
-      { id: "zeecinema", name: "Zee Cinema", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd-dWPg9hDRQb0VlRBFo45p1dD_tyhOsHPkE7I44NdUP4dzuS0QC7AN5Zi&s=10", baseAdvance: 120000000, mult: 1.1 },
-      { id: "colorstvb", name: "Colors Cineplex", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeqXrC15ArSmDq9-1zD2IyHgJHTULk5rsoYNOoi_LeK9grAEBq1Dtgmk0&s=10", baseAdvance: 100000000, mult: 1.05 }
+      { id: "stargold", name: "Star Gold", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg4tFcXA9RLE-xLf2trV2orWJtK7PT2CzU8AeT-drS7A&s=10", baseAdvance: 95000000, mult: 1.15 },
+      { id: "sonymax", name: "Sony MAX", logo: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/SONY_MAX_Logo_2022.png/1280px-SONY_MAX_Logo_2022.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail", baseAdvance: 85000000, mult: 1.1 },
+      { id: "zeecinema", name: "Zee Cinema", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd-dWPg9hDRQb0VlRBFo45p1dD_tyhOsHPkE7I44NdUP4dzuS0QC7AN5Zi&s=10", baseAdvance: 75000000, mult: 1.05 },
+      { id: "colorstvb", name: "Colors Cineplex", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeqXrC15ArSmDq9-1zD2IyHgJHTULk5rsoYNOoi_LeK9grAEBq1Dtgmk0&s=10", baseAdvance: 65000000, mult: 1.0 }
     ];
 
+    /* HYPE IS DRIVEN BY MARKETING: CALIBRATED HYPE VALUES */
     const TARGETED_MARKETING = [
-      { id: "m_news", name: "Newspaper Spread", fee: 8000000, hype: 10, reach: 18000000, cat: "Traditional" },
-      { id: "m_mag", name: "Magazine Cover", fee: 4000000, hype: 6, reach: 6000000, cat: "Traditional" },
-      { id: "m_billboards", name: "Metro Billboards", fee: 18000000, hype: 20, reach: 35000000, cat: "Traditional" },
-      { id: "m_radio", name: "Radio Jingle Blitz", fee: 6000000, hype: 8, reach: 22000000, cat: "Traditional" },
-      { id: "m_net_tv", name: "Network TV Prime", fee: 25000000, hype: 28, reach: 95000000, cat: "Digital" },
-      { id: "m_cable_tv", name: "Cable TV Niche", fee: 10000000, hype: 12, reach: 24000000, cat: "Digital" },
-      { id: "m_stream_ads", name: "Streaming Pre-Roll", fee: 15000000, hype: 18, reach: 42000000, cat: "Digital" },
-      { id: "m_social", name: "Social Media Storm", fee: 12000000, hype: 16, reach: 68000000, cat: "Digital" },
-      { id: "m_mobile", name: "Mobile App Blitz", fee: 8000000, hype: 10, reach: 32000000, cat: "Digital" },
-      { id: "m_desktop", name: "Desktop Web Banners", fee: 5000000, hype: 7, reach: 14000000, cat: "Digital" },
-      { id: "m_general_promo", name: "Brand Tie-in", fee: 14000000, hype: 15, reach: 30000000, cat: "Digital" },
-      { id: "m_trl_tiny", name: "Trailers (Tiny Theatres)", fee: 3000000, hype: 4, reach: 2000000, cat: "Theatrical" },
-      { id: "m_trl_small", name: "Trailers (Small Theatres)", fee: 6000000, hype: 8, reach: 5000000, cat: "Theatrical" },
-      { id: "m_trl_med", name: "Trailer (Medium Theatres)", fee: 12000000, hype: 15, reach: 12000000, cat: "Theatrical" },
-      { id: "m_trl_large", name: "Trailers (Large Theatres)", fee: 24000000, hype: 28, reach: 30000000, cat: "Theatrical" },
-      { id: "m_press_small", name: "Press (Small Hotel)", fee: 2000000, hype: 4, reach: 3000000, cat: "Press" },
-      { id: "m_press_med", name: "Press (Medium Hotel)", fee: 5000000, hype: 8, reach: 9000000, cat: "Press" },
-      { id: "m_press_large", name: "Press (Large Hotel)", fee: 10000000, hype: 14, reach: 18000000, cat: "Press" },
-      { id: "m_press_5star", name: "Press (5-Star Hotel)", fee: 20000000, hype: 22, reach: 35000000, cat: "Press" },
-      { id: "m_press_resort", name: "Press (Resort Hotel)", fee: 28000000, hype: 30, reach: 45000000, cat: "Press" },
-      { id: "m_dig_teaser", name: "Digital Teaser Drop", fee: 10000000, hype: 14, reach: 45000000, cat: "Grand" },
-      { id: "m_5star_teaser", name: "5-Star Press Teaser", fee: 22000000, hype: 26, reach: 65000000, cat: "Grand" },
-      { id: "m_dig_trailer", name: "Digital Trailer Launch", fee: 30000000, hype: 35, reach: 120000000, cat: "Grand" },
-      { id: "m_burj_khalifa", name: "Burj Khalifa Projection", fee: 80000000, hype: 75, reach: 210000000, cat: "Grand" },
-      { id: "m_grand_song", name: "Grand Dance Video", fee: 35000000, hype: 34, reach: 85000000, cat: "Grand" },
-      { id: "m_10city_tour", name: "10 Cities Campus Tour", fee: 40000000, hype: 40, reach: 55000000, cat: "Grand" }
+      { id: "m_news", name: "Newspaper Spread", fee: 8000000, hype: 6, reach: 18000000, cat: "Traditional" },
+      { id: "m_mag", name: "Magazine Cover", fee: 4000000, hype: 4, reach: 6000000, cat: "Traditional" },
+      { id: "m_billboards", name: "Metro Billboards", fee: 18000000, hype: 12, reach: 35000000, cat: "Traditional" },
+      { id: "m_radio", name: "Radio Jingle Blitz", fee: 6000000, hype: 5, reach: 22000000, cat: "Traditional" },
+      { id: "m_net_tv", name: "Network TV Prime", fee: 25000000, hype: 16, reach: 95000000, cat: "Digital" },
+      { id: "m_cable_tv", name: "Cable TV Niche", fee: 10000000, hype: 7, reach: 24000000, cat: "Digital" },
+      { id: "m_stream_ads", name: "Streaming Pre-Roll", fee: 15000000, hype: 10, reach: 42000000, cat: "Digital" },
+      { id: "m_social", name: "Social Media Storm", fee: 12000000, hype: 9, reach: 68000000, cat: "Digital" },
+      { id: "m_mobile", name: "Mobile App Blitz", fee: 8000000, hype: 6, reach: 32000000, cat: "Digital" },
+      { id: "m_desktop", name: "Desktop Web Banners", fee: 5000000, hype: 4, reach: 14000000, cat: "Digital" },
+      { id: "m_general_promo", name: "Brand Tie-in", fee: 14000000, hype: 9, reach: 30000000, cat: "Digital" },
+      { id: "m_trl_tiny", name: "Trailers (Tiny Theatres)", fee: 3000000, hype: 2, reach: 2000000, cat: "Theatrical" },
+      { id: "m_trl_small", name: "Trailers (Small Theatres)", fee: 6000000, hype: 4, reach: 5000000, cat: "Theatrical" },
+      { id: "m_trl_med", name: "Trailer (Medium Theatres)", fee: 12000000, hype: 8, reach: 12000000, cat: "Theatrical" },
+      { id: "m_trl_large", name: "Trailers (Large Theatres)", fee: 24000000, hype: 15, reach: 30000000, cat: "Theatrical" },
+      { id: "m_press_small", name: "Press (Small Hotel)", fee: 2000000, hype: 2, reach: 3000000, cat: "Press" },
+      { id: "m_press_med", name: "Press (Medium Hotel)", fee: 5000000, hype: 5, reach: 9000000, cat: "Press" },
+      { id: "m_press_large", name: "Press (Large Hotel)", fee: 10000000, hype: 8, reach: 18000000, cat: "Press" },
+      { id: "m_press_5star", name: "Press (5-Star Hotel)", fee: 20000000, hype: 13, reach: 35000000, cat: "Press" },
+      { id: "m_press_resort", name: "Press (Resort Hotel)", fee: 28000000, hype: 18, reach: 45000000, cat: "Press" },
+      { id: "m_dig_teaser", name: "Digital Teaser Drop", fee: 10000000, hype: 8, reach: 45000000, cat: "Grand" },
+      { id: "m_5star_teaser", name: "5-Star Press Teaser", fee: 22000000, hype: 15, reach: 65000000, cat: "Grand" },
+      { id: "m_dig_trailer", name: "Digital Trailer Launch", fee: 30000000, hype: 20, reach: 120000000, cat: "Grand" },
+      { id: "m_burj_khalifa", name: "Burj Khalifa Projection", fee: 80000000, hype: 38, reach: 210000000, cat: "Grand" },
+      { id: "m_grand_song", name: "Grand Dance Video", fee: 35000000, hype: 18, reach: 85000000, cat: "Grand" },
+      { id: "m_10city_tour", name: "10 Cities Campus Tour", fee: 40000000, hype: 22, reach: 55000000, cat: "Grand" }
     ];
 
     const POST_RELEASE_CAMPAIGNS = [
-      { id: "pr_success_bash", name: "Success Press Meet & Media Party", fee: 15000000, hypeAdd: 16, screenBoost: 450, desc: "Celebrate opening momentum with national media." },
-      { id: "pr_reels_blitz", name: "Viral Instagram & YouTube Shorts Blitz", fee: 25000000, hypeAdd: 24, screenBoost: 750, desc: "Flood social media with iconic scene clips & music." },
-      { id: "pr_city_visits", name: "Lead Cast Surprise Theatre Visits", fee: 40000000, hypeAdd: 35, screenBoost: 1100, desc: "Lead stars greet fans live in packed single screens & multiplexes." },
-      { id: "pr_global_promo", name: "Global TV & International Multiplex Push", fee: 65000000, hypeAdd: 48, screenBoost: 1600, desc: "Massive overseas & Pan-India exhibitor expansion." }
+      { id: "pr_success_bash", name: "Success Press Meet & Media Party", fee: 18000000, hypeAdd: 12, screenBoost: 600, desc: "Celebrate opening momentum with national media." },
+      { id: "pr_reels_blitz", name: "Viral Instagram & YouTube Shorts Blitz", fee: 30000000, hypeAdd: 18, screenBoost: 1100, desc: "Flood social media with iconic scene clips & music." },
+      { id: "pr_city_visits", name: "Lead Cast Surprise Theatre Visits", fee: 50000000, hypeAdd: 26, screenBoost: 1800, desc: "Lead stars greet fans live in packed single screens & multiplexes." },
+      { id: "pr_global_promo", name: "Global TV & International Multiplex Push", fee: 80000000, hypeAdd: 36, screenBoost: 2800, desc: "Massive overseas & Pan-India exhibitor expansion." }
     ];
 
+    /* RANDOM PRODUCTION EVENTS (CAREFUL WITH HYPE — FOCUSED ON SCHEDULE, QUALITY & COST) */
     const RANDOM_EVENTS_POOL = [
       {
         title: "Lead Actor Injured During Stunt!",
         desc: "During a high-octane action sequence, the lead actor suffered a sprained ankle. Shoot schedule is impacted.",
         choices: [
-          { label: "Pay ₹1.5 Cr for top sports doctors & CGI body double (Keep schedule, +2 Quality)", cashDelta: -15000000, hypeDelta: 4, qualityDelta: 2, delayWeeks: 0 },
-          { label: "Pause shoot for 2 weeks for natural recovery (No cost, +2 weeks delay)", cashDelta: 0, hypeDelta: -3, qualityDelta: 0, delayWeeks: 2 }
+          { label: "Pay ₹1.5 Cr for sports specialists & stunt double (Keep schedule, +2 Quality)", cashDelta: -15000000, hypeDelta: 0, qualityDelta: 2, delayWeeks: 0 },
+          { label: "Pause shoot for 2 weeks for natural recovery (No cost, +2 weeks delay, -4 Hype)", cashDelta: 0, hypeDelta: -4, qualityDelta: 0, delayWeeks: 2 }
         ]
       },
       {
         title: "Actress Met With Minor Road Accident",
-        desc: "While returning from late-night studio dubbing, the lead actress had a minor car collision. Fortunately, she is safe but shaken.",
+        desc: "While returning from late-night studio dubbing, the lead actress had a minor car collision. She is safe but requires rest.",
         choices: [
-          { label: "Cover ₹80 Lakhs medical & PR wellness support (+5 Studio Reputation)", cashDelta: -8000000, repDelta: 5, hypeDelta: 3, delayWeeks: 0 },
-          { label: "Reschedule climax shoot by 1 week", cashDelta: 0, hypeDelta: -2, delayWeeks: 1 }
+          { label: "Cover ₹80 Lakhs medical & PR wellness support (+4 Studio Reputation)", cashDelta: -8000000, repDelta: 4, hypeDelta: 0, delayWeeks: 0 },
+          { label: "Reschedule climax shoot by 1 week (-3 Hype)", cashDelta: 0, hypeDelta: -3, delayWeeks: 1 }
         ]
       },
       {
         title: "Climax Footage Leaked Online!",
-        desc: "An unedited rough cut of your climax action scene leaked on social media platforms and is going viral!",
+        desc: "An unedited rough cut of your climax action scene leaked on social media platforms!",
         choices: [
-          { label: "Spend ₹3 Cr to re-shoot a brand new surprise twist ending (+15 Hype, +4 Quality)", cashDelta: -30000000, hypeDelta: 15, qualityDelta: 4, delayWeeks: 1 },
-          { label: "Issue copyright takedowns and turn leak into official teaser (+8 Hype)", cashDelta: -5000000, hypeDelta: 8, qualityDelta: -1, delayWeeks: 0 }
+          { label: "Spend ₹3 Cr to re-shoot a brand new surprise twist ending (+4 Quality, +2 Hype)", cashDelta: -30000000, hypeDelta: 2, qualityDelta: 4, delayWeeks: 1 },
+          { label: "Issue copyright takedowns (₹50 Lakhs, -5 Hype due to spoilers)", cashDelta: -5000000, hypeDelta: -5, qualityDelta: -1, delayWeeks: 0 }
         ]
       },
       {
-        title: "Viral Fan-Made Trailer Edit Explodes!",
-        desc: "A fan-edited teaser set to your film's background score crossed 20 million views overnight!",
+        title: "Set Equipment & Lighting Damage",
+        desc: "Unexpected monsoon gusts damaged outdoor lighting rigs and camera lenses on location.",
         choices: [
-          { label: "Hire the fan editor officially & boost social media campaign (₹50 Lakhs, +18 Hype)", cashDelta: -5000000, hypeDelta: 18, qualityDelta: 0, delayWeeks: 0 },
-          { label: "Enjoy the free organic buzz (+10 Hype)", cashDelta: 0, hypeDelta: 10, qualityDelta: 0, delayWeeks: 0 }
+          { label: "Pay ₹1.2 Cr for immediate overnight replacement rentals (Zero delay)", cashDelta: -12000000, hypeDelta: 0, qualityDelta: 0, delayWeeks: 0 },
+          { label: "Wait 1 week for insurance replacement (+1 week delay, -2 Hype)", cashDelta: 0, hypeDelta: -2, qualityDelta: 0, delayWeeks: 1 }
         ]
       },
       {
         title: "Censor Board Demands Trims",
         desc: "The Censor Board raised objections over two intense dialogue sequences right before release.",
         choices: [
-          { label: "Pay ₹1 Cr for re-dubbing & clean U/A certificate (Wider family audience, +8 Hype)", cashDelta: -10000000, hypeDelta: 8, qualityDelta: 1, delayWeeks: 0 },
-          { label: "Accept 'A' Adult certificate without cuts (Edgy mass appeal, +4 Hype)", cashDelta: 0, hypeDelta: 4, qualityDelta: 0, delayWeeks: 0 }
+          { label: "Pay ₹1 Cr for re-dubbing & clean U/A certificate (+2 Quality)", cashDelta: -10000000, hypeDelta: 0, qualityDelta: 2, delayWeeks: 0 },
+          { label: "Accept 'A' Adult certificate without cuts (-2 Hype due to restricted family reach)", cashDelta: 0, hypeDelta: -2, qualityDelta: 0, delayWeeks: 0 }
         ]
       },
       {
         title: "State Government Tourism & Film Subsidy!",
-        desc: "The tourism board praised your picturesque location shoot and approved a direct production subsidy grant!",
+        desc: "The tourism board praised your location shoot and approved a direct production subsidy grant!",
         choices: [
-          { label: "Claim ₹2.5 Cr State Subsidy Grant (+₹2.5 Cr Treasury Cash)", cashDelta: 25000000, hypeDelta: 5, qualityDelta: 0, delayWeeks: 0 }
+          { label: "Claim ₹2 Cr State Subsidy Grant (+₹2 Cr Treasury Cash)", cashDelta: 20000000, hypeDelta: 0, qualityDelta: 0, delayWeeks: 0 }
         ]
       }
     ];
@@ -1586,6 +1611,7 @@
     let ACTIVE_BUYOUT_BUYER = "";
     let NEGOTIATION_ATTEMPTS = 0;
 
+    /* DEFAULT PROMOS EMPTY SO HYPE STARTS AT 0 WITHOUT MARKETING */
     let CURRENT_DRAFT = {
       title: "",
       genre: "Action",
@@ -1606,7 +1632,7 @@
       musicRightsId: "tseries",
       ottRightsId: "netflix",
       satelliteRightsId: "stargold",
-      promos: ["m_dig_teaser", "m_dig_trailer"],
+      promos: [],
       releaseWeekOffset: 3
     };
 
@@ -1726,7 +1752,6 @@
       document.getElementById("btn-theme-toggle").innerHTML = isDark ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
     }
 
-    /* ONBOARDING WITH OPTIONAL CARRYOVER CAPITAL */
     function openOnboardingModal(carryoverAmount) {
       CARRIED_OVER_CAPITAL = carryoverAmount;
       const presetsSec = document.getElementById("onboard-capital-presets-section");
@@ -1752,7 +1777,7 @@
       GAME_STATE.cash = CARRIED_OVER_CAPITAL ? CARRIED_OVER_CAPITAL : SELECTED_ONBOARD_CAPITAL;
       CARRIED_OVER_CAPITAL = null;
 
-      localStorage.setItem("bollywood_tycoon_v112e_init", "true");
+      localStorage.setItem("bollywood_tycoon_v112f_init", "true");
       saveState();
       document.getElementById("modal-onboarding").classList.remove("active");
       document.getElementById("studio-name-display").value = chosenName;
@@ -1873,6 +1898,7 @@
         renderBrandRights();
         updateCostHUD();
       }
+      if (CURRENT_WIZARD_STEP === 7) updateMarketingMeters();
       if (CURRENT_WIZARD_STEP === 8) renderReleaseWeekTiles();
 
       document.querySelectorAll(".wizard-step-node").forEach(node => {
@@ -1924,7 +1950,13 @@
       if (mobCash) mobCash.innerText = formattedCash;
 
       document.getElementById("stat-week").innerText = GAME_STATE.week;
+      const mobWeek = document.getElementById("mobile-stat-week");
+      if (mobWeek) mobWeek.innerText = GAME_STATE.week;
+
       document.getElementById("stat-rep").innerText = GAME_STATE.reputation;
+      const mobRep = document.getElementById("mobile-stat-rep");
+      if (mobRep) mobRep.innerText = GAME_STATE.reputation;
+
       document.getElementById("dash-net-worth").innerText = formatINR(getStudioValuation());
       document.getElementById("dash-released-count").innerText = GAME_STATE.releasedMovies.length + GAME_STATE.theatreRuns.filter(r => r.active).length;
       document.getElementById("dash-awards-count").innerHTML = `<i class="fa-solid fa-award"></i> ${GAME_STATE.totalAwardsWon}`;
@@ -1973,7 +2005,6 @@
       `).join('');
     }
 
-    /* COMPANY ACQUISITION & CARRYOVER TO NEW EMPIRE */
     function openSellCompanyModal() {
       const val = getStudioValuation();
       const buyer = COMPETITOR_STUDIOS[Math.floor(Math.random() * COMPETITOR_STUDIOS.length)];
@@ -2048,10 +2079,9 @@
       closeSellCompanyModal();
       triggerConfetti();
 
-      localStorage.removeItem("bollywood_tycoon_v112e");
-      localStorage.removeItem("bollywood_tycoon_v112e_init");
+      localStorage.removeItem("bollywood_tycoon_v112f");
+      localStorage.removeItem("bollywood_tycoon_v112f_init");
 
-      // Carry over the exact sold amount into the new company!
       GAME_STATE = {
         studioName: "Novus Film Productions",
         studioHead: oldHead,
@@ -2273,6 +2303,7 @@
       renderLocationsTiles();
       rememberFranchisePreferences();
       renderBrandRights();
+      updateMarketingMeters();
       updateCostHUD();
     }
 
@@ -2284,6 +2315,7 @@
         renderActorTiles();
         rememberFranchisePreferences();
         renderBrandRights();
+        updateMarketingMeters();
         updateCostHUD();
       }
     }
@@ -2418,14 +2450,14 @@
       if (!CURRENT_DRAFT.franchiseId) return 1.0;
       const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
       if (!f) return 1.0;
-      return 1.0 + ((f.rating / 100) * 1.1);
+      return 1.0 + ((f.rating / 100) * 0.85);
     }
 
     function calculateMusicAdvance(lbl) {
       const albumSize = CURRENT_DRAFT.songCount;
-      if (albumSize === 0) return 0; // Songless movies earn ₹0 Music Rights
-      const composerBonus = CURRENT_DRAFT.composerId ? 1.4 : 1.0;
-      const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 1.4 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 1.2 : 1.0);
+      if (albumSize === 0) return 0;
+      const composerBonus = CURRENT_DRAFT.composerId ? 1.3 : 1.0;
+      const lyricsBonus = CURRENT_DRAFT.lyricsTier === 'legend' ? 1.3 : (CURRENT_DRAFT.lyricsTier === 'poetic' ? 1.15 : 1.0);
       const franMult = getFranchiseFameMultiplier();
       
       let bidBoost = 1.0;
@@ -2442,7 +2474,7 @@
       if (CURRENT_DRAFT.releaseFormat === "only_theatres") return 0;
       const starPower = getCastStarPower();
       const franMult = getFranchiseFameMultiplier();
-      const directOttMult = CURRENT_DRAFT.releaseFormat === "ott_satellite" ? 1.75 : 1.0;
+      const directOttMult = CURRENT_DRAFT.releaseFormat === "ott_satellite" ? 1.65 : 1.0;
 
       let bidBoost = 1.0;
       if (CURRENT_DRAFT.franchiseId) {
@@ -2451,7 +2483,7 @@
           bidBoost = f.lastOttRights !== p.id ? 1.35 : 1.20;
         }
       }
-      return Math.round(p.baseAdvance * (starPower / 70) * p.mult * franMult * directOttMult * bidBoost);
+      return Math.round(p.baseAdvance * (starPower / 75) * p.mult * franMult * directOttMult * bidBoost);
     }
 
     function calculateSatelliteAdvance(ch) {
@@ -2465,7 +2497,7 @@
           bidBoost = f.lastSatRights !== ch.id ? 1.25 : 1.12;
         }
       }
-      return Math.round(ch.baseAdvance * (starPower / 75) * ch.mult * franMult * bidBoost);
+      return Math.round(ch.baseAdvance * (starPower / 80) * ch.mult * franMult * bidBoost);
     }
 
     function getCastStarPower() {
@@ -2512,43 +2544,62 @@
       updateMarketingMeters();
     }
 
-    function updateMarketingMeters() {
-      let totalHype = 25;
+    /* STRICT HYPE FORMULA: 0 BASELINE; CAST MAX 10; FRANCHISE 2-5; REST ONLY FROM MARKETING */
+    function computeDraftHypeAndReach() {
+      let marketingHype = 0;
       let totalSpend = 0;
-      let reachPopulation = 5000000;
+      let reachPopulation = 0;
 
-      if (CURRENT_DRAFT.releaseFormat === "only_theatres") {
-        totalHype += 15;
-        reachPopulation += 15000000;
-      }
-      if (CURRENT_DRAFT.lyricsTier === "legend") totalHype += 12;
-      else if (CURRENT_DRAFT.lyricsTier === "poetic") totalHype += 6;
-
+      // 1. Marketing Campaigns (Primary driver of Hype & Audience Reach)
       CURRENT_DRAFT.promos.forEach(pId => {
         const p = TARGETED_MARKETING.find(x => x.id === pId);
         if (p) {
-          totalHype += p.hype;
+          marketingHype += p.hype;
           totalSpend += p.fee;
           reachPopulation += p.reach;
         }
       });
 
+      // 2. Star Cast Organic Hype (Strictly capped at 10 max even if all stars are cast; 2-5 for typical stars)
+      let castHype = 0;
+      if (CURRENT_DRAFT.cast.length > 0) {
+        const rawCastSum = CURRENT_DRAFT.cast.reduce((acc, c) => {
+          const actor = ALL_ACTORS.find(a => a.id === c.id);
+          return acc + (actor ? (actor.popularity / 40) : 1);
+        }, 0);
+        castHype = Math.min(10, Math.max(2, Math.round(rawCastSum)));
+        reachPopulation += (castHype * 1200000);
+      }
+
+      // 3. Successful Franchise Organic Hype (2 to 5 bonus only if franchise has prior films)
+      let franchiseHype = 0;
       if (CURRENT_DRAFT.franchiseId) {
         const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
-        if (f) {
-          totalHype += Math.round(f.rating * 0.15);
-          reachPopulation += Math.round(f.rating * 500000);
+        if (f && f.films > 0) {
+          franchiseHype = Math.min(5, Math.max(2, Math.round(f.rating / 22)));
+          reachPopulation += (franchiseHype * 2000000);
         }
       }
 
-      reachPopulation = Math.min(1050000000, reachPopulation);
-      totalHype = Math.min(100, totalHype);
+      // 4. Exclusive Theatre Bonus (+4 hype only if some marketing or cast exists)
+      let exclusiveBonus = (CURRENT_DRAFT.releaseFormat === "only_theatres" && (marketingHype > 0 || castHype > 0)) ? 4 : 0;
 
-      let reachFormatted = "";
+      const totalHype = Math.min(100, marketingHype + castHype + franchiseHype + exclusiveBonus);
+      reachPopulation = Math.min(1050000000, reachPopulation);
+
+      return { totalHype, totalSpend, reachPopulation };
+    }
+
+    function updateMarketingMeters() {
+      const { totalHype, totalSpend, reachPopulation } = computeDraftHypeAndReach();
+
+      let reachFormatted = "0 People";
       if (reachPopulation >= 10000000) {
         reachFormatted = (reachPopulation / 10000000).toFixed(2) + " Cr People";
-      } else {
+      } else if (reachPopulation >= 100000) {
         reachFormatted = (reachPopulation / 100000).toFixed(1) + " Lakh People";
+      } else if (reachPopulation > 0) {
+        reachFormatted = reachPopulation.toLocaleString('en-IN') + " People";
       }
 
       const rEl = document.getElementById("m-stat-reach");
@@ -2634,7 +2685,7 @@
     }
 
     function calculateProductionCosts() {
-      let cost = 35000000;
+      let cost = 45000000;
 
       if (CURRENT_DRAFT.scriptQuality === "masterpiece") cost += 50000000;
       else if (CURRENT_DRAFT.scriptQuality === "tight") cost += 15000000;
@@ -2722,6 +2773,7 @@
       document.getElementById("hud-net-outlay").innerText = (netOutlay > 0 ? "-" : "+") + formatINR(Math.abs(netOutlay));
     }
 
+    /* UNCAPPED SCREENS ALLOCATION DRIVEN BY HYPE */
     function greenlightFilm() {
       if (!CURRENT_DRAFT.title.trim()) { showToast("Enter a project title!", "error"); goToStep(1); return; }
       if (CURRENT_DRAFT.cast.length === 0) { showToast("Cast at least one actor!", "error"); goToStep(2); return; }
@@ -2738,30 +2790,13 @@
 
       GAME_STATE.cash -= netCashRequired;
       const releaseWeek = GAME_STATE.week + CURRENT_DRAFT.releaseWeekOffset;
-      const cycleWeek = ((releaseWeek - 1) % 52) + 1;
+      const { totalHype } = computeDraftHypeAndReach();
 
-      let campaignHype = 25;
-      if (CURRENT_DRAFT.releaseFormat === "only_theatres") campaignHype += 15;
-      if (CURRENT_DRAFT.lyricsTier === "legend") campaignHype += 12;
-      else if (CURRENT_DRAFT.lyricsTier === "poetic") campaignHype += 6;
-      if (CURRENT_DRAFT.vfxQuality === "dneg" || CURRENT_DRAFT.vfxQuality === "redchillies") campaignHype += 12;
-      else if (CURRENT_DRAFT.vfxQuality === "nyvfx" || CURRENT_DRAFT.vfxQuality === "primefocus") campaignHype += 6;
-      if (CURRENT_DRAFT.genre === "Patriotic" && (cycleWeek === 4 || cycleWeek === 33)) campaignHype += 25;
-
-      CURRENT_DRAFT.promos.forEach(pId => {
-        const p = TARGETED_MARKETING.find(x => x.id === pId);
-        if (p) campaignHype += p.hype;
-      });
-      if (CURRENT_DRAFT.franchiseId) {
-        const f = GAME_STATE.franchises.find(x => x.id === CURRENT_DRAFT.franchiseId);
-        if (f) campaignHype += Math.round(f.rating * 0.15);
-      }
-      campaignHype = Math.min(100, campaignHype);
-
+      // Uncapped Pan-India Screens: Low hype = very few screens; High hype = 10,000+ screens!
       let startingScreens = 0;
       if (CURRENT_DRAFT.releaseFormat !== "ott_satellite") {
-        const baseScreens = Math.round(2500 + (campaignHype * 35) + (getCastStarPower() * 15));
-        startingScreens = Math.min(7500, baseScreens);
+        const rawScreens = Math.round(350 + (totalHype * 95) + (getCastStarPower() * 8));
+        startingScreens = Math.max(250, rawScreens);
       }
 
       const newFilm = {
@@ -2786,8 +2821,9 @@
         releaseWeek: releaseWeek,
         weeksRemaining: CURRENT_DRAFT.releaseWeekOffset,
         quality: computeQualityScore(),
-        hype: campaignHype,
+        hype: totalHype,
         screens: startingScreens,
+        archivedRecorded: false,
         awardsWon: []
       };
 
@@ -2796,7 +2832,7 @@
       addTradeNews(`[${GAME_STATE.studioName}] Officially greenlit "${newFilm.title}" (${newFilm.genre}) for Week ${releaseWeek} on a budget of ${formatINR(totalCost)}!`);
       saveState();
 
-      const screenMsg = startingScreens > 0 ? `Screens: ${startingScreens.toLocaleString()}` : `Direct OTT & Satellite Premiere`;
+      const screenMsg = startingScreens > 0 ? `Screens: ${startingScreens.toLocaleString()} | Hype: ${totalHype}/100` : `Direct OTT & Satellite Premiere`;
       showToast(`"${newFilm.title}" greenlit! ${screenMsg}`, "success");
       triggerConfetti();
 
@@ -2934,7 +2970,7 @@
         GAME_STATE.cash += (choice.cashDelta || 0);
         if (choice.cashDelta < 0) film.cost += Math.abs(choice.cashDelta);
         if (choice.repDelta) GAME_STATE.reputation = Math.min(100, Math.max(10, GAME_STATE.reputation + choice.repDelta));
-        if (choice.hypeDelta) film.hype = Math.min(100, Math.max(5, (film.hype || 50) + choice.hypeDelta));
+        if (choice.hypeDelta) film.hype = Math.min(100, Math.max(0, (film.hype || 0) + choice.hypeDelta));
         if (choice.qualityDelta) film.quality = Math.min(99, Math.max(40, (film.quality || 75) + choice.qualityDelta));
         if (choice.delayWeeks) {
           film.weeksRemaining += choice.delayWeeks;
@@ -2949,16 +2985,16 @@
       document.getElementById("modal-random-event").classList.remove("active");
       saveState();
       renderAll();
-      showToast("Studio crisis handled!", "success");
+      showToast("Studio situation resolved!", "success");
     }
 
     function applySpilloverToVeterans() {
       GAME_STATE.theatreRuns.forEach(run => {
         if (run.active && run.currentWeekOfRun >= 10 && run.releaseFormat !== "ott_satellite") {
-          const bump = Math.round(run.weeklyHistory[run.weeklyHistory.length - 1] * 0.20);
+          const bump = Math.round(run.weeklyHistory[run.weeklyHistory.length - 1] * 0.18);
           run.weeklyHistory[run.weeklyHistory.length - 1] += bump;
           run.totalGross += bump;
-          const share = Math.round(bump * 0.5);
+          const share = Math.round(bump * 0.45);
           run.producerEarnings += share;
           GAME_STATE.cash += share;
           showToast(`"${run.title}" saw theatre rush spillover! (+${formatINR(bump)})`, "info");
@@ -2980,18 +3016,20 @@
       });
     }
 
+    /* HYPE-DRIVEN OPENING WEEKEND: LOW HYPE = WEAK OPENING; HIGH HYPE = MASSIVE SURGE */
     function startTheatricalRun(film) {
       if (film.releaseFormat === "ott_satellite") {
-        const digitalRoyalties = Math.round(film.inflow * 0.20);
+        const digitalRoyalties = Math.round(film.inflow * 0.15);
         const streamEntry = {
           ...film,
           currentWeekOfRun: 1,
           totalGross: film.inflow,
           producerEarnings: digitalRoyalties,
           weeklyHistory: [digitalRoyalties],
-          activeHype: film.hype || 50,
+          activeHype: film.hype || 0,
           activeScreens: 0,
           boostTurnsRemaining: 0,
+          archivedRecorded: false,
           active: true,
           jubilee: null
         };
@@ -3011,31 +3049,35 @@
       if (film.genre === "Patriotic" && (cycleWeek === 4 || cycleWeek === 33)) clashMult += 0.35;
 
       const starPower = film.cast.reduce((acc, c) => acc + (ALL_ACTORS.find(a => a.id === c.id)?.popularity || 70), 0) / Math.max(1, film.cast.length);
-      const hypeFactor = ((film.hype || 50) / 45);
       
-      const opening = Math.round((starPower * 4200000) * season.mult * clashMult * (film.quality / 80) * hypeFactor);
+      // Hype is critical: 0 hype yields minimal opening (0.12x); 100 hype yields full blockbuster potential (1.85x)
+      const hypeVal = film.hype || 0;
+      const hypeFactor = 0.12 + ((hypeVal / 100) * 1.75);
+      
+      const opening = Math.round((starPower * 2800000) * season.mult * clashMult * (film.quality / 85) * hypeFactor);
+      const share = Math.round(opening * 0.45); // Tougher 45% distributor split
 
       const theatreEntry = {
         ...film,
         currentWeekOfRun: 1,
         totalGross: opening,
-        producerEarnings: Math.round(opening * 0.50),
+        producerEarnings: share,
         weeklyHistory: [opening],
-        activeHype: film.hype || 50,
-        activeScreens: film.screens || 4200,
+        activeHype: hypeVal,
+        activeScreens: film.screens || 400,
         boostTurnsRemaining: 0,
+        archivedRecorded: false,
         active: true,
         jubilee: null
       };
 
-      GAME_STATE.cash += theatreEntry.producerEarnings;
+      GAME_STATE.cash += share;
       GAME_STATE.theatreRuns.unshift(theatreEntry);
       addTradeNews(`[${GAME_STATE.studioName}] "${film.title}" released across ${theatreEntry.activeScreens.toLocaleString()} screens, opening to ${formatINR(opening)} in Week 1!`);
       showToast(`"${film.title}" opened on ${theatreEntry.activeScreens.toLocaleString()} screens! W1: ${formatINR(opening)}`, "success");
       triggerConfetti();
     }
 
-    /* ALL 6 OFFICIAL JUBILEE MILESTONES (15w, 25w, 50w, 60w, 75w, 150w) */
     function processTheatreCollections() {
       GAME_STATE.theatreRuns.forEach(run => {
         if (!run.active) return;
@@ -3043,8 +3085,8 @@
         const lastColl = run.weeklyHistory[run.weeklyHistory.length - 1];
 
         if (run.releaseFormat === "ott_satellite") {
-          run.activeHype = Math.max(5, run.activeHype - 12);
-          const thisRoyalties = Math.round(lastColl * 0.65);
+          run.activeHype = Math.max(0, run.activeHype - 12);
+          const thisRoyalties = Math.round(lastColl * 0.60);
           run.weeklyHistory.push(thisRoyalties);
           run.totalGross += thisRoyalties;
           run.producerEarnings += thisRoyalties;
@@ -3062,10 +3104,10 @@
           run.boostTurnsRemaining--;
           publicitySurgeMult = 1.25;
         } else {
-          let hypeDecay = 10;
-          if (run.quality >= 92) hypeDecay = 2;
-          else if (run.quality >= 85) hypeDecay = 5;
-          else if (run.quality < 65) hypeDecay = 16;
+          let hypeDecay = 12;
+          if (run.quality >= 92) hypeDecay = 3;
+          else if (run.quality >= 85) hypeDecay = 6;
+          else if (run.quality < 65) hypeDecay = 18;
           run.activeHype = Math.max(0, run.activeHype - hypeDecay);
         }
 
@@ -3074,22 +3116,21 @@
           run.activeScreens = Math.max(0, Math.round(run.activeScreens * Math.min(1.05, Math.max(0.45, screenDecayRatio))));
         }
 
-        let holdRatio = 0.55; 
-        if (run.quality >= 95) holdRatio = 0.94;
-        else if (run.quality >= 90) holdRatio = 0.85;
-        else if (run.quality >= 80) holdRatio = 0.72;
-        else if (run.quality >= 70) holdRatio = 0.58;
-        else holdRatio = 0.35;
+        let holdRatio = 0.50; 
+        if (run.quality >= 95) holdRatio = 0.92;
+        else if (run.quality >= 90) holdRatio = 0.82;
+        else if (run.quality >= 80) holdRatio = 0.68;
+        else if (run.quality >= 70) holdRatio = 0.54;
+        else holdRatio = 0.32;
 
         const thisGross = Math.max(100000, Math.round(lastColl * holdRatio * publicitySurgeMult));
         run.weeklyHistory.push(thisGross);
         run.totalGross += thisGross;
 
-        const share = Math.round(thisGross * 0.50);
+        const share = Math.round(thisGross * 0.45);
         run.producerEarnings += share;
         GAME_STATE.cash += share;
 
-        // Check Official Jubilee Tiers
         if (run.currentWeekOfRun === 15) {
           run.jubilee = "Crystal Jubilee (15 Weeks)";
           GAME_STATE.reputation = Math.min(100, GAME_STATE.reputation + 4);
@@ -3153,6 +3194,7 @@
 
     function closePostPublicityModal() { document.getElementById("modal-post-publicity").classList.remove("active"); }
 
+    /* UNCAPPED SCREEN EXPANSION UPON POST-RELEASE PUBLICITY BOOST */
     function applyPostPublicity(campId) {
       const run = GAME_STATE.theatreRuns.find(r => r.id === ACTIVE_PUBLICITY_RUN_ID);
       const camp = POST_RELEASE_CAMPAIGNS.find(c => c.id === campId);
@@ -3165,8 +3207,8 @@
 
       GAME_STATE.cash -= camp.fee;
       run.cost += camp.fee;
-      run.activeHype = Math.min(100, (run.activeHype || 30) + camp.hypeAdd);
-      run.activeScreens = Math.min(7500, (run.activeScreens || 2000) + camp.screenBoost);
+      run.activeHype = Math.min(100, (run.activeHype || 0) + camp.hypeAdd);
+      run.activeScreens = (run.activeScreens || 500) + camp.screenBoost; // Uncapped screen boost
       run.boostTurnsRemaining = 3;
 
       addTradeNews(`[${GAME_STATE.studioName}] Launched "${camp.name}" for "${run.title}", expanding screens to ${run.activeScreens.toLocaleString()}!`);
@@ -3194,7 +3236,11 @@
       }
     }
 
+    /* FIXED FRANCHISE GROSS GLITCH: PREVENTS DUPLICATE GROSS ADDITION */
     function archiveReleasedMovie(run) {
+      if (run.archivedRecorded) return;
+      run.archivedRecorded = true;
+
       const verdictObj = computeBoxOfficeVerdict(run);
       run.verdict = verdictObj.label;
       run.verdictCss = verdictObj.css;
@@ -3205,13 +3251,14 @@
         const fran = GAME_STATE.franchises.find(f => f.id === run.franchiseId);
         if (fran) {
           fran.films++;
-          fran.gross += run.totalGross;
+          fran.gross = (fran.gross || 0) + run.totalGross;
           fran.rating = Math.round((fran.rating + run.quality) / 2);
         }
       }
       addTradeNews(`[${GAME_STATE.studioName}] "${run.title}" concluded its run with ${formatINR(run.totalGross)} gross — Declared ${verdictObj.label}!`);
       showToast(`"${run.title}" Verdict: ${verdictObj.label}! Lifetime: ${formatINR(run.totalGross)}`, "info");
       renderTheatricalRuns();
+      renderFranchiseView();
     }
 
     function renderTheatricalRuns() {
@@ -3228,7 +3275,7 @@
               <div style="flex:1;">
                 <div style="font-family:var(--font-display); font-size:0.86rem; color:var(--gold-bright);">${prod.title}</div>
                 <div style="font-size:0.72rem; color:var(--text-muted);">${prod.genre} • Releasing in ${prod.weeksRemaining} Weeks (Week ${prod.releaseWeek})</div>
-                <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">Audience Buzz: ${prod.hype || 50}/100 | ${prod.releaseFormat === 'ott_satellite' ? 'Direct Digital Stream' : `Target Screens: ${(prod.screens || 0).toLocaleString()}`}</div>
+                <div style="font-size:0.72rem; color:var(--warning); font-weight:700;">Audience Buzz: ${prod.hype || 0}/100 | ${prod.releaseFormat === 'ott_satellite' ? 'Direct Digital Stream' : `Target Screens: ${(prod.screens || 0).toLocaleString()}`}</div>
               </div>
             </div>
           `).join('');
@@ -3255,7 +3302,7 @@
                       ${run.genre} • ${run.releaseFormat === 'ott_satellite' ? 'Streaming Series' : `Wk ${run.currentWeekOfRun} in Cinemas`}
                     </div>
                     <div style="font-size:0.72rem; color:var(--warning); font-weight:700; margin-top:2px;">
-                      ${run.releaseFormat === 'ott_satellite' ? 'Direct Digital Streaming' : `Active Screens: ${(run.activeScreens || 0).toLocaleString()} | Hype: ${run.activeHype || 30}/100 ${run.boostTurnsRemaining > 0 ? `<span style="color:var(--success);">(Surge Active: ${run.boostTurnsRemaining}w)</span>` : ''}`}
+                      ${run.releaseFormat === 'ott_satellite' ? 'Direct Digital Streaming' : `Active Screens: ${(run.activeScreens || 0).toLocaleString()} | Hype: ${run.activeHype || 0}/100 ${run.boostTurnsRemaining > 0 ? `<span style="color:var(--success);">(Surge Active: ${run.boostTurnsRemaining}w)</span>` : ''}`}
                     </div>
                     <div style="font-size:0.75rem; color:var(--text-main); margin-top:2px;">
                       Budget: <strong style="color:var(--danger);">${formatINR(run.cost)}</strong> | Gross: <strong style="color:var(--success);">${formatINR(run.totalGross)}</strong>
@@ -3438,8 +3485,9 @@
         releaseWeek: releaseWeek,
         weeksRemaining: SELECTED_RERELEASE_OFFSET,
         quality: Math.min(99, film.quality + 2),
-        hype: 65,
-        screens: 2200,
+        hype: 35,
+        screens: 1800,
+        archivedRecorded: false,
         awardsWon: []
       };
 
@@ -3501,6 +3549,7 @@
       renderComposerTiles();
       renderSingerTiles();
       renderBrandRights();
+      updateMarketingMeters();
       updateCostHUD();
       showToast(`Auto-loaded template from ${f.name}!`, "info");
     }
@@ -3609,7 +3658,7 @@
             <div class="card" style="margin-bottom:0; border-color:var(--gold-primary);">
               <div style="font-family:var(--font-display); font-size:0.95rem; color:var(--gold-bright); margin-bottom:2px;">${f.name}</div>
               <p style="font-size:0.7rem; color:var(--text-muted); margin-bottom:4px;">${f.desc}</p>
-              <div style="font-size:0.75rem;">Films: <strong>${f.films}</strong> | Gross: <strong style="color:var(--success);">${formatINR(f.gross)}</strong></div>
+              <div style="font-size:0.75rem;">Films: <strong>${f.films}</strong> | Gross: <strong style="color:var(--success);">${formatINR(f.gross || 0)}</strong></div>
             </div>
           `).join('');
       }
@@ -3618,7 +3667,7 @@
       if (tbody) {
         const combined = [
           ...BENCHMARK_FRANCHISES,
-          ...GAME_STATE.franchises.map(f => ({ name: f.name, studio: GAME_STATE.studioName, films: f.films, gross: f.gross, rating: f.rating }))
+          ...GAME_STATE.franchises.map(f => ({ name: f.name, studio: GAME_STATE.studioName, films: f.films, gross: f.gross || 0, rating: f.rating }))
         ].sort((a, b) => b.gross - a.gross);
 
         tbody.innerHTML = combined.map((item, idx) => `
@@ -3647,7 +3696,6 @@
       }
     }
     
-    /* FIXED: IMMEDIATELY REVEALS FRANCHISE CONTAINER & SELECTS NEW TILE UPON CREATION */
     function confirmCreateFranchise() {
       const name = document.getElementById("new-franchise-name").value.trim();
       const desc = document.getElementById("new-franchise-desc").value.trim() || "High-stakes cinematic universe";
@@ -3657,7 +3705,6 @@
       GAME_STATE.franchises.push(newFran);
       CURRENT_DRAFT.franchiseId = newFran.id;
 
-      // Ensure "Part of Franchise" button is active and picker container is visible immediately
       document.querySelectorAll("#franchise-model-pills .curved-choice-btn").forEach(b => {
         b.classList.toggle("active", b.dataset.model === "franchise");
       });
@@ -3846,12 +3893,12 @@
     }
 
     function saveState() {
-      try { localStorage.setItem("bollywood_tycoon_v112e", JSON.stringify(GAME_STATE)); } catch (e) {}
+      try { localStorage.setItem("bollywood_tycoon_v112f", JSON.stringify(GAME_STATE)); } catch (e) {}
     }
 
     function loadSaveState() {
       try {
-        const raw = localStorage.getItem("bollywood_tycoon_v112e");
+        const raw = localStorage.getItem("bollywood_tycoon_v112f");
         if (raw) GAME_STATE = { ...GAME_STATE, ...JSON.parse(raw) };
       } catch (e) {}
     }
